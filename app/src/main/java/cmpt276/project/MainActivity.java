@@ -1,5 +1,7 @@
 package cmpt276.project;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -15,7 +17,17 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+/**
+ * Main menu
+ * Includes play, options, help, and high score
+ *  buttons to navigate through the game
+ */
 public class MainActivity extends AppCompatActivity {
+
+    public static Intent makeLaunchIntent(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

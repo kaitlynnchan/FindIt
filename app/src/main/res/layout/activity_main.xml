@@ -25,7 +25,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.57" />
@@ -34,7 +34,6 @@
         android:id="@+id/buttonOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
         android:layout_marginTop="16dp"
         android:paddingLeft="15dp"
         android:paddingTop="3dp"
@@ -42,18 +41,20 @@
         android:paddingBottom="3dp"
         android:text="@string/options"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textViewTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.41"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 
     <Button
         android:id="@+id/buttonHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
+        android:layout_marginStart="16dp"
         android:text="@string/help"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/buttonOptions"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTitle"
+        app:layout_constraintStart_toEndOf="@+id/buttonOptions"
         app:layout_constraintTop_toTopOf="@+id/buttonOptions" />
 
     <ImageButton

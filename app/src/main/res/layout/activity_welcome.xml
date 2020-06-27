@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/garden"
+    tools:context=".WelcomeActivity">
+
+    <ImageView
+        android:id="@+id/imageApple1"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageApple3"
+        app:srcCompat="@drawable/apple" />
+
+    <ImageView
+        android:id="@+id/imageApple2"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="50dp"
+        app:layout_constraintStart_toEndOf="@+id/imageApple1"
+        app:layout_constraintTop_toBottomOf="@+id/viewOverlay"
+        app:srcCompat="@drawable/apple" />
+
+    <ImageView
+        android:id="@+id/imageApple3"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="50dp"
+        app:layout_constraintStart_toEndOf="@+id/imageApple2"
+        app:layout_constraintTop_toBottomOf="@+id/viewOverlay"
+        app:srcCompat="@drawable/apple" />
+
+    <ImageView
+        android:id="@+id/imageApple4"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="50dp"
+        app:layout_constraintStart_toEndOf="@+id/imageApple3"
+        app:layout_constraintTop_toBottomOf="@+id/viewOverlay"
+        app:srcCompat="@drawable/apple" />
+
+    <ImageView
+        android:id="@+id/imageApple5"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="50dp"
+        app:layout_constraintStart_toEndOf="@+id/imageApple4"
+        app:layout_constraintTop_toBottomOf="@+id/viewOverlay"
+        app:srcCompat="@drawable/apple" />
+
+    <View
+        android:id="@+id/viewOverlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#8BC34A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shadowColor="#000000"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="0.01"
+        android:text="@string/game_title"
+        android:textColor="#FFFFFF"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.425" />
+
+    <TextView
+        android:id="@+id/textAuthors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/authors"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+
+    <Button
+        android:id="@+id/buttonSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_background"
+        android:text="@string/skip"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageMagnifyGlass"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textAuthors"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textTitle"
+        app:layout_constraintTop_toTopOf="@+id/textTitle"
+        app:srcCompat="@drawable/magnifying_glass" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
