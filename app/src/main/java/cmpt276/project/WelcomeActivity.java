@@ -18,7 +18,6 @@ import android.widget.TextView;
  */
 public class WelcomeActivity extends AppCompatActivity {
 
-    private int height;
     private Handler handler = new Handler();
 
     @Override
@@ -55,31 +54,36 @@ public class WelcomeActivity extends AppCompatActivity {
     private void moveAnimation() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels;
+        final int HEIGHT = displayMetrics.heightPixels;
+        final int NEGATIVE_HEIGHT = HEIGHT * -1;
 
-        final int NEGATIVE_HEIGHT = height * -1;
-
+        View overlay = findViewById(R.id.viewOverlay);
         TextView title = findViewById(R.id.textTitle);
         TextView authors = findViewById(R.id.textAuthors);
         ImageView magnifyGlass = findViewById(R.id.imageMagnifyGlass);
-        View overlay = findViewById(R.id.viewOverlay);
+
+        overlay.setY(NEGATIVE_HEIGHT);
         title.setY(NEGATIVE_HEIGHT);
         authors.setY(NEGATIVE_HEIGHT);
         magnifyGlass.setY(NEGATIVE_HEIGHT);
-        overlay.setY(NEGATIVE_HEIGHT);
 
-        ImageView apple1 = findViewById(R.id.imageApple1);
-        ImageView apple2 = findViewById(R.id.imageApple2);
-        ImageView apple3 = findViewById(R.id.imageApple3);
-        ImageView apple4 = findViewById(R.id.imageApple4);
-        ImageView apple5 = findViewById(R.id.imageApple5);
-        apple1.setY(NEGATIVE_HEIGHT);
-        apple2.setY(NEGATIVE_HEIGHT);
-        apple3.setY(NEGATIVE_HEIGHT);
-        apple4.setY(NEGATIVE_HEIGHT);
-        apple5.setY(NEGATIVE_HEIGHT);
+        ImageView apple = findViewById(R.id.imageApple);
+        ImageView lettuce = findViewById(R.id.imageLettuce);
+        ImageView carrot = findViewById(R.id.imageCarrot);
+        ImageView eggplant = findViewById(R.id.imageEggplant);
+        ImageView appleGreen = findViewById(R.id.imageAppleGreen);
+        ImageView broccoli = findViewById(R.id.imageBroccoli);
+        ImageView lemon = findViewById(R.id.imageLemon);
+        ImageView mango = findViewById(R.id.imageMango);
+        ImageView mushroom = findViewById(R.id.imageMushroom);
+        ImageView onion = findViewById(R.id.imageOnion);
+        ImageView orange = findViewById(R.id.imageOrange);
+        ImageView pumpkin = findViewById(R.id.imagePumpkin);
+        ImageView radish = findViewById(R.id.imageRadish);
+        ImageView watermelon = findViewById(R.id.imageWatermelon);
 
-        TranslateAnimation moveDown = new TranslateAnimation(0, 0, 0, height);
+        // Animation
+        TranslateAnimation moveDown = new TranslateAnimation(0, 0, 0, HEIGHT);
         moveDown.setDuration(5000);
         moveDown.setFillAfter(true);
 
@@ -87,10 +91,19 @@ public class WelcomeActivity extends AppCompatActivity {
         title.startAnimation(moveDown);
         magnifyGlass.startAnimation(moveDown);
         authors.setAnimation(moveDown);
-        apple1.startAnimation(moveDown);
-        apple2.startAnimation(moveDown);
-        apple3.startAnimation(moveDown);
-        apple4.startAnimation(moveDown);
-        apple5.startAnimation(moveDown);
+        apple.startAnimation(moveDown);
+        broccoli.startAnimation(moveDown);
+        carrot.startAnimation(moveDown);
+        eggplant.startAnimation(moveDown);
+        appleGreen.startAnimation(moveDown);
+        lemon.startAnimation(moveDown);
+        lettuce.startAnimation(moveDown);
+        mango.startAnimation(moveDown);
+        mushroom.startAnimation(moveDown);
+        onion.startAnimation(moveDown);
+        orange.startAnimation(moveDown);
+        pumpkin.startAnimation(moveDown);
+        radish.startAnimation(moveDown);
+        watermelon.startAnimation(moveDown);
     }
 }

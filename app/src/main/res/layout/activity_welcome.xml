@@ -8,59 +8,141 @@
     tools:context=".WelcomeActivity">
 
     <ImageView
-        android:id="@+id/imageApple1"
+        android:id="@+id/imageWatermelon"
         android:layout_width="86dp"
         android:layout_height="61dp"
-        android:layout_marginStart="50dp"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageApple3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/watermelon" />
+
+    <ImageView
+        android:id="@+id/imageLettuce"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imageWatermelon"
+        app:layout_constraintTop_toTopOf="@+id/imageWatermelon"
+        app:srcCompat="@drawable/lettuce" />
+
+    <ImageView
+        android:id="@+id/imageEggplant"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imageLettuce"
+        app:layout_constraintTop_toTopOf="@+id/imageLettuce"
+        app:srcCompat="@drawable/eggplant" />
+
+    <ImageView
+        android:id="@+id/imageCarrot"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imageEggplant"
+        app:layout_constraintTop_toTopOf="@+id/imageEggplant"
+        app:srcCompat="@drawable/carrot" />
+
+    <ImageView
+        android:id="@+id/imageMango"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imageCarrot"
+        app:layout_constraintTop_toTopOf="@+id/imageCarrot"
+        app:srcCompat="@drawable/mango" />
+
+    <ImageView
+        android:id="@+id/imageOnion"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imageMango"
+        app:layout_constraintTop_toTopOf="@+id/imageMango"
+        app:srcCompat="@drawable/onion" />
+
+    <ImageView
+        android:id="@+id/imagePumpkin"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imageOnion"
+        app:layout_constraintTop_toTopOf="@+id/imageOnion"
+        app:srcCompat="@drawable/pumpkin" />
+
+    <ImageView
+        android:id="@+id/imageBroccoli"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageAppleGreen"
+        app:layout_constraintTop_toTopOf="@+id/imageAppleGreen"
+        app:srcCompat="@drawable/broccoli" />
+
+    <ImageView
+        android:id="@+id/imageAppleGreen"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageLemon"
+        app:layout_constraintTop_toTopOf="@+id/imageLemon"
+        app:srcCompat="@drawable/green_apple" />
+
+    <ImageView
+        android:id="@+id/imageLemon"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageApple"
+        app:layout_constraintTop_toTopOf="@+id/imageApple"
+        app:srcCompat="@drawable/lemon" />
+
+    <ImageView
+        android:id="@+id/imageApple"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageOrange"
+        app:layout_constraintTop_toTopOf="@+id/imageOrange"
         app:srcCompat="@drawable/apple" />
 
     <ImageView
-        android:id="@+id/imageApple2"
+        android:id="@+id/imageOrange"
         android:layout_width="86dp"
         android:layout_height="61dp"
-        android:layout_marginStart="50dp"
-        app:layout_constraintStart_toEndOf="@+id/imageApple1"
-        app:layout_constraintTop_toBottomOf="@+id/viewOverlay"
-        app:srcCompat="@drawable/apple" />
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageMushroom"
+        app:layout_constraintTop_toTopOf="@+id/imageMushroom"
+        app:srcCompat="@drawable/orange" />
 
     <ImageView
-        android:id="@+id/imageApple3"
+        android:id="@+id/imageMushroom"
         android:layout_width="86dp"
         android:layout_height="61dp"
-        android:layout_marginStart="50dp"
-        app:layout_constraintStart_toEndOf="@+id/imageApple2"
-        app:layout_constraintTop_toBottomOf="@+id/viewOverlay"
-        app:srcCompat="@drawable/apple" />
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageRadish"
+        app:layout_constraintTop_toTopOf="@+id/imageRadish"
+        app:srcCompat="@drawable/mushroom" />
 
     <ImageView
-        android:id="@+id/imageApple4"
+        android:id="@+id/imageRadish"
         android:layout_width="86dp"
         android:layout_height="61dp"
-        android:layout_marginStart="50dp"
-        app:layout_constraintStart_toEndOf="@+id/imageApple3"
-        app:layout_constraintTop_toBottomOf="@+id/viewOverlay"
-        app:srcCompat="@drawable/apple" />
-
-    <ImageView
-        android:id="@+id/imageApple5"
-        android:layout_width="86dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="50dp"
-        app:layout_constraintStart_toEndOf="@+id/imageApple4"
-        app:layout_constraintTop_toBottomOf="@+id/viewOverlay"
-        app:srcCompat="@drawable/apple" />
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/radish" />
 
     <View
         android:id="@+id/viewOverlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#8BC34A"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textTitle"
