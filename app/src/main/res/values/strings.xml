@@ -8,4 +8,8 @@
     <string name="help">HELP</string>
     <string name="authors">By Kaitlynn, Lakshay, Sami, and Yangyang</string>
     <string name="skip">SKIP</string>
+    <string name="score">Score:</string>
+    <string name="high_score">High Score:\u0020</string>
+    <string name="draw_pile">Draw Pile</string>
+    <string name="discard_pile">Discard Pile</string>
 </resources>

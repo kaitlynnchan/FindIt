@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Implement games activity
+                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
+                startActivity(intent);
             }
         });
 
