@@ -45,7 +45,7 @@
         android:layout_marginStart="150dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="200dp"
-        android:background="@drawable/vegetable_fruit"
+        android:background="@drawable/favpng_vegetable_fruit_clip_art_xv3cfw8p"
         android:scaleType="fitStart"
         app:layout_constraintBottom_toTopOf="@+id/optionView1"
         app:layout_constraintEnd_toEndOf="parent"
