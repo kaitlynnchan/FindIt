@@ -41,12 +41,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Implement games activity
-//                int[] fruitIDs = {R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
-//                        R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
-//                        R.drawable.watermelon};
+                int[] fruitIDs = {R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
+                        R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
+                        R.drawable.watermelon};
                 CardDeck cardDeck = CardDeck.getInstance();
                 cardDeck.setNumCards(7);
                 cardDeck.setNumImages(3);
+                cardDeck.setImageArr(fruitIDs);
                 cardDeck.populateCards();
                 cardDeck.print();
             }
