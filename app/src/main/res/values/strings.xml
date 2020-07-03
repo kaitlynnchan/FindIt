@@ -9,4 +9,5 @@
     <string name="authors">By Kaitlynn, Lakshay, Sami, and Yangyang</string>
     <string name="skip">SKIP</string>
     <string name="high_score_recording">High Score Recording</string>
+    <string name="reset">Reset</string>
 </resources>
