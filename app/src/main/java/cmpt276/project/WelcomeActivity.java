@@ -108,4 +108,11 @@ public class WelcomeActivity extends AppCompatActivity {
         radish.startAnimation(moveDown);
         watermelon.startAnimation(moveDown);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        handler.removeCallbacksAndMessages(null);
+        finish();
+    }
 }
