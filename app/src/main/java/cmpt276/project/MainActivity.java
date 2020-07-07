@@ -21,6 +21,8 @@ import cmpt276.project.model.CardDeck;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private CardDeck cardDeck;
+
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, MainActivity.class);
         return intent;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        cardDeck = CardDeck.getInstance();
+
         setupButtons();
     }
 
@@ -41,15 +45,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Implement games activity
-                int[] fruitIDs = {R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
+                /*int[] fruitIDs = {R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
                         R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
-                        R.drawable.watermelon};
-                CardDeck cardDeck = CardDeck.getInstance();
+                        R.drawable.watermelon};*/
+
                 cardDeck.setNumCards(7);
                 cardDeck.setNumImages(3);
-                cardDeck.setImageArr(fruitIDs);
+                cardDeck.setCardIndex();
+                cardDeck.setImageArr(new int[] {0, 1, 2, 3, 4, 5, 6});
                 cardDeck.populateCards();
                 cardDeck.print();
+                cardDeck.shuffleCards();
+                cardDeck.shuffleImages();
+                cardDeck.print();
+
+                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
+                startActivity(intent);
             }
         });
 

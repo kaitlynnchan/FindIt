@@ -8,12 +8,14 @@ package cmpt276.project.model;
  */
 public class CardDeck {
 
-    private int numCards;
-    private int numImages;
-    private int[][] cards;
-    private int[] imageArr;
+    private int numCards;       // Number of cards in each game
+    private int numImages;      // Number of images on each card
+    private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
+    private int[][] cards;      // Card array: first index indicates the card, second index indicates which images are on the card
+    private int[] imageArr;     // Array of images, each index represents an specific fruit / vegetable
 
     private static CardDeck instance;
+
     private CardDeck() {}
     public static CardDeck getInstance(){
         if(instance == null){
@@ -32,6 +34,17 @@ public class CardDeck {
 
     public void setImageArr(int[] imageArr) {
         this.imageArr = imageArr;
+    }
+
+    // Set cardIndex to 1, since card[0] is put into the discard pile when the game starts
+    public void setCardIndex() {this.cardIndex = 1;}
+
+    public void incrementCardIndex() {
+        this.cardIndex++;
+    }
+
+    public int returnCardIndex() {
+        return cardIndex;
     }
 
     public void populateCards(){
@@ -79,5 +92,33 @@ public class CardDeck {
             cards[i] = cards[rand];
             cards[rand] = temp;
         }
+    }
+
+    // Reassemble the image order on each card
+    public void shuffleImages() {
+        for(int i = 0; i < numCards; i++){
+            for (int j = 0; j < numImages; j++) {
+                int rand = (int) ((Math.random() * (numImages - j)) + j);
+                int temp = cards[i][j];
+                cards[i][j] = cards[i][rand];
+                cards[i][rand] = temp;
+            }
+        }
+    }
+
+    // Checks if the picture that the user clicked on is present in the top card of the discard pile
+    // cardIndex - 1 refers to the card on top of the discard pile since the card in the discard pile is always one index behind the card in the draw pile
+    // cardIndex refers to the index of the card on the top of the draw pile
+    public int searchDiscardPile(int imageIndex) {
+
+        if (cards[cardIndex - 1][0] == cards[cardIndex][imageIndex]) return 0;
+        else if (cards[cardIndex - 1][1] == cards[cardIndex][imageIndex]) return 0;
+        else if (cards[cardIndex - 1][2] == cards[cardIndex][imageIndex]) return 0;
+        else return -1;
+    }
+
+    // Returns the selected card
+    public int returnCardImage(int card, int index) {
+        return cards[card][index];
     }
 }
