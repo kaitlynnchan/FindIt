@@ -3,6 +3,5 @@
         app:fontProviderAuthority="com.google.android.gms.fonts"
         app:fontProviderPackage="com.google.android.gms"
         app:fontProviderQuery="name=Atma&amp;weight=500"
-        app:fontProviderCerts="@">
+        app:fontProviderCerts="@array/com_google_android_gms_fonts_certs">
 </font-family>
-    @array/com_google_android_gms_fonts_certs

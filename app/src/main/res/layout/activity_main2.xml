@@ -5,53 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/whatsapp_image_2020_06_28_at_3_47_48_pm"
-    tools:context=".MainActivity2" >
+    tools:context=".MainActivity2">
+
 
     <ImageView
         android:id="@+id/optionView1"
         android:layout_width="306dp"
         android:layout_height="190dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="43dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/vegetablesButton"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/fruitButton"
-        app:layout_constraintTop_toTopOf="@+id/fruitButton"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/layer_1" />
+        android:layout_marginStart="229dp"
+        android:layout_marginTop="8dp"
 
-    <ImageButton
-        android:id="@+id/fruitButton"
-        android:layout_width="85dp"
-        android:layout_height="88dp"
-
-        android:layout_marginStart="250dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="160dp"
-        android:background="@drawable/layer_1__1_"
-        android:scaleType="fitStart"
+        android:layout_marginEnd="196dp"
+        android:layout_marginBottom="44dp"
+        android:contentDescription="TODO"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textOption"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textOption"
-        app:srcCompat="@drawable/basket_of_fruit" />
-
-    <ImageButton
-        android:id="@+id/vegetablesButton"
-        android:layout_width="95dp"
-        android:layout_height="84dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="200dp"
-        android:background="@drawable/favpng_vegetable_fruit_clip_art_xv3cfw8p"
-        android:scaleType="fitStart"
-        app:layout_constraintBottom_toTopOf="@+id/optionView1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fruitButton"
-        app:layout_constraintTop_toBottomOf="@+id/textOption"
-        app:srcCompat="@drawable/basket_of_fruit" />
+        app:srcCompat="@drawable/layer_1" />
 
     <TextView
         android:id="@+id/textOption"
@@ -73,9 +44,9 @@
 
     <Button
         android:id="@+id/btnBack"
-        android:layout_width="71dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="79dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="335dp"
         android:background="@drawable/circles"
@@ -100,6 +71,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textOption"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="141dp"
+        android:layout_height="117dp"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="204dp"
+        android:layout_marginBottom="16dp"
+        android:background="#05FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/optionView1"
+        app:layout_constraintEnd_toEndOf="@+id/optionView1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textOption"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/favpng_vegetable_fruit_clip_art_xv3cfw8p" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="141dp"
+        android:layout_height="116dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="162dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/optionView1"
+        app:layout_constraintTop_toBottomOf="@+id/textOption"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/broccoli" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
