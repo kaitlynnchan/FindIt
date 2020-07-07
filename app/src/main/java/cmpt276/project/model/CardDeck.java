@@ -1,11 +1,5 @@
 package cmpt276.project.model;
 
-/**
- * Deck of Cards
- * int[][]
- *      [] -> refers to card
- *      [][] -> refers to images on card
- */
 public class CardDeck {
 
     private int numCards;       // Number of cards in each game
@@ -41,6 +35,14 @@ public class CardDeck {
 
     public void incrementCardIndex() {
         this.cardIndex++;
+    }
+
+    public int getNumImages() {
+        return numImages;
+    }
+
+    public int getNumCards() {
+        return numCards;
     }
 
     public int returnCardIndex() {
@@ -109,12 +111,12 @@ public class CardDeck {
     // Checks if the picture that the user clicked on is present in the top card of the discard pile
     // cardIndex - 1 refers to the card on top of the discard pile since the card in the discard pile is always one index behind the card in the draw pile
     // cardIndex refers to the index of the card on the top of the draw pile
-    public int searchDiscardPile(int imageIndex) {
+    public boolean searchDiscardPile(int imageIndex) {
 
-        if (cards[cardIndex - 1][0] == cards[cardIndex][imageIndex]) return 0;
-        else if (cards[cardIndex - 1][1] == cards[cardIndex][imageIndex]) return 0;
-        else if (cards[cardIndex - 1][2] == cards[cardIndex][imageIndex]) return 0;
-        else return -1;
+        if (cards[cardIndex - 1][0] == cards[cardIndex][imageIndex]) return true;
+        else if (cards[cardIndex - 1][1] == cards[cardIndex][imageIndex]) return true;
+        else if (cards[cardIndex - 1][2] == cards[cardIndex][imageIndex]) return true;
+        else return false;
     }
 
     // Returns the selected card

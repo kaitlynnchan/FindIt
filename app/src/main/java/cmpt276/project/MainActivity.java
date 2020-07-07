@@ -45,14 +45,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Implement games activity
-                /*int[] fruitIDs = {R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
+                int[] fruitIDs = {R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
                         R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
-                        R.drawable.watermelon};*/
+                        R.drawable.watermelon};
 
                 cardDeck.setNumCards(7);
                 cardDeck.setNumImages(3);
                 cardDeck.setCardIndex();
-                cardDeck.setImageArr(new int[] {0, 1, 2, 3, 4, 5, 6});
+                cardDeck.setImageArr(fruitIDs);
                 cardDeck.populateCards();
                 cardDeck.print();
                 cardDeck.shuffleCards();

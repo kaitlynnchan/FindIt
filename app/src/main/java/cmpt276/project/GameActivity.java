@@ -50,8 +50,8 @@ public class GameActivity extends AppCompatActivity {
 
         cardDeck = CardDeck.getInstance();
 
-        drawPileImages = new Button[3];
-        discardPileImages = new Button[3];
+        drawPileImages = new Button[cardDeck.getNumImages()];
+        discardPileImages = new Button[cardDeck.getNumImages()];
         startGameButton = findViewById(R.id.startGameButton);
 
         setupDiscardCard();
@@ -77,7 +77,7 @@ public class GameActivity extends AppCompatActivity {
     private void setupDrawCard() {
         TableLayout tableDraw = findViewById(R.id.tableLayoutDraw);
 
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < cardDeck.getNumImages(); i++){
             final int cardIndex = i;
             Button button = new Button(this);
             button.setLayoutParams(new TableLayout.LayoutParams(
@@ -107,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
     private void setupDiscardCard() {
         TableLayout tableDiscard = findViewById(R.id.tableLayoutDiscard);
 
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < cardDeck.getNumImages(); i++){
             Button button = new Button(this);
             button.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
@@ -125,15 +125,13 @@ public class GameActivity extends AppCompatActivity {
 
     // Checks if the selected image matches an image on on the discard pile card
     private void imageClicked(int index) {
-        if (cardDeck.searchDiscardPile(index) == 0) {
-            if (cardDeck.returnCardIndex() == 6) {
+        if (cardDeck.searchDiscardPile(index)) {
+            if (cardDeck.returnCardIndex() == cardDeck.getNumCards() - 1) {
                 stopTimer();
                 FragmentManager manager = getSupportFragmentManager();
                 WinFragment dialog = new WinFragment();
                 dialog.show(manager, "");
-            }
-
-            else {
+            } else {
                 cardDeck.incrementCardIndex();
                 updateCardImages();
             }
@@ -182,7 +180,7 @@ public class GameActivity extends AppCompatActivity {
             int drawWidth = drawButton.getWidth();
             int drawHeight = drawButton.getHeight();
 
-            Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), setImage(drawImageID));
+            Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), drawImageID);
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, drawWidth, drawHeight, true);
             Resources resource = getResources();
             drawButton.setBackground(new BitmapDrawable(resource, scaledBitmap));
@@ -192,24 +190,13 @@ public class GameActivity extends AppCompatActivity {
             int discardWidth = discardButton.getWidth();
             int discardHeight = discardButton.getHeight();
 
-            originalBitmap = BitmapFactory.decodeResource(getResources(), setImage(discardImageID));
+            originalBitmap = BitmapFactory.decodeResource(getResources(), discardImageID);
             scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, discardWidth, discardHeight, true);
             resource = getResources();
             discardButton.setBackground(new BitmapDrawable(resource, scaledBitmap));
 
             discardButton.setVisibility(View.VISIBLE);
         }
-    }
-
-    // Sets buttons to the appropriate images based on their index
-    public int setImage(int index) {
-        if (index == 0) return R.drawable.apple;
-        else if (index == 1) return R.drawable.green_apple;
-        else if (index == 2) return R.drawable.lemon;
-        else if (index == 3) return R.drawable.mango;
-        else if (index == 4) return R.drawable.orange;
-        else if (index == 5) return R.drawable.pumpkin;
-        else return R.drawable.watermelon;
     }
 
     private void startTimer() {

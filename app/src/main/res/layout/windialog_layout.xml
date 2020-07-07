@@ -179,7 +179,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You Win!"
+        android:text="@string/you_win"
         android:textColor="#F2F6F2"
         android:textSize="100sp"
         app:layout_constraintBottom_toBottomOf="parent"
