@@ -1,7 +1,7 @@
 package cmpt276.project;
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-
 import cmpt276.project.model.CardDeck;
 
 /**
@@ -19,14 +18,14 @@ import cmpt276.project.model.CardDeck;
  * Includes play, options, help, and high score
  *  buttons to navigate through the game
  */
+
+
 public class MainActivity extends AppCompatActivity {
+
+
 
     private CardDeck cardDeck;
 
-    public static Intent makeLaunchIntent(Context context){
-        Intent intent = new Intent(context, MainActivity.class);
-        return intent;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
         btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Implement options activity
+                Intent intent = OptionActivity.makeIntent(MainActivity.this);
+                startActivity(intent);
             }
         });
 
@@ -84,9 +84,13 @@ public class MainActivity extends AppCompatActivity {
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Implement help activity
+               // Intent intent = HelpActivity.makeIntent(MainActivity.this);
+                //startActivity(intent);
             }
         });
     }
-
+    public static Intent makeLaunchIntent(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
 }
