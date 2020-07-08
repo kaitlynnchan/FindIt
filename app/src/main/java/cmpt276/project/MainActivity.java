@@ -2,8 +2,6 @@ package cmpt276.project;
 
 import android.content.Intent;
 import android.content.Context;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,24 +19,12 @@ import android.widget.ImageButton;
  */
 import cmpt276.project.model.CardDeck;
 
-/**
- * Main menu
- * Includes play, options, help, and high score
- *  buttons to navigate through the game
- */
 public class MainActivity extends AppCompatActivity {
 
-    public static Intent makeLaunchIntent(Context context){
-        Intent intent = new Intent(context, MainActivity.class);
-        return intent;
-    }
+
 
     private CardDeck cardDeck;
 
-    public static Intent makeLaunchIntent(Context context){
-        Intent intent = new Intent(context, MainActivity.class);
-        return intent;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
                 // Implement help activity
             }
         });
+    }
+    public static Intent makeLaunchIntent(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
     }
 
 }
