@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         cardDeck = CardDeck.getInstance();
 
@@ -85,9 +84,13 @@ public class MainActivity extends AppCompatActivity {
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Implement help activity
+                Intent intent = HelpActivity.makeIntent(MainActivity.this);
+                startActivity(intent);
             }
         });
     }
-
+    public static Intent makeLaunchIntent(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
 }
