@@ -30,9 +30,8 @@ import cmpt276.project.model.CardDeck;
 public class GameActivity extends AppCompatActivity {
 
     private Chronometer timer;
-
     private CardDeck cardDeck;
-
+    private int numImages;
     private Button[] drawPileImages;        // Contains the three images of a card from the draw pile
     private Button[] discardPileImages;     // Contains the three images of a card from the discard pile
     private Button startGameButton;
@@ -49,9 +48,10 @@ public class GameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         cardDeck = CardDeck.getInstance();
+        numImages = cardDeck.getNumImages();
 
-        drawPileImages = new Button[cardDeck.getNumImages()];
-        discardPileImages = new Button[cardDeck.getNumImages()];
+        drawPileImages = new Button[numImages];
+        discardPileImages = new Button[numImages];
         startGameButton = findViewById(R.id.startGameButton);
 
         setupDiscardCard();
@@ -77,7 +77,7 @@ public class GameActivity extends AppCompatActivity {
     private void setupDrawCard() {
         TableLayout tableDraw = findViewById(R.id.tableLayoutDraw);
 
-        for(int i = 0; i < cardDeck.getNumImages(); i++){
+        for(int i = 0; i < numImages; i++){
             final int cardIndex = i;
             Button button = new Button(this);
             button.setLayoutParams(new TableLayout.LayoutParams(
@@ -107,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
     private void setupDiscardCard() {
         TableLayout tableDiscard = findViewById(R.id.tableLayoutDiscard);
 
-        for(int i = 0; i < cardDeck.getNumImages(); i++){
+        for(int i = 0; i < numImages; i++){
             Button button = new Button(this);
             button.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
