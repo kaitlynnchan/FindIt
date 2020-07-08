@@ -6,6 +6,16 @@
     <string name="play">PLAY</string>
     <string name="options">OPTIONS</string>
     <string name="help">HELP</string>
+    <string name="imageView">TODO</string>
+    <string name="optionHeading">Choose Wisely!!!!</string>
+    <string name="back">BACK</string>
+    <string name="resetString">Reset High Score</string>
     <string name="authors">By Kaitlynn, Lakshay, Sami, and Yangyang</string>
     <string name="skip">SKIP</string>
+    <string name="score">Score:</string>
+    <string name="high_score">High Score:\u0020</string>
+    <string name="draw_pile">Draw Pile</string>
+    <string name="discard_pile">Discard Pile</string>
+    <string name="start_game">START GAME</string>
+    <string name="you_win">You Win!</string>
 </resources>
