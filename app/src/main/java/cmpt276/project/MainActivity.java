@@ -11,13 +11,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import cmpt276.project.model.CardDeck;
 
 /**
  * Main menu
  * Includes play, options, help, and high score
  *  buttons to navigate through the game
  */
-import cmpt276.project.model.CardDeck;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,10 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 // Implement help activity
             }
         });
-    }
-    public static Intent makeLaunchIntent(Context context){
-        Intent intent = new Intent(context, MainActivity.class);
-        return intent;
     }
 
 }
