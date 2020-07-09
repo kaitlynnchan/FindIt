@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".UI.MainActivity">
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -65,6 +65,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/buttonPlay"
         app:layout_constraintStart_toEndOf="@+id/buttonPlay"
         app:layout_constraintTop_toTopOf="@+id/buttonPlay"
-        app:srcCompat="@drawable/ic_trophy_black_30" />
+        app:srcCompat="@drawable/ic_trophy_black_30"
+        android:contentDescription="@string/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

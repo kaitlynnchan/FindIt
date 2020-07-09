@@ -1,4 +1,4 @@
-package cmpt276.project;
+package cmpt276.project.UI;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
+
+import cmpt276.project.R;
 
 public class WinFragment extends AppCompatDialogFragment {
 

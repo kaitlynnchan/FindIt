@@ -1,4 +1,4 @@
-package cmpt276.project;
+package cmpt276.project.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import cmpt276.project.R;
 
 public class OptionActivity extends AppCompatActivity {
 
