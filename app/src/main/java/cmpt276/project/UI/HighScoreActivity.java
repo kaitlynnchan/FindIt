@@ -1,14 +1,15 @@
-package cmpt276.project;
+package cmpt276.project.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-import cmpt276.project.model.ScoreRecording;
+import cmpt276.project.R;
 import cmpt276.project.model.ScoreRecordingManager;
 
 public class HighScoreActivity extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class HighScoreActivity extends AppCompatActivity {
                 manager.resetHighScore();
             }
         });
+
     }
 
     private void setUpHighScore() {
@@ -48,5 +50,9 @@ public class HighScoreActivity extends AppCompatActivity {
                     + manager.scoreArray[i].getDate());
             tv.setText(msg);
         }
+    }
+
+    public static Intent makeIntent(Context context){
+        return new Intent(context, HelpActivity.class);
     }
 }

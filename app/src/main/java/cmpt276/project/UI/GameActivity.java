@@ -18,6 +18,8 @@ import android.widget.TableLayout;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
+import cmpt276.project.model.ScoreRecording;
+import cmpt276.project.model.ScoreRecordingManager;
 
 /**
  * Game Screen
@@ -36,6 +38,8 @@ public class GameActivity extends AppCompatActivity {
     private Button[] drawPileImages;        // Contains the three images of a card from the draw pile
     private Button[] discardPileImages;     // Contains the three images of a card from the discard pile
     private Button startGameButton;
+
+    private ScoreRecordingManager manager;
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, GameActivity.class);
@@ -210,5 +214,13 @@ public class GameActivity extends AppCompatActivity {
         String time = timer.getText().toString();
         int seconds = Integer.parseInt(time.substring(time.length() - 2));
         int minutes = Integer.parseInt(time.substring(time.length() - 5, time.length() - 3));
+
+        int timeBySeconds = minutes * 60 + seconds;
+        /*
+        String name = "";
+        String date = "";
+         */
+        ScoreRecording s = new ScoreRecording(timeBySeconds, "", "");
+        manager.add(s);
     }
 }

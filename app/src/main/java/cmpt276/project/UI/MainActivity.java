@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
         btnHighScores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Implement high scores activity
+                Intent intent = HighScoreActivity.makeIntent(MainActivity.this);
+                startActivity(intent);
             }
         });
 
