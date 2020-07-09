@@ -32,9 +32,11 @@ public class GameActivity extends AppCompatActivity {
     private Chronometer timer;
     private CardDeck cardDeck;
     private int numImages;
-    private Button[] drawPileImages;        // Contains the three images of a card from the draw pile
-    private Button[] discardPileImages;     // Contains the three images of a card from the discard pile
+
+    private Button[] drawPileImages;        // Contains the images of a card from the draw pile
+    private Button[] discardPileImages;     // Contains the images of a card from the discard pile
     private Button startGameButton;
+    private Button backButton;
 
     public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, GameActivity.class);
@@ -53,10 +55,12 @@ public class GameActivity extends AppCompatActivity {
         drawPileImages = new Button[numImages];
         discardPileImages = new Button[numImages];
         startGameButton = findViewById(R.id.startGameButton);
+        backButton = findViewById(R.id.btnBack);
 
-        setupDiscardCard();
         setupDrawCard();
+        setupDiscardCard();
         startGame();
+        setupBackButton();
     }
 
     // Begin the game
@@ -210,5 +214,14 @@ public class GameActivity extends AppCompatActivity {
         String time = timer.getText().toString();
         int seconds = Integer.parseInt(time.substring(time.length() - 2));
         int minutes = Integer.parseInt(time.substring(time.length() - 5, time.length() - 3));
+    }
+
+    private void setupBackButton() {
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

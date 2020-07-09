@@ -2,6 +2,7 @@ package cmpt276.project.model;
 
 /**
  * Card Deck class
+ * Stores a deck of cards, each card contains a specified number of images
  */
 public class CardDeck {
 
@@ -57,7 +58,7 @@ public class CardDeck {
         int row = 0;
 
         // Help taken from: https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/
-        // Generate series from #01 to #N
+        // Generate series from imageArr[0] to imageArr[numImages - 1]
         for (int i = 0; i <= numImages - 1; i++)  {
             cards[row][0] = imageArr[0];
             for (int i2 = 1; i2 <= numImages - 1; i2++) {
@@ -66,7 +67,7 @@ public class CardDeck {
             row++;
         }
 
-        // Generate series from #N+1 to #N+(N-1)*(N-1)
+        // Generate series from imageArr[numImages] to imageArr[numImages * (numImages - 1)]
         for (int i = 1; i <= numImages-1; i++) {
             for (int i2 = 1; i2 <= numImages-1; i2++) {
                 cards[row][0] = imageArr[i];

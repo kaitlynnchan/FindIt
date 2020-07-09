@@ -7,8 +7,21 @@
     android:background="@drawable/garden_rose"
     tools:context=".OptionActivity">
 
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/ic_arrow_back_24"
+        android:foregroundGravity="center_vertical|right"
+        android:foregroundTint="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
-        android:id="@+id/optionView1"
+        android:id="@+id/imgMan"
         android:layout_width="306dp"
         android:layout_height="190dp"
         android:contentDescription="@string/imageView"
@@ -20,6 +33,34 @@
         app:layout_constraintVertical_bias="0.773"
         app:srcCompat="@drawable/options_man" />
 
+    <ImageButton
+        android:id="@+id/imgBtnFruit"
+        android:layout_width="104dp"
+        android:layout_height="90dp"
+        android:layout_marginEnd="220dp"
+        android:background="@drawable/button_background"
+        android:contentDescription="@string/imageView"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/imgMan"
+        app:layout_constraintEnd_toEndOf="@+id/imgMan"
+        app:layout_constraintTop_toBottomOf="@+id/textOption"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/fruits" />
+
+    <ImageButton
+        android:id="@+id/imgBtnVegetable"
+        android:layout_width="104dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="224dp"
+        android:background="@drawable/button_background"
+        android:contentDescription="@string/imageView"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/imgMan"
+        app:layout_constraintStart_toStartOf="@+id/imgMan"
+        app:layout_constraintTop_toBottomOf="@+id/textOption"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/vegs" />
+
     <TextView
         android:id="@+id/textOption"
         android:layout_width="wrap_content"
@@ -30,58 +71,8 @@
         android:textColor="#0B0B0B"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/optionView1"
+        app:layout_constraintBottom_toTopOf="@+id/imgMan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="79dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_background"
-        android:text="@string/back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnReset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/button_background"
-        android:text="@string/resetString"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/imgBtnFruit"
-        android:layout_width="104dp"
-        android:layout_height="90dp"
-        android:layout_marginEnd="220dp"
-        android:background="@drawable/button_background"
-        android:contentDescription="@string/imageView"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/optionView1"
-        app:layout_constraintEnd_toEndOf="@+id/optionView1"
-        app:layout_constraintTop_toBottomOf="@+id/textOption"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/watermelon" />
-
-    <ImageButton
-        android:id="@+id/imgBtnVegetable"
-        android:layout_width="104dp"
-        android:layout_height="90dp"
-        android:layout_marginStart="224dp"
-        android:background="@drawable/button_background"
-        android:contentDescription="@string/imageView"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/optionView1"
-        app:layout_constraintStart_toStartOf="@+id/optionView1"
-        app:layout_constraintTop_toBottomOf="@+id/textOption"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/broccoli" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
