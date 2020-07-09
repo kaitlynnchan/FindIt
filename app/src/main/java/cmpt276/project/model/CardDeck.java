@@ -3,6 +3,8 @@ package cmpt276.project.model;
 /**
  * Card Deck class
  * Stores a deck of cards, each card contains a specified number of images
+ * The deck is represented by a 2D array
+ * The card is represented in a row of the deck
  */
 public class CardDeck {
 

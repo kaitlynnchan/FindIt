@@ -53,6 +53,7 @@ public class OptionActivity extends AppCompatActivity {
 
         // Selecting/deselecting image package
         if(getImagePackId(this) == imageId){
+            button.setClickable(false);
             button.setForegroundGravity(Gravity.END|Gravity.BOTTOM);
             button.setForeground(getDrawable(R.drawable.drawable_magnifying_glass));
         } else{
