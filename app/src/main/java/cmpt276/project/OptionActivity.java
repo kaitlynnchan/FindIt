@@ -16,6 +16,13 @@ import android.widget.ImageButton;
  * Options Screen
  * Allows users to select an image package
  */
+/**
+ * <h1>OPTION SCREEN</h1>
+ * Allows user to choose board game size and number of bugs for game play.
+ * <p>
+ * @author  Kaitlynn, Lakshay, Sami, and Yangyang
+ * @since   2020-07-08
+ */
 public class OptionActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS_IMAGE_PACK = "shared preferences for image pack";
@@ -29,7 +36,8 @@ public class OptionActivity extends AppCompatActivity {
 
         setupImageButton(R.id.imgBtnFruit);
         setupImageButton(R.id.imgBtnVegetable);
-        setupBackButton(R.id.btnBack);
+        requiredButton(R.id.btnBack);
+        requiredButton(R.id.btnReset);
     }
 
     private void setupImageButton(final int imageId) {
@@ -38,7 +46,7 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveImagePackId(imageId);
-                setupImageButton(R.id.imgBtnFruit);;
+                setupImageButton(R.id.imgBtnFruit);
                 setupImageButton(R.id.imgBtnVegetable);
             }
         });
@@ -79,12 +87,18 @@ public class OptionActivity extends AppCompatActivity {
         return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, R.id.imgBtnFruit);
     }
 
-    private void setupBackButton(final int buttonId) {
+    private void requiredButton(final int buttonId) {
         Button btn = findViewById(buttonId);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                if(R.id.btnBack == buttonId){
+                    finish();
+                }
+                else{
+                    // TO BE CONNECTED TO THE SINGLETON
+                }
             }
         });
     }
@@ -93,3 +107,18 @@ public class OptionActivity extends AppCompatActivity {
         return new Intent(context , OptionActivity.class);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
