@@ -3,16 +3,18 @@ package cmpt276.project.model;
 public class ScoreRecording {
     private int timeBySeconds;
     private String name;
-    private String month;
-    private int day;
-    private int year;
+    private String date;
 
-    public ScoreRecording(int timeBySeconds, String name, String month, int day, int year){
+    public ScoreRecording(int timeBySeconds, String name, String date){
         this.timeBySeconds = timeBySeconds;
         this.name = name;
-        this.month = month;
-        this.day = day;
-        this.year = year;
+        this.date = date;
+    }
+
+    public ScoreRecording() {
+        timeBySeconds = 0;
+        name = "";
+        date = "";
     }
 
     public int getTimeBySeconds() {
@@ -23,15 +25,8 @@ public class ScoreRecording {
         return name;
     }
 
-    public String getMonth() {
-        return month;
-    }
 
-    public int getDay() {
-        return day;
-    }
-
-    public int getYear() {
-        return year;
+    public String getDate() {
+        return date;
     }
 }

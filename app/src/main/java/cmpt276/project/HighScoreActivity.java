@@ -39,33 +39,14 @@ public class HighScoreActivity extends AppCompatActivity {
         //Implement set up high score:
 
         TextView tv = findViewById(R.id.ScoreRecording);
-        /*
-        //I'm confusing for sorting array;
-        int index = 0;
-        for (int i = 0; i < manager.getSize(); i++){
-            index = i;
-            for(int j = i + 1; j < manager.getSize(); j++){
-                if(manager.ScoreArray.get(index).getTimeBySeconds() >manager.ScoreArray.get(j).getTimeBySecond()){
-                    value = j;
-                }
-                if(value =! i){
-                    ScoreRecording temp = manager.ScoreArray.get(i);
-                    manager.ScoreArray.get(i) = manager.ScoreArray.get(index);
-                    manager.ScoreArray.get(index) = temp;
-                 }
-            }
-        }
-        */
+
+        manager.selectionSort();
+
         for (int i = 0; i < 5; i++){
-            String msg = String.format(manager.ScoreArray.get(i).getTimeBySeconds() + " sec "
-                    + manager.ScoreArray.get(i).getName()  + " on "
-                    + manager.ScoreArray.get(i).getMonth() + " "
-                    + manager.ScoreArray.get(i).getDay() + ", "
-                    + manager.ScoreArray.get(i).getYear());
+            String msg = String.format(manager.scoreArray[i].getTimeBySeconds() + " sec "
+                    + manager.scoreArray[i].getName()  + " on "
+                    + manager.scoreArray[i].getDate());
             tv.setText(msg);
         }
     }
-
-
-
 }
