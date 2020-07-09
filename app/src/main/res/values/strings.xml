@@ -6,8 +6,30 @@
     <string name="play">PLAY</string>
     <string name="options">OPTIONS</string>
     <string name="help">HELP</string>
+    <string name="imageView">TODO</string>
+    <string name="optionHeading">Choose Wisely!!!!</string>
+    <string name="back">BACK</string>
+    <string name="resetString">Reset High Score</string>
     <string name="authors">By Kaitlynn, Lakshay, Sami, and Yangyang</string>
     <string name="skip">SKIP</string>
-    <string name="high_score_recording">High Score Recording</string>
-    <string name="reset">Reset</string>
+    <string name="score">Score:</string>
+    <string name="high_score">High Score:\u0020</string>
+    <string name="draw_pile">Draw Pile</string>
+    <string name="discard_pile">Discard Pile</string>
+    <string name="start_game">START GAME</string>
+    <string name="you_win">You Win!</string>
+    <string name="helpTitle">HELP</string>
+    <string name="helpContent">Link: https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home\n
+        T.\n1 .
+        T.\n2 .
+        T.\n3 .
+        T.\n4 .
+        Y.\n5 .
+        W.\n
+        Citations:\n
+        G. (2010, September 13). KOBAYASHI MARU. Retrieved June 23, 2020, from https://cheezburger.com/3962842624\n
+        C.Hancock (2010, May 13). Arte Zombie. Retrieved June 23, 2020, from https://www.pinterest.ca/pin/193936327680727480/\n
+        https://www.pngkit.com/bigpic/u2q8w7q8u2q8u2y3/\n
+        https://www.newyorker.com/magazine/2019/06/24/the-dead-dont-die-does-the-zombie-genre-to-death\n
+        G.Zahran(2014, June 14). Stop the Zombie Hordes of Product Managers. Retrieved June 23, 2020, from https://zurb.com/blog/</string>
 </resources>
