@@ -13,15 +13,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 /**
- * Options Screen
+ * OPTIONS SCREEN
  * Allows users to select an image package
- */
-/**
- * <h1>OPTION SCREEN</h1>
- * Allows user to choose board game size and number of bugs for game play.
- * <p>
- * @author  Kaitlynn, Lakshay, Sami, and Yangyang
- * @since   2020-07-08
  */
 public class OptionActivity extends AppCompatActivity {
 
@@ -36,8 +29,7 @@ public class OptionActivity extends AppCompatActivity {
 
         setupImageButton(R.id.imgBtnFruit);
         setupImageButton(R.id.imgBtnVegetable);
-        requiredButton(R.id.btnBack);
-        requiredButton(R.id.btnReset);
+        setupBackButton(R.id.btnBack);
     }
 
     private void setupImageButton(final int imageId) {
@@ -88,18 +80,12 @@ public class OptionActivity extends AppCompatActivity {
         return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, R.id.imgBtnFruit);
     }
 
-    private void requiredButton(final int buttonId) {
+    private void setupBackButton(final int buttonId) {
         Button btn = findViewById(buttonId);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(R.id.btnBack == buttonId){
-                    finish();
-                }
-                else{
-                    // TO BE CONNECTED TO THE SINGLETON
-                }
+                finish();
             }
         });
     }
@@ -108,18 +94,3 @@ public class OptionActivity extends AppCompatActivity {
         return new Intent(context , OptionActivity.class);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
