@@ -24,7 +24,7 @@
         Initially the two cards are empty and then each card is populated with three objects.\n2 .
         Both cards share one common object.\n3 .
         Once you click the common object, two new cards appear.\n4 .
-        This process is reaped untill the game gets over.\n5 .
+        This process is reaped until the game gets over.\n5 .
         Overall time required to complete the game is stored and the top 5 times can be viewed in the High score section.\n
 
         Citations:\n1 .
