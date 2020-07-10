@@ -20,7 +20,7 @@ import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
 
 /**
- * Game Screen
+ * GAME SCREEN
  * Displays:
  *      score,
  *      high score,
@@ -40,7 +40,6 @@ public class GameActivity extends AppCompatActivity {
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, GameActivity.class);
-
     }
 
     @Override

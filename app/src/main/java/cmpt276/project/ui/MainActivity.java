@@ -16,7 +16,7 @@ import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
 
 /**
- * Main menu
+ * MAIN MENU
  * Includes play, options, help, and high score
  *  buttons to navigate through the game
  */
@@ -87,6 +87,5 @@ public class MainActivity extends AppCompatActivity {
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, MainActivity.class);
-
     }
 }

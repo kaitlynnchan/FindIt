@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import cmpt276.project.R;
 
+/**
+ * WIN FRAGMENT
+ * Displays win screen and ok button
+ */
 public class WinFragment extends AppCompatDialogFragment {
 
     // WinDialog method, Used help from Brian's youtube videos: https://www.youtube.com/watch?v=y6StJRn-Y-A&feature=youtu.be
