@@ -5,7 +5,7 @@
     android:id="@+id/gameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameActivity"
+    tools:context=".ui.GameActivity"
     android:background="@drawable/garden">
     <!--android:background="#96e214"-->
 
@@ -20,8 +20,26 @@
         android:foregroundGravity="center_vertical|right"
         android:foregroundTint="#000000"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        android:background="@null"
+        app:srcCompat="@drawable/vine_card"
+        android:contentDescription="@string/imageView" />
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/drawCard"
+        android:layout_width="215dp"
+        android:layout_height="340dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.949"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.915"
+        android:background="@null"
+        app:srcCompat="@drawable/vine_card"
+        android:contentDescription="@string/imageView"/>
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineMiddle"
         android:layout_width="wrap_content"
