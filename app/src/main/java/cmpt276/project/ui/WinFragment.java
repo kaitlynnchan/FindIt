@@ -1,4 +1,4 @@
-package cmpt276.project.UI;
+package cmpt276.project.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

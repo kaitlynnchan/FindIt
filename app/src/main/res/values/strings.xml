@@ -21,10 +21,11 @@
     <string name="helpTitle">HELP</string>
     <string name="helpContent">Link: https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home\n
         The objective of the game is to match all the fruits/vegetables in the least amount of time.\n1 .
-        Initially the two cards are empty and then each card is populated with three objects.\n2 .
-        Both cards share one common object.\n3 .
-        Once you click the common object, two new cards appear.\n4 .
-        This process is reaped until the game gets over.\n5 .
+        Once you click START GAME the cards will flip.\n2 .
+        Initially the two cards are empty and then each card is populated with three objects.\n3 .
+        Both cards share one common object.\n4 .
+        Once you click the matching image from the draw pile with the discard pile ,the next card in the draw pile will flip.\n5 .
+        This process is repeated until there are no more cards in the draw pile.\n6 .
         Overall time required to complete the game is stored and the top 5 times can be viewed in the High score section.\n
 
         Citations:\n1 .

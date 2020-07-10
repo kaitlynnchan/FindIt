@@ -1,4 +1,4 @@
-package cmpt276.project.UI;
+package cmpt276.project.ui;
 
 import android.content.Intent;
 import android.content.Context;
