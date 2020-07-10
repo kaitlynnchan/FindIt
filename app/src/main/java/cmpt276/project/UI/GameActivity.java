@@ -41,7 +41,7 @@ public class GameActivity extends AppCompatActivity {
     private Button[] discardPileImages;     // Contains the three images of a card from the discard pile
     private Button startGameButton;
 
-    private ScoreRecordingManager manager;
+    private ScoreRecordingManager manager;     //to store scores
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, GameActivity.class);

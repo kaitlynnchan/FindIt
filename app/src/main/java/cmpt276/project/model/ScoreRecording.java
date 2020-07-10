@@ -1,5 +1,6 @@
 package cmpt276.project.model;
 
+//basic class for score
 public class ScoreRecording {
     private int timeBySeconds;
     private String name;

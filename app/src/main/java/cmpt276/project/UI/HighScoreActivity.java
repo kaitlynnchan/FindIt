@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import cmpt276.project.R;
 import cmpt276.project.model.ScoreRecordingManager;
 
+//to show top five high score
 public class HighScoreActivity extends AppCompatActivity {
 
     ScoreRecordingManager manager;
@@ -27,6 +28,7 @@ public class HighScoreActivity extends AppCompatActivity {
 
         setUpHighScore();
 
+        //to reset high score
         Button btReset = findViewById(R.id.ResetButton);
         btReset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,12 +40,10 @@ public class HighScoreActivity extends AppCompatActivity {
     }
 
     private void setUpHighScore() {
-        //Implement set up high score:
-
+        //Implement set up top five high score:
         TextView tv = findViewById(R.id.ScoreRecording);
 
         manager.selectionSort();
-
         for (int i = 0; i < 5; i++){
             String msg = String.format(manager.scoreArray[i].getTimeBySeconds() + " sec "
                     + manager.scoreArray[i].getName()  + " on "

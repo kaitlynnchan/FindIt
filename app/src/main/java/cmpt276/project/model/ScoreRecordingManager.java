@@ -1,5 +1,6 @@
 package cmpt276.project.model;
 
+//use array to store scores
 public class ScoreRecordingManager{
     public ScoreRecording[] scoreArray;
     private int size;
@@ -29,11 +30,13 @@ public class ScoreRecordingManager{
         }
     }
 
+    //to reset scores
     public void resetHighScore(){
         scoreArray = new ScoreRecording[0];
         size = 0;
     }
 
+    //to sort scores
     public void selectionSort(){
         int index = 0;
         for (int i = 0; i < size; i++){
