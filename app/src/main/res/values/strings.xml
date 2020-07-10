@@ -20,16 +20,32 @@
     <string name="you_win">You Win!</string>
     <string name="helpTitle">HELP</string>
     <string name="helpContent">Link: https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home\n
-        T.\n1 .
-        T.\n2 .
-        T.\n3 .
-        T.\n4 .
-        Y.\n5 .
-        W.\n
-        Citations:\n
-        G. (2010, September 13). KOBAYASHI MARU. Retrieved June 23, 2020, from https://cheezburger.com/3962842624\n
-        C.Hancock (2010, May 13). Arte Zombie. Retrieved June 23, 2020, from https://www.pinterest.ca/pin/193936327680727480/\n
-        https://www.pngkit.com/bigpic/u2q8w7q8u2q8u2y3/\n
-        https://www.newyorker.com/magazine/2019/06/24/the-dead-dont-die-does-the-zombie-genre-to-death\n
-        G.Zahran(2014, June 14). Stop the Zombie Hordes of Product Managers. Retrieved June 23, 2020, from https://zurb.com/blog/</string>
+        The objective of the game is to match all the fruits/vegetables in the least amount of time.\n1 .
+        Initially the two cards are empty and then each card is populated with three objects.\n2 .
+        Both cards share one common object.\n3 .
+        Once you click the common object, two new cards appear.\n4 .
+        This process is reaped untill the game gets over.\n5 .
+        Overall time required to complete the game is stored and the top 5 times can be viewed in the High score section.\n
+
+        Citations:\n1 .
+        https://www.shutterstock.com/image-vector/vector-garden-flat-cartoon-illustration-291373565\n2 .
+        http://www.clker.com/clipart-magnifying-glass-4.html\n3 .
+        https://www.shutterstock.com/image-vector/apple-icon-vector-eps-10-1700911795\n4 .
+        https://www.dreamstime.com/fresh-cut-slice-orange-fruit-isolated-white-background-tangerine-organic-cartoon-style-vector-illustration-any-design-image172278946\n5 .
+        https://www.vectorstock.com/royalty-free-vector/slice-of-ripe-watermelon-cartoon-vector-19048946\n6 .
+        https://www.vectorstock.com/royalty-free-vector/pumpkin-isolated-on-white-background-cartoon-vector-26775102\n7 .
+        https://www.dreamstime.com/cute-cartoon-lemon-isolated-white-background-vector-illustration-cute-cartoon-lemon-isolated-white-background-flat-style-image163185148\n8 .
+        http://clipart-library.com/cartoon-pictures-of-apples.html\n9 .
+        https://www.pinterest.ca/pin/675610381577433241/\n10 .
+        https://www.pinterest.ca/pin/597008494332117942/\n11 .
+        https://www.shutterstock.com/image-vector/carrot-vegetable-isolated-on-white-vector-543845137\n11 .
+        https://www.vectorstock.com/royalty-free-vector/onion-isolated-vegetable-cartoon-badge-vector-23081042\n12 .
+        https://www.shutterstock.com/image-vector/radish-vector-design-image-694738837\n13 .
+        https://www.clipartkey.com/view/ihRwJJ_transparent-brocoli-clipart-cartoon-broccoli-png/\n14 .
+        https://cliparts.zone/clipart/6536\n15 .
+        https://www.vectorstock.com/royalty-free-vector/mushroom-champignon-flat-cartoon-vector-23098426\n16 .
+        https://www.netclipart.com/isee/TbRii_common-ivy-plant-vine-clip-art-transparent-background/\n17 .
+        https://dev.to/gautemeekolsen/android-button-with-both-image-and-text-452a\n18 .
+        https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/\n
+</string>
 </resources>
