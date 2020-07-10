@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TableLayout;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
 import cmpt276.project.model.ScoreRecording;
@@ -216,11 +218,12 @@ public class GameActivity extends AppCompatActivity {
         int minutes = Integer.parseInt(time.substring(time.length() - 5, time.length() - 3));
 
         int timeBySeconds = minutes * 60 + seconds;
-        /*
-        String name = "";
-        String date = "";
-         */
-        ScoreRecording s = new ScoreRecording(timeBySeconds, "", "");
+
+        TextInputEditText t1 = findViewById(R.id.storeName);
+        TextInputEditText t2 = findViewById(R.id.storeDate);
+        String name = String.format(t1.getText().toString());
+        String date = String.format(t2.getText().toString());
+        ScoreRecording s = new ScoreRecording(timeBySeconds, name, date);
         manager.add(s);
     }
 }
