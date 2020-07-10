@@ -1,4 +1,4 @@
-package cmpt276.project;
+package cmpt276.project.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import cmpt276.project.R;
 
 /**
  * Splash screen

@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/garden_rose"
     tools:context=".OptionActivity">
+    android:background="@drawable/option_background"
+    tools:context=".UI.OptionActivity">
 
     <ImageView
         android:id="@+id/optionView1"

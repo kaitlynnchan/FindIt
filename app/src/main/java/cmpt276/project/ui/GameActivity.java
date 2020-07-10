@@ -1,4 +1,4 @@
-package cmpt276.project;
+package cmpt276.project.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.ImageView;
 import android.widget.TableLayout;
 
+import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
 
 /**
@@ -38,8 +38,8 @@ public class GameActivity extends AppCompatActivity {
     private Button startGameButton;
 
     public static Intent makeLaunchIntent(Context context){
-        Intent intent = new Intent(context, GameActivity.class);
-        return intent;
+        return new Intent(context, GameActivity.class);
+
     }
 
     @Override

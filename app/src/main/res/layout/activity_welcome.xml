@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/garden"
-    tools:context=".WelcomeActivity">
+    tools:context=".ui.WelcomeActivity">
 
     <ImageView
         android:id="@+id/imageWatermelon"
@@ -13,7 +13,8 @@
         android:layout_height="61dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/watermelon" />
+        app:srcCompat="@drawable/watermelon"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageLettuce"
@@ -22,7 +23,8 @@
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/imageWatermelon"
         app:layout_constraintTop_toTopOf="@+id/imageWatermelon"
-        app:srcCompat="@drawable/lettuce" />
+        app:srcCompat="@drawable/lettuce"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageEggplant"
@@ -31,7 +33,8 @@
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/imageLettuce"
         app:layout_constraintTop_toTopOf="@+id/imageLettuce"
-        app:srcCompat="@drawable/eggplant" />
+        app:srcCompat="@drawable/eggplant"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageCarrot"
@@ -40,7 +43,8 @@
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/imageEggplant"
         app:layout_constraintTop_toTopOf="@+id/imageEggplant"
-        app:srcCompat="@drawable/carrot" />
+        app:srcCompat="@drawable/carrot"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageMango"
@@ -49,7 +53,8 @@
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/imageCarrot"
         app:layout_constraintTop_toTopOf="@+id/imageCarrot"
-        app:srcCompat="@drawable/mango" />
+        app:srcCompat="@drawable/mango"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageOnion"
@@ -58,7 +63,8 @@
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/imageMango"
         app:layout_constraintTop_toTopOf="@+id/imageMango"
-        app:srcCompat="@drawable/onion" />
+        app:srcCompat="@drawable/onion"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imagePumpkin"
@@ -67,7 +73,8 @@
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/imageOnion"
         app:layout_constraintTop_toTopOf="@+id/imageOnion"
-        app:srcCompat="@drawable/pumpkin" />
+        app:srcCompat="@drawable/pumpkin"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageBroccoli"
@@ -76,7 +83,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/imageAppleGreen"
         app:layout_constraintTop_toTopOf="@+id/imageAppleGreen"
-        app:srcCompat="@drawable/broccoli" />
+        app:srcCompat="@drawable/broccoli"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageAppleGreen"
@@ -85,7 +93,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/imageLemon"
         app:layout_constraintTop_toTopOf="@+id/imageLemon"
-        app:srcCompat="@drawable/green_apple" />
+        app:srcCompat="@drawable/green_apple"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageLemon"
@@ -94,7 +103,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/imageApple"
         app:layout_constraintTop_toTopOf="@+id/imageApple"
-        app:srcCompat="@drawable/lemon" />
+        app:srcCompat="@drawable/lemon"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageApple"
@@ -103,7 +113,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/imageOrange"
         app:layout_constraintTop_toTopOf="@+id/imageOrange"
-        app:srcCompat="@drawable/apple" />
+        app:srcCompat="@drawable/apple"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageOrange"
@@ -112,7 +123,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/imageMushroom"
         app:layout_constraintTop_toTopOf="@+id/imageMushroom"
-        app:srcCompat="@drawable/orange" />
+        app:srcCompat="@drawable/orange"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageMushroom"
@@ -121,7 +133,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/imageRadish"
         app:layout_constraintTop_toTopOf="@+id/imageRadish"
-        app:srcCompat="@drawable/mushroom" />
+        app:srcCompat="@drawable/mushroom"
+        android:contentDescription="@string/imageView"/>
 
     <ImageView
         android:id="@+id/imageRadish"
@@ -130,7 +143,8 @@
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/radish" />
+        app:srcCompat="@drawable/radish"
+        android:contentDescription="@string/imageView"/>
 
     <View
         android:id="@+id/viewOverlay"
@@ -194,6 +208,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textTitle"
         app:layout_constraintTop_toTopOf="@+id/textTitle"
-        app:srcCompat="@drawable/magnifying_glass" />
+        app:srcCompat="@drawable/magnifying_glass"
+        android:contentDescription="@string/imageView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
