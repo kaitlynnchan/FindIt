@@ -16,7 +16,7 @@ import android.widget.TextView;
 import cmpt276.project.R;
 
 /**
- * Splash screen
+ * SPLASH SCREEN
  * Plays a short animation and displays game title and authors
  */
 public class WelcomeActivity extends AppCompatActivity {

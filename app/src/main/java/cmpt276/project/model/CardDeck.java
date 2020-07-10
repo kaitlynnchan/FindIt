@@ -1,5 +1,11 @@
 package cmpt276.project.model;
 
+/**
+ * CARD DECK class
+ * Stores a deck of cards, each card contains a specified number of images
+ * The deck is represented by a 2D array
+ * The card is represented in a row of the deck
+ */
 public class CardDeck {
 
     private int numCards;       // Number of cards in each game
@@ -54,7 +60,7 @@ public class CardDeck {
         int row = 0;
 
         // Help taken from: https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/
-        // Generate series from #01 to #N
+        // Generate series from imageArr[0] to imageArr[numImages - 1]
         for (int i = 0; i <= numImages - 1; i++)  {
             cards[row][0] = imageArr[0];
             for (int i2 = 1; i2 <= numImages - 1; i2++) {
@@ -63,7 +69,7 @@ public class CardDeck {
             row++;
         }
 
-        // Generate series from #N+1 to #N+(N-1)*(N-1)
+        // Generate series from imageArr[numImages] to imageArr[numImages * (numImages - 1)]
         for (int i = 1; i <= numImages-1; i++) {
             for (int i2 = 1; i2 <= numImages-1; i2++) {
                 cards[row][0] = imageArr[i];
@@ -112,11 +118,12 @@ public class CardDeck {
     // cardIndex - 1 refers to the card on top of the discard pile since the card in the discard pile is always one index behind the card in the draw pile
     // cardIndex refers to the index of the card on the top of the draw pile
     public boolean searchDiscardPile(int imageIndex) {
-
-        if (cards[cardIndex - 1][0] == cards[cardIndex][imageIndex]) return true;
-        else if (cards[cardIndex - 1][1] == cards[cardIndex][imageIndex]) return true;
-        else if (cards[cardIndex - 1][2] == cards[cardIndex][imageIndex]) return true;
-        else return false;
+        for(int i = 0; i < numImages; i++){
+            if(cards[cardIndex - 1][i] == cards[cardIndex][imageIndex]){
+                return true;
+            }
+        }
+        return false;
     }
 
     // Returns the selected card

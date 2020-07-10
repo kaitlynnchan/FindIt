@@ -16,7 +16,7 @@ import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
 
 /**
- * Main menu
+ * MAIN MENU
  * Includes play, options, help, and high score
  *  buttons to navigate through the game
  */
@@ -41,20 +41,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Implement games activity
-                int[] fruitIDs = {R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
-                        R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
-                        R.drawable.watermelon};
-
-                cardDeck.setNumCards(7);
-                cardDeck.setNumImages(3);
-                cardDeck.setCardIndex();
-                cardDeck.setImageArr(fruitIDs);
-                cardDeck.populateCards();
-                cardDeck.print();
-                cardDeck.shuffleCards();
-                cardDeck.shuffleImages();
-                cardDeck.print();
-
+                createCardDeck();
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
@@ -87,8 +74,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void createCardDeck() {
+        int[] imagePack = OptionActivity.getImagePackArray(MainActivity.this);
+        cardDeck.setNumCards(7);
+        cardDeck.setNumImages(3);
+        cardDeck.setCardIndex();
+        cardDeck.setImageArr(imagePack);
+        cardDeck.populateCards();
+        cardDeck.shuffleCards();
+        cardDeck.shuffleImages();
+    }
+
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, MainActivity.class);
-
     }
 }

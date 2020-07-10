@@ -7,7 +7,81 @@
     android:layout_height="match_parent"
     tools:context=".ui.GameActivity"
     android:background="@drawable/garden">
-    <!--android:background="#96e214"-->
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/ic_arrow_back_24"
+        android:foregroundGravity="center_vertical|right"
+        android:foregroundTint="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/vine_card"
+        android:contentDescription="@string/imageView" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineMiddle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.500684" />
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/score"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/chronometer"
+        app:layout_constraintEnd_toStartOf="@+id/chronometer"
+        app:layout_constraintTop_toTopOf="@+id/chronometer" />
+
+    <TextView
+        android:id="@+id/textHighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/high_score"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/chronometer"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/drawCard"
+        android:layout_width="215dp"
+        android:layout_height="340dp"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.949"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.915"
+        app:srcCompat="@drawable/vine_card"
+        android:contentDescription="@string/imageView" />
 
     <ImageView
         android:id="@+id/discardCard"
@@ -22,63 +96,6 @@
         android:background="@null"
         app:srcCompat="@drawable/vine_card"
         android:contentDescription="@string/imageView" />
-
-    <ImageView
-        android:id="@+id/drawCard"
-        android:layout_width="215dp"
-        android:layout_height="340dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.949"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.915"
-        android:background="@null"
-        app:srcCompat="@drawable/vine_card"
-        android:contentDescription="@string/imageView"/>
-
-    <Chronometer
-        android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.536"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/score"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/chronometer"
-        app:layout_constraintEnd_toStartOf="@+id/chronometer"
-        app:layout_constraintTop_toTopOf="@+id/chronometer" />
-
-    <TextView
-        android:id="@+id/textHighScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/high_score"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineMiddle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
 
     <TableLayout
         android:id="@+id/tableLayoutDraw"
@@ -115,6 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/draw_pile"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -129,6 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/discard_pile"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -142,9 +161,10 @@
         android:id="@+id/startGameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#45EAFF"
+        android:background="@drawable/button_background"
         android:text="@string/start_game"
-        android:textColor="#FBFBFB"
+        android:textColor="#000000"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
