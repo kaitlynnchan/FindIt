@@ -225,5 +225,6 @@ public class GameActivity extends AppCompatActivity {
         String date = t2.getText().toString();
         ScoreRecording s = new ScoreRecording(timeBySeconds, name, date);
         manager.addNewScore(s);
+        manager.setScoreArray(manager.getScoreArray());
     }
 }

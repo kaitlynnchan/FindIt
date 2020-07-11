@@ -7,16 +7,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import cmpt276.project.R;
+import cmpt276.project.model.ScoreRecording;
 import cmpt276.project.model.ScoreRecordingManager;
 
 //to show top five high score
 public class HighScoreActivity extends AppCompatActivity {
 
     private ScoreRecordingManager manager;
-    GameActivity g;
 
 
     @Override
@@ -24,9 +25,8 @@ public class HighScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_score);
 
-        manager = g.manager;
-
-        setUpHighScore();
+        populateScoreRecording();
+        setupHighScore();
 
         //to reset high score
         Button btReset = findViewById(R.id.ResetButton);
@@ -39,28 +39,23 @@ public class HighScoreActivity extends AppCompatActivity {
 
     }
 
-    private void setUpHighScore() {
-        //Implement set up top five high score:
-        TextView tv = findViewById(R.id.ScoreRecording);
-        if (manager.getScoreArray().length >= 5) {
-            manager.selectionSort();
-            for (int i = 0; i < 5; i++) {
-                String msg = manager.getScoreArray()[i].getTimeBySeconds() + " sec "
-                        + manager.getScoreArray()[i].getName() + " on "
-                        + manager.getScoreArray()[i].getDate();
-                tv.setText(msg);
-            }
-        }
-        else{
-            manager.selectionSort();
-            for (int i = 0; i < manager.getScoreArray().length; i++) {
-                String msg = manager.getScoreArray()[i].getTimeBySeconds() + " sec "
-                        + manager.getScoreArray()[i].getName() + " on "
-                        + manager.getScoreArray()[i].getDate();
-                tv.setText(msg);
-            }
-        }
+    void populateScoreRecording(){
+        //I have no idea how to add scoreRecording which is from game activity
     }
+
+    private void setupHighScore() {
+        //Implement set up top five high score:
+
+        TextView tv = (TextView) findViewById(R.id.scoreOutput);
+        for (int i = 0; i < manager.getScoreArray().size(); i++) {
+            String msg = manager.getScoreArray().get(i).getTimeBySeconds() + " sec "
+                    + manager.getScoreArray().get(i).getName() + " on "
+                    + manager.getScoreArray().get(i).getDate();
+            tv.setText(msg);
+        }
+
+    }
+
 
     public static Intent makeIntent(Context context){
         return new Intent(context, HighScoreActivity.class);
