@@ -81,29 +81,18 @@ public class CardDeck {
                 row++;
             }
         }
+
+        shuffleCardsAndImages();
     }
 
-    public void print(){
-        for (int r = 0; r < numCards; r++){
-            System.out.print("cards[" + r + "]");
-            for (int c = 0; c < numImages; c++){
-                System.out.print(" " + cards[r][c]);
-            }
-            System.out.println();
-        }
-    }
-
-    public void shuffleCards(){
+    public void shuffleCardsAndImages(){
         for(int i = 0; i < numCards; i++){
             int rand = (int) ((Math.random() * (numCards - i)) + i);
             int[] temp = cards[i];
             cards[i] = cards[rand];
             cards[rand] = temp;
         }
-    }
 
-    // Reassemble the image order on each card
-    public void shuffleImages() {
         for(int i = 0; i < numCards; i++){
             for (int j = 0; j < numImages; j++) {
                 int rand = (int) ((Math.random() * (numImages - j)) + j);
