@@ -81,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
         cardDeck.setCardIndex();
         cardDeck.setImageArr(imagePack);
         cardDeck.populateCards();
-        cardDeck.shuffleCards();
-        cardDeck.shuffleImages();
     }
 
     public static Intent makeLaunchIntent(Context context){
