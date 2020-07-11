@@ -12,12 +12,6 @@ public class ScoreRecording {
         this.date = date;
     }
 
-    public ScoreRecording() {
-        timeBySeconds = 0;
-        name = "";
-        date = "";
-    }
-
     public int getTimeBySeconds() {
         return timeBySeconds;
     }

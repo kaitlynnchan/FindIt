@@ -41,7 +41,7 @@ public class GameActivity extends AppCompatActivity {
     private Button[] discardPileImages;     // Contains the three images of a card from the discard pile
     private Button startGameButton;
 
-    private ScoreRecordingManager manager;     //to store scores
+    public ScoreRecordingManager manager;    //to store scores
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, GameActivity.class);
@@ -221,9 +221,9 @@ public class GameActivity extends AppCompatActivity {
 
         TextInputEditText t1 = findViewById(R.id.storeName);
         TextInputEditText t2 = findViewById(R.id.storeDate);
-        String name = String.format(t1.getText().toString());
-        String date = String.format(t2.getText().toString());
+        String name = t1.getText().toString();
+        String date = t2.getText().toString();
         ScoreRecording s = new ScoreRecording(timeBySeconds, name, date);
-        manager.add(s);
+        manager.addNewScore(s);
     }
 }
