@@ -50,4 +50,15 @@
         \n17 . https://dev.to/gautemeekolsen/android-button-with-both-image-and-text-452a
         \n18 . https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/
 </string>
+    <string name="enter_your_name">Enter your name:</string>
+    <string name="your_name">your name</string>
+    <string name="month_day_year">Month day, year</string>
+    <string name="enter_played_date">Enter played date:</string>
+    <string name="reset">Reset</string>
+    <string name="high_score_recording" />
+    <string name="high_score_recording_text">Top High Scores</string>
+    <string name="nickname">Nickname</string>
+    <string name="date">Month DD, YYYY</string>
+    <string name="no_answer">N/A</string>
+
 </resources>

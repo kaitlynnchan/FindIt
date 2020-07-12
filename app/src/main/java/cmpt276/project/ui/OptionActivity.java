@@ -47,7 +47,7 @@ public class OptionActivity extends AppCompatActivity {
 
         // Selecting/deselecting image package
         if(getImagePackId(this) == imageId){
-            button.setClickable(false);
+//            button.setClickable(false);
             button.setForegroundGravity(Gravity.END|Gravity.BOTTOM);
             button.setForeground(getDrawable(R.drawable.drawable_magnifying_glass));
         } else{
@@ -64,17 +64,15 @@ public class OptionActivity extends AppCompatActivity {
 
     public static int[] getImagePackArray(Context context){
         int imageButtonId = OptionActivity.getImagePackId(context);
-        int[] imagePackArr;
         if(imageButtonId == R.id.imgBtnVegetable){
-            imagePackArr = new int[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
+            return new int[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
                     R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion,
                     R.drawable.radish};
         } else{
-            imagePackArr = new int[]{R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
+            return new int[]{R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
                     R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
                     R.drawable.watermelon};
         }
-        return imagePackArr;
     }
 
     private static int getImagePackId(Context context){

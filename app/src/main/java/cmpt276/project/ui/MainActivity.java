@@ -12,8 +12,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
+
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
+import cmpt276.project.model.HighScores;
+import cmpt276.project.model.Score;
 
 /**
  * MAIN MENU
@@ -23,6 +27,7 @@ import cmpt276.project.model.CardDeck;
 public class MainActivity extends AppCompatActivity {
 
     private CardDeck cardDeck;
+    private HighScores highScores = HighScores.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         cardDeck = CardDeck.getInstance();
 
         setupButtons();
+        setupHighScores();
     }
 
     private void setupButtons() {
@@ -51,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         btnHighScores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Implement high scores activity
+                Intent intent = HighScoreActivity.makeIntent(MainActivity.this);
+                startActivity(intent);
             }
         });
 
@@ -81,6 +88,16 @@ public class MainActivity extends AppCompatActivity {
         cardDeck.setCardIndex();
         cardDeck.setImageArr(imagePack);
         cardDeck.populateCards();
+    }
+
+    private void setupHighScores() {
+        highScores.setNumMaxScores(5);
+        ArrayList<Score> temp = HighScoreActivity.getSavedHighScore(this);
+        if(temp == null){
+            HighScoreActivity.setDefaultScores(highScores);
+        } else{
+            highScores.setScoreArray(temp);
+        }
     }
 
     public static Intent makeLaunchIntent(Context context){

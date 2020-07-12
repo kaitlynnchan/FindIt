@@ -56,19 +56,6 @@
         app:layout_constraintEnd_toStartOf="@+id/chronometer"
         app:layout_constraintTop_toTopOf="@+id/chronometer" />
 
-    <TextView
-        android:id="@+id/textHighScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/high_score"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/chronometer"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/drawCard"
         android:layout_width="215dp"
