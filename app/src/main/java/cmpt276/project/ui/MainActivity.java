@@ -27,7 +27,7 @@ import cmpt276.project.model.Score;
 public class MainActivity extends AppCompatActivity {
 
     private CardDeck cardDeck;
-    private HighScores highScores = HighScores.getInstance();
+    private HighScores highScores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         cardDeck = CardDeck.getInstance();
+        highScores = HighScores.getInstance();
 
         setupButtons();
         setupHighScores();
