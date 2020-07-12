@@ -10,7 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatDialogFragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import cmpt276.project.R;
 import cmpt276.project.model.ScoreRecording;
@@ -18,9 +24,9 @@ import cmpt276.project.model.ScoreRecordingManager;
 
 public class WinFragment extends AppCompatDialogFragment {
 
+    private View view;
     private long time;
-    private ScoreRecordingManager manager;    //to store scores
-    private View v;
+    private ScoreRecordingManager manager;
 
     public WinFragment(long time){
         this.time = time;
@@ -30,7 +36,7 @@ public class WinFragment extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
 
-        v = LayoutInflater.from(getActivity()).inflate(R.layout.windialog_layout, null);
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.windialog_layout, null);
         manager = ScoreRecordingManager.getInstance();
         if(time < manager.getLastScore().getTimeBySeconds()){
             setupNewHighScore();
@@ -38,52 +44,46 @@ public class WinFragment extends AppCompatDialogFragment {
 
         setupButton();
 
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        getActivity().finish();
-                        break;
-                }
-            }
-        };
-
         // Took help from Brians youtube videos: https://www.youtube.com/watch?v=y6StJRn-Y-A&feature=youtu.be
         return new AlertDialog.Builder(getActivity())
                 .setTitle("")
-                .setView(v)
+                .setView(view)
                 .create();
     }
 
     private void setupButton() {
-        Button btnOk = v.findViewById(R.id.buttonOK);
+        Button btnOk = view.findViewById(R.id.buttonOK);
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                EditText userNameEntry = v.findViewById(R.id.editTextNickname);
-//                String userName = userNameEntry.getText().toString();
-//
-//                EditText userDateEntry = v.findViewById(R.id.editTextDate);
-//                String userDate = userDateEntry.getText().toString();
-//
-//                manager.addNewScore(new ScoreRecording((int)time, userName, userDate));
-//                manager.print();
-//                HighScoreActivity.saveHighScores(getActivity(), manager);
+                EditText userNameEntry = view.findViewById(R.id.editTextNickname);
+                if(userNameEntry.getVisibility() == View.VISIBLE){
+                    String userName = userNameEntry.getText().toString();
+
+                    if(userName.isEmpty()){
+                        userName = "N/A";
+                    }
+
+                    Calendar c = Calendar.getInstance();
+                    String month = c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+                    String day = c.get(Calendar.DAY_OF_MONTH) + "";
+                    String year = c.get(Calendar.YEAR) + "";
+                    String userDate = month + " " + day + ", " + year;
+
+                    manager.addNewScore(new ScoreRecording((int)time, userName, userDate));
+                    manager.print();
+                    HighScoreActivity.saveHighScores(getActivity(), manager);
+                }
                 getActivity().finish();
             }
         });
     }
 
     private void setupNewHighScore() {
-        TextView txtName = v.findViewById(R.id.textNickname);
+        TextView txtName = view.findViewById(R.id.textNickname);
         txtName.setVisibility(View.VISIBLE);
-        TextView txtDate = v.findViewById(R.id.textDate);
-        txtDate.setVisibility(View.VISIBLE);
-
-        EditText userName = v.findViewById(R.id.editTextNickname);
+        EditText userName = view.findViewById(R.id.editTextNickname);
         userName.setVisibility(View.VISIBLE);
-        EditText userDate = v.findViewById(R.id.editTextDate);
-        userDate.setVisibility(View.VISIBLE);
+
     }
 }

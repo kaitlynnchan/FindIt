@@ -12,8 +12,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import java.util.ArrayList;
-
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
 import cmpt276.project.model.ScoreRecordingManager;

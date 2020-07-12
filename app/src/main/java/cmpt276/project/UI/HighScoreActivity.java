@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +19,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import cmpt276.project.R;
 import cmpt276.project.model.ScoreRecording;
@@ -32,6 +30,7 @@ public class HighScoreActivity extends AppCompatActivity {
     public static final String EDITOR_HIGH_SCORE_ARRAY = "editor high score array";
     public static final String SHARED_PREFS_HIGH_SCORE = "shared prefs high score";
     private ScoreRecordingManager manager;
+    private TextView[] scoresText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,33 +39,31 @@ public class HighScoreActivity extends AppCompatActivity {
 
         manager = ScoreRecordingManager.getInstance();
         manager.print();
+        scoresText = new TextView[manager.getNumScores()];
         setupHighScore();
-        saveHighScores(this, manager);
 
-//
-//        //to reset high score
-//        Button btReset = findViewById(R.id.ResetButton);
-//        btReset.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                manager.resetHighScore();
-//            }
-//        });
-
+        //to reset high score
+        Button btReset = findViewById(R.id.ResetButton);
+        btReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manager.resetHighScore();
+                populateScoreRecording(manager);
+                setTexts();
+            }
+        });
     }
 
     public static void populateScoreRecording(ScoreRecordingManager manager){
-        manager.addNewScore(new ScoreRecording(0, "kk", "June 16"));
-        manager.addNewScore(new ScoreRecording(45, "kk", "June 16"));
-        manager.addNewScore(new ScoreRecording(20, "kk", "June 16"));
-        manager.addNewScore(new ScoreRecording(60, "kk", "June 16"));
-        manager.addNewScore(new ScoreRecording(80, "kk", "June 16"));
-        manager.addNewScore(new ScoreRecording(100, "kk", "June 16"));
+        manager.addNewScore(new ScoreRecording(30, "??", "Month DD, YYYY"));
+        manager.addNewScore(new ScoreRecording(45, "??", "Month DD, YYYY"));
+        manager.addNewScore(new ScoreRecording(20, "??", "Month DD, YYYY"));
+        manager.addNewScore(new ScoreRecording(50, "??", "Month DD, YYYY"));
+        manager.addNewScore(new ScoreRecording(35, "??", "Month DD, YYYY"));
     }
 
     private void setupHighScore() {
         LinearLayout layout = findViewById(R.id.linearScoreBoard);
-
         for(int i = 0; i < manager.getNumScores(); i++){
             TextView text = new TextView(this);
             text.setLayoutParams(new LinearLayout.LayoutParams(
@@ -74,15 +71,23 @@ public class HighScoreActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             ));
-            String msg = manager.getScoreArray().get(i).getTimeBySeconds() + " sec "
-                    + manager.getScoreArray().get(i).getName() + " on "
-                    + manager.getScoreArray().get(i).getDate();
-            text.setText(msg);
+
             text.setTextColor(Color.parseColor("#000000"));
             text.setTextSize(18);
-            text.setGravity(Gravity.CENTER);
 
             layout.addView(text);
+            scoresText[i] = text;
+        }
+        setTexts();
+    }
+
+    private void setTexts() {
+        for(int i = 0; i < scoresText.length; i++){
+            String msg = (i + 1) + ". "
+                    + manager.getScoreArray().get(i).getTimeBySeconds() + "sec "
+                    + manager.getScoreArray().get(i).getName() + " on "
+                    + manager.getScoreArray().get(i).getDate();
+            scoresText[i].setText(msg);
         }
     }
 
@@ -105,5 +110,11 @@ public class HighScoreActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context){
         return new Intent(context, HighScoreActivity.class);
+    }
+
+    @Override
+    public void onBackPressed() {
+        saveHighScores(this, manager);
+        super.onBackPressed();
     }
 }

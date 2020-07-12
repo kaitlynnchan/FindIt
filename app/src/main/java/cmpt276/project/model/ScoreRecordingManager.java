@@ -20,11 +20,6 @@ public class ScoreRecordingManager{
         this.numScores = numScores;
     }
 
-//    public ScoreRecordingManager(int numScores) {
-//        this.numScores = numScores;
-//        this.scoreArray = new ArrayList<>();
-//    }
-
     public void addNewScore(ScoreRecording s) {
         if(scoreArray.size() < numScores){
             sort(s, scoreArray.size());
@@ -58,11 +53,11 @@ public class ScoreRecordingManager{
         return scoreArray.size();
     }
 
-    //to reset scores
     public void resetHighScore(){
-        scoreArray = new ArrayList<>();
+        for(int i = scoreArray.size()-1; i >= 0; i--){
+            scoreArray.remove(i);
+        }
     }
-
 
     public void setScoreArray(ArrayList<ScoreRecording> sArray){
         this.scoreArray = sArray;
@@ -70,10 +65,6 @@ public class ScoreRecordingManager{
 
     public ArrayList<ScoreRecording> getScoreArray(){
         return scoreArray;
-    }
-
-    public ScoreRecording getScoreRecording(int index){
-        return scoreArray.get(index);
     }
 
     public ScoreRecording getLastScore(){

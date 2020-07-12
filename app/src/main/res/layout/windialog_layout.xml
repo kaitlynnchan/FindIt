@@ -196,38 +196,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/editTextNickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/nickname"
-            android:inputType="textPersonName"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textNickname" />
-
         <TextView
-            android:id="@+id/textDate"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/enter_played_date"
-            android:textSize="18sp"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@+id/editTextNickname"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNickname" />
-
-        <EditText
-            android:id="@+id/editTextDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/date"
-            android:inputType="text|date"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@+id/textDate"
-            app:layout_constraintTop_toBottomOf="@+id/textDate" />
+            android:text="@string/you_win"
+            android:textColor="#F2F6F2"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textNickname"
@@ -239,16 +217,17 @@
             app:layout_constraintStart_toStartOf="@+id/editTextNickname"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <TextView
-            android:id="@+id/textView"
+        <EditText
+            android:id="@+id/editTextNickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/you_win"
-            android:textColor="#F2F6F2"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:ems="10"
+            android:hint="@string/nickname"
+            android:inputType="textPersonName"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textNickname" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
