@@ -1,7 +1,7 @@
 package cmpt276.project.model;
 
 /**
- * CARD DECK class
+ * CARD DECK CLASS
  * Stores a deck of cards, each card contains a specified number of images
  * The deck is represented by a 2D array
  * The card is represented in a row of the deck

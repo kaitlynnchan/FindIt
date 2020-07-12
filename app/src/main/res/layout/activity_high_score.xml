@@ -8,22 +8,36 @@
     tools:context="cmpt276.project.ui.HighScoreActivity">
 
     <Button
-        android:id="@+id/buttonReset"
-        android:layout_width="116dp"
-        android:layout_height="68dp"
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/ic_arrow_back_24"
+        android:foregroundGravity="center_vertical|right"
+        android:foregroundTint="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:background="@drawable/button_background"
         android:text="@string/reset"
-        android:textColor="#2196F3"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textHighScoreTitle"
-        android:layout_width="319dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="16dp"
         android:text="@string/high_score_recording_text"
         android:textColor="#000000"
@@ -33,10 +47,13 @@
 
     <LinearLayout
         android:id="@+id/linearScoreBoard"
-        android:layout_width="331dp"
-        android:layout_height="228dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="24dp"
+        android:background="#9AFFFFFF"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -14,7 +14,7 @@ import android.widget.ImageButton;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
-import cmpt276.project.model.ScoreBoard;
+import cmpt276.project.model.HighScores;
 
 /**
  * MAIN MENU
@@ -24,7 +24,7 @@ import cmpt276.project.model.ScoreBoard;
 public class MainActivity extends AppCompatActivity {
 
     private CardDeck cardDeck;
-    private ScoreBoard scoreBoard = ScoreBoard.getInstance();
+    private HighScores highScores = HighScores.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,14 +86,13 @@ public class MainActivity extends AppCompatActivity {
         cardDeck.setImageArr(imagePack);
         cardDeck.populateCards();
     }
-
-
+    
     private void setupHighScores() {
-        scoreBoard.setNumScores(5);
+        highScores.setNumScores(5);
         if(HighScoreActivity.getSavedHighScore(this) == null){
-            HighScoreActivity.setDefaultScores(scoreBoard);
+            HighScoreActivity.setDefaultScores(highScores);
         } else{
-            scoreBoard.setScoreArray(HighScoreActivity.getSavedHighScore(this));
+            highScores.setScoreArray(HighScoreActivity.getSavedHighScore(this));
         }
     }
 

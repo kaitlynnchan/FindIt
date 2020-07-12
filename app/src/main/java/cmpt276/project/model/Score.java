@@ -1,7 +1,7 @@
 package cmpt276.project.model;
 
 /**
- * SCORE
+ * SCORE CLASS
  * Object that contains time (s), name, and date
  */
 public class Score {

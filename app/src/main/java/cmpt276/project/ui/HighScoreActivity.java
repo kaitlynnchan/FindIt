@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,10 +22,10 @@ import java.util.ArrayList;
 
 import cmpt276.project.R;
 import cmpt276.project.model.Score;
-import cmpt276.project.model.ScoreBoard;
+import cmpt276.project.model.HighScores;
 
 /**
- * HIGH SCORE ACTIVITY
+ * HIGH SCORE SCREEN
  * Displays top number of high scores
  * Allows user to reset high scores
  */
@@ -33,7 +34,7 @@ public class HighScoreActivity extends AppCompatActivity {
     public static final String EDITOR_HIGH_SCORE_ARRAY = "editor high score array";
     public static final String SHARED_PREFS_HIGH_SCORE = "shared prefs for high score";
 
-    private ScoreBoard scoreBoard;
+    private HighScores highScores;
     private TextView[] scoresTxtView;
     private int numScores;
 
@@ -41,22 +42,15 @@ public class HighScoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_score);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        scoreBoard = ScoreBoard.getInstance();
-        numScores = scoreBoard.getNumScores();
+        highScores = HighScores.getInstance();
+        numScores = highScores.getNumScores();
         scoresTxtView = new TextView[numScores];
         setupHighScore();
 
-        //to reset high score
-        Button btReset = findViewById(R.id.buttonReset);
-        btReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreBoard.resetHighScore();
-                setDefaultScores(scoreBoard);
-                setTexts();
-            }
-        });
+        setupResetButton();
+        setupBackButton();
     }
 
     private void setupHighScore() {
@@ -70,6 +64,7 @@ public class HighScoreActivity extends AppCompatActivity {
             ));
             text.setTextColor(Color.parseColor("#000000"));
             text.setTextSize(18);
+            text.setPadding(50, 20, 0, 0);
 
             layout.addView(text);
             scoresTxtView[i] = text;
@@ -80,26 +75,38 @@ public class HighScoreActivity extends AppCompatActivity {
     private void setTexts() {
         for(int i = 0; i < scoresTxtView.length; i++){
             String msg = (i + 1) + ". "
-                    + scoreBoard.getScoreArray().get(i).getTimeBySeconds() + "sec "
-                    + scoreBoard.getScoreArray().get(i).getName() + " on "
-                    + scoreBoard.getScoreArray().get(i).getDate();
+                    + highScores.getScoreArray().get(i).getTimeBySeconds() + "sec "
+                    + highScores.getScoreArray().get(i).getName() + " on "
+                    + highScores.getScoreArray().get(i).getDate();
             scoresTxtView[i].setText(msg);
         }
     }
 
-    public static void setDefaultScores(ScoreBoard scoreBoard){
-        scoreBoard.addScore(new Score(30, "??", "Month DD, YYYY"));
-        scoreBoard.addScore(new Score(45, "??", "Month DD, YYYY"));
-        scoreBoard.addScore(new Score(20, "??", "Month DD, YYYY"));
-        scoreBoard.addScore(new Score(50, "??", "Month DD, YYYY"));
-        scoreBoard.addScore(new Score(35, "??", "Month DD, YYYY"));
+    private void setupResetButton() {
+        Button btReset = findViewById(R.id.btnReset);
+        btReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                highScores.resetHighScore();
+                setDefaultScores(highScores);
+                setTexts();
+            }
+        });
     }
 
-    public static void saveHighScores(Context context, ScoreBoard scoreBoard){
+    public static void setDefaultScores(HighScores highScores){
+        highScores.addScore(new Score(30, "N/A", "Month DD, YYYY"));
+        highScores.addScore(new Score(45, "N/A", "Month DD, YYYY"));
+        highScores.addScore(new Score(20, "N/A", "Month DD, YYYY"));
+        highScores.addScore(new Score(50, "N/A", "Month DD, YYYY"));
+        highScores.addScore(new Score(35, "N/A", "Month DD, YYYY"));
+    }
+
+    public static void saveHighScores(Context context, HighScores highScores){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_HIGH_SCORE, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(scoreBoard.getScoreArray());
+        String json = gson.toJson(highScores.getScoreArray());
         editor.putString(EDITOR_HIGH_SCORE_ARRAY, json);
         editor.apply();
     }
@@ -116,9 +123,20 @@ public class HighScoreActivity extends AppCompatActivity {
         return new Intent(context, HighScoreActivity.class);
     }
 
+    private void setupBackButton() {
+        Button btn = findViewById(R.id.btnBack);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveHighScores(HighScoreActivity.this, highScores);
+                finish();
+            }
+        });
+    }
+
     @Override
     public void onBackPressed() {
-        saveHighScores(this, scoreBoard);
+        saveHighScores(this, highScores);
         super.onBackPressed();
     }
 }

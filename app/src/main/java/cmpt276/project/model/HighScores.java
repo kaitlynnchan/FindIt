@@ -3,18 +3,18 @@ package cmpt276.project.model;
 import java.util.ArrayList;
 
 /**
- * SCORE BOARD
+ * HIGH SCORES CLASS
  * Contains array of scores
  */
-public class ScoreBoard {
+public class HighScores {
     private ArrayList<Score> scoreArray = new ArrayList<>();
     private int numScores;
 
-    private static ScoreBoard instance;
-    private ScoreBoard() {}
-    public static ScoreBoard getInstance(){
+    private static HighScores instance;
+    private HighScores() {}
+    public static HighScores getInstance(){
         if(instance == null){
-            instance = new ScoreBoard();
+            instance = new HighScores();
         }
         return instance;
     }
@@ -41,25 +41,27 @@ public class ScoreBoard {
 
     public void addScore(Score score) {
         if(scoreArray.size() < numScores){
-            sort(score, scoreArray.size());
+            int index = sort(score, scoreArray.size());
+            scoreArray.add(index, score);
         } else{
             if(scoreArray.get(numScores - 1).getTimeBySeconds() > score.getTimeBySeconds()){
                 scoreArray.remove(numScores - 1);
-                sort(score, numScores);
+                int index = sort(score, numScores);
+                scoreArray.add(index, score);
             }
         }
     }
 
-    private void sort(Score score, int size) {
+    private int sort(Score score, int size) {
         int i = 0;
         while (i < size) {
             if (scoreArray.get(i).getTimeBySeconds() > score.getTimeBySeconds()) {
-                break;
+                return i;
             } else {
                 i++;
             }
         }
-        scoreArray.add(i, score);
+        return i;
     }
 
     public void resetHighScore(){
