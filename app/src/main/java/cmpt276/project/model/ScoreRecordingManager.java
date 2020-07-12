@@ -4,13 +4,26 @@ import java.util.ArrayList;
 
 //use array to store scores
 public class ScoreRecordingManager{
-    private ArrayList<ScoreRecording> scoreArray;
+    private ArrayList<ScoreRecording> scoreArray = new ArrayList<>();
     private int numScores;
 
-    public ScoreRecordingManager(int numScores) {
-        this.numScores = numScores;
-        this.scoreArray = new ArrayList<>();
+    private static ScoreRecordingManager instance;
+    private ScoreRecordingManager() {}
+    public static ScoreRecordingManager getInstance(){
+        if(instance == null){
+            instance = new ScoreRecordingManager();
+        }
+        return instance;
     }
+
+    public void setNumScores(int numScores) {
+        this.numScores = numScores;
+    }
+
+//    public ScoreRecordingManager(int numScores) {
+//        this.numScores = numScores;
+//        this.scoreArray = new ArrayList<>();
+//    }
 
     public void addNewScore(ScoreRecording s) {
         if(scoreArray.size() < numScores){
@@ -51,11 +64,19 @@ public class ScoreRecordingManager{
     }
 
 
-//    public void setScoreArray(ArrayList<ScoreRecording> sArray){
-//        this.scoreArray = sArray;
-//    }
-//
+    public void setScoreArray(ArrayList<ScoreRecording> sArray){
+        this.scoreArray = sArray;
+    }
+
     public ArrayList<ScoreRecording> getScoreArray(){
         return scoreArray;
+    }
+
+    public ScoreRecording getScoreRecording(int index){
+        return scoreArray.get(index);
+    }
+
+    public ScoreRecording getLastScore(){
+        return scoreArray.get(numScores - 1);
     }
 }

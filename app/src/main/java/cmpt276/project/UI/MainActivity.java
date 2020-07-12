@@ -12,8 +12,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
+
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
+import cmpt276.project.model.ScoreRecordingManager;
 
 /**
  * Main menu
@@ -24,10 +27,8 @@ import cmpt276.project.model.CardDeck;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     private CardDeck cardDeck;
-
+    private ScoreRecordingManager manager = ScoreRecordingManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         cardDeck = CardDeck.getInstance();
 
         setupButtons();
+        setupHighScores();
     }
 
     private void setupButtons() {
@@ -92,6 +94,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void setupHighScores() {
+        manager.setNumScores(5);
+        manager.setScoreArray(HighScoreActivity.getSavedHighScore(this));
+        if(manager.getScoreArray() == null){
+            HighScoreActivity.populateScoreRecording(manager);
+        }
+    }
+
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, MainActivity.class);
 

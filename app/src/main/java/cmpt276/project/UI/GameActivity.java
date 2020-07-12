@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -40,8 +41,6 @@ public class GameActivity extends AppCompatActivity {
     private Button[] drawPileImages;        // Contains the three images of a card from the draw pile
     private Button[] discardPileImages;     // Contains the three images of a card from the discard pile
     private Button startGameButton;
-
-    public ScoreRecordingManager manager;    //to store scores
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, GameActivity.class);
@@ -134,9 +133,6 @@ public class GameActivity extends AppCompatActivity {
         if (cardDeck.searchDiscardPile(index)) {
             if (cardDeck.returnCardIndex() == cardDeck.getNumCards() - 1) {
                 stopTimer();
-                FragmentManager manager = getSupportFragmentManager();
-                WinFragment dialog = new WinFragment();
-                dialog.show(manager, "");
             } else {
                 cardDeck.incrementCardIndex();
                 updateCardImages();
@@ -148,7 +144,6 @@ public class GameActivity extends AppCompatActivity {
     // Taken from Brians youtube videos: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void lockButtonSizes() {
         for (int i = 0; i < 3; i++) {
-
             Button drawButton = drawPileImages[i];
             Button discardButton = discardPileImages[i];
 
@@ -216,15 +211,11 @@ public class GameActivity extends AppCompatActivity {
         String time = timer.getText().toString();
         int seconds = Integer.parseInt(time.substring(time.length() - 2));
         int minutes = Integer.parseInt(time.substring(time.length() - 5, time.length() - 3));
-
         int timeBySeconds = minutes * 60 + seconds;
 
-//        TextInputEditText t1 = findViewById(R.id.storeName);
-//        TextInputEditText t2 = findViewById(R.id.storeDate);
-//        String name = t1.getText().toString();
-//        String date = t2.getText().toString();
-//        ScoreRecording s = new ScoreRecording(timeBySeconds, name, date);
-//        manager.addNewScore(s);
-//        manager.setScoreArray(manager.getScoreArray());
+        long timeLong = (long) Math.floor( (SystemClock.elapsedRealtime() - timer.getBase()) / 1000);
+        FragmentManager manager = getSupportFragmentManager();
+        WinFragment dialog = new WinFragment(timeLong);
+        dialog.show(manager, "");
     }
 }

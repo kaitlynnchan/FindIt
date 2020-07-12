@@ -39,4 +39,7 @@
     <string name="reset">Reset</string>
     <string name="high_score_recording" />
     <string name="high_score_recording_text">High Score Recording</string>
+    <string name="nickname">Nickname</string>
+    <string name="date">Month DD, YYYY</string>
+
 </resources>
