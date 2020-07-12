@@ -17,7 +17,7 @@ import cmpt276.project.model.CardDeck;
 import cmpt276.project.model.ScoreBoard;
 
 /**
- * Main menu
+ * MAIN MENU
  * Includes play, options, help, and high score
  *  buttons to navigate through the game
  */
@@ -44,20 +44,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Implement games activity
-                int[] fruitIDs = {R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
-                        R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
-                        R.drawable.watermelon};
-
-                cardDeck.setNumCards(7);
-                cardDeck.setNumImages(3);
-                cardDeck.setCardIndex();
-                cardDeck.setImageArr(fruitIDs);
-                cardDeck.populateCards();
-                cardDeck.print();
-                cardDeck.shuffleCards();
-                cardDeck.shuffleImages();
-                cardDeck.print();
-
+                createCardDeck();
                 Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
@@ -91,6 +78,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void createCardDeck() {
+        int[] imagePack = OptionActivity.getImagePackArray(MainActivity.this);
+        cardDeck.setNumCards(7);
+        cardDeck.setNumImages(3);
+        cardDeck.setCardIndex();
+        cardDeck.setImageArr(imagePack);
+        cardDeck.populateCards();
+    }
+
+
     private void setupHighScores() {
         scoreBoard.setNumScores(5);
         if(HighScoreActivity.getSavedHighScore(this) == null){
@@ -102,6 +99,5 @@ public class MainActivity extends AppCompatActivity {
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, MainActivity.class);
-
     }
 }

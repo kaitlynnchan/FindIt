@@ -12,11 +12,8 @@ import android.widget.Button;
 import cmpt276.project.R;
 
 /**
- * <h1>HELP SCREEN</h1>
- *  Displays how to play the game, a hyperlink to the 276 website and the necessary citations as required.
- * <p>
- * @author  Lakshay Sethi & .........
- * @since   2020-07-08
+ * HELP SCREEN
+ * Displays how to play the game, a hyperlink to the 276 website and the necessary citations as required.
  */
 public class HelpActivity extends AppCompatActivity {
 

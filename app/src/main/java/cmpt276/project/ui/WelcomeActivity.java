@@ -16,7 +16,7 @@ import android.widget.TextView;
 import cmpt276.project.R;
 
 /**
- * Splash screen
+ * SPLASH SCREEN
  * Plays a short animation and displays game title and authors
  */
 public class WelcomeActivity extends AppCompatActivity {
@@ -109,5 +109,12 @@ public class WelcomeActivity extends AppCompatActivity {
         pumpkin.startAnimation(moveDown);
         radish.startAnimation(moveDown);
         watermelon.startAnimation(moveDown);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        handler.removeCallbacksAndMessages(null);
+        finish();
     }
 }

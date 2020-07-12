@@ -8,12 +8,27 @@ tools:context=".ui.HelpActivity"
 android:background="@drawable/help_screen">
 
 
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:contentDescription="@string/imageView"
+        android:foreground="@drawable/ic_arrow_back_24"
+        android:foregroundGravity="center_vertical|right"
+        android:foregroundTint="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/vine_card" />
+
     <TextView
         android:id="@+id/textHelp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="280dp"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="300dp"
         android:alpha="1"
         android:lineSpacingExtra="18sp"
@@ -29,29 +44,16 @@ android:background="@drawable/help_screen">
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="79dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="335dp"
-        android:background="@drawable/rectangle"
-        android:text="@string/back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="215dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textHelp"
         app:layout_constraintVertical_bias="0.0">
@@ -64,14 +66,15 @@ android:background="@drawable/help_screen">
             android:layout_marginTop="1dp"
             android:layout_marginEnd="64dp"
             android:layout_marginBottom="61dp"
-            android:autoLink="all"
+            android:autoLink="web"
             android:background="#FFFFFF"
             android:backgroundTint="#02EF9D23"
             android:clickable="true"
+            android:focusable="true"
             android:text="@string/helpContent"
             android:textColor="#131313"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:focusable="true" />
+            android:textColorHighlight="#0027FF"
+            android:textColorLink="#2196F3"
+            android:textSize="18sp" />
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
