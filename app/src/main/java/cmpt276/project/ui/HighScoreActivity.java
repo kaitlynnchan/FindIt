@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -36,7 +37,7 @@ public class HighScoreActivity extends AppCompatActivity {
 
     private HighScores highScores;
     private TextView[] scoresTxtView;
-    private int numScores;
+    private int numMaxScores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,8 @@ public class HighScoreActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         highScores = HighScores.getInstance();
-        numScores = highScores.getNumScores();
-        scoresTxtView = new TextView[numScores];
+        numMaxScores = highScores.getNumMaxScores();
+        scoresTxtView = new TextView[numMaxScores];
         setupHighScore();
 
         setupResetButton();
@@ -55,13 +56,14 @@ public class HighScoreActivity extends AppCompatActivity {
 
     private void setupHighScore() {
         LinearLayout layout = findViewById(R.id.linearScoreBoard);
-        for(int i = 0; i < numScores; i++){
+        for(int i = 0; i < numMaxScores; i++){
             TextView text = new TextView(this);
             text.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             ));
+            text.setTypeface(ResourcesCompat.getFont(this, R.font.atma_medium));
             text.setTextColor(Color.parseColor("#000000"));
             text.setTextSize(18);
             text.setPadding(50, 20, 0, 0);
@@ -87,7 +89,7 @@ public class HighScoreActivity extends AppCompatActivity {
         btReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                highScores.resetHighScore();
+                highScores.resetScoreArray();
                 setDefaultScores(highScores);
                 setTexts();
             }

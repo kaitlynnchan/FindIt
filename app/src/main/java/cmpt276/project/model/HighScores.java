@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class HighScores {
     private ArrayList<Score> scoreArray = new ArrayList<>();
-    private int numScores;
+    private int numMaxScores;
 
     private static HighScores instance;
     private HighScores() {}
@@ -19,7 +19,7 @@ public class HighScores {
         return instance;
     }
 
-    public int getNumScores(){
+    public int getNumMaxScores(){
         return scoreArray.size();
     }
 
@@ -28,11 +28,11 @@ public class HighScores {
     }
 
     public Score getLastScore(){
-        return scoreArray.get(numScores - 1);
+        return scoreArray.get(numMaxScores - 1);
     }
 
-    public void setNumScores(int numScores) {
-        this.numScores = numScores;
+    public void setNumMaxScores(int numMaxScores) {
+        this.numMaxScores = numMaxScores;
     }
 
     public void setScoreArray(ArrayList<Score> sArray){
@@ -40,13 +40,13 @@ public class HighScores {
     }
 
     public void addScore(Score score) {
-        if(scoreArray.size() < numScores){
+        if(scoreArray.size() < numMaxScores){
             int index = sort(score, scoreArray.size());
             scoreArray.add(index, score);
         } else{
-            if(scoreArray.get(numScores - 1).getTimeBySeconds() > score.getTimeBySeconds()){
-                scoreArray.remove(numScores - 1);
-                int index = sort(score, numScores);
+            if(scoreArray.get(numMaxScores - 1).getTimeBySeconds() > score.getTimeBySeconds()){
+                scoreArray.remove(numMaxScores - 1);
+                int index = sort(score, numMaxScores);
                 scoreArray.add(index, score);
             }
         }
@@ -64,7 +64,7 @@ public class HighScores {
         return i;
     }
 
-    public void resetHighScore(){
+    public void resetScoreArray(){
         if (scoreArray.size() > 0) {
             scoreArray.subList(0, scoreArray.size()).clear();
         }

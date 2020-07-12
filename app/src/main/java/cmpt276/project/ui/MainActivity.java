@@ -12,9 +12,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
+
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
 import cmpt276.project.model.HighScores;
+import cmpt276.project.model.Score;
 
 /**
  * MAIN MENU
@@ -86,13 +89,14 @@ public class MainActivity extends AppCompatActivity {
         cardDeck.setImageArr(imagePack);
         cardDeck.populateCards();
     }
-    
+
     private void setupHighScores() {
-        highScores.setNumScores(5);
-        if(HighScoreActivity.getSavedHighScore(this) == null){
+        highScores.setNumMaxScores(5);
+        ArrayList<Score> temp = HighScoreActivity.getSavedHighScore(this);
+        if(temp == null){
             HighScoreActivity.setDefaultScores(highScores);
         } else{
-            highScores.setScoreArray(HighScoreActivity.getSavedHighScore(this));
+            highScores.setScoreArray(temp);
         }
     }
 

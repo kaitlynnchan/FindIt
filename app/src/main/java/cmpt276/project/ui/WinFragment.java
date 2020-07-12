@@ -36,7 +36,6 @@ public class WinFragment extends AppCompatDialogFragment {
     // Used help from Brian's youtube videos: https://www.youtube.com/watch?v=y6StJRn-Y-A&feature=youtu.be
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
-
         view = LayoutInflater.from(getActivity()).inflate(R.layout.windialog_layout, null);
         highScores = HighScores.getInstance();
         if(time < highScores.getLastScore().getTimeBySeconds()){
@@ -68,7 +67,7 @@ public class WinFragment extends AppCompatDialogFragment {
                 if(userNameEntry.getVisibility() == View.VISIBLE){
                     String userName = userNameEntry.getText().toString();
                     if(userName.isEmpty()){
-                        userName = "N/A";
+                        userName = getString(R.string.no_answer);
                     }
 
                     Calendar c = Calendar.getInstance();
