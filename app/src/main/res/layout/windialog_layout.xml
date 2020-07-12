@@ -7,7 +7,19 @@
     android:background="#42cef5">
 
     <ImageView
-        android:id="@+id/imageView14"
+        android:id="@+id/imageFruit1"
+        android:layout_width="48dp"
+        android:layout_height="47dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.989"
+        app:srcCompat="@drawable/apple" />
+
+    <ImageView
+        android:id="@+id/imageFruit2"
         android:layout_width="48dp"
         android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,19 +31,7 @@
         app:srcCompat="@drawable/watermelon" />
 
     <ImageView
-        android:id="@+id/imageView13"
-        android:layout_width="48dp"
-        android:layout_height="47dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.228"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.989"
-        app:srcCompat="@drawable/radish" />
-
-    <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/imageFruit3"
         android:layout_width="48dp"
         android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,7 +43,7 @@
         app:srcCompat="@drawable/pumpkin" />
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/imageFruit4"
         android:layout_width="48dp"
         android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,31 +55,7 @@
         app:srcCompat="@drawable/orange" />
 
     <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="48dp"
-        android:layout_height="47dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.659"
-        app:srcCompat="@drawable/onion" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="48dp"
-        android:layout_height="47dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.332"
-        app:srcCompat="@drawable/mushroom" />
-
-    <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/imageFruit5"
         android:layout_width="48dp"
         android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -91,19 +67,7 @@
         app:srcCompat="@drawable/mango" />
 
     <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="48dp"
-        android:layout_height="47dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.778"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.005"
-        app:srcCompat="@drawable/lettuce" />
-
-    <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imageFruit6"
         android:layout_width="48dp"
         android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -115,7 +79,7 @@
         app:srcCompat="@drawable/lemon" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageFruit7"
         android:layout_width="48dp"
         android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -127,7 +91,7 @@
         app:srcCompat="@drawable/green_apple" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageVeg1"
         android:layout_width="48dp"
         android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -139,7 +103,7 @@
         app:srcCompat="@drawable/eggplant" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageVeg2"
         android:layout_width="48dp"
         android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -151,7 +115,7 @@
         app:srcCompat="@drawable/carrot" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageVeg3"
         android:layout_width="48dp"
         android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -163,16 +127,52 @@
         app:srcCompat="@drawable/broccoli" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageVeg4"
         android:layout_width="48dp"
         android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.228"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.989"
-        app:srcCompat="@drawable/apple" />
+        app:srcCompat="@drawable/radish" />
+
+    <ImageView
+        android:id="@+id/imageVeg5"
+        android:layout_width="48dp"
+        android:layout_height="47dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.659"
+        app:srcCompat="@drawable/onion" />
+
+    <ImageView
+        android:id="@+id/imageVeg6"
+        android:layout_width="48dp"
+        android:layout_height="47dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.332"
+        app:srcCompat="@drawable/mushroom" />
+
+    <ImageView
+        android:id="@+id/imageVeg7"
+        android:layout_width="48dp"
+        android:layout_height="47dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.778"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.005"
+        app:srcCompat="@drawable/lettuce" />
 
     <Button
         android:id="@+id/buttonOK"
@@ -197,7 +197,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textHighScoreTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/you_win"
@@ -215,7 +215,7 @@
             android:textSize="18sp"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/editTextNickname"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textHighScoreTitle" />
 
         <EditText
             android:id="@+id/editTextNickname"

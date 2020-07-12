@@ -1,4 +1,4 @@
-package cmpt276.project.UI;
+package cmpt276.project.ui;
 
 import android.content.Intent;
 import android.content.Context;
@@ -14,19 +14,17 @@ import android.widget.ImageButton;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
-import cmpt276.project.model.ScoreRecordingManager;
+import cmpt276.project.model.ScoreBoard;
 
 /**
  * Main menu
  * Includes play, options, help, and high score
  *  buttons to navigate through the game
  */
-
-
 public class MainActivity extends AppCompatActivity {
 
     private CardDeck cardDeck;
-    private ScoreRecordingManager manager = ScoreRecordingManager.getInstance();
+    private ScoreBoard scoreBoard = ScoreBoard.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +92,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupHighScores() {
-        manager.setNumScores(5);
-        manager.setScoreArray(HighScoreActivity.getSavedHighScore(this));
-        if(manager.getScoreArray() == null){
-            HighScoreActivity.populateScoreRecording(manager);
+        scoreBoard.setNumScores(5);
+        if(HighScoreActivity.getSavedHighScore(this) == null){
+            HighScoreActivity.setDefaultScores(scoreBoard);
+        } else{
+            scoreBoard.setScoreArray(HighScoreActivity.getSavedHighScore(this));
         }
     }
 

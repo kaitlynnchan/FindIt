@@ -1,4 +1,4 @@
-package cmpt276.project.UI;
+package cmpt276.project.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -17,12 +17,8 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TableLayout;
 
-import com.google.android.material.textfield.TextInputEditText;
-
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
-import cmpt276.project.model.ScoreRecording;
-import cmpt276.project.model.ScoreRecordingManager;
 
 /**
  * Game Screen
@@ -208,14 +204,14 @@ public class GameActivity extends AppCompatActivity {
     private void stopTimer() {
         timer.stop();
 
-        String time = timer.getText().toString();
-        int seconds = Integer.parseInt(time.substring(time.length() - 2));
-        int minutes = Integer.parseInt(time.substring(time.length() - 5, time.length() - 3));
+        String strTime = timer.getText().toString();
+        int seconds = Integer.parseInt(strTime.substring(strTime.length() - 2));
+        int minutes = Integer.parseInt(strTime.substring(strTime.length() - 5, strTime.length() - 3));
         int timeBySeconds = minutes * 60 + seconds;
 
-        long timeLong = (long) Math.floor( (SystemClock.elapsedRealtime() - timer.getBase()) / 1000);
+        int time = (int) Math.floor( (SystemClock.elapsedRealtime()/1000.0) - (timer.getBase()/1000.0) );
         FragmentManager manager = getSupportFragmentManager();
-        WinFragment dialog = new WinFragment(timeLong);
+        WinFragment dialog = new WinFragment(timeBySeconds);
         dialog.show(manager, "");
     }
 }

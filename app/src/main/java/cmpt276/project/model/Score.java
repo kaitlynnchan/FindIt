@@ -1,12 +1,15 @@
 package cmpt276.project.model;
 
-//basic class for score
-public class ScoreRecording {
+/**
+ * SCORE
+ * Object that contains time (s), name, and date
+ */
+public class Score {
     private int timeBySeconds;
     private String name;
     private String date;
 
-    public ScoreRecording(int timeBySeconds, String name, String date){
+    public Score(int timeBySeconds, String name, String date){
         this.timeBySeconds = timeBySeconds;
         this.name = name;
         this.date = date;
