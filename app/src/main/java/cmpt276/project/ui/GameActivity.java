@@ -80,7 +80,6 @@ public class GameActivity extends AppCompatActivity {
     // Help taken from Brian: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupDrawCard() {
         TableLayout tableDraw = findViewById(R.id.tableLayoutDraw);
-
         for(int i = 0; i < numImages; i++){
             final int cardIndex = i;
             Button button = new Button(this);
@@ -168,7 +167,6 @@ public class GameActivity extends AppCompatActivity {
     // Used code from Brians youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void updateCardImages() {
         for (int i = 0; i < 3; i++) {
-
             int drawImageID = cardDeck.returnCardImage(cardDeck.returnCardIndex(), i);
             int discardImageID = cardDeck.returnCardImage(cardDeck.returnCardIndex() - 1, i);
 
@@ -201,14 +199,13 @@ public class GameActivity extends AppCompatActivity {
 
     private void startTimer() {
         timer = findViewById(R.id.chronometer);
-        timer.setBase(SystemClock.elapsedRealtime());
         timer.start();
+        timer.setBase(SystemClock.elapsedRealtime());
     }
 
     private void stopTimer() {
         timer.stop();
 
-//        timer.setText();
         // divide by 1000 to convert values from milliseconds to seconds
         int time = (int) (SystemClock.elapsedRealtime() - timer.getBase()) / 1000;
         FragmentManager manager = getSupportFragmentManager();

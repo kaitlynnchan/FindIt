@@ -69,10 +69,4 @@ public class HighScores {
             scoreArray.subList(0, scoreArray.size()).clear();
         }
     }
-
-    public void print(){
-        for(int i = 0; i < scoreArray.size(); i++){
-            System.out.println(scoreArray.get(i).toString());
-        }
-    }
 }

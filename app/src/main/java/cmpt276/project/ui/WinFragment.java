@@ -77,7 +77,6 @@ public class WinFragment extends AppCompatDialogFragment {
                     String userDate = month + " " + day + ", " + year;
 
                     highScores.addScore(new Score(time, userName, userDate));
-                    highScores.print();
                     HighScoreActivity.saveHighScores(getActivity(), highScores);
                 }
                 getActivity().finish();
