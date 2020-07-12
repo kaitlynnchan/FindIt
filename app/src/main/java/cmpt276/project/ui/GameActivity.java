@@ -201,22 +201,18 @@ public class GameActivity extends AppCompatActivity {
 
     private void startTimer() {
         timer = findViewById(R.id.chronometer);
+        timer.setBase(SystemClock.elapsedRealtime());
         timer.start();
     }
 
     private void stopTimer() {
         timer.stop();
 
-        String strTime = timer.getText().toString();
-        int seconds = Integer.parseInt(strTime.substring(strTime.length() - 2));
-        int minutes = Integer.parseInt(strTime.substring(strTime.length() - 5, strTime.length() - 3));
-        int timeBySeconds = minutes * 60 + seconds;
-
+//        timer.setText();
         // divide by 1000 to convert values from milliseconds to seconds
-        int time = (int) Math.floor( (SystemClock.elapsedRealtime()/1000.0) - (timer.getBase()/1000.0) );
-
+        int time = (int) (SystemClock.elapsedRealtime() - timer.getBase()) / 1000;
         FragmentManager manager = getSupportFragmentManager();
-        WinFragment dialog = new WinFragment(timeBySeconds);
+        WinFragment dialog = new WinFragment(time);
         dialog.show(manager, "");
     }
 

@@ -76,9 +76,17 @@ public class HighScoreActivity extends AppCompatActivity {
 
     private void setTexts() {
         for(int i = 0; i < scoresTxtView.length; i++){
-            String msg = (i + 1) + ". "
-                    + highScores.getScoreArray().get(i).getTimeBySeconds() + "sec "
-                    + highScores.getScoreArray().get(i).getName() + " on "
+            int time = highScores.getScoreArray().get(i).getTimeBySeconds();
+            int minute = time / 60;
+            int seconds = time % 60;
+
+            String secs = seconds + "";
+            if(seconds / 10 < 1){
+                secs = "0" + seconds;
+            }
+            String msg = (i + 1) + ".\t\t\t"
+                    + minute + ":" + secs + "\t\t\t"
+                    + highScores.getScoreArray().get(i).getName() + "\t\t\t"
                     + highScores.getScoreArray().get(i).getDate();
             scoresTxtView[i].setText(msg);
         }
@@ -97,11 +105,11 @@ public class HighScoreActivity extends AppCompatActivity {
     }
 
     public static void setDefaultScores(HighScores highScores){
-        highScores.addScore(new Score(30, "N/A", "Month DD, YYYY"));
-        highScores.addScore(new Score(45, "N/A", "Month DD, YYYY"));
+        highScores.addScore(new Score(13, "N/A", "Month DD, YYYY"));
+        highScores.addScore(new Score(18, "N/A", "Month DD, YYYY"));
         highScores.addScore(new Score(20, "N/A", "Month DD, YYYY"));
-        highScores.addScore(new Score(50, "N/A", "Month DD, YYYY"));
-        highScores.addScore(new Score(35, "N/A", "Month DD, YYYY"));
+        highScores.addScore(new Score(25, "N/A", "Month DD, YYYY"));
+        highScores.addScore(new Score(15, "N/A", "Month DD, YYYY"));
     }
 
     public static void saveHighScores(Context context, HighScores highScores){
