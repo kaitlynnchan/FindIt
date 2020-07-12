@@ -219,12 +219,12 @@ public class GameActivity extends AppCompatActivity {
 
         int timeBySeconds = minutes * 60 + seconds;
 
-        TextInputEditText t1 = findViewById(R.id.storeName);
-        TextInputEditText t2 = findViewById(R.id.storeDate);
-        String name = t1.getText().toString();
-        String date = t2.getText().toString();
-        ScoreRecording s = new ScoreRecording(timeBySeconds, name, date);
-        manager.addNewScore(s);
-        manager.setScoreArray(manager.getScoreArray());
+//        TextInputEditText t1 = findViewById(R.id.storeName);
+//        TextInputEditText t2 = findViewById(R.id.storeDate);
+//        String name = t1.getText().toString();
+//        String date = t2.getText().toString();
+//        ScoreRecording s = new ScoreRecording(timeBySeconds, name, date);
+//        manager.addNewScore(s);
+//        manager.setScoreArray(manager.getScoreArray());
     }
 }

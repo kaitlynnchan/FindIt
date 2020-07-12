@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".UI.HighScoreActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".UI.HelpActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity

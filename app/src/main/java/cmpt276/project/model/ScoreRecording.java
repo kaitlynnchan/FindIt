@@ -20,8 +20,16 @@ public class ScoreRecording {
         return name;
     }
 
-
     public String getDate() {
         return date;
+    }
+
+    @Override
+    public String toString() {
+        return "ScoreRecording{" +
+                "timeBySeconds=" + timeBySeconds +
+                ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                '}';
     }
 }

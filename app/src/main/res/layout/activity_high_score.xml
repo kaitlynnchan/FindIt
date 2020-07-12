@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/high_score_screen"
+    android:background="@drawable/high_score_background"
     tools:context="cmpt276.project.UI.HighScoreActivity">
 
     <Button
         android:id="@+id/ResetButton"
         android:layout_width="116dp"
         android:layout_height="68dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/reset"
         android:textColor="#2196F3"
         android:textSize="24sp"
@@ -24,20 +24,31 @@
         android:layout_width="319dp"
         android:layout_height="57dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="16dp"
         android:text="@string/high_score_recording_text"
-        android:textColor="#F60505"
+        android:textColor="#000000"
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/scoreOutput"
-        android:layout_width="390dp"
-        android:layout_height="227dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:id="@+id/linearScoreBoard"
+        android:layout_width="404dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/ResetButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"></LinearLayout>
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/scoreOutput"-->
+    <!--        android:layout_width="390dp"-->
+    <!--        android:layout_height="227dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
