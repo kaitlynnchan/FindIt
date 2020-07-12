@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -48,6 +47,7 @@ public class HighScoreActivity extends AppCompatActivity {
         highScores = HighScores.getInstance();
         numMaxScores = highScores.getNumMaxScores();
         scoresTxtView = new TextView[numMaxScores];
+
         setupHighScore();
         setupResetButton();
         setupBackButton();
@@ -87,12 +87,13 @@ public class HighScoreActivity extends AppCompatActivity {
                     + minute + ":" + secs + "\t\t\t"
                     + highScores.getScoreArray().get(i).getName() + "\t\t\t"
                     + highScores.getScoreArray().get(i).getDate();
+
             scoresTxtView[i].setText(msg);
         }
     }
 
     private void setupResetButton() {
-        Button btReset = findViewById(R.id.btnReset);
+        Button btReset = findViewById(R.id.buttonReset);
         btReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,12 +129,8 @@ public class HighScoreActivity extends AppCompatActivity {
         return gson.fromJson(json, type);
     }
 
-    public static Intent makeIntent(Context context){
-        return new Intent(context, HighScoreActivity.class);
-    }
-
     private void setupBackButton() {
-        Button btn = findViewById(R.id.btnBack);
+        Button btn = findViewById(R.id.buttonBack);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,5 +144,9 @@ public class HighScoreActivity extends AppCompatActivity {
     public void onBackPressed() {
         saveHighScores(this, highScores);
         super.onBackPressed();
+    }
+
+    public static Intent makeIntent(Context context){
+        return new Intent(context, HighScoreActivity.class);
     }
 }

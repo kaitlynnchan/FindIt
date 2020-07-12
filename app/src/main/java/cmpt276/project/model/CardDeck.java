@@ -24,12 +24,29 @@ public class CardDeck {
         return instance;
     }
 
-    public void setNumCards(int numCards) {
-        this.numCards = numCards;
+    public int getNumImages() {
+        return numImages;
+    }
+
+    public int getNumCards() {
+        return numCards;
+    }
+
+    public int getCardIndex() {
+        return cardIndex;
+    }
+
+    // Returns the image at the index on the selected card
+    public int getCardImage(int card, int index) {
+        return cards[card][index];
     }
 
     public void setNumImages(int numImages) {
         this.numImages = numImages;
+    }
+
+    public void setNumCards(int numCards) {
+        this.numCards = numCards;
     }
 
     public void setImageArr(int[] imageArr) {
@@ -41,18 +58,6 @@ public class CardDeck {
 
     public void incrementCardIndex() {
         this.cardIndex++;
-    }
-
-    public int getNumImages() {
-        return numImages;
-    }
-
-    public int getNumCards() {
-        return numCards;
-    }
-
-    public int returnCardIndex() {
-        return cardIndex;
     }
 
     public void populateCards(){
@@ -88,17 +93,15 @@ public class CardDeck {
     public void shuffleCardsAndImages(){
         for(int i = 0; i < numCards; i++){
             int rand = (int) ((Math.random() * (numCards - i)) + i);
-            int[] temp = cards[i];
+            int[] tempCard = cards[i];
             cards[i] = cards[rand];
-            cards[rand] = temp;
-        }
+            cards[rand] = tempCard;
 
-        for(int i = 0; i < numCards; i++){
             for (int j = 0; j < numImages; j++) {
-                int rand = (int) ((Math.random() * (numImages - j)) + j);
-                int temp = cards[i][j];
+                rand = (int) ((Math.random() * (numImages - j)) + j);
+                int tempImage = cards[i][j];
                 cards[i][j] = cards[i][rand];
-                cards[i][rand] = temp;
+                cards[i][rand] = tempImage;
             }
         }
     }
@@ -113,10 +116,5 @@ public class CardDeck {
             }
         }
         return false;
-    }
-
-    // Returns the selected card
-    public int returnCardImage(int card, int index) {
-        return cards[card][index];
     }
 }

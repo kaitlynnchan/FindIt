@@ -20,7 +20,7 @@ public class HighScores {
     }
 
     public int getNumMaxScores(){
-        return scoreArray.size();
+        return numMaxScores;
     }
 
     public ArrayList<Score> getScoreArray(){

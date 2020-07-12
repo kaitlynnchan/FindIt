@@ -22,7 +22,7 @@ import cmpt276.project.model.Score;
 /**
  * MAIN MENU
  * Includes play, options, help, and high score
- *  buttons to navigate through the game
+ *  buttons to navigate through the app
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Implement games activity
                 createCardDeck();
-                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
+                Intent intent = GameActivity.makeIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent makeLaunchIntent(Context context){
+    public static Intent makeIntent(Context context){
         return new Intent(context, MainActivity.class);
     }
 }

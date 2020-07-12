@@ -22,11 +22,7 @@ import cmpt276.project.model.CardDeck;
 
 /**
  * GAME SCREEN
- * Displays:
- *      score,
- *      high score,
- *      discard pile,
- *      draw pile
+ * Displays score/timer, discard pile, and draw pile
  */
 public class GameActivity extends AppCompatActivity {
 
@@ -36,12 +32,6 @@ public class GameActivity extends AppCompatActivity {
 
     private Button[] drawPileImages;        // Contains the images of a card from the draw pile
     private Button[] discardPileImages;     // Contains the images of a card from the discard pile
-    private Button startGameButton;
-    private Button backButton;
-
-    public static Intent makeLaunchIntent(Context context){
-        return new Intent(context, GameActivity.class);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +44,6 @@ public class GameActivity extends AppCompatActivity {
 
         drawPileImages = new Button[numImages];
         discardPileImages = new Button[numImages];
-        startGameButton = findViewById(R.id.startGameButton);
-        backButton = findViewById(R.id.btnBack);
 
         setupDrawCard();
         setupDiscardCard();
@@ -65,6 +53,7 @@ public class GameActivity extends AppCompatActivity {
 
     // Begin the game
     private void startGame() {
+        final Button startGameButton = findViewById(R.id.buttonStartGame);
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,7 +118,7 @@ public class GameActivity extends AppCompatActivity {
     // Checks if the selected image matches an image on on the discard pile card
     private void imageClicked(int index) {
         if (cardDeck.searchDiscardPile(index)) {
-            if (cardDeck.returnCardIndex() == cardDeck.getNumCards() - 1) {
+            if (cardDeck.getCardIndex() == cardDeck.getNumCards() - 1) {
                 stopTimer();
             } else {
                 cardDeck.incrementCardIndex();
@@ -167,8 +156,8 @@ public class GameActivity extends AppCompatActivity {
     // Used code from Brians youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void updateCardImages() {
         for (int i = 0; i < 3; i++) {
-            int drawImageID = cardDeck.returnCardImage(cardDeck.returnCardIndex(), i);
-            int discardImageID = cardDeck.returnCardImage(cardDeck.returnCardIndex() - 1, i);
+            int drawImageID = cardDeck.getCardImage(cardDeck.getCardIndex(), i);
+            int discardImageID = cardDeck.getCardImage(cardDeck.getCardIndex() - 1, i);
 
             Button drawButton = drawPileImages[i];
             Button discardButton = discardPileImages[i];
@@ -214,11 +203,16 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupBackButton() {
+        Button backButton = findViewById(R.id.buttonBack);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+    }
+
+    public static Intent makeIntent(Context context){
+        return new Intent(context, GameActivity.class);
     }
 }

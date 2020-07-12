@@ -9,7 +9,7 @@
     android:background="@drawable/garden">
 
     <Button
-        android:id="@+id/btnBack"
+        android:id="@+id/buttonBack"
         android:layout_width="40dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
@@ -57,95 +57,82 @@
         app:layout_constraintTop_toTopOf="@+id/chronometer" />
 
     <ImageView
-        android:id="@+id/drawCard"
-        android:layout_width="215dp"
-        android:layout_height="340dp"
+        android:id="@+id/imageDrawCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
         android:background="@null"
+        android:contentDescription="@string/imageView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.949"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guidelineMiddle"
+        app:layout_constraintTop_toBottomOf="@+id/textDraw"
         app:layout_constraintVertical_bias="0.915"
-        app:srcCompat="@drawable/vine_card"
-        android:contentDescription="@string/imageView" />
+        app:srcCompat="@drawable/vine_card" />
 
     <ImageView
-        android:id="@+id/discardCard"
-        android:layout_width="215dp"
-        android:layout_height="340dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        android:id="@+id/imageDiscardCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="24dp"
         android:background="@null"
-        app:srcCompat="@drawable/vine_card"
-        android:contentDescription="@string/imageView" />
+        android:contentDescription="@string/imageView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineMiddle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textDiscard"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/vine_card" />
 
     <TableLayout
         android:id="@+id/tableLayoutDraw"
         android:layout_width="90dp"
         android:layout_height="200dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.707"
-        app:layout_constraintStart_toStartOf="@+id/guidelineMiddle"
-        app:layout_constraintTop_toBottomOf="@+id/chronometer"
-        app:layout_constraintVertical_bias="0.634" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageDrawCard"
+        app:layout_constraintEnd_toEndOf="@+id/imageDrawCard"
+        app:layout_constraintStart_toStartOf="@+id/imageDrawCard"
+        app:layout_constraintTop_toTopOf="@+id/imageDrawCard" />
 
     <TableLayout
         android:id="@+id/tableLayoutDiscard"
         android:layout_width="90dp"
         android:layout_height="200dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineMiddle"
-        app:layout_constraintHorizontal_bias="0.372"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textScore"
-        app:layout_constraintVertical_bias="0.685" />
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageDiscardCard"
+        app:layout_constraintEnd_toEndOf="@+id/imageDiscardCard"
+        app:layout_constraintStart_toStartOf="@+id/imageDiscardCard"
+        app:layout_constraintTop_toTopOf="@+id/imageDiscardCard" />
 
     <TextView
         android:id="@+id/textDraw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/draw_pile"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.67"
-        app:layout_constraintStart_toStartOf="@+id/guidelineMiddle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.169" />
+        app:layout_constraintEnd_toEndOf="@+id/imageDrawCard"
+        app:layout_constraintStart_toStartOf="@+id/imageDrawCard"
+        app:layout_constraintTop_toBottomOf="@+id/textScore" />
 
     <TextView
         android:id="@+id/textDiscard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/discard_pile"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineMiddle"
-        app:layout_constraintHorizontal_bias="0.402"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.184" />
+        app:layout_constraintEnd_toEndOf="@+id/imageDiscardCard"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/imageDiscardCard"
+        app:layout_constraintTop_toBottomOf="@+id/textScore" />
 
     <Button
-        android:id="@+id/startGameButton"
+        android:id="@+id/buttonStartGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"

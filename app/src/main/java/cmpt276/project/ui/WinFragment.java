@@ -1,5 +1,6 @@
 package cmpt276.project.ui;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import java.util.Calendar;
@@ -34,6 +36,8 @@ public class WinFragment extends AppCompatDialogFragment {
     }
 
     // Used help from Brian's youtube videos: https://www.youtube.com/watch?v=y6StJRn-Y-A&feature=youtu.be
+    @SuppressLint("InflateParams")
+    @NonNull
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.windialog_layout, null);
@@ -54,6 +58,8 @@ public class WinFragment extends AppCompatDialogFragment {
     private void setupNewHighScore() {
         TextView txtName = view.findViewById(R.id.textNickname);
         txtName.setVisibility(View.VISIBLE);
+        TextView txtHighScore = view.findViewById(R.id.textNewHighScore);
+        txtHighScore.setVisibility(View.VISIBLE);
         EditText userName = view.findViewById(R.id.editTextNickname);
         userName.setVisibility(View.VISIBLE);
     }
