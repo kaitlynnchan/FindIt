@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 
 import cmpt276.project.R;
@@ -59,6 +60,12 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startTimer();
                 updateCardImages();
+
+                ImageView imgDiscard = findViewById(R.id.imageDiscardCard);
+                imgDiscard.setVisibility(View.VISIBLE);
+                ImageView imgCard = findViewById(R.id.imageCardBack);
+                imgCard.setVisibility(View.GONE);
+                
                 startGameButton.setVisibility(View.INVISIBLE);
             }
         });

@@ -77,6 +77,7 @@
         android:layout_marginEnd="24dp"
         android:background="@null"
         android:contentDescription="@string/imageView"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineMiddle"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,5 +144,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageCardBack"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageDrawCard"
+        app:layout_constraintEnd_toEndOf="@+id/imageDrawCard"
+        app:layout_constraintStart_toStartOf="@+id/imageDrawCard"
+        app:layout_constraintTop_toTopOf="@+id/imageDrawCard"
+        app:srcCompat="@drawable/card_back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
