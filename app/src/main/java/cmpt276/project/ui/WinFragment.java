@@ -18,7 +18,7 @@ import java.util.Locale;
 
 import cmpt276.project.R;
 import cmpt276.project.model.Score;
-import cmpt276.project.model.HighScores;
+import cmpt276.project.model.ScoresManager;
 
 /**
  * WIN FRAGMENT
@@ -29,7 +29,7 @@ public class WinFragment extends AppCompatDialogFragment {
 
     private View view;
     private int time;
-    private HighScores highScores;
+    private ScoresManager scoresManager;
 
     public WinFragment(int time){
         this.time = time;
@@ -41,8 +41,8 @@ public class WinFragment extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.windialog_layout, null);
-        highScores = HighScores.getInstance();
-        if(time < highScores.getBestScore().getTimeBySeconds()){
+        scoresManager = ScoresManager.getInstance();
+        if(time < scoresManager.getScore(0).getTimeBySeconds()){
             TextView txtHighScore = view.findViewById(R.id.textNewHighScore);
             txtHighScore.setVisibility(View.VISIBLE);
         }
@@ -73,8 +73,8 @@ public class WinFragment extends AppCompatDialogFragment {
                 String year = c.get(Calendar.YEAR) + "";
                 String userDate = month + " " + day + ", " + year;
 
-                highScores.addScore(new Score(time, userName, userDate));
-                HighScoreActivity.saveHighScores(getActivity(), highScores);
+                scoresManager.addScore(new Score(time, userName, userDate));
+                HighScoreActivity.saveScores(getActivity(), scoresManager);
 
                 getActivity().finish();
             }

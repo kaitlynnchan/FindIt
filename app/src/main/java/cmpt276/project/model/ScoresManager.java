@@ -3,18 +3,19 @@ package cmpt276.project.model;
 import java.util.ArrayList;
 
 /**
- * HIGH SCORES CLASS
+ * SCORES MANAGER CLASS
  * Contains array of scores
  */
-public class HighScores {
+public class ScoresManager {
     private ArrayList<Score> scoreArray = new ArrayList<>();
     private int numMaxScores;
 
-    private static HighScores instance;
-    private HighScores() {}
-    public static HighScores getInstance(){
+    // Singleton implementation
+    private static ScoresManager instance;
+    private ScoresManager() {}
+    public static ScoresManager getInstance(){
         if(instance == null){
-            instance = new HighScores();
+            instance = new ScoresManager();
         }
         return instance;
     }
@@ -27,8 +28,8 @@ public class HighScores {
         return scoreArray;
     }
 
-    public Score getBestScore(){
-        return scoreArray.get(0);
+    public Score getScore(int index){
+        return scoreArray.get(index);
     }
 
     public void setNumMaxScores(int numMaxScores) {
@@ -41,19 +42,14 @@ public class HighScores {
 
     public void addScore(Score score) {
         int index = sort(score);
-        if(index != -1){
-            scoreArray.add(index, score);
-        }
+        scoreArray.add(index, score);
     }
 
-    // returns -1 if the score is already in the list
     private int sort(Score score) {
         int i = 0;
         while (i < scoreArray.size()) {
-            if(scoreArray.get(i).getTimeBySeconds() > score.getTimeBySeconds()){
+            if(score.getTimeBySeconds() < scoreArray.get(i).getTimeBySeconds()){
                 return i;
-            } else if(scoreArray.get(i).getTimeBySeconds() == score.getTimeBySeconds()){
-                return -1;
             } else{
                 i++;
             }

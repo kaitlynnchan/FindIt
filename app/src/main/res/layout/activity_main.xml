@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/garden_rose"
+    android:background="@drawable/garden"
     tools:context=".ui.MainActivity">
 
     <TextView
@@ -12,12 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:shadowColor="#000000"
-        android:shadowDx="6"
-        android:shadowDy="6"
+        android:shadowDx="7"
+        android:shadowDy="7"
         android:shadowRadius="0.01"
         android:text="@string/game_title"
         android:textColor="#FFFFFF"
-        android:textSize="60sp"
+        android:textSize="70sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,12 +72,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:background="@drawable/button_background"
+        android:contentDescription="@string/imageView"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/buttonPlay"
         app:layout_constraintStart_toEndOf="@+id/buttonPlay"
         app:layout_constraintTop_toTopOf="@+id/buttonPlay"
-        app:srcCompat="@drawable/ic_trophy_black_30"
-        android:contentDescription="@string/imageView" />
+        app:srcCompat="@drawable/ic_trophy_black_30" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

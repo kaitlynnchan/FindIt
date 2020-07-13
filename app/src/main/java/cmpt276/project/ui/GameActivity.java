@@ -196,7 +196,7 @@ public class GameActivity extends AppCompatActivity {
         timer.stop();
 
         // divide by 1000 to convert values from milliseconds to seconds
-        int time = (int) (SystemClock.elapsedRealtime() - timer.getBase()) / 1000;
+        int time = (int) ((SystemClock.elapsedRealtime() - timer.getBase()) / 1000.0);
         FragmentManager manager = getSupportFragmentManager();
         WinFragment dialog = new WinFragment(time);
         dialog.show(manager, "");
