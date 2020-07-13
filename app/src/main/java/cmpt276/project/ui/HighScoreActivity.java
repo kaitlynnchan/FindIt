@@ -48,6 +48,7 @@ public class HighScoreActivity extends AppCompatActivity {
         numMaxScores = highScores.getNumMaxScores();
         scoresTxtView = new TextView[numMaxScores];
 
+        highScores.print();
         setupHighScore();
         setupResetButton();
         setupBackButton();
@@ -65,7 +66,7 @@ public class HighScoreActivity extends AppCompatActivity {
 //            text.setTypeface(ResourcesCompat.getFont(this, R.font.atma_medium));
             text.setTextColor(Color.parseColor("#000000"));
             text.setTextSize(18);
-            text.setPadding(50, 20, 0, 0);
+            text.setPadding(0, 0, 0, 0);
 
             layout.addView(text);
             scoresTxtView[i] = text;

@@ -53,13 +53,13 @@
         \n19 . <a href="https://www.shutterstock.com/image-vector/vector-garden-flat-cartoon-illustration-291373565">background</a>
         \n20 . <a href="https://www.dreamstime.com/cartoon-man-choosing-red-blue-pill-matrix-hand-drawn-illustration-colorful-image160029660">cartoon character</a>
     </string>
-    <string name="enter_your_name">Enter your name:</string>
+    <string name="enter_your_name">Enter a nickname:</string>
     <string name="your_name">your name</string>
     <string name="month_day_year">Month day, year</string>
     <string name="enter_played_date">Enter played date:</string>
     <string name="reset">Reset</string>
     <string name="high_score_recording" />
-    <string name="high_score_recording_text">Top High Scores</string>
+    <string name="high_score_recording_text">Top 5 High Scores</string>
     <string name="nickname">Nickname</string>
     <string name="date">Month DD, YYYY</string>
     <string name="no_answer">N/A</string>

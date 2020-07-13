@@ -27,8 +27,8 @@ public class HighScores {
         return scoreArray;
     }
 
-    public Score getLastScore(){
-        return scoreArray.get(numMaxScores - 1);
+    public Score getBestScore(){
+        return scoreArray.get(0);
     }
 
     public void setNumMaxScores(int numMaxScores) {
@@ -40,24 +40,21 @@ public class HighScores {
     }
 
     public void addScore(Score score) {
-        if(scoreArray.size() < numMaxScores){
-            int index = sort(score, scoreArray.size());
+        int index = sort(score);
+        if(index != -1){
             scoreArray.add(index, score);
-        } else{
-            if(scoreArray.get(numMaxScores - 1).getTimeBySeconds() > score.getTimeBySeconds()){
-                scoreArray.remove(numMaxScores - 1);
-                int index = sort(score, numMaxScores);
-                scoreArray.add(index, score);
-            }
         }
     }
 
-    private int sort(Score score, int size) {
+    // returns -1 if the score is already in the list
+    private int sort(Score score) {
         int i = 0;
-        while (i < size) {
-            if (scoreArray.get(i).getTimeBySeconds() > score.getTimeBySeconds()) {
+        while (i < scoreArray.size()) {
+            if(scoreArray.get(i).getTimeBySeconds() > score.getTimeBySeconds()){
                 return i;
-            } else {
+            } else if(scoreArray.get(i).getTimeBySeconds() == score.getTimeBySeconds()){
+                return -1;
+            } else{
                 i++;
             }
         }
@@ -67,6 +64,12 @@ public class HighScores {
     public void resetScoreArray(){
         if (scoreArray.size() > 0) {
             scoreArray.subList(0, scoreArray.size()).clear();
+        }
+    }
+
+    public void print(){
+        for(int i = 0; i < scoreArray.size(); i++){
+            System.out.println(scoreArray.get(i).toString());
         }
     }
 }

@@ -42,8 +42,9 @@ public class WinFragment extends AppCompatDialogFragment {
     public Dialog onCreateDialog (Bundle savedInstanceState) {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.windialog_layout, null);
         highScores = HighScores.getInstance();
-        if(time < highScores.getLastScore().getTimeBySeconds()){
-            setupNewHighScore();
+        if(time < highScores.getBestScore().getTimeBySeconds()){
+            TextView txtHighScore = view.findViewById(R.id.textNewHighScore);
+            txtHighScore.setVisibility(View.VISIBLE);
         }
 
         setupButton();
@@ -55,36 +56,26 @@ public class WinFragment extends AppCompatDialogFragment {
                 .create();
     }
 
-    private void setupNewHighScore() {
-        TextView txtName = view.findViewById(R.id.textNickname);
-        txtName.setVisibility(View.VISIBLE);
-        TextView txtHighScore = view.findViewById(R.id.textNewHighScore);
-        txtHighScore.setVisibility(View.VISIBLE);
-        EditText userName = view.findViewById(R.id.editTextNickname);
-        userName.setVisibility(View.VISIBLE);
-    }
-
     private void setupButton() {
         Button btnOk = view.findViewById(R.id.buttonOK);
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText userNameEntry = view.findViewById(R.id.editTextNickname);
-                if(userNameEntry.getVisibility() == View.VISIBLE){
-                    String userName = userNameEntry.getText().toString();
-                    if(userName.isEmpty()){
-                        userName = getString(R.string.no_answer);
-                    }
-
-                    Calendar c = Calendar.getInstance();
-                    String month = c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-                    String day = c.get(Calendar.DAY_OF_MONTH) + "";
-                    String year = c.get(Calendar.YEAR) + "";
-                    String userDate = month + " " + day + ", " + year;
-
-                    highScores.addScore(new Score(time, userName, userDate));
-                    HighScoreActivity.saveHighScores(getActivity(), highScores);
+                String userName = userNameEntry.getText().toString();
+                if(userName.isEmpty()){
+                    userName = getString(R.string.no_answer);
                 }
+
+                Calendar c = Calendar.getInstance();
+                String month = c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+                String day = c.get(Calendar.DAY_OF_MONTH) + "";
+                String year = c.get(Calendar.YEAR) + "";
+                String userDate = month + " " + day + ", " + year;
+
+                highScores.addScore(new Score(time, userName, userDate));
+                HighScoreActivity.saveHighScores(getActivity(), highScores);
+
                 getActivity().finish();
             }
         });
