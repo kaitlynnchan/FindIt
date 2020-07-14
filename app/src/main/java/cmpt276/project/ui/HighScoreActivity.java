@@ -63,7 +63,6 @@ public class HighScoreActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             ));
-//            text.setTypeface(ResourcesCompat.getFont(this, R.font.atma_medium));
             text.setTextColor(Color.parseColor("#000000"));
             text.setTextSize(18);
             text.setPadding(0, 0, 0, 0);
