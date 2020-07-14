@@ -106,11 +106,11 @@ public class HighScoreActivity extends AppCompatActivity {
     }
 
     public static void setDefaultScores(ScoresManager scoresManager){
-        scoresManager.addScore(new Score(13, "N/A", "Month DD, YYYY"));
-        scoresManager.addScore(new Score(18, "N/A", "Month DD, YYYY"));
+        scoresManager.addScore(new Score(23, "N/A", "Month DD, YYYY"));
+        scoresManager.addScore(new Score(28, "N/A", "Month DD, YYYY"));
         scoresManager.addScore(new Score(20, "N/A", "Month DD, YYYY"));
         scoresManager.addScore(new Score(25, "N/A", "Month DD, YYYY"));
-        scoresManager.addScore(new Score(15, "N/A", "Month DD, YYYY"));
+        scoresManager.addScore(new Score(18, "N/A", "Month DD, YYYY"));
     }
 
     public static void saveScores(Context context, ScoresManager scoresManager){
