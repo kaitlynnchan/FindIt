@@ -149,6 +149,7 @@
         android:id="@+id/imageCardBack"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/imageView"
         app:layout_constraintBottom_toBottomOf="@+id/imageDrawCard"
         app:layout_constraintEnd_toEndOf="@+id/imageDrawCard"
         app:layout_constraintStart_toStartOf="@+id/imageDrawCard"
