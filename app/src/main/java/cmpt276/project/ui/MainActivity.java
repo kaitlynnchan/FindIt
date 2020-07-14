@@ -16,18 +16,18 @@ import java.util.ArrayList;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
-import cmpt276.project.model.HighScores;
+import cmpt276.project.model.ScoresManager;
 import cmpt276.project.model.Score;
 
 /**
  * MAIN MENU
  * Includes play, options, help, and high score
- *  buttons to navigate through the game
+ *  buttons to navigate through the app
  */
 public class MainActivity extends AppCompatActivity {
 
     private CardDeck cardDeck;
-    private HighScores highScores;
+    private ScoresManager scoresManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         cardDeck = CardDeck.getInstance();
-        highScores = HighScores.getInstance();
+        scoresManager = ScoresManager.getInstance();
 
         setupButtons();
-        setupHighScores();
+        setupSavedScores();
     }
 
     private void setupButtons() {
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Implement games activity
                 createCardDeck();
-                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
+                Intent intent = GameActivity.makeIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
@@ -91,17 +91,17 @@ public class MainActivity extends AppCompatActivity {
         cardDeck.populateCards();
     }
 
-    private void setupHighScores() {
-        highScores.setNumMaxScores(5);
-        ArrayList<Score> temp = HighScoreActivity.getSavedHighScore(this);
+    private void setupSavedScores() {
+        scoresManager.setNumMaxScores(5);
+        ArrayList<Score> temp = HighScoreActivity.getSavedScores(this);
         if(temp == null){
-            HighScoreActivity.setDefaultScores(highScores);
+            HighScoreActivity.setDefaultScores(scoresManager);
         } else{
-            highScores.setScoreArray(temp);
+            scoresManager.setScoreArray(temp);
         }
     }
 
-    public static Intent makeLaunchIntent(Context context){
+    public static Intent makeIntent(Context context){
         return new Intent(context, MainActivity.class);
     }
 }

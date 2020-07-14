@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import cmpt276.project.R;
 
@@ -23,7 +25,10 @@ public class HelpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_help);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Button btn = findViewById(R.id.btnBack);
+        TextView txtBox = findViewById(R.id.textBox);
+        txtBox.setMovementMethod(LinkMovementMethod.getInstance());
+
+        Button btn = findViewById(R.id.buttonBack);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,5 +40,4 @@ public class HelpActivity extends AppCompatActivity {
     public static Intent makeIntent(Context context){
         return new Intent(context, HelpActivity.class);
     }
-
 }

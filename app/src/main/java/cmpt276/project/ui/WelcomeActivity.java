@@ -21,7 +21,7 @@ import cmpt276.project.R;
  */
 public class WelcomeActivity extends AppCompatActivity {
 
-    private Handler handler = new Handler();
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,30 +29,18 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        moveAnimation();
-        setupSkipBtn();
-
+        handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
+                Intent intent = MainActivity.makeIntent(WelcomeActivity.this);
                 startActivity(intent);
                 finish();
             }
         }, 9000);
-    }
 
-    private void setupSkipBtn() {
-        Button skip = findViewById(R.id.buttonSkip);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
-                startActivity(intent);
-                handler.removeCallbacksAndMessages(null);
-                finish();
-            }
-        });
+        moveAnimation();
+        setupSkipBtn();
     }
 
     private void moveAnimation() {
@@ -109,6 +97,19 @@ public class WelcomeActivity extends AppCompatActivity {
         pumpkin.startAnimation(moveDown);
         radish.startAnimation(moveDown);
         watermelon.startAnimation(moveDown);
+    }
+
+    private void setupSkipBtn() {
+        Button skip = findViewById(R.id.buttonSkip);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MainActivity.makeIntent(WelcomeActivity.this);
+                startActivity(intent);
+                handler.removeCallbacksAndMessages(null);
+                finish();
+            }
+        });
     }
 
     @Override

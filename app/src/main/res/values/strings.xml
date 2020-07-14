@@ -2,7 +2,7 @@
     <string name="app_name">Find daMatch</string>
     <string name="action_settings">Settings</string>
 
-    <string name="game_title">Find daMatch</string>
+    <string name="game_title">Find daMatch\u0020</string>
     <string name="play">PLAY</string>
     <string name="options">OPTIONS</string>
     <string name="help">HELP</string>
@@ -19,46 +19,50 @@
     <string name="start_game">START GAME</string>
     <string name="you_win">You Win!</string>
     <string name="helpTitle">HELP</string>
-    <string name="helpContent">Link: https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home
+    <string name="helpContent">Link: <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">SFU HOME</a>
         \n\n<b>How to Play</b>
-        \nThe objective of the game is to match all the fruits/vegetables in the least amount of time.
-        \n1 . Once you click START GAME the cards will flip.
-        \n2 . Initially the two cards are empty and then each card is populated with three objects.
-        \n3 . Both cards share one common object.
-        \n4 . Once you click the matching image from the draw pile with the discard pile ,the next card in the draw pile will flip.
+        \nThe objective of the game is to match all the images in the least amount of time.
+        \n1 . You can change the image package in OPTIONS in main menu.
+        \n2 . Once you click START GAME the cards will flip, and will show a number of images.
+        \n3 . Find and click the image on the draw pile which matches one on the discard pile.
+        \n4 . Then the card on the draw pile is moved to the discard pile and the next card in the draw pile will flip.
         \n5 . This process is repeated until there are no more cards in the draw pile.
-        \n6 . Overall time required to complete the game is stored and the top 5 times can be viewed in the High score section.
+        \n6 . If your score is good enough you will be able to save your high score with a nickname.
+        \n7 . The top 5 high scores can be viewed by clicking the trophy on the main menu.
+        \n8 . Click OK to go back to the main menu.
 
         \n\n<b>Citations</b>
-        \n1 . https://www.shutterstock.com/image-vector/vector-garden-flat-cartoon-illustration-291373565
-        \n2 . http://www.clker.com/clipart-magnifying-glass-4.html
-        \n3 . https://www.shutterstock.com/image-vector/apple-icon-vector-eps-10-1700911795
-        \n4 . https://www.dreamstime.com/fresh-cut-slice-orange-fruit-isolated-white-background-tangerine-organic-cartoon-style-vector-illustration-any-design-image172278946
-        \n5 . https://www.vectorstock.com/royalty-free-vector/slice-of-ripe-watermelon-cartoon-vector-19048946
-        \n6 . https://www.vectorstock.com/royalty-free-vector/pumpkin-isolated-on-white-background-cartoon-vector-26775102
-        \n7 . https://www.dreamstime.com/cute-cartoon-lemon-isolated-white-background-vector-illustration-cute-cartoon-lemon-isolated-white-background-flat-style-image163185148
-        \n8 . http://clipart-library.com/cartoon-pictures-of-apples.html
-        \n9 . https://www.pinterest.ca/pin/675610381577433241/
-        \n10 . https://www.pinterest.ca/pin/597008494332117942/
-        \n11 . https://www.shutterstock.com/image-vector/carrot-vegetable-isolated-on-white-vector-543845137
-        \n11 . https://www.vectorstock.com/royalty-free-vector/onion-isolated-vegetable-cartoon-badge-vector-23081042
-        \n12 . https://www.shutterstock.com/image-vector/radish-vector-design-image-694738837
-        \n13 . https://www.clipartkey.com/view/ihRwJJ_transparent-brocoli-clipart-cartoon-broccoli-png/
-        \n14 . https://cliparts.zone/clipart/6536
-        \n15 . https://www.vectorstock.com/royalty-free-vector/mushroom-champignon-flat-cartoon-vector-23098426
-        \n16 . https://www.netclipart.com/isee/TbRii_common-ivy-plant-vine-clip-art-transparent-background/
-        \n17 . https://dev.to/gautemeekolsen/android-button-with-both-image-and-text-452a
-        \n18 . https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/
-</string>
-    <string name="enter_your_name">Enter your name:</string>
+        \n1 . <a href="https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/">algorithm help</a>
+        \n2 . <a href="http://www.clker.com/clipart-magnifying-glass-4.html">magnifying glass</a>
+        \n3 . <a href="https://www.shutterstock.com/image-vector/apple-icon-vector-eps-10-1700911795">red apple</a>
+        \n4 . <a href="https://www.dreamstime.com/fresh-cut-slice-orange-fruit-isolated-white-background-tangerine-organic-cartoon-style-vector-illustration-any-design-image172278946">orange</a>
+        \n5 . <a href="https://www.vectorstock.com/royalty-free-vector/slice-of-ripe-watermelon-cartoon-vector-19048946">watermelon</a>
+        \n6 . <a href="https://www.vectorstock.com/royalty-free-vector/pumpkin-isolated-on-white-background-cartoon-vector-26775102">pumpkin</a>
+        \n7 . <a href="https://www.dreamstime.com/cute-cartoon-lemon-isolated-white-background-vector-illustration-cute-cartoon-lemon-isolated-white-background-flat-style-image163185148">lemon</a>
+        \n8 . <a href="http://clipart-library.com/cartoon-pictures-of-apples.html">green apple</a>
+        \n9 . <a href="https://www.pinterest.ca/pin/675610381577433241/">mango</a>
+        \n10 . <a href="https://www.pinterest.ca/pin/597008494332117942/">lettuce</a>
+        \n11 . <a href="https://www.shutterstock.com/image-vector/carrot-vegetable-isolated-on-white-vector-543845137">carrot</a>
+        \n12 . <a href="https://www.vectorstock.com/royalty-free-vector/onion-isolated-vegetable-cartoon-badge-vector-23081042">onion</a>
+        \n13 . <a href="https://www.shutterstock.com/image-vector/radish-vector-design-image-694738837">radish</a>
+        \n14 . <a href="https://www.clipartkey.com/view/ihRwJJ_transparent-brocoli-clipart-cartoon-broccoli-png/">broccoli</a>
+        \n15 . <a href="https://cliparts.zone/clipart/6536">eggplant</a>
+        \n16 . <a href="https://www.vectorstock.com/royalty-free-vector/mushroom-champignon-flat-cartoon-vector-23098426">mushroom</a>
+        \n17 . <a href="https://www.netclipart.com/isee/TbRii_common-ivy-plant-vine-clip-art-transparent-background/">card style</a>
+        \n18 . <a href="https://www.starpik.com/shop/croquet-court-with-red-roses-green-garden-with-a-paved-road-illustration-raster-image-drawn-in-a-cartoon-style/">background</a>
+        \n19 . <a href="https://www.shutterstock.com/image-vector/vector-garden-flat-cartoon-illustration-291373565">background</a>
+        \n20 . <a href="https://www.dreamstime.com/cartoon-man-choosing-red-blue-pill-matrix-hand-drawn-illustration-colorful-image160029660">cartoon character</a>
+    </string>
+    <string name="enter_your_name">Enter a nickname:</string>
     <string name="your_name">your name</string>
     <string name="month_day_year">Month day, year</string>
     <string name="enter_played_date">Enter played date:</string>
     <string name="reset">Reset</string>
     <string name="high_score_recording" />
-    <string name="high_score_recording_text">Top High Scores</string>
+    <string name="high_score_recording_text">Top 5 High Scores</string>
     <string name="nickname">Nickname</string>
     <string name="date">Month DD, YYYY</string>
     <string name="no_answer">N/A</string>
+    <string name="new_high_score">New High Score</string>
 
 </resources>

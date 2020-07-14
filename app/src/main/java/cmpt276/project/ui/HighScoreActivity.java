@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,19 +22,19 @@ import java.util.ArrayList;
 
 import cmpt276.project.R;
 import cmpt276.project.model.Score;
-import cmpt276.project.model.HighScores;
+import cmpt276.project.model.ScoresManager;
 
 /**
  * HIGH SCORE SCREEN
- * Displays top number of high scores
- * Allows user to reset high scores
+ * Displays top number of scores
+ * Allows user to reset scores
  */
 public class HighScoreActivity extends AppCompatActivity {
 
-    public static final String EDITOR_HIGH_SCORE_ARRAY = "editor high score array";
-    public static final String SHARED_PREFS_HIGH_SCORE = "shared prefs for high score";
+    public static final String EDITOR_SCORES_ARRAY = "editor for scores array";
+    public static final String SHARED_PREFS_SCORES = "shared prefs for scores";
 
-    private HighScores highScores;
+    private ScoresManager scoresManager;
     private TextView[] scoresTxtView;
     private int numMaxScores;
 
@@ -45,16 +44,18 @@ public class HighScoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_high_score);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        highScores = HighScores.getInstance();
-        numMaxScores = highScores.getNumMaxScores();
+        scoresManager = ScoresManager.getInstance();
+        numMaxScores = scoresManager.getNumMaxScores();
         scoresTxtView = new TextView[numMaxScores];
-        setupHighScore();
+
+        scoresManager.print();
+        setupHighScores();
         setupResetButton();
         setupBackButton();
     }
 
-    private void setupHighScore() {
-        LinearLayout layout = findViewById(R.id.linearScoreBoard);
+    private void setupHighScores() {
+        LinearLayout layout = findViewById(R.id.linearLayoutScores);
         for(int i = 0; i < numMaxScores; i++){
             TextView text = new TextView(this);
             text.setLayoutParams(new LinearLayout.LayoutParams(
@@ -62,10 +63,9 @@ public class HighScoreActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             ));
-//            text.setTypeface(ResourcesCompat.getFont(this, R.font.atma_medium));
             text.setTextColor(Color.parseColor("#000000"));
             text.setTextSize(18);
-            text.setPadding(50, 20, 0, 0);
+            text.setPadding(0, 0, 0, 0);
 
             layout.addView(text);
             scoresTxtView[i] = text;
@@ -75,69 +75,66 @@ public class HighScoreActivity extends AppCompatActivity {
 
     private void setTexts() {
         for(int i = 0; i < scoresTxtView.length; i++){
-            int time = highScores.getScoreArray().get(i).getTimeBySeconds();
-            int minute = time / 60;
+            int time = scoresManager.getScore(i).getTimeBySeconds();
+            int minutes = time / 60;
             int seconds = time % 60;
 
-            String secs = seconds + "";
+            String strSeconds = seconds + "";
             if(seconds / 10 < 1){
-                secs = "0" + seconds;
+                strSeconds = "0" + seconds;
             }
             String msg = (i + 1) + ".\t\t\t"
-                    + minute + ":" + secs + "\t\t\t"
-                    + highScores.getScoreArray().get(i).getName() + "\t\t\t"
-                    + highScores.getScoreArray().get(i).getDate();
+                    + minutes + ":" + strSeconds + "\t\t\t"
+                    + scoresManager.getScore(i).getName() + "\t\t\t"
+                    + scoresManager.getScore(i).getDate();
+
             scoresTxtView[i].setText(msg);
         }
     }
 
     private void setupResetButton() {
-        Button btReset = findViewById(R.id.btnReset);
+        Button btReset = findViewById(R.id.buttonReset);
         btReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                highScores.resetScoreArray();
-                setDefaultScores(highScores);
+                scoresManager.resetScoreArray();
+                setDefaultScores(scoresManager);
                 setTexts();
             }
         });
     }
 
-    public static void setDefaultScores(HighScores highScores){
-        highScores.addScore(new Score(23, "N/A", "Month DD, YYYY"));
-        highScores.addScore(new Score(28, "N/A", "Month DD, YYYY"));
-        highScores.addScore(new Score(20, "N/A", "Month DD, YYYY"));
-        highScores.addScore(new Score(25, "N/A", "Month DD, YYYY"));
-        highScores.addScore(new Score(25, "N/A", "Month DD, YYYY"));
+    public static void setDefaultScores(ScoresManager scoresManager){
+        scoresManager.addScore(new Score(23, "N/A", "Month DD, YYYY"));
+        scoresManager.addScore(new Score(28, "N/A", "Month DD, YYYY"));
+        scoresManager.addScore(new Score(20, "N/A", "Month DD, YYYY"));
+        scoresManager.addScore(new Score(25, "N/A", "Month DD, YYYY"));
+        scoresManager.addScore(new Score(18, "N/A", "Month DD, YYYY"));
     }
 
-    public static void saveHighScores(Context context, HighScores highScores){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_HIGH_SCORE, MODE_PRIVATE);
+    public static void saveScores(Context context, ScoresManager scoresManager){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_SCORES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(highScores.getScoreArray());
-        editor.putString(EDITOR_HIGH_SCORE_ARRAY, json);
+        String json = gson.toJson(scoresManager.getScoreArray());
+        editor.putString(EDITOR_SCORES_ARRAY, json);
         editor.apply();
     }
 
-    public static ArrayList<Score> getSavedHighScore(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_HIGH_SCORE, MODE_PRIVATE);
+    public static ArrayList<Score> getSavedScores(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_SCORES, MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = sharedPreferences.getString(EDITOR_HIGH_SCORE_ARRAY, null);
+        String json = sharedPreferences.getString(EDITOR_SCORES_ARRAY, null);
         Type type = new TypeToken<ArrayList<Score>>() {}.getType();
         return gson.fromJson(json, type);
     }
 
-    public static Intent makeIntent(Context context){
-        return new Intent(context, HighScoreActivity.class);
-    }
-
     private void setupBackButton() {
-        Button btn = findViewById(R.id.btnBack);
+        Button btn = findViewById(R.id.buttonBack);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveHighScores(HighScoreActivity.this, highScores);
+                saveScores(HighScoreActivity.this, scoresManager);
                 finish();
             }
         });
@@ -145,7 +142,11 @@ public class HighScoreActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        saveHighScores(this, highScores);
+        saveScores(this, scoresManager);
         super.onBackPressed();
+    }
+
+    public static Intent makeIntent(Context context){
+        return new Intent(context, HighScoreActivity.class);
     }
 }
