@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
 import cmpt276.project.R;
 
@@ -18,7 +21,7 @@ import cmpt276.project.R;
  * OPTIONS SCREEN
  * Allows users to select an image package
  */
-public class OptionActivity extends AppCompatActivity {
+public class OptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     public static final String SHARED_PREFS_IMAGE_PACK = "shared preferences for image pack";
     public static final String EDITOR_IMAGE_PACK_ID = "id for image pack";
@@ -37,6 +40,9 @@ public class OptionActivity extends AppCompatActivity {
         setupImageButton(imgButtonFruits);
         setupImageButton(imgButtonVegs);
         setupBackButton();
+
+        reqSpinner(R.id.cardNumSpinner , R.array.cardNumArray);
+        reqSpinner(R.id.imageNumSpinner , R.array.imageNumArray);
     }
 
     private void setupImageButton(final int imageId) {
@@ -96,5 +102,28 @@ public class OptionActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context){
         return new Intent(context, OptionActivity.class);
+    }
+
+    private void reqSpinner(int buttonId, int textArray) {
+        Spinner spinner = findViewById(buttonId);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,textArray,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+    }
+
+
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

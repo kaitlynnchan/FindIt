@@ -64,5 +64,16 @@
     <string name="date">Month DD, YYYY</string>
     <string name="no_answer">N/A</string>
     <string name="new_high_score">New High Score</string>
+    <string-array name="cardNumArray">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>all</item>
+    </string-array>
+    <string-array name="imageNumArray">
+        <item>3</item>
+        <item>4</item>
+        <item>6</item>
+    </string-array>
 
 </resources>

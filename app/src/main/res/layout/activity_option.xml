@@ -75,4 +75,71 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/textImageNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="330dp"
+        android:layout_marginBottom="17dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/atma_medium"
+        android:text="No. of Images"
+        android:textColor="#1B1919"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageNumSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textBoardSize" />
+
+    <TextView
+        android:id="@+id/textBoardSize"
+        android:layout_width="175dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="226dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="13dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/atma_medium"
+        android:text="No. of Cards"
+        android:textColor="#0E0E0E"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/textImageNum"
+        app:layout_constraintEnd_toStartOf="@+id/imgMan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBack" />
+
+    <Spinner
+        android:id="@+id/imageNumSpinner"
+        android:layout_width="153dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_background"
+        android:spinnerMode="dropdown"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardNumSpinner" />
+
+    <Spinner
+        android:id="@+id/cardNumSpinner"
+        android:layout_width="153dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="299dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_background"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toTopOf="@+id/imageNumSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgMan"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
