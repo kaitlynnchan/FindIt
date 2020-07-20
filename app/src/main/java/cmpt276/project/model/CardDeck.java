@@ -11,8 +11,10 @@ public class CardDeck {
     private int numCards;       // Number of cards in each game
     private int numImages;      // Number of images on each card
     private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
-    private int[][] cards;      // Card array: first index indicates the card, second index indicates which images are on the card
+//    private int[][] cards;      // Card array: first index indicates the card, second index indicates which images are on the card
     private int[] imageArr;     // Array of images, each index represents an specific fruit / vegetable
+    private String[] wordArr;     // Array of images, each index represents an specific fruit / vegetable
+    private Object[][] cardsObj;
 
     private static CardDeck instance;
 
@@ -37,8 +39,15 @@ public class CardDeck {
     }
 
     // Returns the image at the index on the selected card
-    public int getCardImage(int card, int index) {
-        return cards[card][index];
+    public Object getCardObject(int card, int index) {
+        String[] split = ((String) cardsObj[card][index]).split(",");
+        String type = split[0];
+        int i = Integer.parseInt(split[1]);
+        if(type.equals("word")){
+            return wordArr[i];
+        } else{
+            return imageArr[i];
+        }
     }
 
     public void setNumImages(int numImages) {
@@ -53,6 +62,10 @@ public class CardDeck {
         this.imageArr = imageArr;
     }
 
+    public void setWordArr(String[] wordArr) {
+        this.wordArr = wordArr;
+    }
+
     // Set cardIndex to 1, since card[0] is put into the discard pile when the game starts
     public void setCardIndex() {this.cardIndex = 1;}
 
@@ -61,15 +74,28 @@ public class CardDeck {
     }
 
     public void populateCards(){
-        cards = new int[numCards][numImages];
+        cardsObj = new Object[numCards][numImages];
         int row = 0;
 
         // Help taken from: https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/
         // Generate series from imageArr[0] to imageArr[numImages - 1]
         for (int i = 0; i <= numImages - 1; i++)  {
-            cards[row][0] = imageArr[0];
+            int rand = (int) (Math.random() * 2);
+            if(rand == 0){
+                cardsObj[row][0] = "image,0";
+            } else if(rand == 1){
+                cardsObj[row][0] = "word,0";
+            }
+
             for (int i2 = 1; i2 <= numImages - 1; i2++) {
-                cards[row][i2] = imageArr[(numImages * i) - i + i2];
+                int indx = (numImages * i) - i + i2;
+
+                rand = (int) (Math.random() * 2);
+                if(rand == 0){
+                    cardsObj[row][i2] = "image," + indx;
+                } else if(rand == 1){
+                    cardsObj[row][i2] = "word," + indx;
+                }
             }
             row++;
         }
@@ -77,11 +103,26 @@ public class CardDeck {
         // Generate series from imageArr[numImages] to imageArr[numImages * (numImages - 1)]
         for (int i = 1; i <= numImages-1; i++) {
             for (int i2 = 1; i2 <= numImages-1; i2++) {
-                cards[row][0] = imageArr[i];
+
+                int rand = (int) (Math.random() * 2);
+                if(rand == 0){
+                    cardsObj[row][0] = "image," + i;;
+                } else if(rand == 1){
+                    cardsObj[row][0] = "word," + i;
+                }
+
                 for (int i3 = 1; i3 <= numImages-1; i3++) {
-                    cards[row][i3] = imageArr[numImages + (numImages - 1) * (i3 - 1)
+                    int indx = numImages + (numImages - 1) * (i3 - 1)
                             + ( (i - 1) * (i3 - 1) + (i2 - 1) )
-                            % (numImages - 1)];
+                            % (numImages - 1);
+
+                    rand = (int) (Math.random() * 2);
+                    if(rand == 0){
+                        cardsObj[row][i3] = "image," + indx;
+                    } else if(rand == 1){
+                        cardsObj[row][i3] = "word," + indx;
+                    }
+
                 }
                 row++;
             }
@@ -93,15 +134,15 @@ public class CardDeck {
     public void shuffleCardsAndImages(){
         for(int i = 0; i < numCards; i++){
             int rand = (int) ((Math.random() * (numCards - i)) + i);
-            int[] tempCard = cards[i];
-            cards[i] = cards[rand];
-            cards[rand] = tempCard;
+            Object[] tempCard = cardsObj[i];
+            cardsObj[i] = cardsObj[rand];
+            cardsObj[rand] = tempCard;
 
             for (int j = 0; j < numImages; j++) {
                 rand = (int) ((Math.random() * (numImages - j)) + j);
-                int tempImage = cards[i][j];
-                cards[i][j] = cards[i][rand];
-                cards[i][rand] = tempImage;
+                Object tempImage = cardsObj[i][j];
+                cardsObj[i][j] = cardsObj[i][rand];
+                cardsObj[i][rand] = tempImage;
             }
         }
     }
@@ -111,7 +152,14 @@ public class CardDeck {
     // cardIndex refers to the index of the card on the top of the draw pile
     public boolean searchDiscardPile(int imageIndex) {
         for(int i = 0; i < numImages; i++){
-            if(cards[cardIndex - 1][i] == cards[cardIndex][imageIndex]){
+
+            String[] split = ((String) cardsObj[cardIndex][imageIndex]).split(",");
+            int idxDraw = Integer.parseInt(split[1]);
+
+            split = ((String) cardsObj[cardIndex - 1][i]).split(",");
+            int idxDiscard = Integer.parseInt(split[1]);
+
+            if(idxDraw == idxDiscard){
                 return true;
             }
         }
