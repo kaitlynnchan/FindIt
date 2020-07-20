@@ -84,9 +84,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void createCardDeck() {
         int[] imagePack = OptionActivity.getImagePackArray(MainActivity.this);
-        String[] wordPack = {"red apple", "green apple", "lemon", "mango", "orange", "pumpkin", "watermelon"};
+        String[] wordPack = OptionActivity.getWordPackArray(MainActivity.this);
         cardDeck.setNumCards(7);
         cardDeck.setNumImages(3);
+        cardDeck.setMode(OptionActivity.getMode(MainActivity.this));
         cardDeck.setCardIndex();
         cardDeck.setImageArr(imagePack);
         cardDeck.setWordArr(wordPack);
