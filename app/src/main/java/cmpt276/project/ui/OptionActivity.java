@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import cmpt276.project.R;
+import cmpt276.project.model.CardDeck;
 
 /**
  * OPTIONS SCREEN
@@ -46,26 +47,6 @@ public class OptionActivity extends AppCompatActivity {
         setupBackButton();
     }
 
-    private void setupModeButton(final int modeBtn) {
-        Button button = findViewById(modeBtn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveModeId(modeBtn);
-                setupModeButton(buttonRegular);
-                setupModeButton(buttonWordsImages);
-            }
-        });
-
-        // Selecting/deselecting mode button
-        if(getModeId(this) == modeBtn){
-            button.setForegroundGravity(Gravity.END|Gravity.BOTTOM);
-            button.setForeground(getDrawable(R.drawable.drawable_magnifying_glass));
-        } else{
-            button.setForeground(null);
-        }
-    }
-
     private void setupImageButton(final int imageId) {
         ImageButton button = findViewById(imageId);
         button.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +60,26 @@ public class OptionActivity extends AppCompatActivity {
 
         // Selecting/deselecting image package
         if(getImagePackId(this) == imageId){
+            button.setForegroundGravity(Gravity.END|Gravity.BOTTOM);
+            button.setForeground(getDrawable(R.drawable.drawable_magnifying_glass));
+        } else{
+            button.setForeground(null);
+        }
+    }
+
+    private void setupModeButton(final int modeBtn) {
+        Button button = findViewById(modeBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveModeId(modeBtn);
+                setupModeButton(buttonRegular);
+                setupModeButton(buttonWordsImages);
+            }
+        });
+
+        // Selecting/deselecting mode button
+        if(getModeId(this) == modeBtn){
             button.setForegroundGravity(Gravity.END|Gravity.BOTTOM);
             button.setForeground(getDrawable(R.drawable.drawable_magnifying_glass));
         } else{
@@ -113,7 +114,7 @@ public class OptionActivity extends AppCompatActivity {
         }
     }
 
-    public static String[] getWordPackArray(Context context){
+    public static String[] getWordArray(Context context){
         int imageButtonId = OptionActivity.getImagePackId(context);
         if(imageButtonId == R.id.imgButtonVegs){
             return new String[]{"broccoli", "carrot", "eggplant", "lettuce", "mushroom", "onion", "radish"};
@@ -127,12 +128,12 @@ public class OptionActivity extends AppCompatActivity {
         return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, R.id.imgButtonFruits);
     }
 
-    public static int getMode(Context context){
+    public static CardDeck.Mode getMode(Context context){
         int modeId = OptionActivity.getModeId(context);
         if(modeId == R.id.buttonWordsImages){
-            return 1;
+            return CardDeck.Mode.WORD_IMAGES;
         } else{
-            return 0;
+            return CardDeck.Mode.REGULAR;
         }
     }
 

@@ -31,8 +31,8 @@ public class GameActivity extends AppCompatActivity {
     private CardDeck cardDeck;
     private int numImages;
 
-    private Button[] drawPileImages;        // Contains the images of a card from the draw pile
-    private Button[] discardPileImages;     // Contains the images of a card from the discard pile
+    private Button[] drawPile;        // Contains the images of a card from the draw pile
+    private Button[] discardPile;     // Contains the images of a card from the discard pile
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,8 @@ public class GameActivity extends AppCompatActivity {
         cardDeck = CardDeck.getInstance();
         numImages = cardDeck.getNumImages();
 
-        drawPileImages = new Button[numImages];
-        discardPileImages = new Button[numImages];
+        drawPile = new Button[numImages];
+        discardPile = new Button[numImages];
 
         setupDrawCard();
         setupDiscardCard();
@@ -59,7 +59,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startTimer();
-                updateCardImages();
+                updateCard();
 
                 ImageView imgDiscard = findViewById(R.id.imageDiscardCard);
                 imgDiscard.setVisibility(View.VISIBLE);
@@ -95,8 +95,8 @@ public class GameActivity extends AppCompatActivity {
             });
 
             tableDraw.addView(button);
-            drawPileImages[i] = button;
-            drawPileImages[i].setVisibility(View.INVISIBLE);
+            drawPile[i] = button;
+            drawPile[i].setVisibility(View.INVISIBLE);
         }
     }
 
@@ -117,8 +117,8 @@ public class GameActivity extends AppCompatActivity {
             button.setPadding(0, 0, 0, 0);
 
             tableDiscard.addView(button);
-            discardPileImages[i] = button;
-            discardPileImages[i].setVisibility(View.INVISIBLE);
+            discardPile[i] = button;
+            discardPile[i].setVisibility(View.INVISIBLE);
         }
     }
 
@@ -129,63 +129,51 @@ public class GameActivity extends AppCompatActivity {
                 stopTimer();
             } else {
                 cardDeck.incrementCardIndex();
-                updateCardImages();
+                updateCard();
             }
         }
     }
 
     // Locks the button sizes
     // Taken from Brians youtube videos: https://www.youtube.com/watch?v=4MFzuP1F-xQ
-    private void lockButtonSizes() {
+    private void lockButtonSizes(Button[] pile) {
         for (int i = 0; i < 3; i++) {
-            Button drawButton = drawPileImages[i];
-            Button discardButton = discardPileImages[i];
+            Button button = pile[i];
 
-            int drawHeight = drawButton.getHeight();
-            drawButton.setMinHeight(drawHeight);
-            drawButton.setMaxHeight(drawHeight);
+            int height = button.getHeight();
+            button.setMinHeight(height);
+            button.setMaxHeight(height);
 
-            int drawWidth = drawButton.getWidth();
-            drawButton.setMinWidth(drawWidth);
-            drawButton.setMaxWidth(drawWidth);
-
-            int discardHeight = discardButton.getHeight();
-            drawButton.setMinHeight(discardHeight);
-            drawButton.setMaxHeight(discardHeight);
-
-            int discardWidth = discardButton.getWidth();
-            drawButton.setMinWidth(discardWidth);
-            drawButton.setMaxWidth(discardWidth);
+            int width = button.getWidth();
+            button.setMinWidth(width);
+            button.setMaxWidth(width);
         }
     }
 
     // Change the button icons to the appropriate pictures
     // Used code from Brians youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
-    private void updateCardImages() {
+    private void updateCard() {
         for (int i = 0; i < 3; i++) {
-
             Object drawObject = cardDeck.getCardObject(cardDeck.getCardIndex(), i);
             Object discardObject = cardDeck.getCardObject(cardDeck.getCardIndex() - 1, i);
 
-            Button drawButton = drawPileImages[i];
+            Button drawButton = drawPile[i];
+            lockButtonSizes(drawPile);
             if(drawObject.getClass() == Integer.class){
-                lockButtonSizes();
                 setImage((int) drawObject, drawButton);
                 drawButton.setText(null);
             } else if(drawObject.getClass() == String.class){
-                lockButtonSizes();
                 drawButton.setText("" + drawObject);
                 drawButton.setBackground(null);
             }
             drawButton.setVisibility(View.VISIBLE);
 
-            Button discardButton = discardPileImages[i];
+            Button discardButton = discardPile[i];
+            lockButtonSizes(discardPile);
             if(discardObject.getClass() == Integer.class){
-                lockButtonSizes();
                 setImage((int) discardObject, discardButton);
                 discardButton.setText(null);
             } else if(discardObject.getClass() == String.class){
-                lockButtonSizes();
                 discardButton.setText("" + discardObject);
                 discardButton.setBackground(null);
             }

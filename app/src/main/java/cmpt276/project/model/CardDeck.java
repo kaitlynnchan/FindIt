@@ -8,15 +8,17 @@ package cmpt276.project.model;
  */
 public class CardDeck {
 
+    public enum Mode {
+        REGULAR, WORD_IMAGES
+    }
+
     private int numCards;       // Number of cards in each game
     private int numImages;      // Number of images on each card
     private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
     private int[] imageArr;     // Array of images, each index represents an specific fruit / vegetable
     private String[] wordArr;   // Array of images, each index represents an specific fruit / vegetable
-    private Object[][] cardsObj;// Card array: first index indicates the card, second index indicates which images are on the card
-    private int mode;           // Game mode
-    private final int REGULAR = 0;
-    private final int WORDS_IMAGES = 1;
+    private Object[][] cards;// Card array: first index indicates the card, second index indicates which images are on the card
+    private Mode mode;           // Game mode
 
     private static CardDeck instance;
 
@@ -42,7 +44,7 @@ public class CardDeck {
 
     // Returns the image at the index on the selected card
     public Object getCardObject(int card, int index) {
-        String[] split = ((String) cardsObj[card][index]).split(",");
+        String[] split = ((String) cards[card][index]).split(",");
         String type = split[0];
         int i = Integer.parseInt(split[1]);
         if(type.equals("word")){
@@ -68,7 +70,9 @@ public class CardDeck {
         this.wordArr = wordArr;
     }
 
-    public void setMode(int mode) {this.mode = mode;}
+    public void setMode(Mode mode) {
+        this.mode = mode;
+    }
 
     // Set cardIndex to 1, since card[0] is put into the discard pile when the game starts
     public void setCardIndex() {this.cardIndex = 1;}
@@ -78,17 +82,17 @@ public class CardDeck {
     }
 
     public void populateCards(){
-        cardsObj = new Object[numCards][numImages];
+        cards = new Object[numCards][numImages];
         int card = 0;
 
         // Help taken from: https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/
         // Generate series from imageArr[0] to imageArr[numImages - 1]
         for (int i = 0; i <= numImages - 1; i++)  {
             int rand = (int) (Math.random() * 2);
-            if(rand == 0 || mode == REGULAR){
-                cardsObj[card][0] = "image,0";
+            if(rand == 0 || mode == Mode.REGULAR){
+                cards[card][0] = "image,0";
             } else if(rand == 1){
-                cardsObj[card][0] = "word,0";
+                cards[card][0] = "word,0";
             }
 
             for (int i2 = 1; i2 <= numImages - 1; i2++) {
@@ -104,10 +108,10 @@ public class CardDeck {
                     rand = (int) (Math.random() * 2);
                 }
 
-                if(rand == 0 || mode == REGULAR){
-                    cardsObj[card][i2] = "image," + indx;
+                if(rand == 0 || mode == Mode.REGULAR){
+                    cards[card][i2] = "image," + indx;
                 } else if(rand == 1){
-                    cardsObj[card][i2] = "word," + indx;
+                    cards[card][i2] = "word," + indx;
                 }
             }
             card++;
@@ -118,10 +122,10 @@ public class CardDeck {
             for (int i2 = 1; i2 <= numImages - 1; i2++) {
 
                 int rand = (int) (Math.random() * 2);
-                if(rand == 0 || mode == REGULAR){
-                    cardsObj[card][0] = "image," + i;;
+                if(rand == 0 || mode == Mode.REGULAR){
+                    cards[card][0] = "image," + i;;
                 } else if(rand == 1){
-                    cardsObj[card][0] = "word," + i;
+                    cards[card][0] = "word," + i;
                 }
 
                 for (int i3 = 1; i3 <= numImages - 1; i3++) {
@@ -139,10 +143,10 @@ public class CardDeck {
                         rand = (int) (Math.random() * 2);
                     }
 
-                    if(rand == 0 || mode == REGULAR){
-                        cardsObj[card][i3] = "image," + indx;
+                    if(rand == 0 || mode == Mode.REGULAR){
+                        cards[card][i3] = "image," + indx;
                     } else if(rand == 1){
-                        cardsObj[card][i3] = "word," + indx;
+                        cards[card][i3] = "word," + indx;
                     }
 
                 }
@@ -156,15 +160,15 @@ public class CardDeck {
     public void shuffleCardsAndImages(){
         for(int i = 0; i < numCards; i++){
             int rand = (int) ((Math.random() * (numCards - i)) + i);
-            Object[] tempCard = cardsObj[i];
-            cardsObj[i] = cardsObj[rand];
-            cardsObj[rand] = tempCard;
+            Object[] tempCard = cards[i];
+            cards[i] = cards[rand];
+            cards[rand] = tempCard;
 
             for (int j = 0; j < numImages; j++) {
                 rand = (int) ((Math.random() * (numImages - j)) + j);
-                Object tempImage = cardsObj[i][j];
-                cardsObj[i][j] = cardsObj[i][rand];
-                cardsObj[i][rand] = tempImage;
+                Object tempImage = cards[i][j];
+                cards[i][j] = cards[i][rand];
+                cards[i][rand] = tempImage;
             }
         }
     }
@@ -175,10 +179,10 @@ public class CardDeck {
     public boolean searchDiscardPile(int imageIndex) {
         for(int i = 0; i < numImages; i++){
 
-            String[] split = ((String) cardsObj[cardIndex][imageIndex]).split(",");
+            String[] split = ((String) cards[cardIndex][imageIndex]).split(",");
             int idxDraw = Integer.parseInt(split[1]);
 
-            split = ((String) cardsObj[cardIndex - 1][i]).split(",");
+            split = ((String) cards[cardIndex - 1][i]).split(",");
             int idxDiscard = Integer.parseInt(split[1]);
 
             if(idxDraw == idxDiscard){
