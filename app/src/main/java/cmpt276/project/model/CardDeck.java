@@ -12,7 +12,7 @@ public class CardDeck {
     private int numImages;      // Number of images on each card
     private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
     private int[] imageArr;     // Array of images, each index represents an specific fruit / vegetable
-    private String[] wordArr;   // Array of images, each index represents an specific fruit / vegetable
+    private String[] wordArr;   // Array of words, each index represents an specific fruit / vegetable
     private Object[][] cards;   // Card array: first index indicates the card, second index indicates which images are on the card
     private Mode mode;          // Game mode
 
