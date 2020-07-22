@@ -136,19 +136,29 @@ public class GameActivity extends AppCompatActivity {
 
     // Locks the button sizes
     // Taken from Brians youtube videos: https://www.youtube.com/watch?v=4MFzuP1F-xQ
-    private void lockButtonSizes(Button[] pile) {
+    private void lockButtonSizes() {
         for (int i = 0; i < 3; i++) {
-            Button button = pile[i];
+            Button drawButton = drawPile[i];
+            Button discardButton = discardPile[i];
 
-            int height = button.getHeight();
-            button.setMinHeight(height);
-            button.setMaxHeight(height);
+            int drawHeight = drawButton.getHeight();
+            drawButton.setMinHeight(drawHeight);
+            drawButton.setMaxHeight(drawHeight);
 
-            int width = button.getWidth();
-            button.setMinWidth(width);
-            button.setMaxWidth(width);
+            int drawWidth = drawButton.getWidth();
+            drawButton.setMinWidth(drawWidth);
+            drawButton.setMaxWidth(drawWidth);
+
+            int discardHeight = discardButton.getHeight();
+            drawButton.setMinHeight(discardHeight);
+            drawButton.setMaxHeight(discardHeight);
+
+            int discardWidth = discardButton.getWidth();
+            drawButton.setMinWidth(discardWidth);
+            drawButton.setMaxWidth(discardWidth);
         }
     }
+
 
     // Change the button icons to the appropriate pictures
     // Used code from Brians youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
@@ -157,39 +167,29 @@ public class GameActivity extends AppCompatActivity {
             Object drawObject = cardDeck.getCardObject(cardDeck.getCardIndex(), i);
             Object discardObject = cardDeck.getCardObject(cardDeck.getCardIndex() - 1, i);
 
-            Button drawButton = drawPile[i];
-            lockButtonSizes(drawPile);
-            if(drawObject.getClass() == Integer.class){
-                setImage((int) drawObject, drawButton);
-                drawButton.setText(null);
-            } else if(drawObject.getClass() == String.class){
-                drawButton.setText("" + drawObject);
-                drawButton.setBackground(null);
-            }
-            drawButton.setVisibility(View.VISIBLE);
+            lockButtonSizes();
 
-            Button discardButton = discardPile[i];
-            lockButtonSizes(discardPile);
-            if(discardObject.getClass() == Integer.class){
-                setImage((int) discardObject, discardButton);
-                discardButton.setText(null);
-            } else if(discardObject.getClass() == String.class){
-                discardButton.setText("" + discardObject);
-                discardButton.setBackground(null);
-            }
-            discardButton.setVisibility(View.VISIBLE);
-
+            setButton(drawObject, drawPile[i]);
+            setButton(discardObject, discardPile[i]);
         }
     }
 
-    private void setImage(int imageID, Button button) {
-        int width = button.getWidth();
-        int height = button.getHeight();
+    private void setButton(Object object, Button button) {
+        if (object.getClass() == Integer.class) {
+            int width = button.getWidth();
+            int height = button.getHeight();
 
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), imageID);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, true);
-        Resources resource = getResources();
-        button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+            Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), (int) object);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, true);
+            Resources resource = getResources();
+            button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+
+            button.setText(null);
+        } else if (object.getClass() == String.class) {
+            button.setText("" + object);
+            button.setBackground(null);
+        }
+        button.setVisibility(View.VISIBLE);
     }
 
     private void startTimer() {

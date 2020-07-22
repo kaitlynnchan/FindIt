@@ -8,17 +8,13 @@ package cmpt276.project.model;
  */
 public class CardDeck {
 
-    public enum Mode {
-        REGULAR, WORD_IMAGES
-    }
-
     private int numCards;       // Number of cards in each game
     private int numImages;      // Number of images on each card
     private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
     private int[] imageArr;     // Array of images, each index represents an specific fruit / vegetable
     private String[] wordArr;   // Array of images, each index represents an specific fruit / vegetable
-    private Object[][] cards;// Card array: first index indicates the card, second index indicates which images are on the card
-    private Mode mode;           // Game mode
+    private Object[][] cards;   // Card array: first index indicates the card, second index indicates which images are on the card
+    private Mode mode;          // Game mode
 
     private static CardDeck instance;
 
@@ -83,78 +79,61 @@ public class CardDeck {
 
     public void populateCards(){
         cards = new Object[numCards][numImages];
-        int card = 0;
+        int row = 0;
 
         // Help taken from: https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/
         // Generate series from imageArr[0] to imageArr[numImages - 1]
         for (int i = 0; i <= numImages - 1; i++)  {
-            int rand = (int) (Math.random() * 2);
-            if(rand == 0 || mode == Mode.REGULAR){
-                cards[card][0] = "image,0";
-            } else if(rand == 1){
-                cards[card][0] = "word,0";
-            }
+            int rand = checkRandom(0, 0);
+            addValue(row, rand, 0, 0);
 
             for (int i2 = 1; i2 <= numImages - 1; i2++) {
                 int indx = (numImages * i) - i + i2;
-
-                if(i2 == numImages - 1){
-                    if(rand == 0){
-                        rand = 1;
-                    } else{
-                        rand = 0;
-                    }
-                } else{
-                    rand = (int) (Math.random() * 2);
-                }
-
-                if(rand == 0 || mode == Mode.REGULAR){
-                    cards[card][i2] = "image," + indx;
-                } else if(rand == 1){
-                    cards[card][i2] = "word," + indx;
-                }
+                rand = checkRandom(rand, i2);
+                addValue(row, rand, i2, indx);
             }
-            card++;
+            row++;
         }
 
         // Generate series from imageArr[numImages] to imageArr[numImages * (numImages - 1)]
         for (int i = 1; i <= numImages-1; i++) {
             for (int i2 = 1; i2 <= numImages - 1; i2++) {
-
-                int rand = (int) (Math.random() * 2);
-                if(rand == 0 || mode == Mode.REGULAR){
-                    cards[card][0] = "image," + i;;
-                } else if(rand == 1){
-                    cards[card][0] = "word," + i;
-                }
+                int rand = checkRandom(0, 0);
+                addValue(row, rand, 0, i);
 
                 for (int i3 = 1; i3 <= numImages - 1; i3++) {
                     int indx = numImages + (numImages - 1) * (i3 - 1)
                             + ( (i - 1) * (i3 - 1) + (i2 - 1) )
                             % (numImages - 1);
-
-                    if(i3 == numImages - 1){
-                        if(rand == 0){
-                            rand = 1;
-                        } else{
-                            rand = 0;
-                        }
-                    } else{
-                        rand = (int) (Math.random() * 2);
-                    }
-
-                    if(rand == 0 || mode == Mode.REGULAR){
-                        cards[card][i3] = "image," + indx;
-                    } else if(rand == 1){
-                        cards[card][i3] = "word," + indx;
-                    }
-
+                    rand = checkRandom(rand, i3);
+                    addValue(row, rand, i3, indx);
                 }
-                card++;
+                row++;
             }
         }
 
         shuffleCardsAndImages();
+    }
+
+    private void addValue(int row, int rand, int i, int indx) {
+        if (rand == 0 || mode == Mode.NORMAL) {
+            cards[row][i] = "image," + indx;
+        } else if (rand == 1) {
+            cards[row][i] = "word," + indx;
+        }
+    }
+
+    private int checkRandom(int rand, int i2) {
+        if (i2 == numImages - 1) {
+            if (rand == 0) {
+                rand = 1;
+            } else {
+                rand = 0;
+            }
+        } else {
+            rand = (int) (Math.random() * 2);
+        }
+        return rand;
     }
 
     public void shuffleCardsAndImages(){

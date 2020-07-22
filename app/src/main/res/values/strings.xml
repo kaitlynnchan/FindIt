@@ -65,7 +65,7 @@
     <string name="no_answer">N/A</string>
     <string name="new_high_score">New High Score</string>
     <string name="words_and_images">words and images</string>
-    <string name="regular">Regular</string>
+    <string name="normal">NORMAL\n(IMAGES)</string>
     <string name="mode">Mode:</string>
 
 </resources>

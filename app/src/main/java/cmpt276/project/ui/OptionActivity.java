@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,11 +16,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import cmpt276.project.R;
-import cmpt276.project.model.CardDeck;
+import cmpt276.project.model.Mode;
 
 /**
  * OPTIONS SCREEN
- * Allows users to select an image package
+ * Allows users to select an image package and mode
  */
 public class OptionActivity extends AppCompatActivity {
 
@@ -26,7 +29,7 @@ public class OptionActivity extends AppCompatActivity {
     public static final String EDITOR_MODE_ID = "id for mode button";
     private int imgButtonFruits;
     private int imgButtonVegs;
-    private int buttonRegular;
+    private int buttonNormal;
     private int buttonWordsImages;
 
     @Override
@@ -37,12 +40,12 @@ public class OptionActivity extends AppCompatActivity {
 
         imgButtonFruits = R.id.imgButtonFruits;
         imgButtonVegs = R.id.imgButtonVegs;
-        buttonRegular = R.id.buttonRegular;
+        buttonNormal = R.id.buttonNormal;
         buttonWordsImages = R.id.buttonWordsImages;
 
         setupImageButton(imgButtonFruits);
         setupImageButton(imgButtonVegs);
-        setupModeButton(buttonRegular);
+        setupModeButton(buttonNormal);
         setupModeButton(buttonWordsImages);
         setupBackButton();
     }
@@ -73,10 +76,17 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveModeId(modeBtn);
-                setupModeButton(buttonRegular);
+                setupModeButton(buttonNormal);
                 setupModeButton(buttonWordsImages);
             }
         });
+
+        if(modeBtn == buttonNormal){
+            String s = getString(R.string.normal);
+            SpannableString string = new SpannableString(s);
+            string.setSpan(new RelativeSizeSpan(0.75f), s.length() - 8, s.length(), Spanned.SPAN_COMPOSING);
+            button.setText(string);
+        }
 
         // Selecting/deselecting mode button
         if(getModeId(this) == modeBtn){
@@ -128,18 +138,18 @@ public class OptionActivity extends AppCompatActivity {
         return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, R.id.imgButtonFruits);
     }
 
-    public static CardDeck.Mode getMode(Context context){
+    public static Mode getMode(Context context){
         int modeId = OptionActivity.getModeId(context);
         if(modeId == R.id.buttonWordsImages){
-            return CardDeck.Mode.WORD_IMAGES;
+            return Mode.WORD_IMAGES;
         } else{
-            return CardDeck.Mode.REGULAR;
+            return Mode.NORMAL;
         }
     }
 
     private static int getModeId(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_IMAGE_PACK, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_MODE_ID, R.id.buttonRegular);
+        return sharedPreferences.getInt(EDITOR_MODE_ID, R.id.buttonNormal);
     }
 
     private void setupBackButton() {
