@@ -65,4 +65,6 @@
     <string name="no_answer">N/A</string>
     <string name="new_high_score">New High Score</string>
 
+    <string name="search">Search</string>
+    <string name="clear_search">Clear Search</string>
 </resources>

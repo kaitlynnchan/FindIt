@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import java.util.ArrayList;
 
 import cmpt276.project.R;
+import cmpt276.project.flickr.PhotoGalleryActivity;
 import cmpt276.project.model.CardDeck;
 import cmpt276.project.model.ScoresManager;
 import cmpt276.project.model.Score;
@@ -78,6 +79,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                Intent intent = HelpActivity.makeIntent(MainActivity.this);
                startActivity(intent);
+            }
+        });
+
+        Button flickrbutton = findViewById(R.id.flickrButton);
+        flickrbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PhotoGalleryActivity.class);
+                startActivity(intent);
             }
         });
     }
