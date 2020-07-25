@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -48,8 +47,8 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
         setupImageButton(imgButtonVegs);
         setupBackButton();
 
-        imageSpinner(R.id.imageNumSpinner , R.array.imageNumArray);
-        cardSpinner(R.id.cardNumSpinner , R.array.cardNumArray);
+        imageSpinner();
+        cardSpinner();
 
     }
 
@@ -120,17 +119,16 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
         return new Intent(context, OptionActivity.class);
     }
 
-    private void imageSpinner(int buttonId, int textArray) {
-        Spinner spinner = findViewById(buttonId);
-        String[] temp = getResources().getStringArray(textArray);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,textArray,android.R.layout.simple_spinner_item);
+    private void imageSpinner() {
+        Spinner spinner = findViewById(R.id.imageNumSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.imageNumArray,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
     }
-    private void cardSpinner(int buttonId, int textArrayNum) {
-        Spinner spinner = findViewById(buttonId);
-        String[] textArray = getResources().getStringArray(textArrayNum);
+    private void cardSpinner() {
+        Spinner spinner = findViewById(R.id.cardNumSpinner);
+        String[] textArray = getResources().getStringArray(R.array.cardNumArray);
         String[] textArray1;
         if(getCardNum(getBaseContext()) == 7){
             textArray1 = Arrays.copyOfRange(textArray, 0, 2);
@@ -139,7 +137,7 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
             textArray1 = Arrays.copyOfRange(textArray, 0, 3);
         }
         else{
-            textArray1 = Arrays.copyOfRange(textArray, 0, 5);
+            textArray1 = Arrays.copyOfRange(textArray, 0, textArray.length);
         }
 
         ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(this,android.R.layout.simple_spinner_item,textArray1);
@@ -208,7 +206,7 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
             if(text.equals(tempArray[0]) || text.equals(tempArray[1]) || text.equals(temp[2])  ) {
 
                 saveNumImages(Integer.parseInt(text));
-                cardSpinner(R.id.cardNumSpinner , R.array.cardNumArray);
+                cardSpinner();
             }
         }
     }
