@@ -83,21 +83,26 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
     public static int[] getImagePackArray(Context context){
         int imageButtonId = OptionActivity.getImagePackId(context);
         if(imageButtonId == R.id.imgButtonVegs){
-
-                return new int[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
-                        R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion,
-                        R.drawable.radish,R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
-                        R.drawable.mango, R.drawable.orange, R.drawable.pumpkin};
-
-
+            return new int[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
+                    R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
+                    R.drawable.artichoke, R.drawable.asparagus, R.drawable.cabbage,
+                    R.drawable.cauliflower, R.drawable.celery, R.drawable.corn, R.drawable.cucumber,
+                    R.drawable.garlic, R.drawable.ginger, R.drawable.green_bell_pepper,
+                    R.drawable.kale, R.drawable.leek, R.drawable.okra, R.drawable.parsnip,
+                    R.drawable.peas, R.drawable.potato, R.drawable.red_bell_pepper,
+                    R.drawable.red_cabbage, R.drawable.red_onion, R.drawable.spinach,
+                    R.drawable.turnip, R.drawable.yam, R.drawable.yellow_bell_pepper,
+                    R.drawable.zucchini};
         } else{
-
-                return new int[]{R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
-                        R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
-                        R.drawable.watermelon, R.drawable.carrot, R.drawable.eggplant,
-                        R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion,
-                        R.drawable.radish};
-
+            return new int[]{R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
+                    R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
+                    R.drawable.watermelon, R.drawable.avocado, R.drawable.banana, R.drawable.blackberry,
+                    R.drawable.blueberry, R.drawable.cherry, R.drawable.coconut,
+                    R.drawable.cranberry, R.drawable.dragon_fruit, R.drawable.durian, R.drawable.fig,
+                    R.drawable.grapefruit, R.drawable.grapes, R.drawable.kiwi,
+                    R.drawable.melon, R.drawable.papaya, R.drawable.peach, R.drawable.pear,
+                    R.drawable.pineapple, R.drawable.plum, R.drawable.pomegranate,
+                    R.drawable.raspberry, R.drawable.squash, R.drawable.starfruit, R.drawable.strawberry};
         }
     }
 
