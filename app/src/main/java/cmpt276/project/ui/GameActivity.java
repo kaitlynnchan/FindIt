@@ -162,7 +162,7 @@ public class GameActivity extends AppCompatActivity {
     // Change the button icons to the appropriate pictures
     // Used code from Brians youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void updateCardImages() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < numImages; i++) {
             int drawImageID = cardDeck.getCardImage(cardDeck.getCardIndex(), i);
             int discardImageID = cardDeck.getCardImage(cardDeck.getCardIndex() - 1, i);
 

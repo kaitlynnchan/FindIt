@@ -14,6 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.util.Arrays;
 
 import cmpt276.project.R;
 
@@ -25,6 +28,10 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
 
     public static final String SHARED_PREFS_IMAGE_PACK = "shared preferences for image pack";
     public static final String EDITOR_IMAGE_PACK_ID = "id for image pack";
+    private static final String SHARED_PREFS_IMAGE_NUM = "shared preferences for image number";
+    private static final String EDITOR_IMAGE_NUM = "id for image number";
+    private static final String SHARED_PREFS_PILE_SIZE = "shared preferences for pile size";
+    private static final String EDITOR_PILE_SIZE = "id for pile size";
     private int imgButtonFruits;
     private int imgButtonVegs;
 
@@ -41,8 +48,9 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
         setupImageButton(imgButtonVegs);
         setupBackButton();
 
-        reqSpinner(R.id.cardNumSpinner , R.array.cardNumArray);
-        reqSpinner(R.id.imageNumSpinner , R.array.imageNumArray);
+        imageSpinner(R.id.imageNumSpinner , R.array.imageNumArray);
+        cardSpinner(R.id.cardNumSpinner , R.array.cardNumArray);
+
     }
 
     private void setupImageButton(final int imageId) {
@@ -75,13 +83,21 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
     public static int[] getImagePackArray(Context context){
         int imageButtonId = OptionActivity.getImagePackId(context);
         if(imageButtonId == R.id.imgButtonVegs){
-            return new int[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
-                    R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion,
-                    R.drawable.radish};
+
+                return new int[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
+                        R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion,
+                        R.drawable.radish,R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
+                        R.drawable.mango, R.drawable.orange, R.drawable.pumpkin};
+
+
         } else{
-            return new int[]{R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
-                    R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
-                    R.drawable.watermelon};
+
+                return new int[]{R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
+                        R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
+                        R.drawable.watermelon, R.drawable.carrot, R.drawable.eggplant,
+                        R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion,
+                        R.drawable.radish};
+
         }
     }
 
@@ -104,19 +120,97 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
         return new Intent(context, OptionActivity.class);
     }
 
-    private void reqSpinner(int buttonId, int textArray) {
+    private void imageSpinner(int buttonId, int textArray) {
         Spinner spinner = findViewById(buttonId);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,textArray,
-                android.R.layout.simple_spinner_item);
+        String[] temp = getResources().getStringArray(textArray);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,textArray,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+    }
+    private void cardSpinner(int buttonId, int textArrayNum) {
+        Spinner spinner = findViewById(buttonId);
+        String[] textArray = getResources().getStringArray(textArrayNum);
+        String[] textArray1;
+        if(getCardNum(getBaseContext()) == 7){
+            textArray1 = Arrays.copyOfRange(textArray, 0, 2);
+        }
+        else if(getCardNum(getBaseContext()) == 13){
+            textArray1 = Arrays.copyOfRange(textArray, 0, 3);
+        }
+        else{
+            textArray1 = Arrays.copyOfRange(textArray, 0, 5);
+        }
+
+        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(this,android.R.layout.simple_spinner_item,textArray1);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
     }
 
+    private void saveNumImages(int num){
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_IMAGE_NUM, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_IMAGE_NUM, num);
+        editor.apply();
+    }
+
+    public static int getNumImages(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_IMAGE_NUM, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_IMAGE_NUM, 4);
+    }
+
+    private void savePileSize(int num){
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_PILE_SIZE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_PILE_SIZE, num);
+        editor.apply();
+    }
+
+    public static int getPileSize(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_PILE_SIZE, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_PILE_SIZE, 4);
+
+    }
+
+    public static int getCardNum(Context context) {
+        int numImages = OptionActivity.getNumImages(context);
+        int cardNum;
+        if(numImages == 3){
+            cardNum = 7;
+        }
+        else if(numImages == 4){
+            cardNum = 13;
+        }
+        else{
+            cardNum = 31;
+        }
+        return cardNum;
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
+
         // Create function to send the data to the required classes.
+
+        String[] temp = parent.getResources().getStringArray(R.array.cardNumArray);
+        if(text.equals(temp[0]) || text.equals(temp[1]) || text.equals(temp[2]) || text.equals(temp[3])){
+            if(text.equals(temp[0])) {
+                savePileSize(getCardNum(getBaseContext()));
+            }
+            else {
+                savePileSize(Integer.parseInt(text));
+            }
+        }
+        else {
+            String[] tempArray = parent.getResources().getStringArray(R.array.imageNumArray);
+            if(text.equals(tempArray[0]) || text.equals(tempArray[1]) || text.equals(temp[2])  ) {
+
+                saveNumImages(Integer.parseInt(text));
+                cardSpinner(R.id.cardNumSpinner , R.array.cardNumArray);
+            }
+        }
     }
 
 
@@ -124,5 +218,7 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     // Pass default values for both spinners.
+        saveNumImages(3);
+        savePileSize(7);
     }
 }

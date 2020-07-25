@@ -54,7 +54,14 @@ public class CardDeck {
     }
 
     // Set cardIndex to 1, since card[0] is put into the discard pile when the game starts
-    public void setCardIndex() {this.cardIndex = 1;}
+    public void setCardIndex(int cardIndex) {
+        if(numCards - cardIndex == 0){
+            this.cardIndex = 1;
+        }
+        else{
+            this.cardIndex = numCards - cardIndex;
+        }
+    }
 
     public void incrementCardIndex() {
         this.cardIndex++;

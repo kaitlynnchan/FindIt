@@ -65,10 +65,11 @@
     <string name="no_answer">N/A</string>
     <string name="new_high_score">New High Score</string>
     <string-array name="cardNumArray">
+        <item>all</item>
         <item>5</item>
         <item>10</item>
         <item>15</item>
-        <item>all</item>
+        <item>20</item>
     </string-array>
     <string-array name="imageNumArray">
         <item>3</item>

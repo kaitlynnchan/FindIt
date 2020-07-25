@@ -84,9 +84,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void createCardDeck() {
         int[] imagePack = OptionActivity.getImagePackArray(MainActivity.this);
-        cardDeck.setNumCards(7);
-        cardDeck.setNumImages(3);
-        cardDeck.setCardIndex();
+        int numImages = OptionActivity.getNumImages(MainActivity.this);
+        int pileSize = OptionActivity.getPileSize(MainActivity.this);
+        int cardNum = OptionActivity.getCardNum(MainActivity.this);
+
+        cardDeck.setNumCards(cardNum);
+        cardDeck.setNumImages(numImages);
+        cardDeck.setCardIndex(pileSize);
         cardDeck.setImageArr(imagePack);
         cardDeck.populateCards();
     }
