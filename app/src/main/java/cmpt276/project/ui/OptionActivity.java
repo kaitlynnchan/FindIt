@@ -114,15 +114,16 @@ public class OptionActivity extends AppCompatActivity {
 
     public static int[] getImagePackArray(Context context){
         int imageButtonId = OptionActivity.getImagePackId(context);
+        TypedArray temp = context.getResources().obtainTypedArray(R.array.image_pack_fruits);
         if(imageButtonId == R.id.imgButtonVegs){
-            return new int[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
-                    R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion,
-                    R.drawable.radish};
-        } else{
-            return new int[]{R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
-                    R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
-                    R.drawable.watermelon};
+            temp = context.getResources().obtainTypedArray(R.array.image_pack_vegetables);
         }
+
+        int[] imagePack = new int[temp.length()];
+        for(int i = 0; i < temp.length(); i++){
+            imagePack[i] = temp.getResourceId(i, -1);
+        }
+        return imagePack;
     }
 
     public static String[] getWordArray(Context context){
