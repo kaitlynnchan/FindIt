@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -125,12 +126,12 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     public static String[] getWordArray(Context context){
-        int imageButtonId = OptionActivity.getImagePackId(context);
-        if(imageButtonId == R.id.imgButtonVegs){
-            return new String[]{"broccoli", "carrot", "eggplant", "lettuce", "mushroom", "onion", "radish"};
-        } else{
-            return new String[]{"red apple", "green apple", "lemon", "mango", "orange", "pumpkin", "watermelon"};
+        int[] imagePack = OptionActivity.getImagePackArray(context);
+        String[] wordArray = new String[imagePack.length];
+        for (int i = 0; i < imagePack.length; i++) {
+            wordArray[i] = context.getResources().getResourceEntryName(imagePack[i]);
         }
+        return wordArray;
     }
 
     private static int getImagePackId(Context context){
