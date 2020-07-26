@@ -182,11 +182,11 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
         if(numImages == 3){
             cardNum = 7;
         }
-        else if(numImages == 4){
-            cardNum = 13;
+        else if(numImages == 6){
+            cardNum = 31;
         }
         else{
-            cardNum = 31;
+            cardNum = 13;
         }
         return cardNum;
     }
@@ -208,7 +208,7 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
         }
         else {
             String[] tempArray = parent.getResources().getStringArray(R.array.imageNumArray);
-            if(text.equals(tempArray[0]) || text.equals(tempArray[1]) || text.equals(temp[2])  ) {
+            if(text.equals(tempArray[0]) || text.equals(tempArray[1]) || text.equals(tempArray[2])  ) {
 
                 saveNumImages(Integer.parseInt(text));
                 cardSpinner();
