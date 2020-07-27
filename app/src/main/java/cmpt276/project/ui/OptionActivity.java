@@ -13,8 +13,13 @@ import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
+
+import java.util.Arrays;
 
 import cmpt276.project.R;
 import cmpt276.project.model.Mode;
@@ -25,8 +30,11 @@ import cmpt276.project.model.Mode;
  */
 public class OptionActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFS_IMAGE_PACK = "shared preferences for image pack";
+    public static final String SHARED_PREFS_OPTIONS = "shared preferences for image pack";
     public static final String EDITOR_IMAGE_PACK_ID = "id for image pack";
+    public static final String EDITOR_NUM_IMAGES = "number of images";
+    public static final String EDITOR_CARD_DECK_SIZE = "card deck size";
+
     public static final String EDITOR_MODE_ID = "id for mode button";
     private int imgButtonFruits;
     private int imgButtonVegs;
@@ -49,6 +57,9 @@ public class OptionActivity extends AppCompatActivity {
         setupModeButton(buttonNormal);
         setupModeButton(buttonWordsImages);
         setupBackButton();
+
+        imageSpinner();
+        cardSpinner();
     }
 
     private void setupImageButton(final int imageId) {
@@ -99,16 +110,9 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     private void saveImagePackId(int imagePack) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_IMAGE_PACK, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_IMAGE_PACK_ID, imagePack);
-        editor.apply();
-    }
-
-    private void saveModeId(int mode) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_IMAGE_PACK, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_MODE_ID, mode);
         editor.apply();
     }
 
@@ -136,8 +140,128 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     private static int getImagePackId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_IMAGE_PACK, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, R.id.imgButtonFruits);
+    }
+
+    private void imageSpinner() {
+        Spinner spinner = findViewById(R.id.numImagesSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.numImagesArray, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = parent.getItemAtPosition(position).toString();
+                saveNumImages(Integer.parseInt(text));
+                cardSpinner();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        String[] numImagesArray = getResources().getStringArray(R.array.numImagesArray);
+        for(int i = 0; i < numImagesArray.length; i++){
+            if(numImagesArray[i].equals("" + getNumImages(this))){
+                spinner.setSelection(i);
+            }
+        }
+    }
+
+    private void cardSpinner() {
+        Spinner spinner = findViewById(R.id.numCardsSpinner);
+        String[] numCardsArray = getResources().getStringArray(R.array.numCardsArray);
+        String[] textArray = setTextArray(numCardsArray);
+
+        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
+                this, android.R.layout.simple_spinner_item, textArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = parent.getItemAtPosition(position).toString();
+                String[] numCardsArray = parent.getResources().getStringArray(R.array.numCardsArray);
+                if(text.equals(numCardsArray[0])) {
+                    saveCardDeckSize(getNumCardsTotal(getBaseContext()));
+                } else {
+                    saveCardDeckSize(Integer.parseInt(text));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        for(int i = 0; i < textArray.length; i++){
+            if(i == 0){
+                if(getCardDeckSize(this) == getNumCardsTotal(this)){
+                    spinner.setSelection(i);
+                }
+            } else if(textArray[i].equals("" + getCardDeckSize(this))){
+                spinner.setSelection(i);
+            }
+        }
+    }
+
+    private String[] setTextArray(String[] numCardsArray) {
+        String[] textArray;
+        if(getNumCardsTotal(getBaseContext()) == 7){
+            textArray = Arrays.copyOfRange(numCardsArray, 0, 2);
+        } else if(getNumCardsTotal(getBaseContext()) == 13){
+            textArray = Arrays.copyOfRange(numCardsArray, 0, 3);
+        } else{
+            textArray = Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
+        }
+        return textArray;
+    }
+
+    private void saveNumImages(int numImages){
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_NUM_IMAGES, numImages);
+        editor.apply();
+    }
+
+    public static int getNumImages(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_NUM_IMAGES, 3);
+    }
+
+    private void saveCardDeckSize(int cardDeckSize){
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_CARD_DECK_SIZE, cardDeckSize);
+        editor.apply();
+    }
+
+    public static int getCardDeckSize(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_CARD_DECK_SIZE, 5);
+    }
+
+    public static int getNumCardsTotal(Context context) {
+        int numImages = OptionActivity.getNumImages(context);
+        int numCardsTotal;
+        if(numImages == 3){
+            numCardsTotal = 7;
+        } else if(numImages == 6){
+            numCardsTotal = 31;
+        } else{
+            numCardsTotal = 13;
+        }
+        return numCardsTotal;
+    }
+
+    private void saveModeId(int mode) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_MODE_ID, mode);
+        editor.apply();
     }
 
     public static Mode getMode(Context context){
@@ -150,7 +274,7 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     private static int getModeId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_IMAGE_PACK, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         return sharedPreferences.getInt(EDITOR_MODE_ID, R.id.buttonNormal);
     }
 

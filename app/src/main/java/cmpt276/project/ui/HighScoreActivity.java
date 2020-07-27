@@ -2,41 +2,43 @@ package cmpt276.project.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 import cmpt276.project.R;
+import cmpt276.project.model.GameConfigs;
 import cmpt276.project.model.Score;
 import cmpt276.project.model.ScoresManager;
 
 /**
  * HIGH SCORE SCREEN
- * Displays top number of scores
+ * Displays top number of scores for selected configuration
  * Allows user to reset scores
  */
 public class HighScoreActivity extends AppCompatActivity {
 
-    public static final String EDITOR_SCORES_ARRAY = "editor for scores array";
-    public static final String SHARED_PREFS_SCORES = "shared prefs for scores";
+    public static final String EXTRA_INDEX = "extra for index";
 
+    private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
     private TextView[] scoresTxtView;
     private int numMaxScores;
+    private int index;
+    private int numImages;
+    private int numCards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +46,20 @@ public class HighScoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_high_score);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        scoresManager = ScoresManager.getInstance();
+        Intent intent = getIntent();
+        index = intent.getIntExtra(EXTRA_INDEX, -1);
+        gameConfigs = GameConfigs.getInstance();
+        scoresManager = gameConfigs.getScoreManager(index);
         numMaxScores = scoresManager.getNumMaxScores();
         scoresTxtView = new TextView[numMaxScores];
 
-        scoresManager.print();
+        numImages = gameConfigs.getCardDecks().get(index).getNumImages();
+        numCards = gameConfigs.getCardDecks().get(index).getCardDeckSize();
+
         setupHighScores();
         setupResetButton();
+        imageSpinner();
+        cardSpinner();
         setupBackButton();
     }
 
@@ -97,36 +106,154 @@ public class HighScoreActivity extends AppCompatActivity {
         btReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoresManager.resetScoreArray();
-                setDefaultScores(scoresManager);
-                setTexts();
+                if(index != -1){
+                    scoresManager.resetScoreArray();
+                    setDefaultScores(HighScoreActivity.this, scoresManager);
+                    gameConfigs.getScoreManager(index).setScoreArray(scoresManager.getScoreArray());
+                    MainActivity.saveGameConfigs(HighScoreActivity.this, gameConfigs);
+                    setTexts();
+                }
             }
         });
     }
 
-    public static void setDefaultScores(ScoresManager scoresManager){
-        scoresManager.addScore(new Score(23, "N/A", "Month DD, YYYY"));
-        scoresManager.addScore(new Score(28, "N/A", "Month DD, YYYY"));
-        scoresManager.addScore(new Score(20, "N/A", "Month DD, YYYY"));
-        scoresManager.addScore(new Score(25, "N/A", "Month DD, YYYY"));
-        scoresManager.addScore(new Score(18, "N/A", "Month DD, YYYY"));
+    public static void setDefaultScores(Context context, ScoresManager scoresManager){
+        scoresManager.addScore(new Score(
+                250,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format))
+        );
+        scoresManager.addScore(new Score(
+                400,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format))
+        );
+        scoresManager.addScore(new Score(
+                20,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format))
+        );
+        scoresManager.addScore(new Score(
+                25,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format))
+        );
+        scoresManager.addScore(new Score(
+                18,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format))
+        );
     }
 
-    public static void saveScores(Context context, ScoresManager scoresManager){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_SCORES, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(scoresManager.getScoreArray());
-        editor.putString(EDITOR_SCORES_ARRAY, json);
-        editor.apply();
+    private void imageSpinner() {
+        Spinner spinner = findViewById(R.id.numImagesSpinner2);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.numImagesArray, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = parent.getItemAtPosition(position).toString();
+                numImages = Integer.parseInt(text);
+                updateScoresManager();
+
+                setTexts();
+                cardSpinner();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        String[] numImagesArray = getResources().getStringArray(R.array.numImagesArray);
+        for(int i = 0; i < numImagesArray.length; i++){
+            if(numImagesArray[i].equals("" + numImages)){
+                spinner.setSelection(i);
+            }
+        }
     }
 
-    public static ArrayList<Score> getSavedScores(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_SCORES, MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString(EDITOR_SCORES_ARRAY, null);
-        Type type = new TypeToken<ArrayList<Score>>() {}.getType();
-        return gson.fromJson(json, type);
+    private void cardSpinner() {
+        Spinner spinner = findViewById(R.id.numCardsSpinner2);
+        String[] numCardsArray = getResources().getStringArray(R.array.numCardsArray);
+        String[] textArray = setTextArray(numCardsArray);
+
+        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
+                this, android.R.layout.simple_spinner_item, textArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = parent.getItemAtPosition(position).toString();
+                String[] numCardsArray = parent.getResources().getStringArray(R.array.numCardsArray);
+
+                if(text.equals(numCardsArray[0])) {
+                    numCards = getNumCardsTotal();
+                    updateScoresManager();
+                } else {
+                    numCards = Integer.parseInt(text);
+                    updateScoresManager();
+                }
+
+                setTexts();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        for(int i = 0; i < textArray.length; i++){
+            if(i == 0){
+                int numCardsTotal = getNumCardsTotal();
+                if(numCards == numCardsTotal){
+                    spinner.setSelection(i);
+                }
+            } else if(textArray[i].equals("" + numCards)){
+                spinner.setSelection(i);
+            }
+        }
+    }
+
+    private String[] setTextArray(String[] numCardsArray) {
+        String[] textArray;
+        int numCardsTotal = getNumCardsTotal();
+
+        if(numCardsTotal == 7){
+            textArray = Arrays.copyOfRange(numCardsArray, 0, 2);
+        } else if(numCardsTotal == 13){
+            textArray = Arrays.copyOfRange(numCardsArray, 0, 3);
+        } else{
+            textArray = Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
+        }
+        return textArray;
+    }
+
+    private int getNumCardsTotal() {
+        int numCardsTotal;
+        if (numImages == 3) {
+            numCardsTotal = 7;
+        } else if (numImages == 6) {
+            numCardsTotal = 31;
+        } else {
+            numCardsTotal = 13;
+        }
+        return numCardsTotal;
+    }
+
+    private void updateScoresManager() {
+        index = gameConfigs.getCardDeckIndex(numImages, numCards);
+        scoresManager = new ScoresManager();
+        if (index == -1) {
+            scoresManager.setNumMaxScores(5);
+            setDefaultScores(this, scoresManager);
+        } else {
+            scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
+            scoresManager.setScoreArray(gameConfigs.getScoreManager(index).getScoreArray());
+        }
     }
 
     private void setupBackButton() {
@@ -134,19 +261,14 @@ public class HighScoreActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveScores(HighScoreActivity.this, scoresManager);
                 finish();
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        saveScores(this, scoresManager);
-        super.onBackPressed();
-    }
-
-    public static Intent makeIntent(Context context){
-        return new Intent(context, HighScoreActivity.class);
+    public static Intent makeIntent(Context context, int index){
+        Intent intent = new Intent(context, HighScoreActivity.class);
+        intent.putExtra(EXTRA_INDEX, index);
+        return intent;
     }
 }

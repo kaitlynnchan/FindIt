@@ -10,16 +10,6 @@ public class ScoresManager {
     private ArrayList<Score> scoreArray = new ArrayList<>();
     private int numMaxScores;
 
-    // Singleton implementation
-    private static ScoresManager instance;
-    private ScoresManager() {}
-    public static ScoresManager getInstance(){
-        if(instance == null){
-            instance = new ScoresManager();
-        }
-        return instance;
-    }
-
     public int getNumMaxScores(){
         return numMaxScores;
     }
@@ -60,12 +50,6 @@ public class ScoresManager {
     public void resetScoreArray(){
         if (scoreArray.size() > 0) {
             scoreArray.subList(0, scoreArray.size()).clear();
-        }
-    }
-
-    public void print(){
-        for(int i = 0; i < scoreArray.size(); i++){
-            System.out.println(scoreArray.get(i).toString());
         }
     }
 }

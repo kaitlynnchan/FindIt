@@ -8,7 +8,8 @@ package cmpt276.project.model;
  */
 public class CardDeck {
 
-    private int numCards;       // Number of cards in each game
+    private int numCardsTotal;  // Number of cards in each game
+    private int cardDeckSize;   // Size of the card size
     private int numImages;      // Number of images on each card
     private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
     private int[] imageArr;     // Array of images, each index represents an specific fruit / vegetable
@@ -27,16 +28,20 @@ public class CardDeck {
         return instance;
     }
 
+    public int getNumCardsTotal() {
+        return numCardsTotal;
+    }
+
     public int getNumImages() {
         return numImages;
     }
 
-    public int getNumCards() {
-        return numCards;
-    }
-
     public int getCardIndex() {
         return cardIndex;
+    }
+
+    public int getCardDeckSize() {
+        return cardDeckSize;
     }
 
     // Returns the image at the index on the selected card
@@ -55,12 +60,16 @@ public class CardDeck {
         this.numImages = numImages;
     }
 
-    public void setNumCards(int numCards) {
-        this.numCards = numCards;
+    public void setNumCardsTotal(int numCardsTotal) {
+        this.numCardsTotal = numCardsTotal;
     }
 
     public void setImageArr(int[] imageArr) {
         this.imageArr = imageArr;
+    }
+
+    public void setCardDeckSize(int cardDeckSize) {
+        this.cardDeckSize = cardDeckSize;
     }
 
     public void setWordArr(String[] wordArr) {
@@ -76,14 +85,17 @@ public class CardDeck {
     }
 
     // Set cardIndex to 1, since card[0] is put into the discard pile when the game starts
-    public void setCardIndex() {this.cardIndex = 1;}
+    public void setCardIndex() {
+        this.cardIndex = 1;
+    }
 
     public void incrementCardIndex() {
         this.cardIndex++;
     }
 
     public void populateCards(){
-        cards = new Object[numCards][numImages];
+        cards = new Object[numCardsTotal][numImages];
+        int row = 0;
 
         int orderIndex = 0;
         for(int r = 0; r < numCards; r++){
@@ -122,6 +134,9 @@ public class CardDeck {
     public void shuffleCards(){
         for(int i = 0; i < numCards; i++){
             int rand = (int) ((Math.random() * (numCards - i)) + i);
+    public void shuffleCardsAndImages(){
+        for(int i = 0; i < numCardsTotal; i++){
+            int rand = (int) ((Math.random() * (numCardsTotal - i)) + i);
             Object[] tempCard = cards[i];
             cards[i] = cards[rand];
             cards[rand] = tempCard;

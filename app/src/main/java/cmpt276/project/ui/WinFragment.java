@@ -17,6 +17,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import cmpt276.project.R;
+import cmpt276.project.model.CardDeck;
+import cmpt276.project.model.GameConfigs;
 import cmpt276.project.model.Score;
 import cmpt276.project.model.ScoresManager;
 
@@ -29,6 +31,9 @@ public class WinFragment extends AppCompatDialogFragment {
 
     private View view;
     private int time;
+    private int index;
+    private CardDeck cardDeck;
+    private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
 
     public WinFragment(int time){
@@ -41,7 +46,11 @@ public class WinFragment extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.windialog_layout, null);
-        scoresManager = ScoresManager.getInstance();
+        cardDeck = CardDeck.getInstance();
+        gameConfigs = GameConfigs.getInstance();
+        index = gameConfigs.getCardDeckIndex(cardDeck);
+        scoresManager = gameConfigs.getScoreManager(index);
+
         if(time < scoresManager.getScore(0).getTimeBySeconds()){
             TextView txtHighScore = view.findViewById(R.id.textNewHighScore);
             txtHighScore.setVisibility(View.VISIBLE);
@@ -74,7 +83,8 @@ public class WinFragment extends AppCompatDialogFragment {
                 String userDate = month + " " + day + ", " + year;
 
                 scoresManager.addScore(new Score(time, userName, userDate));
-                HighScoreActivity.saveScores(getActivity(), scoresManager);
+                gameConfigs.getScoreManager(index).setScoreArray(scoresManager.getScoreArray());
+                MainActivity.saveGameConfigs(getActivity(), gameConfigs);
 
                 getActivity().finish();
             }
