@@ -65,7 +65,7 @@ public class GameActivity extends AppCompatActivity {
                 imgDiscard.setVisibility(View.VISIBLE);
                 ImageView imgCard = findViewById(R.id.imageCardBack);
                 imgCard.setVisibility(View.GONE);
-                
+
                 startGameButton.setVisibility(View.INVISIBLE);
             }
         });

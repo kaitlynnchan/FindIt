@@ -32,7 +32,7 @@ import cmpt276.project.model.ScoresManager;
  */
 public class HighScoreActivity extends AppCompatActivity {
 
-    public static final String EXTRA_INDEX = "testing maybe";
+    public static final String EXTRA_INDEX = "extra for index";
 
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
@@ -47,7 +47,7 @@ public class HighScoreActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Intent intent = getIntent();
-        index = intent.getIntExtra(Intent.EXTRA_INDEX, -1);
+        index = intent.getIntExtra(EXTRA_INDEX, -1);
         gameConfigs = GameConfigs.getInstance();
         scoresManager = gameConfigs.getScoreManager(index);
         numMaxScores = scoresManager.getNumMaxScores();
