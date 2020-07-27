@@ -22,157 +22,161 @@
 
     <ImageView
         android:id="@+id/imgMan"
-        android:layout_width="306dp"
-        android:layout_height="190dp"
+        android:layout_width="194dp"
+        android:layout_height="153dp"
         android:contentDescription="@string/imageView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.97"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.497"
-        app:srcCompat="@drawable/options_man" />
-
-    <ImageButton
-        android:id="@+id/imgButtonFruits"
-        android:layout_width="104dp"
-        android:layout_height="90dp"
-        android:layout_marginEnd="220dp"
-        android:background="@drawable/button_background"
-        android:contentDescription="@string/imageView"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/imgMan"
-        app:layout_constraintEnd_toEndOf="@+id/imgMan"
-        app:layout_constraintTop_toBottomOf="@+id/textOption"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/fruits" />
-
-    <ImageButton
-        android:id="@+id/imgButtonVegs"
-        android:layout_width="104dp"
-        android:layout_height="90dp"
-        android:layout_marginStart="224dp"
-        android:background="@drawable/button_background"
-        android:contentDescription="@string/imageView"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/imgMan"
-        app:layout_constraintStart_toStartOf="@+id/imgMan"
-        app:layout_constraintTop_toBottomOf="@+id/textOption"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/vegs" />
+        app:layout_constraintVertical_bias="0.806"
+        app:srcCompat="@drawable/cartoon_man" />
 
     <TextView
         android:id="@+id/textOption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/atma_medium"
         android:text="@string/optionHeading"
         android:textColor="#0B0B0B"
-        android:textSize="36sp"
+        android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/mode"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imgMan"
+        app:layout_constraintEnd_toEndOf="@+id/imgMan"
         app:layout_constraintStart_toStartOf="@+id/imgMan"
-        app:layout_constraintTop_toBottomOf="@+id/imgMan" />
-
-    <Button
-        android:id="@+id/buttonNormal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_background"
-        android:text="@string/normal"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <Button
-        android:id="@+id/buttonWordsImages"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/button_background"
-        android:text="@string/words_and_images"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/buttonNormal"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/imgMan" />
 
     <TextView
         android:id="@+id/textImageNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="330dp"
-        android:layout_marginBottom="17dp"
         android:layout_weight="1"
-        android:background="@drawable/button_background"
         android:fontFamily="@font/atma_medium"
         android:text="@string/num_of_images"
-        android:textColor="#1B1919"
-        android:textSize="30sp"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/numImagesSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.247"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textBoardSize" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498" />
 
     <TextView
         android:id="@+id/textBoardSize"
-        android:layout_width="175dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="226dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginBottom="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_weight="1"
-        android:background="@drawable/button_background"
         android:fontFamily="@font/atma_medium"
         android:text="@string/num_of_cards"
-        android:textColor="#0E0E0E"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/textImageNum"
-        app:layout_constraintEnd_toStartOf="@+id/imgMan"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBack" />
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/numImagesSpinner"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/numImagesSpinner"
-        android:layout_width="153dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="70dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/button_background"
-        android:spinnerMode="dropdown"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numCardsSpinner" />
+        android:foreground="@drawable/ic_arrow_down_24"
+        android:foregroundGravity="center_vertical|right"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/textImageNum"
+        app:layout_constraintStart_toEndOf="@+id/textImageNum"
+        app:layout_constraintTop_toTopOf="@+id/textImageNum" />
 
     <Spinner
         android:id="@+id/numCardsSpinner"
-        android:layout_width="153dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="299dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="65dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/button_background"
+        android:foreground="@drawable/ic_arrow_down_24"
+        android:foregroundGravity="center_vertical|right"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/numImagesSpinner"
+        app:layout_constraintBottom_toBottomOf="@+id/textBoardSize"
+        app:layout_constraintStart_toEndOf="@+id/textBoardSize"
+        app:layout_constraintTop_toTopOf="@+id/textBoardSize" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgMan"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imgButtonVegs"
+                android:layout_width="104dp"
+                android:layout_height="90dp"
+                android:background="@drawable/button_background"
+                android:contentDescription="@string/imageView"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/vegs" />
+
+            <ImageButton
+                android:id="@+id/imgButtonFruits"
+                android:layout_width="104dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button_background"
+                android:contentDescription="@string/imageView"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/fruits" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/textMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/mode"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textImageNum"
+        app:layout_constraintTop_toBottomOf="@+id/textImageNum" />
+
+    <Button
+        android:id="@+id/buttonNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/button_background"
+        android:text="@string/normal"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textMode"
+        app:layout_constraintStart_toEndOf="@+id/textMode"
+        app:layout_constraintTop_toTopOf="@+id/textMode" />
+
+    <Button
+        android:id="@+id/buttonWordsImages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/button_background"
+        android:text="@string/words_and_images"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonNormal"
+        app:layout_constraintStart_toEndOf="@+id/buttonNormal"
+        app:layout_constraintTop_toTopOf="@+id/buttonNormal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -115,13 +115,6 @@ public class OptionActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void saveModeId(int mode) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_IMAGE_PACK, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_MODE_ID, mode);
-        editor.apply();
-    }
-
     public static int[] getImagePackArray(Context context){
         int imageButtonId = OptionActivity.getImagePackId(context);
         if(imageButtonId == R.id.imgButtonVegs){
@@ -151,9 +144,17 @@ public class OptionActivity extends AppCompatActivity {
     public static String[] getWordArray(Context context){
         int imageButtonId = OptionActivity.getImagePackId(context);
         if(imageButtonId == R.id.imgButtonVegs){
-            return new String[]{"broccoli", "carrot", "eggplant", "lettuce", "mushroom", "onion", "radish"};
+            return new String[]{"broccoli", "carrot", "eggplant", "lettuce", "mushroom", "onion",
+                    "radish", "artichoke", "asparagus", "cabbage", "cauliflower", "celery", "corn",
+                    "cucumber", "garlic", "ginger", "green_bell_pepper", "kale", "leek", "okra",
+                    "parsnip", "peas", "potato", "red_bell_pepper", "red_cabbage", "red_onion",
+                    "spinach", "turnip", "yam", "yellow_bell_pepper", "zucchini"};
         } else{
-            return new String[]{"red apple", "green apple", "lemon", "mango", "orange", "pumpkin", "watermelon"};
+            return new String[]{"red apple", "green apple", "lemon", "mango", "orange", "pumpkin",
+                    "watermelon", "avocado", "banana", "blackberry", "blueberry", "cherry", "coconut",
+                    "cranberry", "dragon_fruit", "durian", "fig", "grapefruit", "grapes", "kiwi",
+                    "melon", "papaya", "peach", "pear", "pineapple", "plum", "pomegranate",
+                    "raspberry", "squash", "starfruit", "strawberry"};
         }
     }
 
@@ -275,6 +276,13 @@ public class OptionActivity extends AppCompatActivity {
         return numCardsTotal;
     }
 
+    private void saveModeId(int mode) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_MODE_ID, mode);
+        editor.apply();
+    }
+
     public static Mode getMode(Context context){
         int modeId = OptionActivity.getModeId(context);
         if(modeId == R.id.buttonWordsImages){
@@ -285,7 +293,7 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     private static int getModeId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_IMAGE_PACK, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         return sharedPreferences.getInt(EDITOR_MODE_ID, R.id.buttonNormal);
     }
 

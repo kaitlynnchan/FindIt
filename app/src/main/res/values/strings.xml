@@ -7,7 +7,7 @@
     <string name="options">OPTIONS</string>
     <string name="help">HELP</string>
     <string name="imageView">TODO</string>
-    <string name="optionHeading">Choose Wisely!!!!</string>
+    <string name="optionHeading">Choose \nWisely!!!!</string>
     <string name="back">BACK</string>
     <string name="resetString">Reset High Score</string>
     <string name="authors">By Kaitlynn, Lakshay, Sami, and Yangyang</string>
@@ -64,8 +64,8 @@
     <string name="date">Month DD, YYYY</string>
     <string name="no_answer">N/A</string>
     <string name="new_high_score">New High Score</string>
-    <string name="num_of_cards">No. of Cards</string>
-    <string name="num_of_images">No. of Images</string>
+    <string name="num_of_cards">Number \nof Cards</string>
+    <string name="num_of_images">Number \nof Images</string>
     <string-array name="numCardsArray">
         <item>all</item>
         <item>5</item>
