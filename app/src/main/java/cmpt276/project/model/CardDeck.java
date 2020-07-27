@@ -16,7 +16,6 @@ public class CardDeck {
     private String[] wordArr;   // Array of words, each index represents an specific fruit / vegetable
     private Object[][] cards;   // Card array: first index indicates the card, second index indicates which images are on the card
     private Mode mode;          // Game mode
-    private int[] order;
 
     private static CardDeck instance;
 
@@ -80,10 +79,6 @@ public class CardDeck {
         this.mode = mode;
     }
 
-    public void setOrder(int[] order) {
-        this.order = order;
-    }
-
     // Set cardIndex to 1, since card[0] is put into the discard pile when the game starts
     public void setCardIndex() {
         this.cardIndex = 1;
@@ -97,17 +92,38 @@ public class CardDeck {
         cards = new Object[numCardsTotal][numImages];
         int row = 0;
 
-        int orderIndex = 0;
-        for(int r = 0; r < numCards; r++){
+        // Help taken from: https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/
+        // Generate series from imageArr[0] to imageArr[numImages - 1]
+        for (int i = 0; i <= numImages - 1; i++)  {
             int rand = checkRandom(0, 0);
-            for(int c = 0; c < numImages; c++){
-                rand = checkRandom(rand, c);
-                addValue(r, rand, c, order[orderIndex]);
-                orderIndex++;
+            addValue(row, rand, 0, 0);
+
+            for (int i2 = 1; i2 <= numImages - 1; i2++) {
+                int indx = (numImages * i) - i + i2;
+                rand = checkRandom(rand, i2);
+                addValue(row, rand, i2, indx);
+            }
+            row++;
+        }
+
+        // Generate series from imageArr[numImages] to imageArr[numImages * (numImages - 1)]
+        for (int i = 1; i <= numImages-1; i++) {
+            for (int i2 = 1; i2 <= numImages - 1; i2++) {
+                int rand = checkRandom(0, 0);
+                addValue(row, rand, 0, i);
+
+                for (int i3 = 1; i3 <= numImages - 1; i3++) {
+                    int indx = numImages + (numImages - 1) * (i3 - 1)
+                            + ( (i - 1) * (i3 - 1) + (i2 - 1) )
+                            % (numImages - 1);
+                    rand = checkRandom(rand, i3);
+                    addValue(row, rand, i3, indx);
+                }
+                row++;
             }
         }
 
-        shuffleCards();
+        shuffleCardsAndImages();
     }
 
     private void addValue(int row, int rand, int col, int indx) {
@@ -131,15 +147,19 @@ public class CardDeck {
         return rand;
     }
 
-    public void shuffleCards(){
-        for(int i = 0; i < numCards; i++){
-            int rand = (int) ((Math.random() * (numCards - i)) + i);
     public void shuffleCardsAndImages(){
         for(int i = 0; i < numCardsTotal; i++){
             int rand = (int) ((Math.random() * (numCardsTotal - i)) + i);
             Object[] tempCard = cards[i];
             cards[i] = cards[rand];
             cards[rand] = tempCard;
+
+            for (int j = 0; j < numImages; j++) {
+                rand = (int) ((Math.random() * (numImages - j)) + j);
+                Object tempImage = cards[i][j];
+                cards[i][j] = cards[i][rand];
+                cards[i][rand] = tempImage;
+            }
         }
     }
 

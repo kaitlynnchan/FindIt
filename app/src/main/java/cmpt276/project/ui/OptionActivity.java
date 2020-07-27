@@ -134,7 +134,8 @@ public class OptionActivity extends AppCompatActivity {
         int[] imagePack = OptionActivity.getImagePackArray(context);
         String[] wordArray = new String[imagePack.length];
         for (int i = 0; i < imagePack.length; i++) {
-            wordArray[i] = context.getResources().getResourceEntryName(imagePack[i]);
+            String temp = context.getResources().getResourceEntryName(imagePack[i]);
+            wordArray[i] = temp.replace("_", " ");
         }
         return wordArray;
     }

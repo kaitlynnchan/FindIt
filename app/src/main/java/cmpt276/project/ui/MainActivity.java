@@ -93,18 +93,11 @@ public class MainActivity extends AppCompatActivity {
         int[] imagePack = OptionActivity.getImagePackArray(MainActivity.this);
         String[] wordPack = OptionActivity.getWordArray(MainActivity.this);
         Mode mode = OptionActivity.getMode(MainActivity.this);
-        int[] order = getResources().getIntArray(R.array.order_2);
-        if(cardDeck.getNumImages() == 4){
-            order = getResources().getIntArray(R.array.order_3);
-        } else if(cardDeck.getNumImages() == 6){
-            order = getResources().getIntArray(R.array.order_5);
-        }
-        cardDeck.setOrder(order);
-        cardDeck.setMode(mode);
         int numImages = OptionActivity.getNumImages(MainActivity.this);
         int cardDeckSize = OptionActivity.getCardDeckSize(MainActivity.this);
         int numCardsTotal = OptionActivity.getNumCardsTotal(MainActivity.this);
 
+        cardDeck.setMode(mode);
         cardDeck.setNumCardsTotal(numCardsTotal);
         cardDeck.setNumImages(numImages);
         cardDeck.setCardIndex();
