@@ -27,7 +27,6 @@ public class ScoresManager {
     }
 
     public void setScoreArray(ArrayList<Score> sArray){
-        System.out.println("quoi");
         this.scoreArray = sArray;
     }
 
@@ -51,12 +50,6 @@ public class ScoresManager {
     public void resetScoreArray(){
         if (scoreArray.size() > 0) {
             scoreArray.subList(0, scoreArray.size()).clear();
-        }
-    }
-
-    public void print(){
-        for(int i = 0; i < scoreArray.size(); i++){
-            System.out.println(scoreArray.get(i).toString());
         }
     }
 }

@@ -32,12 +32,13 @@ import cmpt276.project.model.ScoresManager;
  */
 public class HighScoreActivity extends AppCompatActivity {
 
-    public static final String EDITOR_SCORES_ARRAY = "editor for scores array";
-    public static final String SHARED_PREFS_SCORES = "shared prefs for scores";
+    public static final String EXTRA_INDEX = "testing maybe";
 
+    private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
     private TextView[] scoresTxtView;
     private int numMaxScores;
+    private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +47,12 @@ public class HighScoreActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Intent intent = getIntent();
-        int index = intent.getIntExtra("testing maybe", -1);
-        scoresManager = GameConfigs.getInstance().getScoreManager(index);
+        index = intent.getIntExtra(Intent.EXTRA_INDEX, -1);
+        gameConfigs = GameConfigs.getInstance();
+        scoresManager = gameConfigs.getScoreManager(index);
         numMaxScores = scoresManager.getNumMaxScores();
         scoresTxtView = new TextView[numMaxScores];
 
-        scoresManager.print();
         setupHighScores();
         setupResetButton();
         setupBackButton();
@@ -102,6 +103,8 @@ public class HighScoreActivity extends AppCompatActivity {
             public void onClick(View v) {
                 scoresManager.resetScoreArray();
                 setDefaultScores(scoresManager);
+                gameConfigs.getScoreManager(index).setScoreArray(scoresManager.getScoreArray());
+                MainActivity.saveGameConfigs(HighScoreActivity.this, gameConfigs);
                 setTexts();
             }
         });
@@ -115,43 +118,19 @@ public class HighScoreActivity extends AppCompatActivity {
         scoresManager.addScore(new Score(18, "N/A", "Month DD, YYYY"));
     }
 
-    public static void saveScores(Context context, ScoresManager scoresManager){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_SCORES, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(scoresManager.getScoreArray());
-        editor.putString(EDITOR_SCORES_ARRAY, json);
-        editor.apply();
-    }
-
-    public static ArrayList<Score> getSavedScores(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_SCORES, MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString(EDITOR_SCORES_ARRAY, null);
-        Type type = new TypeToken<ArrayList<Score>>() {}.getType();
-        return gson.fromJson(json, type);
-    }
-
     private void setupBackButton() {
         Button btn = findViewById(R.id.buttonBack);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveScores(HighScoreActivity.this, scoresManager);
                 finish();
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        saveScores(this, scoresManager);
-        super.onBackPressed();
-    }
-
     public static Intent makeIntent(Context context, int index){
         Intent intent = new Intent(context, HighScoreActivity.class);
-        intent.putExtra("testing maybe", index);
+        intent.putExtra(EXTRA_INDEX, index);
         return intent;
     }
 }

@@ -86,11 +86,11 @@
         android:layout_weight="1"
         android:background="@drawable/button_background"
         android:fontFamily="@font/atma_medium"
-        android:text="No. of Images"
+        android:text="@string/num_of_images"
         android:textColor="#1B1919"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageNumSpinner"
+        app:layout_constraintEnd_toStartOf="@+id/numImagesSpinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textBoardSize" />
 
@@ -105,7 +105,7 @@
         android:layout_weight="1"
         android:background="@drawable/button_background"
         android:fontFamily="@font/atma_medium"
-        android:text="No. of Cards"
+        android:text="@string/num_of_cards"
         android:textColor="#0E0E0E"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/textImageNum"
@@ -114,7 +114,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonBack" />
 
     <Spinner
-        android:id="@+id/imageNumSpinner"
+        android:id="@+id/numImagesSpinner"
         android:layout_width="153dp"
         android:layout_height="44dp"
         android:layout_marginTop="8dp"
@@ -125,10 +125,10 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardNumSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/numCardsSpinner" />
 
     <Spinner
-        android:id="@+id/cardNumSpinner"
+        android:id="@+id/numCardsSpinner"
         android:layout_width="153dp"
         android:layout_height="44dp"
         android:layout_marginStart="32dp"
@@ -137,7 +137,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/button_background"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/imageNumSpinner"
+        app:layout_constraintBottom_toTopOf="@+id/numImagesSpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgMan"
         app:layout_constraintTop_toTopOf="parent" />

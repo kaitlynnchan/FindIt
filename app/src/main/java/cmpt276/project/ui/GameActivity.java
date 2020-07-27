@@ -125,7 +125,7 @@ public class GameActivity extends AppCompatActivity {
     // Checks if the selected image matches an image on on the discard pile card
     private void imageClicked(int index) {
         if (cardDeck.searchDiscardPile(index)) {
-            if (cardDeck.getCardIndex() == cardDeck.getNumCards() - 1) {
+            if (cardDeck.getCardIndex() == cardDeck.getCardDeckSize() - 1) {
                 stopTimer();
             } else {
                 cardDeck.incrementCardIndex();

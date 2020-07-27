@@ -27,8 +27,9 @@ public class OptionActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS_OPTIONS = "shared preferences for image pack";
     public static final String EDITOR_IMAGE_PACK_ID = "id for image pack";
-    private static final String EDITOR_NUM_IMAGES = "number of images";
-    private static final String EDITOR_PILE_SIZE = "pile size";
+    public static final String EDITOR_NUM_IMAGES = "number of images";
+    public static final String EDITOR_CARD_DECK_SIZE = "card deck size";
+
     private int imgButtonFruits;
     private int imgButtonVegs;
 
@@ -107,22 +108,8 @@ public class OptionActivity extends AppCompatActivity {
         return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, R.id.imgButtonFruits);
     }
 
-    private void setupBackButton() {
-        Button btn = findViewById(R.id.buttonBack);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-
-    public static Intent makeIntent(Context context){
-        return new Intent(context, OptionActivity.class);
-    }
-
     private void imageSpinner() {
-        Spinner spinner = findViewById(R.id.imageNumSpinner);
+        Spinner spinner = findViewById(R.id.numImagesSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.numImagesArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -149,16 +136,9 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     private void cardSpinner() {
-        Spinner spinner = findViewById(R.id.cardNumSpinner);
+        Spinner spinner = findViewById(R.id.numCardsSpinner);
         String[] numCardsArray = getResources().getStringArray(R.array.numCardsArray);
-        String[] textArray;
-        if(getNumCardsTotal(getBaseContext()) == 7){
-            textArray = Arrays.copyOfRange(numCardsArray, 0, 2);
-        } else if(getNumCardsTotal(getBaseContext()) == 13){
-            textArray = Arrays.copyOfRange(numCardsArray, 0, 3);
-        } else{
-            textArray = Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
-        }
+        String[] textArray = setTextArray(numCardsArray);
 
         ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
                 this, android.R.layout.simple_spinner_item, textArray);
@@ -170,9 +150,9 @@ public class OptionActivity extends AppCompatActivity {
                 String text = parent.getItemAtPosition(position).toString();
                 String[] numCardsArray = parent.getResources().getStringArray(R.array.numCardsArray);
                 if(text.equals(numCardsArray[0])) {
-                    savePileSize(getNumCardsTotal(getBaseContext()));
+                    saveCardDeckSize(getNumCardsTotal(getBaseContext()));
                 } else {
-                    savePileSize(Integer.parseInt(text));
+                    saveCardDeckSize(Integer.parseInt(text));
                 }
             }
 
@@ -183,13 +163,25 @@ public class OptionActivity extends AppCompatActivity {
 
         for(int i = 0; i < textArray.length; i++){
             if(i == 0){
-                if(getPileSize(this) == getNumCardsTotal(this)){
+                if(getCardDeckSize(this) == getNumCardsTotal(this)){
                     spinner.setSelection(i);
                 }
-            } else if(textArray[i].equals("" + getPileSize(this))){
+            } else if(textArray[i].equals("" + getCardDeckSize(this))){
                 spinner.setSelection(i);
             }
         }
+    }
+
+    private String[] setTextArray(String[] numCardsArray) {
+        String[] textArray;
+        if(getNumCardsTotal(getBaseContext()) == 7){
+            textArray = Arrays.copyOfRange(numCardsArray, 0, 2);
+        } else if(getNumCardsTotal(getBaseContext()) == 13){
+            textArray = Arrays.copyOfRange(numCardsArray, 0, 3);
+        } else{
+            textArray = Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
+        }
+        return textArray;
     }
 
     private void saveNumImages(int numImages){
@@ -204,16 +196,16 @@ public class OptionActivity extends AppCompatActivity {
         return sharedPreferences.getInt(EDITOR_NUM_IMAGES, 3);
     }
 
-    private void savePileSize(int pileSize){
+    private void saveCardDeckSize(int cardDeckSize){
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_PILE_SIZE, pileSize);
+        editor.putInt(EDITOR_CARD_DECK_SIZE, cardDeckSize);
         editor.apply();
     }
 
-    public static int getPileSize(Context context) {
+    public static int getCardDeckSize(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_PILE_SIZE, 5);
+        return sharedPreferences.getInt(EDITOR_CARD_DECK_SIZE, 5);
     }
 
     public static int getNumCardsTotal(Context context) {
@@ -227,5 +219,19 @@ public class OptionActivity extends AppCompatActivity {
             numCardsTotal = 13;
         }
         return numCardsTotal;
+    }
+
+    private void setupBackButton() {
+        Button btn = findViewById(R.id.buttonBack);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    public static Intent makeIntent(Context context){
+        return new Intent(context, OptionActivity.class);
     }
 }

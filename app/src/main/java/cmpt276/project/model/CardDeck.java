@@ -8,8 +8,8 @@ package cmpt276.project.model;
  */
 public class CardDeck {
 
-    private int numCardsTotal;       // Number of cards in each game
-    private int numCards;
+    private int numCardsTotal;  // Number of cards in each game
+    private int cardDeckSize;   // Size of the card size
     private int numImages;      // Number of images on each card
     private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
     private int[][] cards;      // Card array: first index indicates the card, second index indicates which images are on the card
@@ -29,16 +29,12 @@ public class CardDeck {
         return numImages;
     }
 
-    public int getNumCardsTotal() {
-        return numCardsTotal;
-    }
-
     public int getCardIndex() {
         return cardIndex;
     }
 
-    public int getNumCards() {
-        return numCards;
+    public int getCardDeckSize() {
+        return cardDeckSize;
     }
 
     // Returns the image at the index on the selected card
@@ -58,8 +54,8 @@ public class CardDeck {
         this.imageArr = imageArr;
     }
 
-    public void setNumCards(int numCards) {
-        this.numCards = numCards;
+    public void setCardDeckSize(int cardDeckSize) {
+        this.cardDeckSize = cardDeckSize;
     }
 
     // Set cardIndex to 1, since card[0] is put into the discard pile when the game starts

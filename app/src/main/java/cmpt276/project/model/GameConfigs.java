@@ -44,29 +44,10 @@ public class GameConfigs {
 
         for(int i = 0; i < cardDecks.size(); i++){
             if(cardDecks.get(i).getNumImages() == cardDeck.getNumImages()
-                    && cardDecks.get(i).getNumCards() == cardDeck.getNumCards()){
+                    && cardDecks.get(i).getCardDeckSize() == cardDeck.getCardDeckSize()){
                 return i;
             }
         }
         return -1;
-    }
-
-    public int getScoreManagerIndex(ScoresManager scoresManager){
-
-        for(int i = 0; i < cardDecks.size(); i++){
-            if(scoresManagers.get(i).getScoreArray() == scoresManager.getScoreArray()){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public void print(){
-        for(int i = 0; i< cardDecks.size(); i++){
-            System.out.println("card: " + cardDecks.get(i));
-        }
-        for(int i = 0; i < scoresManagers.size(); i++){
-            System.out.println("score: " + scoresManagers.get(i));
-        }
     }
 }

@@ -33,8 +33,8 @@ public class WinFragment extends AppCompatDialogFragment {
     private int time;
     private int index;
     private CardDeck cardDeck;
-    private ScoresManager scoresManager;
     private GameConfigs gameConfigs;
+    private ScoresManager scoresManager;
 
     public WinFragment(int time){
         this.time = time;
@@ -46,7 +46,6 @@ public class WinFragment extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.windialog_layout, null);
-//        scoresManager = ScoresManager.getInstance();
         cardDeck = CardDeck.getInstance();
         gameConfigs = GameConfigs.getInstance();
         index = gameConfigs.getCardDeckIndex(cardDeck);
@@ -83,12 +82,9 @@ public class WinFragment extends AppCompatDialogFragment {
                 String year = c.get(Calendar.YEAR) + "";
                 String userDate = month + " " + day + ", " + year;
 
-                gameConfigs.getScoreManager(index).print();
                 scoresManager.addScore(new Score(time, userName, userDate));
                 gameConfigs.getScoreManager(index).setScoreArray(scoresManager.getScoreArray());
-                gameConfigs.getScoreManager(index).print();
                 MainActivity.saveGameConfigs(getActivity(), gameConfigs);
-//                HighScoreActivity.saveScores(getActivity(), gameConfigs.getScoreManager(index));
 
                 getActivity().finish();
             }
