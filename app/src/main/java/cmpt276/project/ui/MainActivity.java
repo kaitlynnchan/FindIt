@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
+import cmpt276.project.model.Mode;
 import cmpt276.project.model.GameConfigs;
 import cmpt276.project.model.ScoresManager;
 
@@ -90,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void createCardDeck() {
         int[] imagePack = OptionActivity.getImagePackArray(MainActivity.this);
+        String[] wordPack = OptionActivity.getWordArray(MainActivity.this);
+        Mode mode = OptionActivity.getMode(MainActivity.this);
+
+        cardDeck.setMode(mode);
         int numImages = OptionActivity.getNumImages(MainActivity.this);
         int cardDeckSize = OptionActivity.getCardDeckSize(MainActivity.this);
         int numCardsTotal = OptionActivity.getNumCardsTotal(MainActivity.this);
@@ -99,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         cardDeck.setCardIndex();
         cardDeck.setCardDeckSize(cardDeckSize);
         cardDeck.setImageArr(imagePack);
+        cardDeck.setWordArr(wordPack);
         cardDeck.populateCards();
     }
 

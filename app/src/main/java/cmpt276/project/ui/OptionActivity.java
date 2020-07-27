@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,10 +21,11 @@ import android.widget.Spinner;
 import java.util.Arrays;
 
 import cmpt276.project.R;
+import cmpt276.project.model.Mode;
 
 /**
  * OPTIONS SCREEN
- * Allows users to select an image package
+ * Allows users to select an image package and mode
  */
 public class OptionActivity extends AppCompatActivity {
 
@@ -30,8 +34,11 @@ public class OptionActivity extends AppCompatActivity {
     public static final String EDITOR_NUM_IMAGES = "number of images";
     public static final String EDITOR_CARD_DECK_SIZE = "card deck size";
 
+    public static final String EDITOR_MODE_ID = "id for mode button";
     private int imgButtonFruits;
     private int imgButtonVegs;
+    private int buttonNormal;
+    private int buttonWordsImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +48,13 @@ public class OptionActivity extends AppCompatActivity {
 
         imgButtonFruits = R.id.imgButtonFruits;
         imgButtonVegs = R.id.imgButtonVegs;
+        buttonNormal = R.id.buttonNormal;
+        buttonWordsImages = R.id.buttonWordsImages;
 
         setupImageButton(imgButtonFruits);
         setupImageButton(imgButtonVegs);
+        setupModeButton(buttonNormal);
+        setupModeButton(buttonWordsImages);
         setupBackButton();
 
         imageSpinner();
@@ -70,10 +81,44 @@ public class OptionActivity extends AppCompatActivity {
         }
     }
 
+    private void setupModeButton(final int modeBtn) {
+        Button button = findViewById(modeBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveModeId(modeBtn);
+                setupModeButton(buttonNormal);
+                setupModeButton(buttonWordsImages);
+            }
+        });
+
+        if(modeBtn == buttonNormal){
+            String s = getString(R.string.normal);
+            SpannableString string = new SpannableString(s);
+            string.setSpan(new RelativeSizeSpan(0.75f), s.length() - 8, s.length(), Spanned.SPAN_COMPOSING);
+            button.setText(string);
+        }
+
+        // Selecting/deselecting mode button
+        if(getModeId(this) == modeBtn){
+            button.setForegroundGravity(Gravity.END|Gravity.BOTTOM);
+            button.setForeground(getDrawable(R.drawable.drawable_magnifying_glass));
+        } else{
+            button.setForeground(null);
+        }
+    }
+
     private void saveImagePackId(int imagePack) {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_IMAGE_PACK_ID, imagePack);
+        editor.apply();
+    }
+
+    private void saveModeId(int mode) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_IMAGE_PACK, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_MODE_ID, mode);
         editor.apply();
     }
 
@@ -100,6 +145,15 @@ public class OptionActivity extends AppCompatActivity {
                     R.drawable.melon, R.drawable.papaya, R.drawable.peach, R.drawable.pear,
                     R.drawable.pineapple, R.drawable.plum, R.drawable.pomegranate,
                     R.drawable.raspberry, R.drawable.squash, R.drawable.starfruit, R.drawable.strawberry};
+        }
+    }
+
+    public static String[] getWordArray(Context context){
+        int imageButtonId = OptionActivity.getImagePackId(context);
+        if(imageButtonId == R.id.imgButtonVegs){
+            return new String[]{"broccoli", "carrot", "eggplant", "lettuce", "mushroom", "onion", "radish"};
+        } else{
+            return new String[]{"red apple", "green apple", "lemon", "mango", "orange", "pumpkin", "watermelon"};
         }
     }
 
@@ -219,6 +273,20 @@ public class OptionActivity extends AppCompatActivity {
             numCardsTotal = 13;
         }
         return numCardsTotal;
+    }
+
+    public static Mode getMode(Context context){
+        int modeId = OptionActivity.getModeId(context);
+        if(modeId == R.id.buttonWordsImages){
+            return Mode.WORD_IMAGES;
+        } else{
+            return Mode.NORMAL;
+        }
+    }
+
+    private static int getModeId(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_IMAGE_PACK, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_MODE_ID, R.id.buttonNormal);
     }
 
     private void setupBackButton() {
