@@ -25,7 +25,7 @@ import cmpt276.project.model.ScoresManager;
 
 /**
  * HIGH SCORE SCREEN
- * Displays top number of scores
+ * Displays top number of scores for selected configuration
  * Allows user to reset scores
  */
 public class HighScoreActivity extends AppCompatActivity {
@@ -108,7 +108,7 @@ public class HighScoreActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(index != -1){
                     scoresManager.resetScoreArray();
-                    setDefaultScores(scoresManager);
+                    setDefaultScores(HighScoreActivity.this, scoresManager);
                     gameConfigs.getScoreManager(index).setScoreArray(scoresManager.getScoreArray());
                     MainActivity.saveGameConfigs(HighScoreActivity.this, gameConfigs);
                     setTexts();
@@ -117,12 +117,32 @@ public class HighScoreActivity extends AppCompatActivity {
         });
     }
 
-    public static void setDefaultScores(ScoresManager scoresManager){
-        scoresManager.addScore(new Score(23, "N/A", "Month DD, YYYY"));
-        scoresManager.addScore(new Score(28, "N/A", "Month DD, YYYY"));
-        scoresManager.addScore(new Score(20, "N/A", "Month DD, YYYY"));
-        scoresManager.addScore(new Score(25, "N/A", "Month DD, YYYY"));
-        scoresManager.addScore(new Score(18, "N/A", "Month DD, YYYY"));
+    public static void setDefaultScores(Context context, ScoresManager scoresManager){
+        scoresManager.addScore(new Score(
+                250,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format))
+        );
+        scoresManager.addScore(new Score(
+                400,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format))
+        );
+        scoresManager.addScore(new Score(
+                20,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format))
+        );
+        scoresManager.addScore(new Score(
+                25,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format))
+        );
+        scoresManager.addScore(new Score(
+                18,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format))
+        );
     }
 
     private void imageSpinner() {
@@ -229,7 +249,7 @@ public class HighScoreActivity extends AppCompatActivity {
         scoresManager = new ScoresManager();
         if (index == -1) {
             scoresManager.setNumMaxScores(5);
-            setDefaultScores(scoresManager);
+            setDefaultScores(this, scoresManager);
         } else {
             scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
             scoresManager.setScoreArray(gameConfigs.getScoreManager(index).getScoreArray());

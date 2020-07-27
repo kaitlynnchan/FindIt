@@ -68,7 +68,7 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineMiddle"
         app:layout_constraintTop_toBottomOf="@+id/textDraw"
         app:layout_constraintVertical_bias="0.915"
-        app:srcCompat="@drawable/vine_card" />
+        app:srcCompat="@drawable/card" />
 
     <ImageView
         android:id="@+id/imageDiscardCard"
@@ -83,12 +83,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textDiscard"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/vine_card" />
+        app:srcCompat="@drawable/card" />
 
     <TableLayout
         android:id="@+id/tableLayoutDraw"
-        android:layout_width="90dp"
-        android:layout_height="200dp"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageDrawCard"
         app:layout_constraintEnd_toEndOf="@+id/imageDrawCard"
         app:layout_constraintStart_toStartOf="@+id/imageDrawCard"
@@ -96,10 +98,10 @@
 
     <TableLayout
         android:id="@+id/tableLayoutDiscard"
-        android:layout_width="90dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageDiscardCard"
         app:layout_constraintEnd_toEndOf="@+id/imageDiscardCard"
         app:layout_constraintStart_toStartOf="@+id/imageDiscardCard"
