@@ -21,6 +21,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import cmpt276.project.R;
+import cmpt276.project.model.GameConfigs;
 import cmpt276.project.model.Score;
 import cmpt276.project.model.ScoresManager;
 
@@ -44,7 +45,9 @@ public class HighScoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_high_score);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        scoresManager = ScoresManager.getInstance();
+        Intent intent = getIntent();
+        int index = intent.getIntExtra("testing maybe", -1);
+        scoresManager = GameConfigs.getInstance().getScoreManager(index);
         numMaxScores = scoresManager.getNumMaxScores();
         scoresTxtView = new TextView[numMaxScores];
 
@@ -146,7 +149,9 @@ public class HighScoreActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public static Intent makeIntent(Context context){
-        return new Intent(context, HighScoreActivity.class);
+    public static Intent makeIntent(Context context, int index){
+        Intent intent = new Intent(context, HighScoreActivity.class);
+        intent.putExtra("testing maybe", index);
+        return intent;
     }
 }

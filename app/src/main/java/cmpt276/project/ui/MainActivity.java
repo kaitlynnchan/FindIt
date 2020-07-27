@@ -2,6 +2,7 @@ package cmpt276.project.ui;
 
 import android.content.Intent;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +13,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
+import cmpt276.project.model.GameConfigs;
 import cmpt276.project.model.ScoresManager;
 import cmpt276.project.model.Score;
 
@@ -28,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CardDeck cardDeck;
     private ScoresManager scoresManager;
+    private GameConfigs gameConfigs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +43,12 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         cardDeck = CardDeck.getInstance();
-        scoresManager = ScoresManager.getInstance();
+        scoresManager = new ScoresManager();
+        gameConfigs = GameConfigs.getInstance();
+
+//        loadGameConfigs();
 
         setupButtons();
-        setupSavedScores();
     }
 
     private void setupButtons() {
@@ -48,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Implement games activity
-                createCardDeck();
+//                createCardDeck();
                 Intent intent = GameActivity.makeIntent(MainActivity.this);
                 startActivity(intent);
             }
@@ -58,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         btnHighScores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = HighScoreActivity.makeIntent(MainActivity.this);
+                Intent intent = HighScoreActivity.makeIntent(MainActivity.this, gameConfigs.getCardDeckIndex(cardDeck));
                 startActivity(intent);
             }
         });
@@ -86,26 +95,87 @@ public class MainActivity extends AppCompatActivity {
         int[] imagePack = OptionActivity.getImagePackArray(MainActivity.this);
         int numImages = OptionActivity.getNumImages(MainActivity.this);
         int pileSize = OptionActivity.getPileSize(MainActivity.this);
-        int cardNum = OptionActivity.getCardNum(MainActivity.this);
+        int numCardsTotal = OptionActivity.getNumCardsTotal(MainActivity.this);
 
-        cardDeck.setNumCards(cardNum);
+        cardDeck.setNumCardsTotal(numCardsTotal);
         cardDeck.setNumImages(numImages);
-        cardDeck.setCardIndex(pileSize);
+        cardDeck.setCardIndex();
+        cardDeck.setNumCards(pileSize);
         cardDeck.setImageArr(imagePack);
         cardDeck.populateCards();
     }
 
     private void setupSavedScores() {
-        scoresManager.setNumMaxScores(5);
-        ArrayList<Score> temp = HighScoreActivity.getSavedScores(this);
-        if(temp == null){
+        int index = gameConfigs.getCardDeckIndex(cardDeck);
+        if(index == -1){
+            System.out.println("does not exist");
+            scoresManager.setNumMaxScores(5);
+            scoresManager.resetScoreArray();
             HighScoreActivity.setDefaultScores(scoresManager);
+            gameConfigs.add(cardDeck, scoresManager);
         } else{
-            scoresManager.setScoreArray(temp);
+            System.out.println("exists");
+            scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
+
+//            ArrayList<Score> temp = HighScoreActivity.getSavedScores(this);
+//            if(index != gameConfigs.getScoreManagerIndex(temp)){
+//                gameConfigs.getScoreManager(index).setScoreArray(temp);
+//            }
+            scoresManager.setScoreArray(gameConfigs.getScoreManager(index).getScoreArray());
+
         }
+//        scoresManager.setNumMaxScores(5);
+//        ArrayList<Score> temp = HighScoreActivity.getSavedScores(this);
+//        if(temp == null){
+//            HighScoreActivity.setDefaultScores(scoresManager);
+//        } else{
+//            scoresManager.setScoreArray(temp);
+//        }
     }
 
     public static Intent makeIntent(Context context){
         return new Intent(context, MainActivity.class);
+    }
+
+    @Override
+    protected void onResume() {
+        loadGameConfigs();
+//        gameConfigs.print();
+        createCardDeck();
+        setupSavedScores();
+        saveGameConfigs(this, gameConfigs);
+//        loadGameConfigs();
+        super.onResume();
+    }
+
+    private void loadGameConfigs() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared prefs", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("card decks ya", null);
+        Type type = new TypeToken<ArrayList<CardDeck>>() {}.getType();
+        ArrayList<CardDeck> arrCardDeckTemp = gson.fromJson(json, type);
+        if(arrCardDeckTemp != null) {
+            gameConfigs.setCardDecks(arrCardDeckTemp);
+        }
+
+        json = sharedPreferences.getString("scores managers ya", null);
+        type = new TypeToken<ArrayList<ScoresManager>>() {}.getType();
+        ArrayList<ScoresManager> arrScoreManagerTemp = gson.fromJson(json, type);
+        if(arrScoreManagerTemp != null) {
+            gameConfigs.setScoresManagers(arrScoreManagerTemp);
+        }
+    }
+
+    public static void saveGameConfigs(Context context, GameConfigs gameConfigs) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("shared prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(gameConfigs.getCardDecks());
+        editor.putString("card decks ya", json);
+
+        json = gson.toJson(gameConfigs.getScoresManagers());
+        editor.putString("scores managers ya", json);
+
+        editor.apply();
     }
 }

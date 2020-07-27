@@ -8,7 +8,8 @@ package cmpt276.project.model;
  */
 public class CardDeck {
 
-    private int numCards;       // Number of cards in each game
+    private int numCardsTotal;       // Number of cards in each game
+    private int numCards;
     private int numImages;      // Number of images on each card
     private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
     private int[][] cards;      // Card array: first index indicates the card, second index indicates which images are on the card
@@ -28,12 +29,16 @@ public class CardDeck {
         return numImages;
     }
 
-    public int getNumCards() {
-        return numCards;
+    public int getNumCardsTotal() {
+        return numCardsTotal;
     }
 
     public int getCardIndex() {
         return cardIndex;
+    }
+
+    public int getNumCards() {
+        return numCards;
     }
 
     // Returns the image at the index on the selected card
@@ -45,22 +50,21 @@ public class CardDeck {
         this.numImages = numImages;
     }
 
-    public void setNumCards(int numCards) {
-        this.numCards = numCards;
+    public void setNumCardsTotal(int numCardsTotal) {
+        this.numCardsTotal = numCardsTotal;
     }
 
     public void setImageArr(int[] imageArr) {
         this.imageArr = imageArr;
     }
 
+    public void setNumCards(int numCards) {
+        this.numCards = numCards;
+    }
+
     // Set cardIndex to 1, since card[0] is put into the discard pile when the game starts
-    public void setCardIndex(int cardIndex) {
-        if(numCards - cardIndex == 0){
-            this.cardIndex = 1;
-        }
-        else{
-            this.cardIndex = numCards - cardIndex;
-        }
+    public void setCardIndex() {
+        this.cardIndex = 1;
     }
 
     public void incrementCardIndex() {
@@ -68,7 +72,7 @@ public class CardDeck {
     }
 
     public void populateCards(){
-        cards = new int[numCards][numImages];
+        cards = new int[numCardsTotal][numImages];
         int row = 0;
 
         // Help taken from: https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/
@@ -98,8 +102,8 @@ public class CardDeck {
     }
 
     public void shuffleCardsAndImages(){
-        for(int i = 0; i < numCards; i++){
-            int rand = (int) ((Math.random() * (numCards - i)) + i);
+        for(int i = 0; i < numCardsTotal; i++){
+            int rand = (int) ((Math.random() * (numCardsTotal - i)) + i);
             int[] tempCard = cards[i];
             cards[i] = cards[rand];
             cards[rand] = tempCard;

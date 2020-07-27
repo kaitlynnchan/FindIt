@@ -23,14 +23,12 @@ import cmpt276.project.R;
  * OPTIONS SCREEN
  * Allows users to select an image package
  */
-public class OptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class OptionActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFS_IMAGE_PACK = "shared preferences for image pack";
+    public static final String SHARED_PREFS_OPTIONS = "shared preferences for image pack";
     public static final String EDITOR_IMAGE_PACK_ID = "id for image pack";
-    private static final String SHARED_PREFS_IMAGE_NUM = "shared preferences for image number";
-    private static final String EDITOR_IMAGE_NUM = "id for image number";
-    private static final String SHARED_PREFS_PILE_SIZE = "shared preferences for pile size";
-    private static final String EDITOR_PILE_SIZE = "id for pile size";
+    private static final String EDITOR_NUM_IMAGES = "number of images";
+    private static final String EDITOR_PILE_SIZE = "pile size";
     private int imgButtonFruits;
     private int imgButtonVegs;
 
@@ -49,7 +47,6 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
 
         imageSpinner();
         cardSpinner();
-
     }
 
     private void setupImageButton(final int imageId) {
@@ -73,7 +70,7 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void saveImagePackId(int imagePack) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_IMAGE_PACK, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_IMAGE_PACK_ID, imagePack);
         editor.apply();
@@ -106,7 +103,7 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private static int getImagePackId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_IMAGE_PACK, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, R.id.imgButtonFruits);
     }
 
@@ -126,102 +123,109 @@ public class OptionActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void imageSpinner() {
         Spinner spinner = findViewById(R.id.imageNumSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.imageNumArray,android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.numImagesArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = parent.getItemAtPosition(position).toString();
+                saveNumImages(Integer.parseInt(text));
+                cardSpinner();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        String[] numImagesArray = getResources().getStringArray(R.array.numImagesArray);
+        for(int i = 0; i < numImagesArray.length; i++){
+            if(numImagesArray[i].equals("" + getNumImages(this))){
+                spinner.setSelection(i);
+            }
+        }
     }
+
     private void cardSpinner() {
         Spinner spinner = findViewById(R.id.cardNumSpinner);
-        String[] textArray = getResources().getStringArray(R.array.cardNumArray);
-        String[] textArray1;
-        if(getCardNum(getBaseContext()) == 7){
-            textArray1 = Arrays.copyOfRange(textArray, 0, 2);
-        }
-        else if(getCardNum(getBaseContext()) == 13){
-            textArray1 = Arrays.copyOfRange(textArray, 0, 3);
-        }
-        else{
-            textArray1 = Arrays.copyOfRange(textArray, 0, textArray.length);
+        String[] numCardsArray = getResources().getStringArray(R.array.numCardsArray);
+        String[] textArray;
+        if(getNumCardsTotal(getBaseContext()) == 7){
+            textArray = Arrays.copyOfRange(numCardsArray, 0, 2);
+        } else if(getNumCardsTotal(getBaseContext()) == 13){
+            textArray = Arrays.copyOfRange(numCardsArray, 0, 3);
+        } else{
+            textArray = Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
         }
 
-        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(this,android.R.layout.simple_spinner_item,textArray1);
+        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
+                this, android.R.layout.simple_spinner_item, textArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = parent.getItemAtPosition(position).toString();
+                String[] numCardsArray = parent.getResources().getStringArray(R.array.numCardsArray);
+                if(text.equals(numCardsArray[0])) {
+                    savePileSize(getNumCardsTotal(getBaseContext()));
+                } else {
+                    savePileSize(Integer.parseInt(text));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        for(int i = 0; i < textArray.length; i++){
+            if(i == 0){
+                if(getPileSize(this) == getNumCardsTotal(this)){
+                    spinner.setSelection(i);
+                }
+            } else if(textArray[i].equals("" + getPileSize(this))){
+                spinner.setSelection(i);
+            }
+        }
     }
 
-    private void saveNumImages(int num){
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_IMAGE_NUM, MODE_PRIVATE);
+    private void saveNumImages(int numImages){
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_IMAGE_NUM, num);
+        editor.putInt(EDITOR_NUM_IMAGES, numImages);
         editor.apply();
     }
 
     public static int getNumImages(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_IMAGE_NUM, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_IMAGE_NUM, 4);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_NUM_IMAGES, 3);
     }
 
-    private void savePileSize(int num){
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_PILE_SIZE, MODE_PRIVATE);
+    private void savePileSize(int pileSize){
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_PILE_SIZE, num);
+        editor.putInt(EDITOR_PILE_SIZE, pileSize);
         editor.apply();
     }
 
     public static int getPileSize(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_PILE_SIZE, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_PILE_SIZE, 4);
-
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_PILE_SIZE, 5);
     }
 
-    public static int getCardNum(Context context) {
+    public static int getNumCardsTotal(Context context) {
         int numImages = OptionActivity.getNumImages(context);
-        int cardNum;
+        int numCardsTotal;
         if(numImages == 3){
-            cardNum = 7;
+            numCardsTotal = 7;
+        } else if(numImages == 6){
+            numCardsTotal = 31;
+        } else{
+            numCardsTotal = 13;
         }
-        else if(numImages == 6){
-            cardNum = 31;
-        }
-        else{
-            cardNum = 13;
-        }
-        return cardNum;
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
-
-        // Create function to send the data to the required classes.
-
-        String[] temp = parent.getResources().getStringArray(R.array.cardNumArray);
-        if(text.equals(temp[0]) || text.equals(temp[1]) || text.equals(temp[2]) || text.equals(temp[3])){
-            if(text.equals(temp[0])) {
-                savePileSize(getCardNum(getBaseContext()));
-            }
-            else {
-                savePileSize(Integer.parseInt(text));
-            }
-        }
-        else {
-            String[] tempArray = parent.getResources().getStringArray(R.array.imageNumArray);
-            if(text.equals(tempArray[0]) || text.equals(tempArray[1]) || text.equals(tempArray[2])  ) {
-
-                saveNumImages(Integer.parseInt(text));
-                cardSpinner();
-            }
-        }
-    }
-
-
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-    // Pass default values for both spinners.
-        saveNumImages(3);
-        savePileSize(7);
+        return numCardsTotal;
     }
 }

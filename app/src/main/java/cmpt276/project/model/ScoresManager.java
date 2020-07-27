@@ -10,16 +10,6 @@ public class ScoresManager {
     private ArrayList<Score> scoreArray = new ArrayList<>();
     private int numMaxScores;
 
-    // Singleton implementation
-    private static ScoresManager instance;
-    private ScoresManager() {}
-    public static ScoresManager getInstance(){
-        if(instance == null){
-            instance = new ScoresManager();
-        }
-        return instance;
-    }
-
     public int getNumMaxScores(){
         return numMaxScores;
     }
@@ -37,6 +27,7 @@ public class ScoresManager {
     }
 
     public void setScoreArray(ArrayList<Score> sArray){
+        System.out.println("quoi");
         this.scoreArray = sArray;
     }
 
