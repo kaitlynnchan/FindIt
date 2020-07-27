@@ -59,7 +59,7 @@
     <string name="enter_played_date">Enter played date:</string>
     <string name="reset">Reset</string>
     <string name="high_score_recording" />
-    <string name="high_score_recording_text">Top 5 High Scores</string>
+    <string name="high_score_recording_text">High Scores</string>
     <string name="nickname">Nickname</string>
     <string name="no_answer">N/A</string>
     <string name="new_high_score">New High Score</string>
