@@ -7,6 +7,63 @@
     android:background="@drawable/high_score_background"
     tools:context="cmpt276.project.ui.HighScoreActivity">
 
+    <TextView
+        android:id="@+id/textImageNum2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/atma_medium"
+        android:text="@string/num_of_images"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textHighScoreTitle"
+        app:layout_constraintStart_toEndOf="@+id/textHighScoreTitle"
+        app:layout_constraintTop_toTopOf="@+id/textHighScoreTitle" />
+
+    <TextView
+        android:id="@+id/textBoardSize2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/atma_medium"
+        android:text="@string/num_of_cards"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/numImagesSpinner2"
+        app:layout_constraintStart_toEndOf="@+id/numImagesSpinner2"
+        app:layout_constraintTop_toTopOf="@+id/numImagesSpinner2" />
+
+    <Spinner
+        android:id="@+id/numImagesSpinner2"
+        android:layout_width="70dp"
+        android:layout_height="46dp"
+
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/ic_arrow_down_24"
+        android:foregroundGravity="center_vertical|right"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/textImageNum2"
+        app:layout_constraintStart_toEndOf="@+id/textImageNum2"
+        app:layout_constraintTop_toTopOf="@+id/textImageNum2" />
+
+    <Spinner
+        android:id="@+id/numCardsSpinner2"
+        android:layout_width="65dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/ic_arrow_down_24"
+        android:foregroundGravity="center_vertical|right"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/textBoardSize2"
+        app:layout_constraintStart_toEndOf="@+id/textBoardSize2"
+        app:layout_constraintTop_toTopOf="@+id/textBoardSize2" />
+
     <Button
         android:id="@+id/buttonBack"
         android:layout_width="40dp"
@@ -42,7 +99,7 @@
         android:textColor="#000000"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.254"
+        app:layout_constraintHorizontal_bias="0.147"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
