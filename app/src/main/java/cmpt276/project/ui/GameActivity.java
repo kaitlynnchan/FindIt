@@ -125,7 +125,7 @@ public class GameActivity extends AppCompatActivity {
     // Checks if the selected image matches an image on on the discard pile card
     private void imageClicked(int index) {
         if (cardDeck.searchDiscardPile(index)) {
-            if (cardDeck.getCardIndex() == cardDeck.getNumCards() - 1) {
+            if (cardDeck.getCardIndex() == cardDeck.getCardDeckSize() - 1) {
                 stopTimer();
             } else {
                 cardDeck.incrementCardIndex();
@@ -159,11 +159,10 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-
     // Change the button icons to the appropriate pictures
     // Used code from Brians youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void updateCard() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < numImages; i++) {
             Object drawObject = cardDeck.getCardObject(cardDeck.getCardIndex(), i);
             Object discardObject = cardDeck.getCardObject(cardDeck.getCardIndex() - 1, i);
 

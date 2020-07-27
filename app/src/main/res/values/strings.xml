@@ -7,7 +7,7 @@
     <string name="options">OPTIONS</string>
     <string name="help">HELP</string>
     <string name="imageView">TODO</string>
-    <string name="optionHeading">Choose Wisely!!!!</string>
+    <string name="optionHeading">Choose \nWisely!!!!</string>
     <string name="back">BACK</string>
     <string name="resetString">Reset High Score</string>
     <string name="authors">By Kaitlynn, Lakshay, Sami, and Yangyang</string>
@@ -22,7 +22,7 @@
     <string name="helpContent">Link: <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">SFU HOME</a>
         \n\n<b>How to Play</b>
         \nThe objective of the game is to match all the images in the least amount of time.
-        \n1 . You can change the image package in OPTIONS in main menu.
+        \n1 . You can change the image package, number of images on the card, number of cards, and mode in OPTIONS in main menu.
         \n2 . Once you click START GAME the cards will flip, and will show a number of images.
         \n3 . Find and click the image on the draw pile which matches one on the discard pile.
         \n4 . Then the card on the draw pile is moved to the discard pile and the next card in the draw pile will flip.
@@ -64,6 +64,20 @@
     <string name="date">Month DD, YYYY</string>
     <string name="no_answer">N/A</string>
     <string name="new_high_score">New High Score</string>
+    <string name="num_of_cards">Number \nof Cards</string>
+    <string name="num_of_images">Number \nof Images</string>
+    <string-array name="numCardsArray">
+        <item>all</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+    </string-array>
+    <string-array name="numImagesArray">
+        <item>3</item>
+        <item>4</item>
+        <item>6</item>
+    </string-array>
     <string name="words_and_images">words and images</string>
     <string name="normal">NORMAL\n(IMAGES)</string>
     <string name="mode">Mode:</string>
