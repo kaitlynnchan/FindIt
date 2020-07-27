@@ -2,6 +2,10 @@ package cmpt276.project.model;
 
 import java.util.ArrayList;
 
+/**
+ * GAME CONFIGS CLASS
+ * Stores a collection of cardDecks and scoresManagers
+ */
 public class GameConfigs {
     private ArrayList<CardDeck> cardDecks = new ArrayList<>();
     private ArrayList<ScoresManager> scoresManagers = new ArrayList<>();

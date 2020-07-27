@@ -22,7 +22,7 @@
     <string name="helpContent">Link: <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">SFU HOME</a>
         \n\n<b>How to Play</b>
         \nThe objective of the game is to match all the images in the least amount of time.
-        \n1 . You can change the image package in OPTIONS in main menu.
+        \n1 . You can change the image package, number of images on the card, number of cards, and mode in OPTIONS in main menu.
         \n2 . Once you click START GAME the cards will flip, and will show a number of images.
         \n3 . Find and click the image on the draw pile which matches one on the discard pile.
         \n4 . Then the card on the draw pile is moved to the discard pile and the next card in the draw pile will flip.
