@@ -1,6 +1,8 @@
 package cmpt276.project.flickr;
 
+import android.app.VoiceInteractor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cmpt276.project.R;
+import cmpt276.project.ui.OptionActivity;
 
 public class PhotoGalleryFragment extends Fragment {
     private static final String TAG = "PhotoGalleryFragment";
@@ -31,6 +34,9 @@ public class PhotoGalleryFragment extends Fragment {
     private RecyclerView mPhotoRecyclerView;
     private List<GalleryItem> mItems = new ArrayList<>();
     private ThumbnailDownloader<PhotoHolder> mThumbnailDownloader;
+
+    private int numImages; // Number of images to be saved
+    private ArrayList<String> imageUrls;
 
     public static PhotoGalleryFragment newInstance() {
         return new PhotoGalleryFragment();
@@ -42,6 +48,9 @@ public class PhotoGalleryFragment extends Fragment {
         setRetainInstance(true);
         setHasOptionsMenu(true);
         updateItems();
+
+        numImages = 0;
+        imageUrls = new ArrayList<>();
 
         Handler responseHandler = new Handler();
         mThumbnailDownloader = new ThumbnailDownloader<>(responseHandler);
@@ -161,6 +170,16 @@ public class PhotoGalleryFragment extends Fragment {
                         itemView.setForeground(getResources().getDrawable(R.drawable.gallery_item_selected));
                     } else{
                         itemView.setForeground(null);
+                    }
+
+                    if (numImages < OptionActivity.getNumImages(getActivity())) {
+                        imageUrls.add(mItems.get(position).getUrl());
+                        numImages++;
+                    }
+
+                    if (numImages == OptionActivity.getNumImages(getActivity())) {
+                        // Save images with JSON
+                        getActivity().finish();
                     }
                 }
             });
