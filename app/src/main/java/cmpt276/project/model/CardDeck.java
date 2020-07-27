@@ -27,6 +27,10 @@ public class CardDeck {
         return instance;
     }
 
+    public int getNumCardsTotal() {
+        return numCardsTotal;
+    }
+
     public int getNumImages() {
         return numImages;
     }

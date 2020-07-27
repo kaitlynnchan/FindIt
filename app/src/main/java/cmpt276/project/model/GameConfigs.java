@@ -54,4 +54,15 @@ public class GameConfigs {
         }
         return -1;
     }
+
+    public int getCardDeckIndex(int numImages, int cardDeckSize){
+
+        for(int i = 0; i < cardDecks.size(); i++){
+            if(cardDecks.get(i).getNumImages() == numImages
+                    && cardDecks.get(i).getCardDeckSize() == cardDeckSize){
+                return i;
+            }
+        }
+        return -1;
+    }
 }
