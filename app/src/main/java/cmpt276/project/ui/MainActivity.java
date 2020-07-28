@@ -13,6 +13,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 
 import android.view.WindowManager;
@@ -25,9 +27,12 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -82,8 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
                 // Execute DownloadImage AsyncTask
                 new DownloadImage().execute(URL);
+                image.setImageBitmap(loadImageBitmap(getApplicationContext(), "my_image.jpeg"));
             }
         });
+
 
     }
 
@@ -251,9 +258,53 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Bitmap result) {
             // Set the bitmap into ImageView
-            image.setImageBitmap(result);
+            saveImage(getApplicationContext(), result, "my_ittmage.png");
             // Close progressdialog
             mProgressDialog.dismiss();
+        }
+    }
+
+    public void saveImage(Context context, Bitmap b, String imageName)
+    {
+        FileOutputStream foStream;
+        try
+        {
+            foStream = context.openFileOutput(imageName, Context.MODE_PRIVATE);
+            b.compress(Bitmap.CompressFormat.PNG, 100, foStream);
+            foStream.close();
+        }
+        catch (Exception e)
+        {
+            Log.d("saveImage", "Exception 2, Something went wrong!");
+            e.printStackTrace();
+        }
+    }
+    public Bitmap loadImageBitmap(Context context, String imageName) {
+        Bitmap bitmap = null;
+        FileInputStream fiStream;
+        try {
+            fiStream    = context.openFileInput(imageName);
+            bitmap      = BitmapFactory.decodeStream(fiStream);
+            fiStream.close();
+        } catch (Exception e) {
+            Log.d("saveImage", "Exception 3, Something went wrong!");
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+    private void saveImage(Bitmap data) {
+        File createFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"test");
+        createFolder.mkdir();
+        File saveImage = new File(createFolder,"downloadimage.jpg");
+        try {
+            OutputStream outputStream = new FileOutputStream(saveImage);
+            data.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
