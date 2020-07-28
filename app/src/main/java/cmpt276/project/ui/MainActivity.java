@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
-import cmpt276.project.model.Mode;
 import cmpt276.project.model.GameConfigs;
 import cmpt276.project.model.ScoresManager;
 
@@ -134,18 +133,13 @@ public class MainActivity extends AppCompatActivity {
         int numCardsTotal = OptionActivity.getNumCardsTotal(MainActivity.this);
         int cardDeckSize = OptionActivity.getCardDeckSize(MainActivity.this);
         int numImages = OptionActivity.getNumImages(MainActivity.this);
-        int[] imagePack = OptionActivity.getImagePackArray(MainActivity.this);
-        String[] wordPack = OptionActivity.getWordArray(MainActivity.this);
-        Mode mode = OptionActivity.getMode(MainActivity.this);
+        Object[] packArr = OptionActivity.getPackArray(MainActivity.this);
 
         cardDeck.setNumCardsTotal(numCardsTotal);
         cardDeck.setCardDeckSize(cardDeckSize);
         cardDeck.setNumImages(numImages);
         cardDeck.setCardIndex();
-        cardDeck.setImageArr(imagePack);
-        cardDeck.setWordArr(wordPack);
-        cardDeck.setMode(mode);
-        cardDeck.populateCards();
+        cardDeck.populateCards(packArr);
     }
 
     private void setupSavedScores() {

@@ -12,9 +12,6 @@ public class CardDeck {
     private int cardDeckSize;   // Number of cards in deck
     private int numImages;      // Number of images on each card
     private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
-    private int[] imageArr;     // Array of images, each index represents an specific fruit / vegetable
-    private String[] wordArr;   // Array of words, each index represents an specific fruit / vegetable
-    private Mode mode;          // Game mode
     private Object[][] cards;   // Card array: first index indicates the card, second index indicates which images are on the card
 
     private static CardDeck instance;
@@ -45,14 +42,11 @@ public class CardDeck {
 
     // Returns the image at the index on the selected card
     public Object getCardObject(int card, int index) {
-        String[] split = ((String) cards[card][index]).split(",");
-        String type = split[0];
-        int i = Integer.parseInt(split[1]);
-        if(type.equals("word")){
-            return wordArr[i];
-        } else{
-            return imageArr[i];
+        if(cards[card][index].getClass() == String.class){
+            String[] split = ((String) cards[card][index]).split(",");
+            return (Object) split[1];
         }
+        return cards[card][index];
     }
 
     public void setNumImages(int numImages) {
@@ -63,20 +57,8 @@ public class CardDeck {
         this.numCardsTotal = numCardsTotal;
     }
 
-    public void setImageArr(int[] imageArr) {
-        this.imageArr = imageArr;
-    }
-
     public void setCardDeckSize(int cardDeckSize) {
         this.cardDeckSize = cardDeckSize;
-    }
-
-    public void setWordArr(String[] wordArr) {
-        this.wordArr = wordArr;
-    }
-
-    public void setMode(Mode mode) {
-        this.mode = mode;
     }
 
     // Set cardIndex to 1, since card[0] is put into the discard pile when the game starts
@@ -88,7 +70,7 @@ public class CardDeck {
         this.cardIndex++;
     }
 
-    public void populateCards(){
+    public void populateCards(Object[] packArr){
         cards = new Object[numCardsTotal][numImages];
         int row = 0;
 
@@ -96,12 +78,12 @@ public class CardDeck {
         // Generate series from imageArr[0] to imageArr[numImages - 1]
         for (int i = 0; i <= numImages - 1; i++)  {
             int rand = checkRandom(0, 0);
-            addValue(row, rand, 0, 0);
+            addValue(row, rand, 0, 0, packArr);
 
             for (int i2 = 1; i2 <= numImages - 1; i2++) {
                 int indx = (numImages * i) - i + i2;
                 rand = checkRandom(rand, i2);
-                addValue(row, rand, i2, indx);
+                addValue(row, rand, i2, indx, packArr);
             }
             row++;
         }
@@ -110,14 +92,14 @@ public class CardDeck {
         for (int i = 1; i <= numImages-1; i++) {
             for (int i2 = 1; i2 <= numImages - 1; i2++) {
                 int rand = checkRandom(0, 0);
-                addValue(row, rand, 0, i);
+                addValue(row, rand, 0, i, packArr);
 
                 for (int i3 = 1; i3 <= numImages - 1; i3++) {
                     int indx = numImages + (numImages - 1) * (i3 - 1)
                             + ( (i - 1) * (i3 - 1) + (i2 - 1) )
                             % (numImages - 1);
                     rand = checkRandom(rand, i3);
-                    addValue(row, rand, i3, indx);
+                    addValue(row, rand, i3, indx, packArr);
                 }
                 row++;
             }
@@ -126,11 +108,16 @@ public class CardDeck {
         shuffleCardsAndImages();
     }
 
-    private void addValue(int row, int rand, int col, int indx) {
-        if (rand == 0 || mode == Mode.NORMAL) {
-            cards[row][col] = "image," + indx;
-        } else if (rand == 1) {
-            cards[row][col] = "word," + indx;
+    private void addValue(int row, int rand, int col, int indx, Object[] packArr) {
+        if(packArr[indx].getClass() == String.class){
+            String[] split = ((String) packArr[indx]).split(",");
+            if (rand == 0) {
+                cards[row][col] = Integer.parseInt(split[0]);
+            } else if (rand == 1) {
+                cards[row][col] = packArr[indx];
+            }
+        } else{
+            cards[row][col] = packArr[indx];
         }
     }
 
@@ -169,16 +156,27 @@ public class CardDeck {
     public boolean searchDiscardPile(int imageIndex) {
         for(int i = 0; i < numImages; i++){
 
-            String[] split = ((String) cards[cardIndex][imageIndex]).split(",");
-            int indexDraw = Integer.parseInt(split[1]);
+            Object drawValue;
+            if(cards[cardIndex][imageIndex].getClass() == String.class){
+                String[] split = ((String) cards[cardIndex][imageIndex]).split(",");
+                drawValue = Integer.parseInt(split[0]);
+            } else{
+                drawValue = cards[cardIndex][imageIndex];
+            }
 
-            split = ((String) cards[cardIndex - 1][i]).split(",");
-            int indexDiscard = Integer.parseInt(split[1]);
+            Object discardValue;
+            if(cards[cardIndex - 1][i].getClass() == String.class){
+                String[] split = ((String) cards[cardIndex - 1][i]).split(",");
+                discardValue = Integer.parseInt(split[0]);
+            } else{
+                discardValue = cards[cardIndex - 1][i];
+            }
 
-            if(indexDraw == indexDiscard){
+            if(drawValue.equals(discardValue)){
                 return true;
             }
         }
         return false;
     }
+
 }
