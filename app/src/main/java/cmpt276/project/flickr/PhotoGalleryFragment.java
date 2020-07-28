@@ -44,7 +44,6 @@ public class PhotoGalleryFragment extends Fragment {
     private ThumbnailDownloader<PhotoHolder> mThumbnailDownloader;
 
     private int numImages; // Number of images to be saved
-    private int maxNumImages;
     private ArrayList<String> imageUrls;
 
     public static PhotoGalleryFragment newInstance() {
@@ -60,7 +59,6 @@ public class PhotoGalleryFragment extends Fragment {
 
         numImages = 0;
         imageUrls = new ArrayList<>();
-        maxNumImages = OptionActivity.getNumImages(getActivity());
 
         Handler responseHandler = new Handler();
         mThumbnailDownloader = new ThumbnailDownloader<>(responseHandler);
@@ -182,17 +180,12 @@ public class PhotoGalleryFragment extends Fragment {
                         itemView.setForeground(null);
                     }
 
-                    if (numImages < maxNumImages) {
+                    String bitmapUrl = mItems.get(position).getUrl();
+                    String imageName = mItems.get(position).getCaption();
+                    imageName += ".png";
 
-                        String bitmapUrl = mItems.get(position).getUrl();
-                        String imageName = mItems.get(position).getCaption();
-
-                        imageName += ".png";
-
-                        numImages++;
-
-                        new DownloadFile(bitmapUrl, imageName).execute();
-                    }
+                    numImages++;
+                    new DownloadFile(bitmapUrl, imageName).execute();
                 }
             });
         }
@@ -310,9 +303,7 @@ public class PhotoGalleryFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            if (numImages >= maxNumImages) {
-                getActivity().finish();
-            }
+
         }
     }
 }
