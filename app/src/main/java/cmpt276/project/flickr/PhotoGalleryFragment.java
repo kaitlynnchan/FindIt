@@ -182,7 +182,7 @@ public class PhotoGalleryFragment extends Fragment {
                         itemView.setForeground(null);
                     }
 
-                    if (numImages < OptionActivity.getNumImages(getActivity())) {
+                    if (numImages < maxNumImages) {
 
                         String bitmapUrl = mItems.get(position).getUrl();
                         String imageName = mItems.get(position).getCaption();
