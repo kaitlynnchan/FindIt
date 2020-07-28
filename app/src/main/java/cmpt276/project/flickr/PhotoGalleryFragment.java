@@ -1,8 +1,8 @@
 package cmpt276.project.flickr;
 
-import android.app.VoiceInteractor;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -22,20 +22,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import cmpt276.project.R;
+import cmpt276.project.model.CardDeck;
+import cmpt276.project.model.GameConfigs;
+import cmpt276.project.model.ScoresManager;
 import cmpt276.project.ui.OptionActivity;
 
 public class PhotoGalleryFragment extends Fragment {
     private static final String TAG = "PhotoGalleryFragment";
+    public static final String SHARED_PREFERENCES = "SHARED_PREFERENCES";
+    private static final String EDITOR_IMG_URLS = "EDITOR";
+
 
     private RecyclerView mPhotoRecyclerView;
     private List<GalleryItem> mItems = new ArrayList<>();
     private ThumbnailDownloader<PhotoHolder> mThumbnailDownloader;
 
-    private int numImages; // Number of images to be saved
+    private int cardNum; // Number of images to be saved
     private ArrayList<String> imageUrls;
 
     public static PhotoGalleryFragment newInstance() {
@@ -49,7 +59,7 @@ public class PhotoGalleryFragment extends Fragment {
         setHasOptionsMenu(true);
         updateItems();
 
-        numImages = 0;
+        cardNum = 0;
         imageUrls = new ArrayList<>();
 
         Handler responseHandler = new Handler();
@@ -172,13 +182,14 @@ public class PhotoGalleryFragment extends Fragment {
                         itemView.setForeground(null);
                     }
 
-                    if (numImages < OptionActivity.getNumImages(getActivity())) {
+                    if (cardNum < OptionActivity.getNumCardsTotal(getActivity())) {
                         imageUrls.add(mItems.get(position).getUrl());
-                        numImages++;
+                        cardNum++;
                     }
 
-                    if (numImages == OptionActivity.getNumImages(getActivity())) {
+                    if (cardNum == OptionActivity.getNumCardsTotal(getActivity())) {
                         // Save images with JSON
+                        saveImgArr(getActivity(),imageUrls);
                         getActivity().finish();
                     }
                 }
@@ -244,6 +255,32 @@ public class PhotoGalleryFragment extends Fragment {
             setupAdapter();
         }
 
+
+
     }
 
-}
+    public static ArrayList<String> getImgArr(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(EDITOR_IMG_URLS, null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        ArrayList<String> imageUrlsTemp = gson.fromJson(json, type);
+        return imageUrlsTemp;
+
+    }
+
+    private void saveImgArr(Context context, ArrayList imageUrls) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(imageUrls);
+        editor.putString(EDITOR_IMG_URLS, json);
+
+        editor.apply();
+    }
+
+
+    }
+
+
