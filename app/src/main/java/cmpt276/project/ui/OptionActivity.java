@@ -21,6 +21,8 @@ import android.widget.Spinner;
 import java.util.Arrays;
 
 import cmpt276.project.R;
+import cmpt276.project.flickr.PhotoGalleryActivity;
+import cmpt276.project.flickr.PhotoGalleryFragment;
 import cmpt276.project.model.Mode;
 
 /**
@@ -39,6 +41,7 @@ public class OptionActivity extends AppCompatActivity {
     private int imgButtonVegs;
     private int buttonNormal;
     private int buttonWordsImages;
+    private int imgFlicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +51,13 @@ public class OptionActivity extends AppCompatActivity {
 
         imgButtonFruits = R.id.imgButtonFruits;
         imgButtonVegs = R.id.imgButtonVegs;
+        imgFlicker = R.id.imgButtonFlicker;
         buttonNormal = R.id.buttonNormal;
         buttonWordsImages = R.id.buttonWordsImages;
 
+
         setupImageButton(imgButtonFruits);
+        setupImageButton(imgFlicker);
         setupImageButton(imgButtonVegs);
         setupModeButton(buttonNormal);
         setupModeButton(buttonWordsImages);
@@ -69,6 +75,7 @@ public class OptionActivity extends AppCompatActivity {
                 saveImagePackId(imageId);
                 setupImageButton(imgButtonFruits);
                 setupImageButton(imgButtonVegs);
+                setupImageButton(imgFlicker);
             }
         });
 
@@ -128,7 +135,11 @@ public class OptionActivity extends AppCompatActivity {
                     R.drawable.red_cabbage, R.drawable.red_onion, R.drawable.spinach,
                     R.drawable.turnip, R.drawable.yam, R.drawable.yellow_bell_pepper,
                     R.drawable.zucchini};
-        } else{
+        }
+        else if(imageButtonId == R.id.imgButtonFlicker){
+            return null;
+        }
+        else{
             return new int[]{R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
                     R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
                     R.drawable.watermelon, R.drawable.avocado, R.drawable.banana, R.drawable.blackberry,
@@ -287,7 +298,8 @@ public class OptionActivity extends AppCompatActivity {
         int modeId = OptionActivity.getModeId(context);
         if(modeId == R.id.buttonWordsImages){
             return Mode.WORD_IMAGES;
-        } else{
+        }
+        else{
             return Mode.NORMAL;
         }
     }
