@@ -1,8 +1,10 @@
 package cmpt276.project.flickr;
 
+import android.app.VoiceInteractor;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -21,31 +23,28 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import cmpt276.project.R;
-import cmpt276.project.model.CardDeck;
-import cmpt276.project.model.GameConfigs;
-import cmpt276.project.model.ScoresManager;
 import cmpt276.project.ui.OptionActivity;
 
 public class PhotoGalleryFragment extends Fragment {
     private static final String TAG = "PhotoGalleryFragment";
-    public static final String SHARED_PREFERENCES = "SHARED_PREFERENCES";
-    private static final String EDITOR_IMG_URLS = "EDITOR";
-
 
     private RecyclerView mPhotoRecyclerView;
     private List<GalleryItem> mItems = new ArrayList<>();
     private ThumbnailDownloader<PhotoHolder> mThumbnailDownloader;
 
-    private int cardNum; // Number of images to be saved
+    private int numImages; // Number of images to be saved
+    private int maxNumImages;
     private ArrayList<String> imageUrls;
 
     public static PhotoGalleryFragment newInstance() {
@@ -59,8 +58,9 @@ public class PhotoGalleryFragment extends Fragment {
         setHasOptionsMenu(true);
         updateItems();
 
-        cardNum = 0;
+        numImages = 0;
         imageUrls = new ArrayList<>();
+        maxNumImages = OptionActivity.getNumImages(getActivity());
 
         Handler responseHandler = new Handler();
         mThumbnailDownloader = new ThumbnailDownloader<>(responseHandler);
@@ -182,15 +182,16 @@ public class PhotoGalleryFragment extends Fragment {
                         itemView.setForeground(null);
                     }
 
-                    if (cardNum < OptionActivity.getNumCardsTotal(getActivity())) {
-                        imageUrls.add(mItems.get(position).getUrl());
-                        cardNum++;
-                    }
+                    if (numImages < OptionActivity.getNumImages(getActivity())) {
 
-                    if (cardNum == OptionActivity.getNumCardsTotal(getActivity())) {
-                        // Save images with JSON
-                        saveImgArr(getActivity(),imageUrls);
-                        getActivity().finish();
+                        String bitmapUrl = mItems.get(position).getUrl();
+                        String imageName = mItems.get(position).getCaption();
+
+                        imageName += ".png";
+
+                        numImages++;
+
+                        new DownloadFile(bitmapUrl, imageName).execute();
                     }
                 }
             });
@@ -255,32 +256,63 @@ public class PhotoGalleryFragment extends Fragment {
             setupAdapter();
         }
 
-
-
     }
 
-    public static ArrayList<String> getImgArr(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString(EDITOR_IMG_URLS, null);
-        Type type = new TypeToken<ArrayList<String>>() {}.getType();
-        ArrayList<String> imageUrlsTemp = gson.fromJson(json, type);
-        return imageUrlsTemp;
+    private class DownloadFile extends AsyncTask<String, Void, Bitmap> {
 
+        String url;
+        String name;
+
+        DownloadFile(String URL, String name) {
+            this.url = URL;
+            this.name = name;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... URL) {
+
+            System.out.println("IMAGE URL: " + url);
+            System.out.println("IMAGE CAPTION: " + name);
+
+            Bitmap bitmap = null;
+            try {
+                // Download Image from URL
+                InputStream input = new java.net.URL(url).openStream();
+                // Decode Bitmap
+                bitmap = BitmapFactory.decodeStream(input);
+
+                if (bitmap == null) return null;
+
+                ContextWrapper cw = new ContextWrapper(getContext());
+                File directory = cw.getDir("flickrDrawable", Context.MODE_PRIVATE);
+
+                File mypath = new File(directory, name);
+
+                FileOutputStream fos = null;
+                try {
+                    fos = new FileOutputStream(mypath);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                    fos.close();
+                } catch (Exception e) {
+                    Log.e("SAVE_IMAGE", e.getMessage(), e);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            if (numImages >= maxNumImages) {
+                getActivity().finish();
+            }
+        }
     }
-
-    private void saveImgArr(Context context, ArrayList imageUrls) {
-
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(imageUrls);
-        editor.putString(EDITOR_IMG_URLS, json);
-
-        editor.apply();
-    }
-
-
-    }
-
-
+}

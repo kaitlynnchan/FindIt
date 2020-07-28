@@ -69,29 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
         cardDeck = CardDeck.getInstance();
         gameConfigs = GameConfigs.getInstance();
-        
+
         setupButtons();
-
-
-
-
-        // Locate the ImageView in activity_main.xml
-        image = (ImageView) findViewById(R.id.image);
-
-        // Locate the Button in activity_main.xml
-        button = (Button) findViewById(R.id.button);
-
-        // Capture button click
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-
-                // Execute DownloadImage AsyncTask
-                new DownloadImage().execute(URL);
-                image.setImageBitmap(loadImageBitmap(getApplicationContext(), "my_image.jpeg"));
-            }
-        });
-
-
     }
 
     private void setupButtons() {
@@ -138,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PhotoGalleryActivity.class);
                 startActivity(intent);
-                for(int i =0 ;i<7 ;i++){
-                URL = PhotoGalleryFragment.getImgArr(getBaseContext()).get(i);}
             }
         });
     }
@@ -219,101 +196,4 @@ public class MainActivity extends AppCompatActivity {
     public static Intent makeIntent(Context context){
         return new Intent(context, MainActivity.class);
     }
-
-
-    // DownloadImage AsyncTask
-    private class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Create a progressdialog
-            mProgressDialog = new ProgressDialog(MainActivity.this);
-            // Set progressdialog title
-            mProgressDialog.setTitle("Download Image Tutorial");
-            // Set progressdialog message
-            mProgressDialog.setMessage("Loading...");
-            mProgressDialog.setIndeterminate(false);
-            // Show progressdialog
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... URL) {
-
-            String imageURL = URL[0];
-
-            Bitmap bitmap = null;
-            try {
-                // Download Image from URL
-                InputStream input = new java.net.URL(imageURL).openStream();
-                // Decode Bitmap
-                bitmap = BitmapFactory.decodeStream(input);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            // Set the bitmap into ImageView
-            saveImage(getApplicationContext(), result, "my_ittmage.png");
-            // Close progressdialog
-            mProgressDialog.dismiss();
-        }
-    }
-
-    public void saveImage(Context context, Bitmap b, String imageName)
-    {
-        FileOutputStream foStream;
-        try
-        {
-            foStream = context.openFileOutput(imageName, Context.MODE_PRIVATE);
-            b.compress(Bitmap.CompressFormat.PNG, 100, foStream);
-            foStream.close();
-        }
-        catch (Exception e)
-        {
-            Log.d("saveImage", "Exception 2, Something went wrong!");
-            e.printStackTrace();
-        }
-    }
-    public Bitmap loadImageBitmap(Context context, String imageName) {
-        Bitmap bitmap = null;
-        FileInputStream fiStream;
-        try {
-            fiStream    = context.openFileInput(imageName);
-            bitmap      = BitmapFactory.decodeStream(fiStream);
-            fiStream.close();
-        } catch (Exception e) {
-            Log.d("saveImage", "Exception 3, Something went wrong!");
-            e.printStackTrace();
-        }
-        return bitmap;
-    }
-    private void saveImage(Bitmap data) {
-        File createFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"test");
-        createFolder.mkdir();
-        File saveImage = new File(createFolder,"downloadimage.jpg");
-        try {
-            OutputStream outputStream = new FileOutputStream(saveImage);
-            data.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
-            outputStream.flush();
-            outputStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
-
-
-
-
-
-
-
-
-
