@@ -30,12 +30,12 @@ import cmpt276.project.model.Mode;
  */
 public class OptionActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFS_OPTIONS = "shared preferences for image pack";
+    public static final String SHARED_PREFS_OPTIONS = "shared preferences for options";
     public static final String EDITOR_IMAGE_PACK_ID = "id for image pack";
     public static final String EDITOR_NUM_IMAGES = "number of images";
     public static final String EDITOR_CARD_DECK_SIZE = "card deck size";
-
     public static final String EDITOR_MODE_ID = "id for mode button";
+
     private int imgButtonFruits;
     private int imgButtonVegs;
     private int buttonNormal;
@@ -56,10 +56,11 @@ public class OptionActivity extends AppCompatActivity {
         setupImageButton(imgButtonVegs);
         setupModeButton(buttonNormal);
         setupModeButton(buttonWordsImages);
-        setupBackButton();
 
         imageSpinner();
         cardSpinner();
+
+        setupBackButton();
     }
 
     private void setupImageButton(final int imageId) {
@@ -174,8 +175,8 @@ public class OptionActivity extends AppCompatActivity {
 
     private void cardSpinner() {
         Spinner spinner = findViewById(R.id.numCardsSpinner);
-        String[] numCardsArray = getResources().getStringArray(R.array.numCardsArray);
-        String[] textArray = setTextArray(numCardsArray);
+        final String[] cardDeckSizeArray = getResources().getStringArray(R.array.cardDeckSizeArray);
+        String[] textArray = setTextArray(cardDeckSizeArray);
 
         ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
                 this, android.R.layout.simple_spinner_item, textArray);
@@ -185,8 +186,8 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-                String[] numCardsArray = parent.getResources().getStringArray(R.array.numCardsArray);
-                if(text.equals(numCardsArray[0])) {
+//                String[] cardDeckSizeArray = parent.getResources().getStringArray(R.array.cardDeckSizeArray);
+                if(text.equals(cardDeckSizeArray[0])) {
                     saveCardDeckSize(getNumCardsTotal(getBaseContext()));
                 } else {
                     saveCardDeckSize(Integer.parseInt(text));
@@ -209,14 +210,14 @@ public class OptionActivity extends AppCompatActivity {
         }
     }
 
-    private String[] setTextArray(String[] numCardsArray) {
+    private String[] setTextArray(String[] cardDeckSizeArray) {
         String[] textArray;
         if(getNumCardsTotal(getBaseContext()) == 7){
-            textArray = Arrays.copyOfRange(numCardsArray, 0, 2);
+            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 2);
         } else if(getNumCardsTotal(getBaseContext()) == 13){
-            textArray = Arrays.copyOfRange(numCardsArray, 0, 3);
+            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 3);
         } else{
-            textArray = Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
+            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, cardDeckSizeArray.length);
         }
         return textArray;
     }

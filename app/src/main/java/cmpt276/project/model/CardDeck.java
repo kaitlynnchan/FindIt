@@ -8,14 +8,14 @@ package cmpt276.project.model;
  */
 public class CardDeck {
 
-    private int numCardsTotal;  // Number of cards in each game
-    private int cardDeckSize;   // Size of the card size
+    private int numCardsTotal;  // Total number of cards possible
+    private int cardDeckSize;   // Number of cards in deck
     private int numImages;      // Number of images on each card
     private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
     private int[] imageArr;     // Array of images, each index represents an specific fruit / vegetable
     private String[] wordArr;   // Array of words, each index represents an specific fruit / vegetable
-    private Object[][] cards;   // Card array: first index indicates the card, second index indicates which images are on the card
     private Mode mode;          // Game mode
+    private Object[][] cards;   // Card array: first index indicates the card, second index indicates which images are on the card
 
     private static CardDeck instance;
 
@@ -170,12 +170,12 @@ public class CardDeck {
         for(int i = 0; i < numImages; i++){
 
             String[] split = ((String) cards[cardIndex][imageIndex]).split(",");
-            int idxDraw = Integer.parseInt(split[1]);
+            int indexDraw = Integer.parseInt(split[1]);
 
             split = ((String) cards[cardIndex - 1][i]).split(",");
-            int idxDiscard = Integer.parseInt(split[1]);
+            int indexDiscard = Integer.parseInt(split[1]);
 
-            if(idxDraw == idxDiscard){
+            if(indexDraw == indexDiscard){
                 return true;
             }
         }

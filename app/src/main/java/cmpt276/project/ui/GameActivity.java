@@ -105,7 +105,6 @@ public class GameActivity extends AppCompatActivity {
     // Help taken from Brian: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupDiscardCard() {
         TableLayout tableDiscard = findViewById(R.id.tableLayoutDiscard);
-
         for(int i = 0; i < numImages; i++){
             Button button = new Button(this);
             button.setLayoutParams(new TableLayout.LayoutParams(

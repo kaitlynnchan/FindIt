@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Arrays;
@@ -38,7 +37,7 @@ public class HighScoreActivity extends AppCompatActivity {
     private int numMaxScores;
     private int index;
     private int numImages;
-    private int numCards;
+    private int cardDeckSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +47,14 @@ public class HighScoreActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         index = intent.getIntExtra(EXTRA_INDEX, -1);
+
         gameConfigs = GameConfigs.getInstance();
         scoresManager = gameConfigs.getScoreManager(index);
         numMaxScores = scoresManager.getNumMaxScores();
         scoresTxtView = new TextView[numMaxScores];
 
         numImages = gameConfigs.getCardDecks().get(index).getNumImages();
-        numCards = gameConfigs.getCardDecks().get(index).getCardDeckSize();
+        cardDeckSize = gameConfigs.getCardDecks().get(index).getCardDeckSize();
 
         setupHighScores();
         setupResetButton();
@@ -146,7 +146,7 @@ public class HighScoreActivity extends AppCompatActivity {
     }
 
     private void imageSpinner() {
-        Spinner spinner = findViewById(R.id.numImagesSpinner2);
+        Spinner spinner = findViewById(R.id.imagesSpinnerHighScore);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.numImagesArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -176,9 +176,9 @@ public class HighScoreActivity extends AppCompatActivity {
     }
 
     private void cardSpinner() {
-        Spinner spinner = findViewById(R.id.numCardsSpinner2);
-        String[] numCardsArray = getResources().getStringArray(R.array.numCardsArray);
-        String[] textArray = setTextArray(numCardsArray);
+        Spinner spinner = findViewById(R.id.cardsSpinnerHighScore);
+        final String[] cardDeckSizeArray = getResources().getStringArray(R.array.cardDeckSizeArray);
+        String[] textArray = setTextArray(cardDeckSizeArray);
 
         ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
                 this, android.R.layout.simple_spinner_item, textArray);
@@ -188,16 +188,15 @@ public class HighScoreActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-                String[] numCardsArray = parent.getResources().getStringArray(R.array.numCardsArray);
+//                String[] numCardsArray = parent.getResources().getStringArray(R.array.cardDeckSizeArray);
 
-                if(text.equals(numCardsArray[0])) {
-                    numCards = getNumCardsTotal();
-                    updateScoresManager();
+                if(text.equals(cardDeckSizeArray[0])) {
+                    cardDeckSize = getNumCardsTotal();
                 } else {
-                    numCards = Integer.parseInt(text);
-                    updateScoresManager();
+                    cardDeckSize = Integer.parseInt(text);
                 }
 
+                updateScoresManager();
                 setTexts();
             }
 
@@ -209,25 +208,25 @@ public class HighScoreActivity extends AppCompatActivity {
         for(int i = 0; i < textArray.length; i++){
             if(i == 0){
                 int numCardsTotal = getNumCardsTotal();
-                if(numCards == numCardsTotal){
+                if(cardDeckSize == numCardsTotal){
                     spinner.setSelection(i);
                 }
-            } else if(textArray[i].equals("" + numCards)){
+            } else if(textArray[i].equals("" + cardDeckSize)){
                 spinner.setSelection(i);
             }
         }
     }
 
-    private String[] setTextArray(String[] numCardsArray) {
+    private String[] setTextArray(String[] cardDeckSizeArray) {
         String[] textArray;
         int numCardsTotal = getNumCardsTotal();
 
         if(numCardsTotal == 7){
-            textArray = Arrays.copyOfRange(numCardsArray, 0, 2);
+            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 2);
         } else if(numCardsTotal == 13){
-            textArray = Arrays.copyOfRange(numCardsArray, 0, 3);
+            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 3);
         } else{
-            textArray = Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
+            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, cardDeckSizeArray.length);
         }
         return textArray;
     }
@@ -245,7 +244,7 @@ public class HighScoreActivity extends AppCompatActivity {
     }
 
     private void updateScoresManager() {
-        index = gameConfigs.getCardDeckIndex(numImages, numCards);
+        index = gameConfigs.getCardDeckIndex(numImages, cardDeckSize);
         scoresManager = new ScoresManager();
         if (index == -1) {
             scoresManager.setNumMaxScores(5);

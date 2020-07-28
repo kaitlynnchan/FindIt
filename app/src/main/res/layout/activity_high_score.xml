@@ -33,13 +33,13 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/numImagesSpinner2"
-        app:layout_constraintStart_toEndOf="@+id/numImagesSpinner2"
-        app:layout_constraintTop_toTopOf="@+id/numImagesSpinner2" />
+        app:layout_constraintBottom_toBottomOf="@+id/imagesSpinnerHighScore"
+        app:layout_constraintStart_toEndOf="@+id/imagesSpinnerHighScore"
+        app:layout_constraintTop_toTopOf="@+id/imagesSpinnerHighScore" />
 
     <Spinner
-        android:id="@+id/numImagesSpinner2"
-        android:layout_width="70dp"
+        android:id="@+id/imagesSpinnerHighScore"
+        android:layout_width="60dp"
         android:layout_height="46dp"
 
         android:layout_marginStart="8dp"
@@ -52,8 +52,8 @@
         app:layout_constraintTop_toTopOf="@+id/textImageNum2" />
 
     <Spinner
-        android:id="@+id/numCardsSpinner2"
-        android:layout_width="65dp"
+        android:id="@+id/cardsSpinnerHighScore"
+        android:layout_width="60dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/button_background"

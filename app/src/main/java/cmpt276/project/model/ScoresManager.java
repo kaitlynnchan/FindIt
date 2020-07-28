@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * SCORES MANAGER CLASS
- * Contains array of scores
+ * Stores an array list of scores
  */
 public class ScoresManager {
     private ArrayList<Score> scoreArray = new ArrayList<>();
