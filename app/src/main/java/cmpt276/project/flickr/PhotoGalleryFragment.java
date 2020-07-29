@@ -1,3 +1,4 @@
+// This fragment displays the images available to the user, and downloads and saves them when a user clicks them
 package cmpt276.project.flickr;
 
 import android.content.Context;
