@@ -1,6 +1,11 @@
-// This class contains functions related to information about each image
+
 package cmpt276.project.flickr;
 
+import androidx.annotation.NonNull;
+
+/**
+ * This class contains functions related to information about each image
+ */
 public class GalleryItem {
     private String mCaption;
     private String mId;
@@ -30,6 +35,7 @@ public class GalleryItem {
         mUrl = url;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return mCaption;

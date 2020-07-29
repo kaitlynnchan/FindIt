@@ -76,6 +76,7 @@ public class FlickrEditActivity extends AppCompatActivity {
         File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
         File dir = new File(directory.toString());
         File[] directoryListing = dir.listFiles();
+        assert directoryListing != null;
         numImages = directoryListing.length;
 
         numRows = 3;

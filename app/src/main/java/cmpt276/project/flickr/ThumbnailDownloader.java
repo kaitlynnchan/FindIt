@@ -1,6 +1,7 @@
-// This class retrieves the bitmap thumbnails
+
 package cmpt276.project.flickr;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -9,9 +10,12 @@ import android.os.Message;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
+/**
+ * Retrieves the bitmap thumbnails.
+ */
 public class ThumbnailDownloader<T> extends HandlerThread {
     private static final String TAG = "ThumbnailDownloader";
     private static final int MESSAGE_DOWNLOAD = 0;
@@ -35,6 +39,7 @@ public class ThumbnailDownloader<T> extends HandlerThread {
         mResponseHandler = responseHandler;
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onLooperPrepared() {
         mRequestHandler = new Handler() {
@@ -87,7 +92,7 @@ public class ThumbnailDownloader<T> extends HandlerThread {
 
             mResponseHandler.post(new Runnable() {
                 public void run() {
-                    if (mRequestMap.get(target) != url ||
+                    if (!Objects.equals(mRequestMap.get(target), url) ||
                             mHasQuit) {
                         return;
                     }
