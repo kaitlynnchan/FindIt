@@ -318,6 +318,14 @@ public class OptionActivity extends AppCompatActivity {
         return numCardsTotal;
     }
 
+    @Override
+    protected void onResume() {
+        imageSpinner();
+        cardSpinner();
+
+        super.onResume();
+    }
+
     private void setupBackButton() {
         Button btn = findViewById(R.id.buttonBack);
         btn.setOnClickListener(new View.OnClickListener() {
