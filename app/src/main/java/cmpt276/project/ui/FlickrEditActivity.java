@@ -55,7 +55,7 @@ public class FlickrEditActivity extends AppCompatActivity {
         launchFlickrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FlickrEditActivity.this, PhotoGalleryActivity.class);
+                Intent intent = PhotoGalleryActivity.makeIntent(FlickrEditActivity.this);
                 startActivityForResult(intent, 1);
             }
         });
@@ -170,4 +170,7 @@ public class FlickrEditActivity extends AppCompatActivity {
         });
     }
 
+    public static Intent makeIntent(Context context){
+        return new Intent(context, FlickrEditActivity.class);
+    }
 }
