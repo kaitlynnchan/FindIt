@@ -27,6 +27,10 @@ import cmpt276.project.R;
 import cmpt276.project.flickr.PhotoGalleryActivity;
 import cmpt276.project.flickr.PhotoGalleryFragment;
 
+/**
+ * FLICKR EDIT SCREEN
+ * Allows users to remove and add images, include launch flicker button
+ */
 public class FlickrEditActivity extends AppCompatActivity {
 
     private int numImages;
