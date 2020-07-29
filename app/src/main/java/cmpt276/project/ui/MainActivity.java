@@ -87,15 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        Button btnF = findViewById(R.id.flickrButton);
-        btnF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FlickrEditActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
