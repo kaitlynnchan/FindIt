@@ -1,6 +1,5 @@
 package cmpt276.project.flickr;
 
-import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
@@ -23,21 +22,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import cmpt276.project.R;
-import cmpt276.project.ui.OptionActivity;
 
 public class PhotoGalleryFragment extends Fragment {
     private static final String TAG = "PhotoGalleryFragment";
+    public static final String FILE_FLICKR_DRAWABLE = "flickrDrawable";
+    public static final String LOG_SAVE_IMAGE = "SAVE_IMAGE";
 
     private RecyclerView mPhotoRecyclerView;
     private List<GalleryItem> mItems = new ArrayList<>();
@@ -168,11 +165,7 @@ public class PhotoGalleryFragment extends Fragment {
                     System.out.println("ID: " + mItems.get(position).getId());
                     System.out.println("url: " + mItems.get(position).getUrl());
 
-                    if(itemView.getForeground() == null){
-                        itemView.setForeground(getResources().getDrawable(R.drawable.gallery_item_selected));
-                    } else{
-                        itemView.setForeground(null);
-                    }
+                    itemView.setForeground(getResources().getDrawable(R.drawable.gallery_item_selected));
 
                     String bitmapUrl = mItems.get(position).getUrl();
                     String imageName = mItems.get(position).getCaption();
@@ -206,7 +199,7 @@ public class PhotoGalleryFragment extends Fragment {
         @Override
         public void onBindViewHolder(PhotoHolder photoHolder, int position) {
             GalleryItem galleryItem = mGalleryItems.get(position);
-            Drawable placeholder = getResources().getDrawable(R.drawable.bill_up_close);
+            Drawable placeholder = getResources().getDrawable(R.drawable.magnifying_glass);
             photoHolder.bindDrawable(placeholder);
             photoHolder.registerClicks(position);
             mThumbnailDownloader.queueThumbnail(photoHolder, galleryItem.getUrl());
@@ -276,7 +269,7 @@ public class PhotoGalleryFragment extends Fragment {
                 if (bitmap == null) return null;
 
                 ContextWrapper cw = new ContextWrapper(getContext());
-                File directory = cw.getDir("flickrDrawable", Context.MODE_PRIVATE);
+                File directory = cw.getDir(FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
 
                 File mypath = new File(directory, name);
 
@@ -286,7 +279,7 @@ public class PhotoGalleryFragment extends Fragment {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                     fos.close();
                 } catch (Exception e) {
-                    Log.e("SAVE_IMAGE", e.getMessage(), e);
+                    Log.e(LOG_SAVE_IMAGE, e.getMessage(), e);
                 }
 
             } catch (Exception e) {

@@ -1,21 +1,17 @@
 package cmpt276.project.ui;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,20 +19,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.Arrays;
 
 import cmpt276.project.R;
-import cmpt276.project.model.Mode;
+import cmpt276.project.flickr.PhotoGalleryFragment;
 
 /**
  * OPTIONS SCREEN
@@ -52,9 +44,10 @@ public class OptionActivity extends AppCompatActivity {
 
     private int imgButtonFruits;
     private int imgButtonVegs;
+    private int imgButtonFlicker;
     private int buttonNormal;
     private int buttonWordsImages;
-    private static int numImages = 0;
+    private static int numFlikrImages = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +57,13 @@ public class OptionActivity extends AppCompatActivity {
 
         imgButtonFruits = R.id.imgButtonFruits;
         imgButtonVegs = R.id.imgButtonVegs;
+        imgButtonFlicker = R.id.imgButtonFlicker;
         buttonNormal = R.id.buttonNormal;
         buttonWordsImages = R.id.buttonWordsImages;
 
         setupImageButton(imgButtonFruits);
         setupImageButton(imgButtonVegs);
-        setupImageButton(R.id.imgButtonFlicker);
+        setupImageButton(imgButtonFlicker);
         setupModeButton(buttonNormal);
         setupModeButton(buttonWordsImages);
 
@@ -77,6 +71,7 @@ public class OptionActivity extends AppCompatActivity {
         cardSpinner();
 
         setupBackButton();
+        File[] directoryListing = getNumImagesAndDirectory(this);
     }
 
     private void setupImageButton(final int imageId) {
@@ -84,13 +79,14 @@ public class OptionActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(imageId == R.id.imgButtonFlicker){
+                if(imageId == imgButtonFlicker){
                     Intent intent = new Intent(OptionActivity.this, FlickrEditActivity.class);
                     startActivity(intent);
                 }
                 saveImagePackId(imageId);
                 setupImageButton(imgButtonFruits);
                 setupImageButton(imgButtonVegs);
+                setupImageButton(imgButtonFlicker);
             }
         });
 
@@ -108,9 +104,13 @@ public class OptionActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveModeId(modeBtn);
-                setupModeButton(buttonNormal);
-                setupModeButton(buttonWordsImages);
+                if(getImagePackId(OptionActivity.this) == imgButtonFlicker){
+                    Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
+                } else{
+                    saveModeId(modeBtn);
+                    setupModeButton(buttonNormal);
+                    setupModeButton(buttonWordsImages);
+                }
             }
         });
 
@@ -141,9 +141,9 @@ public class OptionActivity extends AppCompatActivity {
         int imageButtonID = OptionActivity.getImagePackId(context);
         Object[] packArr;
 
-        /*if(imageButtonID == R.id.imgButtonFlicker){
+        if(imageButtonID == R.id.imgButtonFlicker){
             packArr = OptionActivity.setupFlickrImageTable(context);
-        } else*/ if(imageButtonID == R.id.imgButtonVegs){
+        } else if(imageButtonID == R.id.imgButtonVegs){
             packArr =  new Object[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
                     R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
                     R.drawable.artichoke, R.drawable.asparagus, R.drawable.cabbage,
@@ -202,8 +202,22 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-                saveNumImages(Integer.parseInt(text));
-                cardSpinner();
+                int imageNum = Integer.parseInt(text);
+                int totalImages;
+                if(imageNum == 3){
+                    totalImages = 7;
+                } else if(imageNum == 6){
+                    totalImages = 31;
+                } else{
+                    totalImages = 13;
+                }
+
+                if(numFlikrImages < totalImages){
+                    Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
+                } else{
+                    saveNumImages(Integer.parseInt(text));
+                    cardSpinner();
+                }
             }
 
             @Override
@@ -232,7 +246,6 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-//                String[] cardDeckSizeArray = parent.getResources().getStringArray(R.array.cardDeckSizeArray);
                 if(text.equals(cardDeckSizeArray[0])) {
                     saveCardDeckSize(getNumCardsTotal(getBaseContext()));
                 } else {
@@ -321,10 +334,10 @@ public class OptionActivity extends AppCompatActivity {
 
     private static File[] getNumImagesAndDirectory(Context context) {
         ContextWrapper cw = new ContextWrapper(context);
-        File directory = cw.getDir("flickrDrawable", Context.MODE_PRIVATE);
+        File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
         File dir = new File(directory.toString());
         File[] directoryListing = dir.listFiles();
-        numImages = directoryListing.length;
+        numFlikrImages = directoryListing.length;
 
         return directoryListing;
     }
@@ -334,8 +347,8 @@ public class OptionActivity extends AppCompatActivity {
 
         final File[] directoryListing = getNumImagesAndDirectory(context);
 
-        Object[] objects = new Object[numImages];
-        for(int i = 0; i < numImages; i++){
+        Object[] objects = new Object[numFlikrImages];
+        for(int i = 0; i < numFlikrImages; i++){
             Bitmap b = null;
             try {
                 b = BitmapFactory.decodeStream(new FileInputStream(directoryListing[i]));
