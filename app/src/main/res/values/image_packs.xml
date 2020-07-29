@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="image_pack_fruits">
+        <item>@drawable/apple</item>
+        <item>@drawable/avocado</item>
+        <item>@drawable/banana</item>
+        <item>@drawable/blackberry</item>
+        <item>@drawable/blueberry</item>
+        <item>@drawable/cherry</item>
+        <item>@drawable/coconut</item>
+        <item>@drawable/cranberry</item>
+        <item>@drawable/dragon_fruit</item>
+        <item>@drawable/durian</item>
+        <item>@drawable/fig</item>
+        <item>@drawable/grapefruit</item>
+        <item>@drawable/grapes</item>
+        <item>@drawable/green_apple</item>
+        <item>@drawable/kiwi</item>
+        <item>@drawable/lemon</item>
+        <item>@drawable/mango</item>
+        <item>@drawable/melon</item>
+        <item>@drawable/orange</item>
+        <item>@drawable/papaya</item>
+        <item>@drawable/peach</item>
+        <item>@drawable/pear</item>
+        <item>@drawable/pineapple</item>
+        <item>@drawable/plum</item>
+        <item>@drawable/pomegranate</item>
+        <item>@drawable/pumpkin</item>
+        <item>@drawable/raspberry</item>
+        <item>@drawable/squash</item>
+        <item>@drawable/starfruit</item>
+        <item>@drawable/strawberry</item>
+        <item>@drawable/watermelon</item>
+    </integer-array>
+
+    <array name="image_pack_vegetables">
+        <item>@drawable/artichoke</item>
+        <item>@drawable/asparagus</item>
+        <item>@drawable/broccoli</item>
+        <item>@drawable/cabbage</item>
+        <item>@drawable/carrot</item>
+        <item>@drawable/cauliflower</item>
+        <item>@drawable/celery</item>
+        <item>@drawable/corn</item>
+        <item>@drawable/cucumber</item>
+        <item>@drawable/eggplant</item>
+        <item>@drawable/garlic</item>
+        <item>@drawable/ginger</item>
+        <item>@drawable/green_bell_pepper</item>
+        <item>@drawable/kale</item>
+        <item>@drawable/leek</item>
+        <item>@drawable/lettuce</item>
+        <item>@drawable/mushroom</item>
+        <item>@drawable/okra</item>
+        <item>@drawable/onion</item>
+        <item>@drawable/parsnip</item>
+        <item>@drawable/peas</item>
+        <item>@drawable/potato</item>
+        <item>@drawable/radish</item>
+        <item>@drawable/red_bell_pepper</item>
+        <item>@drawable/red_cabbage</item>
+        <item>@drawable/red_onion</item>
+        <item>@drawable/spinach</item>
+        <item>@drawable/turnip</item>
+        <item>@drawable/yam</item>
+        <item>@drawable/yellow_bell_pepper</item>
+        <item>@drawable/zucchini</item>
+    </array>
+</resources>
