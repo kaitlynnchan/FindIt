@@ -1,46 +1,26 @@
 package cmpt276.project.ui;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import cmpt276.project.R;
-import cmpt276.project.flickr.PhotoGalleryActivity;
-import cmpt276.project.flickr.PhotoGalleryFragment;
 import cmpt276.project.model.CardDeck;
-import cmpt276.project.model.Mode;
 import cmpt276.project.model.GameConfigs;
 import cmpt276.project.model.ScoresManager;
 
@@ -54,12 +34,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String SHARED_PREFERENCES = "shared prefs";
     public static final String EDITOR_CARD_DECKS = "card decks";
     public static final String EDITOR_SCORES_MANAGERS = "scores managers";
+
     private CardDeck cardDeck;
     private GameConfigs gameConfigs;
-    String URL ;
-    ImageView image;
-    Button button;
-    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,47 +88,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button flickrbutton = findViewById(R.id.flickrButton);
-        flickrbutton.setOnClickListener(new View.OnClickListener() {
+        Button btnF = findViewById(R.id.flickrButton);
+        btnF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(MainActivity.this, PhotoGalleryActivity.class);
                 Intent intent = new Intent(MainActivity.this, FlickrEditActivity.class);
                 startActivity(intent);
             }
         });
-    }
-
-    private void createCardDeck() {
-        int[] imagePack = OptionActivity.getImagePackArray(MainActivity.this);
-        String[] wordPack = OptionActivity.getWordArray(MainActivity.this);
-        Mode mode = OptionActivity.getMode(MainActivity.this);
-
-        cardDeck.setMode(mode);
-        int numImages = OptionActivity.getNumImages(MainActivity.this);
-        int cardDeckSize = OptionActivity.getCardDeckSize(MainActivity.this);
-        int numCardsTotal = OptionActivity.getNumCardsTotal(MainActivity.this);
-
-        cardDeck.setNumCardsTotal(numCardsTotal);
-        cardDeck.setNumImages(numImages);
-        cardDeck.setCardIndex();
-        cardDeck.setCardDeckSize(cardDeckSize);
-        cardDeck.setImageArr(imagePack);
-        cardDeck.setWordArr(wordPack);
-        cardDeck.populateCards();
-    }
-
-    private void setupSavedScores() {
-        int index = gameConfigs.getCardDeckIndex(cardDeck);
-        ScoresManager scoresManager = new ScoresManager();
-        if(index == -1){
-            scoresManager.setNumMaxScores(5);
-            HighScoreActivity.setDefaultScores(scoresManager);
-            gameConfigs.add(cardDeck, scoresManager);
-        } else{
-            scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
-            scoresManager.setScoreArray(gameConfigs.getScoreManager(index).getScoreArray());
-        }
     }
 
     @Override
@@ -192,6 +136,32 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(EDITOR_SCORES_MANAGERS, json);
 
         editor.apply();
+    }
+
+    private void createCardDeck() {
+        int numCardsTotal = OptionActivity.getNumCardsTotal(MainActivity.this);
+        int cardDeckSize = OptionActivity.getCardDeckSize(MainActivity.this);
+        int numImages = OptionActivity.getNumImages(MainActivity.this);
+        Object[] packArr = OptionActivity.getPackArray(MainActivity.this);
+
+        cardDeck.setNumCardsTotal(numCardsTotal);
+        cardDeck.setCardDeckSize(cardDeckSize);
+        cardDeck.setNumImages(numImages);
+        cardDeck.setCardIndex();
+        cardDeck.populateCards(packArr);
+    }
+
+    private void setupSavedScores() {
+        int index = gameConfigs.getCardDeckIndex(cardDeck);
+        ScoresManager scoresManager = new ScoresManager();
+        if(index == -1){
+            scoresManager.setNumMaxScores(5);
+            HighScoreActivity.setDefaultScores(scoresManager);
+            gameConfigs.add(cardDeck, scoresManager);
+        } else{
+            scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
+            scoresManager.setScoreArray(gameConfigs.getScoreManager(index).getScoreArray());
+        }
     }
 
     public static Intent makeIntent(Context context){

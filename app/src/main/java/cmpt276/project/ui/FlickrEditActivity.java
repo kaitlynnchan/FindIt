@@ -27,14 +27,15 @@ import cmpt276.project.flickr.PhotoGalleryActivity;
 
 public class FlickrEditActivity extends AppCompatActivity {
 
-    private int numImages;
-    private int numRows;
-    private int numCols;
-    private int counter;
+    private static int numImages;
+    private static int numRows;
+    private static int numCols;
+    private static int counter;
 
     private Button launchFlickrButton;
 
     private ImageView[] imageList;
+    private static Object[] objects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +60,13 @@ public class FlickrEditActivity extends AppCompatActivity {
         });
     }
 
-    private File[] getNumImagesAndDirectory() {
-        ContextWrapper cw = new ContextWrapper(this);
+    private static File[] getNumImagesAndDirectory(Context context) {
+        ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir("flickrDrawable", Context.MODE_PRIVATE);
         File dir = new File(directory.toString());
         File[] directoryListing = dir.listFiles();
         numImages = directoryListing.length;
+        objects = new Object[numImages];
 
         if (numImages < 4) {
             numRows = 2;
@@ -88,7 +90,7 @@ public class FlickrEditActivity extends AppCompatActivity {
     // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
     private void setupFlickrImageTable() {
 
-        final File[] directoryListing = getNumImagesAndDirectory();
+        final File[] directoryListing = getNumImagesAndDirectory(this);
 
         TableLayout tableDraw = findViewById(R.id.flickrImageTable);
         for (int i = 0; i < numRows; i++) {
@@ -120,6 +122,7 @@ public class FlickrEditActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                objects[counter] = b;
                 imageView.setImageBitmap(b);
 
                 // Avoid clipping text on smaller buttons
@@ -135,6 +138,23 @@ public class FlickrEditActivity extends AppCompatActivity {
                 counter++;
             }
         }
+    }
+
+    public static Object[] getObjects(Context context) {
+        final File[] directoryListing = getNumImagesAndDirectory(context);
+
+        Object[] objects = new Object[numImages];
+        for(int i = 0; i < numImages; i++){
+            Bitmap b = null;
+            try {
+                b = BitmapFactory.decodeStream(new FileInputStream(directoryListing[i]));
+                System.out.println("" + directoryListing[counter].getName());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            objects[i] = b;
+        }
+        return objects;
     }
 
     private void deleteImageFile(File[] directoryListing, int index) {
