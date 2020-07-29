@@ -306,4 +306,8 @@ public class PhotoGalleryFragment extends Fragment {
 
         }
     }
+
+    public interface IOnBackPressed{
+        boolean onBackPressed();
+    }
 }
