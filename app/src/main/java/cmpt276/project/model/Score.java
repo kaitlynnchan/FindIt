@@ -7,7 +7,7 @@ package cmpt276.project.model;
 public class Score {
     private int timeBySeconds;
     private String name;
-    private String date;
+    private String date;        // format: Month DD, YYY
 
     public Score(int timeBySeconds, String name, String date){
         this.timeBySeconds = timeBySeconds;

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -29,12 +30,12 @@ import cmpt276.project.model.Mode;
  */
 public class OptionActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFS_OPTIONS = "shared preferences for image pack";
+    public static final String SHARED_PREFS_OPTIONS = "shared preferences for options";
     public static final String EDITOR_IMAGE_PACK_ID = "id for image pack";
     public static final String EDITOR_NUM_IMAGES = "number of images";
     public static final String EDITOR_CARD_DECK_SIZE = "card deck size";
-
     public static final String EDITOR_MODE_ID = "id for mode button";
+
     private int imgButtonFruits;
     private int imgButtonVegs;
     private int buttonNormal;
@@ -55,10 +56,11 @@ public class OptionActivity extends AppCompatActivity {
         setupImageButton(imgButtonVegs);
         setupModeButton(buttonNormal);
         setupModeButton(buttonWordsImages);
-        setupBackButton();
 
         imageSpinner();
         cardSpinner();
+
+        setupBackButton();
     }
 
     private void setupImageButton(final int imageId) {
@@ -115,10 +117,11 @@ public class OptionActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public static int[] getImagePackArray(Context context){
-        int imageButtonId = OptionActivity.getImagePackId(context);
-        if(imageButtonId == R.id.imgButtonVegs){
-            return new int[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
+    public static Object[] getPackArray(Context context){
+        int imageButtonID = OptionActivity.getImagePackId(context);
+        Object[] packArr;
+        if(imageButtonID == R.id.imgButtonVegs){
+            packArr =  new Object[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
                     R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
                     R.drawable.artichoke, R.drawable.asparagus, R.drawable.cabbage,
                     R.drawable.cauliflower, R.drawable.celery, R.drawable.corn, R.drawable.cucumber,
@@ -129,7 +132,7 @@ public class OptionActivity extends AppCompatActivity {
                     R.drawable.turnip, R.drawable.yam, R.drawable.yellow_bell_pepper,
                     R.drawable.zucchini};
         } else{
-            return new int[]{R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
+            packArr = new Object[]{R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
                     R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
                     R.drawable.watermelon, R.drawable.avocado, R.drawable.banana, R.drawable.blackberry,
                     R.drawable.blueberry, R.drawable.cherry, R.drawable.coconut,
@@ -139,28 +142,31 @@ public class OptionActivity extends AppCompatActivity {
                     R.drawable.pineapple, R.drawable.plum, R.drawable.pomegranate,
                     R.drawable.raspberry, R.drawable.squash, R.drawable.starfruit, R.drawable.strawberry};
         }
-    }
 
-    public static String[] getWordArray(Context context){
-        int imageButtonId = OptionActivity.getImagePackId(context);
-        if(imageButtonId == R.id.imgButtonVegs){
-            return new String[]{"broccoli", "carrot", "eggplant", "lettuce", "mushroom", "onion",
-                    "radish", "artichoke", "asparagus", "cabbage", "cauliflower", "celery", "corn",
-                    "cucumber", "garlic", "ginger", "green_bell_pepper", "kale", "leek", "okra",
-                    "parsnip", "peas", "potato", "red_bell_pepper", "red_cabbage", "red_onion",
-                    "spinach", "turnip", "yam", "yellow_bell_pepper", "zucchini"};
-        } else{
-            return new String[]{"red apple", "green apple", "lemon", "mango", "orange", "pumpkin",
-                    "watermelon", "avocado", "banana", "blackberry", "blueberry", "cherry", "coconut",
-                    "cranberry", "dragon_fruit", "durian", "fig", "grapefruit", "grapes", "kiwi",
-                    "melon", "papaya", "peach", "pear", "pineapple", "plum", "pomegranate",
-                    "raspberry", "squash", "starfruit", "strawberry"};
+        if(getModeId(context) == R.id.buttonWordsImages){
+            for(int i = 0; i < packArr.length; i++){
+                String temp = context.getResources().getResourceEntryName((int) packArr[i]);
+                packArr[i] += "," + temp.replace("_", " ");
+            }
         }
+        return packArr;
     }
 
     private static int getImagePackId(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, R.id.imgButtonFruits);
+    }
+
+    private void saveModeId(int mode) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_MODE_ID, mode);
+        editor.apply();
+    }
+
+    private static int getModeId(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_MODE_ID, R.id.buttonNormal);
     }
 
     private void imageSpinner() {
@@ -192,8 +198,8 @@ public class OptionActivity extends AppCompatActivity {
 
     private void cardSpinner() {
         Spinner spinner = findViewById(R.id.numCardsSpinner);
-        String[] numCardsArray = getResources().getStringArray(R.array.numCardsArray);
-        String[] textArray = setTextArray(numCardsArray);
+        final String[] cardDeckSizeArray = getResources().getStringArray(R.array.cardDeckSizeArray);
+        String[] textArray = setTextArray(cardDeckSizeArray);
 
         ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
                 this, android.R.layout.simple_spinner_item, textArray);
@@ -203,8 +209,8 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-                String[] numCardsArray = parent.getResources().getStringArray(R.array.numCardsArray);
-                if(text.equals(numCardsArray[0])) {
+//                String[] cardDeckSizeArray = parent.getResources().getStringArray(R.array.cardDeckSizeArray);
+                if(text.equals(cardDeckSizeArray[0])) {
                     saveCardDeckSize(getNumCardsTotal(getBaseContext()));
                 } else {
                     saveCardDeckSize(Integer.parseInt(text));
@@ -227,14 +233,14 @@ public class OptionActivity extends AppCompatActivity {
         }
     }
 
-    private String[] setTextArray(String[] numCardsArray) {
+    private String[] setTextArray(String[] cardDeckSizeArray) {
         String[] textArray;
         if(getNumCardsTotal(getBaseContext()) == 7){
-            textArray = Arrays.copyOfRange(numCardsArray, 0, 2);
+            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 2);
         } else if(getNumCardsTotal(getBaseContext()) == 13){
-            textArray = Arrays.copyOfRange(numCardsArray, 0, 3);
+            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 3);
         } else{
-            textArray = Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
+            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, cardDeckSizeArray.length);
         }
         return textArray;
     }
@@ -274,27 +280,6 @@ public class OptionActivity extends AppCompatActivity {
             numCardsTotal = 13;
         }
         return numCardsTotal;
-    }
-
-    private void saveModeId(int mode) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_MODE_ID, mode);
-        editor.apply();
-    }
-
-    public static Mode getMode(Context context){
-        int modeId = OptionActivity.getModeId(context);
-        if(modeId == R.id.buttonWordsImages){
-            return Mode.WORD_IMAGES;
-        } else{
-            return Mode.NORMAL;
-        }
-    }
-
-    private static int getModeId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_MODE_ID, R.id.buttonNormal);
     }
 
     private void setupBackButton() {

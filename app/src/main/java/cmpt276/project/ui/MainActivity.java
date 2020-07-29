@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
-import cmpt276.project.model.Mode;
 import cmpt276.project.model.GameConfigs;
 import cmpt276.project.model.ScoresManager;
 
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String SHARED_PREFERENCES = "shared prefs";
     public static final String EDITOR_CARD_DECKS = "card decks";
     public static final String EDITOR_SCORES_MANAGERS = "scores managers";
+
     private CardDeck cardDeck;
     private GameConfigs gameConfigs;
 
@@ -89,38 +89,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void createCardDeck() {
-        int[] imagePack = OptionActivity.getImagePackArray(MainActivity.this);
-        String[] wordPack = OptionActivity.getWordArray(MainActivity.this);
-        Mode mode = OptionActivity.getMode(MainActivity.this);
-
-        cardDeck.setMode(mode);
-        int numImages = OptionActivity.getNumImages(MainActivity.this);
-        int cardDeckSize = OptionActivity.getCardDeckSize(MainActivity.this);
-        int numCardsTotal = OptionActivity.getNumCardsTotal(MainActivity.this);
-
-        cardDeck.setNumCardsTotal(numCardsTotal);
-        cardDeck.setNumImages(numImages);
-        cardDeck.setCardIndex();
-        cardDeck.setCardDeckSize(cardDeckSize);
-        cardDeck.setImageArr(imagePack);
-        cardDeck.setWordArr(wordPack);
-        cardDeck.populateCards();
-    }
-
-    private void setupSavedScores() {
-        int index = gameConfigs.getCardDeckIndex(cardDeck);
-        ScoresManager scoresManager = new ScoresManager();
-        if(index == -1){
-            scoresManager.setNumMaxScores(5);
-            HighScoreActivity.setDefaultScores(this, scoresManager);
-            gameConfigs.add(cardDeck, scoresManager);
-        } else{
-            scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
-            scoresManager.setScoreArray(gameConfigs.getScoreManager(index).getScoreArray());
-        }
-    }
-
     @Override
     protected void onResume() {
         loadGameConfigs();
@@ -159,6 +127,32 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(EDITOR_SCORES_MANAGERS, json);
 
         editor.apply();
+    }
+
+    private void createCardDeck() {
+        int numCardsTotal = OptionActivity.getNumCardsTotal(MainActivity.this);
+        int cardDeckSize = OptionActivity.getCardDeckSize(MainActivity.this);
+        int numImages = OptionActivity.getNumImages(MainActivity.this);
+        Object[] packArr = OptionActivity.getPackArray(MainActivity.this);
+
+        cardDeck.setNumCardsTotal(numCardsTotal);
+        cardDeck.setCardDeckSize(cardDeckSize);
+        cardDeck.setNumImages(numImages);
+        cardDeck.setCardIndex();
+        cardDeck.populateCards(packArr);
+    }
+
+    private void setupSavedScores() {
+        int index = gameConfigs.getCardDeckIndex(cardDeck);
+        ScoresManager scoresManager = new ScoresManager();
+        if(index == -1){
+            scoresManager.setNumMaxScores(5);
+            HighScoreActivity.setDefaultScores(this, scoresManager);
+            gameConfigs.add(cardDeck, scoresManager);
+        } else{
+            scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
+            scoresManager.setScoreArray(gameConfigs.getScoreManager(index).getScoreArray());
+        }
     }
 
     public static Intent makeIntent(Context context){
