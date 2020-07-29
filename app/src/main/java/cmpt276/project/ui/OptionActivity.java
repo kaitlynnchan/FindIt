@@ -3,9 +3,11 @@ package cmpt276.project.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -18,15 +20,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 import cmpt276.project.R;
-import cmpt276.project.model.Mode;
+import cmpt276.project.flickr.PhotoGalleryFragment;
 
 /**
  * OPTIONS SCREEN
- * Allows users to select an image package and mode
+ * Allows users to select an image package and mode.
  */
 public class OptionActivity extends AppCompatActivity {
 
@@ -38,8 +44,10 @@ public class OptionActivity extends AppCompatActivity {
 
     private int imgButtonFruits;
     private int imgButtonVegs;
+    private int imgButtonFlicker;
     private int buttonNormal;
     private int buttonWordsImages;
+    private static int numFlikrImages = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +57,13 @@ public class OptionActivity extends AppCompatActivity {
 
         imgButtonFruits = R.id.imgButtonFruits;
         imgButtonVegs = R.id.imgButtonVegs;
+        imgButtonFlicker = R.id.imgButtonFlicker;
         buttonNormal = R.id.buttonNormal;
         buttonWordsImages = R.id.buttonWordsImages;
 
         setupImageButton(imgButtonFruits);
         setupImageButton(imgButtonVegs);
+        setupImageButton(imgButtonFlicker);
         setupModeButton(buttonNormal);
         setupModeButton(buttonWordsImages);
 
@@ -68,9 +78,14 @@ public class OptionActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(imageId == imgButtonFlicker){
+                    Intent intent = FlickrEditActivity.makeIntent(OptionActivity.this);
+                    startActivity(intent);
+                }
                 saveImagePackId(imageId);
                 setupImageButton(imgButtonFruits);
                 setupImageButton(imgButtonVegs);
+                setupImageButton(imgButtonFlicker);
             }
         });
 
@@ -88,9 +103,13 @@ public class OptionActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveModeId(modeBtn);
-                setupModeButton(buttonNormal);
-                setupModeButton(buttonWordsImages);
+                if(getImagePackId(OptionActivity.this) == imgButtonFlicker && modeBtn == buttonWordsImages){
+                    Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
+                } else{
+                    saveModeId(modeBtn);
+                    setupModeButton(buttonNormal);
+                    setupModeButton(buttonWordsImages);
+                }
             }
         });
 
@@ -120,7 +139,10 @@ public class OptionActivity extends AppCompatActivity {
     public static Object[] getPackArray(Context context){
         int imageButtonID = OptionActivity.getImagePackId(context);
         Object[] packArr;
-        if(imageButtonID == R.id.imgButtonVegs){
+
+        if(imageButtonID == R.id.imgButtonFlicker){
+            packArr = OptionActivity.getFlickrArr(context);
+        } else if(imageButtonID == R.id.imgButtonVegs){
             packArr =  new Object[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
                     R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
                     R.drawable.artichoke, R.drawable.asparagus, R.drawable.cabbage,
@@ -143,7 +165,7 @@ public class OptionActivity extends AppCompatActivity {
                     R.drawable.raspberry, R.drawable.squash, R.drawable.starfruit, R.drawable.strawberry};
         }
 
-        if(getModeId(context) == R.id.buttonWordsImages){
+        if(getModeId(context) == R.id.buttonWordsImages && imageButtonID != R.id.imgButtonFlicker){
             for(int i = 0; i < packArr.length; i++){
                 String temp = context.getResources().getResourceEntryName((int) packArr[i]);
                 packArr[i] += "," + temp.replace("_", " ");
@@ -179,8 +201,17 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-                saveNumImages(Integer.parseInt(text));
-                cardSpinner();
+                int imageNum = Integer.parseInt(text);
+
+                getNumImagesAndDirectory(OptionActivity.this);
+                int totalImages = getNumCardsTotal(imageNum);
+
+                if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
+                    Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
+                } else{
+                    saveNumImages(imageNum);
+                    cardSpinner();
+                }
             }
 
             @Override
@@ -209,9 +240,8 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-//                String[] cardDeckSizeArray = parent.getResources().getStringArray(R.array.cardDeckSizeArray);
                 if(text.equals(cardDeckSizeArray[0])) {
-                    saveCardDeckSize(getNumCardsTotal(getBaseContext()));
+                    saveCardDeckSize(getNumCardsTotal(OptionActivity.getNumImages(getBaseContext())));
                 } else {
                     saveCardDeckSize(Integer.parseInt(text));
                 }
@@ -224,7 +254,7 @@ public class OptionActivity extends AppCompatActivity {
 
         for(int i = 0; i < textArray.length; i++){
             if(i == 0){
-                if(getCardDeckSize(this) == getNumCardsTotal(this)){
+                if(getCardDeckSize(this) == getNumCardsTotal(OptionActivity.getNumImages(this))){
                     spinner.setSelection(i);
                 }
             } else if(textArray[i].equals("" + getCardDeckSize(this))){
@@ -235,9 +265,9 @@ public class OptionActivity extends AppCompatActivity {
 
     private String[] setTextArray(String[] cardDeckSizeArray) {
         String[] textArray;
-        if(getNumCardsTotal(getBaseContext()) == 7){
+        if(getNumCardsTotal(OptionActivity.getNumImages(this)) == 7){
             textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 2);
-        } else if(getNumCardsTotal(getBaseContext()) == 13){
+        } else if(getNumCardsTotal(OptionActivity.getNumImages(this)) == 13){
             textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 3);
         } else{
             textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, cardDeckSizeArray.length);
@@ -269,8 +299,7 @@ public class OptionActivity extends AppCompatActivity {
         return sharedPreferences.getInt(EDITOR_CARD_DECK_SIZE, 5);
     }
 
-    public static int getNumCardsTotal(Context context) {
-        int numImages = OptionActivity.getNumImages(context);
+    public static int getNumCardsTotal(int numImages) {
         int numCardsTotal;
         if(numImages == 3){
             numCardsTotal = 7;
@@ -282,14 +311,76 @@ public class OptionActivity extends AppCompatActivity {
         return numCardsTotal;
     }
 
+    @Override
+    protected void onResume() {
+        if(getModeId(this) == buttonWordsImages){
+            Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
+        }
+        imageSpinner();
+        cardSpinner();
+
+        super.onResume();
+    }
+
     private void setupBackButton() {
         Button btn = findViewById(R.id.buttonBack);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                getNumImagesAndDirectory(OptionActivity.this);
+                int totalImages = getNumCardsTotal(OptionActivity.getNumImages(getBaseContext()));
+
+                if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
+                    Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
+                } else if (getImagePackId(OptionActivity.this) == imgButtonFlicker && getModeId(OptionActivity.this) == buttonWordsImages){
+                    Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
+                } else{
+                    finish();
+                }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        getNumImagesAndDirectory(OptionActivity.this);
+        int totalImages = getNumCardsTotal(OptionActivity.getNumImages(this));
+
+        if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
+            Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
+        }  else if (getImagePackId(OptionActivity.this) == imgButtonFlicker && getModeId(OptionActivity.this) == buttonWordsImages){
+            Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
+        } else{
+            super.onBackPressed();
+        }
+    }
+
+    private static File[] getNumImagesAndDirectory(Context context) {
+        ContextWrapper cw = new ContextWrapper(context);
+        File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
+        File dir = new File(directory.toString());
+        File[] directoryListing = dir.listFiles();
+        numFlikrImages = directoryListing.length;
+
+        return directoryListing;
+    }
+
+    // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
+    private static Object[] getFlickrArr(Context context) {
+        final File[] directoryListing = getNumImagesAndDirectory(context);
+
+        Object[] objects = new Object[numFlikrImages];
+        for(int i = 0; i < numFlikrImages; i++){
+            Bitmap b = null;
+            try {
+                b = BitmapFactory.decodeStream(new FileInputStream(directoryListing[i]));
+                System.out.println("" + directoryListing[i].getName());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            objects[i] = b;
+        }
+        return objects;
     }
 
     public static Intent makeIntent(Context context){
