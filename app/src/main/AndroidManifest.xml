@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cmpt276.project">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_magnify_glass_shadow"
@@ -10,13 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.FlickrEditActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.HighScoreActivity"
             android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.HelpActivity"
             android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.OptionActivity"
             android:screenOrientation="sensorLandscape"
@@ -25,6 +33,9 @@
             android:name=".ui.GameActivity"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".flickr.PhotoGalleryActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.WelcomeActivity"
             android:screenOrientation="sensorLandscape"

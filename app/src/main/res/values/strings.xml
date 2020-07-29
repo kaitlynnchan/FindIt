@@ -23,6 +23,8 @@
         \n\n<b>How to Play</b>
         \nThe objective of the game is to match all the images in the least amount of time.
         \n1 . You can change the image package, number of images on the card, number of cards, and mode in OPTIONS in main menu.
+        If you want to get your own images from flickr click the + button. To remove images, simply click on the image you would like to remove.
+        To add images click LAUNCH FLICKR and select the images you like, then you can press the back button.
         \n2 . Once you click START GAME the cards will flip, and will show a number of images.
         \n3 . Find and click the image on the draw pile which matches one on the discard pile.
         \n4 . Then the card on the draw pile is moved to the discard pile and the next card in the draw pile will flip.
@@ -130,4 +132,10 @@
     <string name="mode">Mode:</string>
     <string name="date_format">Month DD, YYYY</string>
 
+    <string name="search">Search</string>
+    <string name="clear_search">Clear Search</string>
+    <string name="launch_flickr">LAUNCH FLICKR</string>
+    <string name="toast_flickr_activity">You must select a minimum of 7 images</string>
+    <string name="toast_options">There are not enough images in this packages to support this order</string>
+    <string name="toast_options_mode">This mode is not supported for the selected image package</string>
 </resources>
