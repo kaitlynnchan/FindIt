@@ -71,7 +71,6 @@ public class OptionActivity extends AppCompatActivity {
         cardSpinner();
 
         setupBackButton();
-        File[] directoryListing = getNumImagesAndDirectory(this);
     }
 
     private void setupImageButton(final int imageId) {
@@ -202,6 +201,7 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
+                File[] directoryListing = getNumImagesAndDirectory(OptionActivity.this);
                 int imageNum = Integer.parseInt(text);
                 int totalImages;
                 if(imageNum == 3){
