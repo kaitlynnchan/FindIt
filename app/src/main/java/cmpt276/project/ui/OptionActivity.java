@@ -204,7 +204,7 @@ public class OptionActivity extends AppCompatActivity {
                 int imageNum = Integer.parseInt(text);
 
                 getNumImagesAndDirectory(OptionActivity.this);
-                int totalImages = getTotalImages(imageNum);
+                int totalImages = getNumCardsTotal(imageNum);
 
                 if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
                     Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
@@ -241,7 +241,7 @@ public class OptionActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
                 if(text.equals(cardDeckSizeArray[0])) {
-                    saveCardDeckSize(getNumCardsTotal(getBaseContext()));
+                    saveCardDeckSize(getNumCardsTotal(OptionActivity.getNumImages(getBaseContext())));
                 } else {
                     saveCardDeckSize(Integer.parseInt(text));
                 }
@@ -254,7 +254,7 @@ public class OptionActivity extends AppCompatActivity {
 
         for(int i = 0; i < textArray.length; i++){
             if(i == 0){
-                if(getCardDeckSize(this) == getNumCardsTotal(this)){
+                if(getCardDeckSize(this) == getNumCardsTotal(OptionActivity.getNumImages(this))){
                     spinner.setSelection(i);
                 }
             } else if(textArray[i].equals("" + getCardDeckSize(this))){
@@ -265,9 +265,9 @@ public class OptionActivity extends AppCompatActivity {
 
     private String[] setTextArray(String[] cardDeckSizeArray) {
         String[] textArray;
-        if(getNumCardsTotal(getBaseContext()) == 7){
+        if(getNumCardsTotal(OptionActivity.getNumImages(this)) == 7){
             textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 2);
-        } else if(getNumCardsTotal(getBaseContext()) == 13){
+        } else if(getNumCardsTotal(OptionActivity.getNumImages(this)) == 13){
             textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 3);
         } else{
             textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, cardDeckSizeArray.length);
@@ -299,8 +299,7 @@ public class OptionActivity extends AppCompatActivity {
         return sharedPreferences.getInt(EDITOR_CARD_DECK_SIZE, 5);
     }
 
-    public static int getNumCardsTotal(Context context) {
-        int numImages = OptionActivity.getNumImages(context);
+    public static int getNumCardsTotal(int numImages) {
         int numCardsTotal;
         if(numImages == 3){
             numCardsTotal = 7;
@@ -326,7 +325,7 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getNumImagesAndDirectory(OptionActivity.this);
-                int totalImages = getTotalImages(numFlikrImages);
+                int totalImages = getNumCardsTotal(OptionActivity.getNumImages(getBaseContext()));
 
                 if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
                     Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
@@ -340,25 +339,13 @@ public class OptionActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         getNumImagesAndDirectory(OptionActivity.this);
-        int totalImages = getTotalImages(numFlikrImages);
+        int totalImages = getNumCardsTotal(OptionActivity.getNumImages(this));
 
         if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
             Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
         } else{
             super.onBackPressed();
         }
-    }
-
-    private int getTotalImages(int numFlikrImages) {
-        int totalImages;
-        if (numFlikrImages == 3) {
-            totalImages = 7;
-        } else if (numFlikrImages == 6) {
-            totalImages = 31;
-        } else {
-            totalImages = 13;
-        }
-        return totalImages;
     }
 
     public static Intent makeIntent(Context context){
