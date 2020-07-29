@@ -59,12 +59,17 @@ public class FlickrEditActivity extends AppCompatActivity {
         });
     }
 
+    // Calculates the number of rows and columns required for displaying the images, the number of images in the directory, and returns
+    // an array that contains the files in the directory
+    // Got help and code from: https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
+    // and: https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
     private File[] getNumImagesAndDirectory() {
         ContextWrapper cw = new ContextWrapper(this);
         File directory = cw.getDir("flickrDrawable", Context.MODE_PRIVATE);
         File dir = new File(directory.toString());
         File[] directoryListing = dir.listFiles();
         numImages = directoryListing.length;
+        System.out.println(numImages);
 
         if (numImages < 4) {
             numRows = 2;
@@ -85,7 +90,10 @@ public class FlickrEditActivity extends AppCompatActivity {
         return directoryListing;
     }
 
-    // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
+    // Displays the flickr image set
+    // Got help and code from: https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
+    // and https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
+    // and Brian's youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupFlickrImageTable() {
 
         final File[] directoryListing = getNumImagesAndDirectory();
@@ -137,6 +145,8 @@ public class FlickrEditActivity extends AppCompatActivity {
         }
     }
 
+    // Got help and code from: https://stackoverflow.com/questions/2486934/programmatically-relaunch-recreate-an-activity
+    // Deletes an image file, and reloads the activity
     private void deleteImageFile(File[] directoryListing, int index) {
         if (directoryListing[index].delete()) System.out.println("Deleted successfully");
         Intent intent = getIntent();
@@ -144,6 +154,8 @@ public class FlickrEditActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Got help and code from: https://stackoverflow.com/questions/2486934/programmatically-relaunch-recreate-an-activity
+    // Reloads the activity when the user is done using flickr
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
