@@ -1,11 +1,9 @@
 package cmpt276.project.flickr;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 
 import androidx.fragment.app.Fragment;
-
-import java.util.ArrayList;
 
 public class PhotoGalleryActivity extends SingleFragmentActivity {
 
@@ -14,4 +12,7 @@ public class PhotoGalleryActivity extends SingleFragmentActivity {
         return PhotoGalleryFragment.newInstance();
     }
 
+    public static Intent makeIntent(Context context){
+        return new Intent(context, PhotoGalleryActivity.class);
+    }
 }
