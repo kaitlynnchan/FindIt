@@ -1,3 +1,4 @@
+// This class retrieves the bitmap thumbnails
 package cmpt276.project.flickr;
 
 import android.graphics.Bitmap;

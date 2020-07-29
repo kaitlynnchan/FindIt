@@ -1,3 +1,4 @@
+// This activity creates the basic structure of the flickr fragment
 package cmpt276.project.flickr;
 
 import android.os.Bundle;

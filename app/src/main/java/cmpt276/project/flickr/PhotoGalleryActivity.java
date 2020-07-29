@@ -1,3 +1,4 @@
+// This activity calls the Photogallery fragment
 package cmpt276.project.flickr;
 
 import android.content.Context;
