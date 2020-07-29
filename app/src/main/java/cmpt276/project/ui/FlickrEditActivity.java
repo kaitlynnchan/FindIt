@@ -73,7 +73,6 @@ public class FlickrEditActivity extends AppCompatActivity {
         File dir = new File(directory.toString());
         File[] directoryListing = dir.listFiles();
         numImages = directoryListing.length;
-        System.out.println(numImages);
 
         if (numImages < 4) {
             numRows = 2;
@@ -154,6 +153,7 @@ public class FlickrEditActivity extends AppCompatActivity {
     private void deleteImageFile(File[] directoryListing, int index) {
         if (directoryListing[index].delete()) {
             System.out.println("Deleted successfully");
+            System.gc();
         }
         Intent intent = getIntent();
         finish();
@@ -175,21 +175,9 @@ public class FlickrEditActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numImages < 7){
-                    Toast.makeText(FlickrEditActivity.this, R.string.toast_flickr_activity, Toast.LENGTH_LONG).show();
-                } else{
-                    finish();
-                }
+                finish();
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        if(numImages < 7){
-            Toast.makeText(this, R.string.toast_flickr_activity, Toast.LENGTH_LONG).show();
-        } else{
-            super.onBackPressed();
-        }
-    }
 }

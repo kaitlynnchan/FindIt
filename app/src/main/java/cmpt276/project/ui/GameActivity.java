@@ -189,12 +189,12 @@ public class GameActivity extends AppCompatActivity {
         } else if (object.getClass() == Bitmap.class){
             int width = button.getWidth();
             int height = button.getHeight();
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap((Bitmap)object, width, height, true);
+
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap((Bitmap) object, width, height, true);
             Resources resource = getResources();
             button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+
             button.setText(null);
-//            BitmapDrawable drawable = new BitmapDrawable(getResources(), (Bitmap) object);
-//            button.setBackground(drawable);
         }
         button.setVisibility(View.VISIBLE);
     }
