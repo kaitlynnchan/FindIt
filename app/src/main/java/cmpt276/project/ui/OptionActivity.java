@@ -212,10 +212,10 @@ public class OptionActivity extends AppCompatActivity {
                     totalImages = 13;
                 }
 
-                if(numFlikrImages < totalImages){
+                if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
                     Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
                 } else{
-                    saveNumImages(Integer.parseInt(text));
+                    saveNumImages(imageNum);
                     cardSpinner();
                 }
             }
