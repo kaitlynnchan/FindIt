@@ -224,7 +224,7 @@ public class OptionActivity extends AppCompatActivity {
 
     private void cardSpinner() {
         Spinner spinner = findViewById(R.id.numCardsSpinner);
-        final String[] cardDeckSizeArray = getResources().getStringArray(R.array.numCardsArray);
+        final String[] cardDeckSizeArray = getResources().getStringArray(R.array.cardDeckSizeArray);
         String[] textArray = setTextArray(cardDeckSizeArray);
 
         ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(

@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         ScoresManager scoresManager = new ScoresManager();
         if(index == -1){
             scoresManager.setNumMaxScores(5);
-            HighScoreActivity.setDefaultScores(scoresManager);
+            HighScoreActivity.setDefaultScores(this, scoresManager);
             gameConfigs.add(cardDeck, scoresManager);
         } else{
             scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
