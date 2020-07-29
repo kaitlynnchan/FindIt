@@ -103,7 +103,7 @@ public class OptionActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(getImagePackId(OptionActivity.this) == imgButtonFlicker){
+                if(getImagePackId(OptionActivity.this) == imgButtonFlicker && modeBtn == buttonWordsImages){
                     Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
                 } else{
                     saveModeId(modeBtn);
@@ -313,6 +313,9 @@ public class OptionActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        if(getModeId(this) == buttonWordsImages){
+            Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
+        }
         imageSpinner();
         cardSpinner();
 
@@ -329,6 +332,8 @@ public class OptionActivity extends AppCompatActivity {
 
                 if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
                     Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
+                } else if (getImagePackId(OptionActivity.this) == imgButtonFlicker && getModeId(OptionActivity.this) == buttonWordsImages){
+                    Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
                 } else{
                     finish();
                 }
@@ -343,9 +348,39 @@ public class OptionActivity extends AppCompatActivity {
 
         if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
             Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
+        }  else if (getImagePackId(OptionActivity.this) == imgButtonFlicker && getModeId(OptionActivity.this) == buttonWordsImages){
+            Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
         } else{
             super.onBackPressed();
         }
+    }
+
+    private static File[] getNumImagesAndDirectory(Context context) {
+        ContextWrapper cw = new ContextWrapper(context);
+        File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
+        File dir = new File(directory.toString());
+        File[] directoryListing = dir.listFiles();
+        numFlikrImages = directoryListing.length;
+
+        return directoryListing;
+    }
+
+    // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
+    private static Object[] getFlickrArr(Context context) {
+        final File[] directoryListing = getNumImagesAndDirectory(context);
+
+        Object[] objects = new Object[numFlikrImages];
+        for(int i = 0; i < numFlikrImages; i++){
+            Bitmap b = null;
+            try {
+                b = BitmapFactory.decodeStream(new FileInputStream(directoryListing[i]));
+                System.out.println("" + directoryListing[i].getName());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            objects[i] = b;
+        }
+        return objects;
     }
 
     public static Intent makeIntent(Context context){
