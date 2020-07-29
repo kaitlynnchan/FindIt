@@ -42,7 +42,7 @@
         android:textColor="#000000"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.254"
+        app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +59,61 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textHighScoreTitle"
-        app:layout_constraintVertical_bias="0.087" />
+        app:layout_constraintTop_toBottomOf="@+id/textHighScoreTitle" />
+
+    <TextView
+        android:id="@+id/textImageNum2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/num_of_images"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textHighScoreTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textHighScoreTitle" />
+
+    <TextView
+        android:id="@+id/textBoardSize2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/num_of_cards"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imagesSpinnerHighScore"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.727"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imagesSpinnerHighScore" />
+
+    <Spinner
+        android:id="@+id/imagesSpinnerHighScore"
+        android:layout_width="60dp"
+        android:layout_height="46dp"
+
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/ic_arrow_down_24"
+        android:foregroundGravity="center_vertical|right"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/textImageNum2"
+        app:layout_constraintStart_toEndOf="@+id/textImageNum2"
+        app:layout_constraintTop_toTopOf="@+id/textImageNum2" />
+
+    <Spinner
+        android:id="@+id/cardsSpinnerHighScore"
+        android:layout_width="60dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/ic_arrow_down_24"
+        android:foregroundGravity="center_vertical|right"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/textBoardSize2"
+        app:layout_constraintStart_toEndOf="@+id/textBoardSize2"
+        app:layout_constraintTop_toTopOf="@+id/textBoardSize2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
