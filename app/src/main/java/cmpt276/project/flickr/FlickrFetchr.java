@@ -1,3 +1,4 @@
+// This class Launches the flickr API, and deals with basic image functionality and storage
 package cmpt276.project.flickr;
 
 import android.net.Uri;

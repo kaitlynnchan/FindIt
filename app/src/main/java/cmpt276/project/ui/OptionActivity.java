@@ -319,34 +319,6 @@ public class OptionActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    private static File[] getNumImagesAndDirectory(Context context) {
-        ContextWrapper cw = new ContextWrapper(context);
-        File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
-        File dir = new File(directory.toString());
-        File[] directoryListing = dir.listFiles();
-        numFlikrImages = directoryListing.length;
-
-        return directoryListing;
-    }
-
-    // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
-    private static Object[] getFlickrArr(Context context) {
-        final File[] directoryListing = getNumImagesAndDirectory(context);
-
-        Object[] objects = new Object[numFlikrImages];
-        for(int i = 0; i < numFlikrImages; i++){
-            Bitmap b = null;
-            try {
-                b = BitmapFactory.decodeStream(new FileInputStream(directoryListing[i]));
-                System.out.println("" + directoryListing[i].getName());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            objects[i] = b;
-        }
-        return objects;
-    }
-
     private void setupBackButton() {
         Button btn = findViewById(R.id.buttonBack);
         btn.setOnClickListener(new View.OnClickListener() {
