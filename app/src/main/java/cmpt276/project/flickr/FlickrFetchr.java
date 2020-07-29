@@ -1,4 +1,4 @@
-// This class Launches the flickr API, and deals with basic image functionality and storage
+
 package cmpt276.project.flickr;
 
 import android.net.Uri;
@@ -15,7 +15,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * This class Launches the flickr API, and deals with basic image functionality and storage
+ */
 public class FlickrFetchr {
     private static final String TAG = "FlickrFetchr";
 
@@ -42,7 +44,7 @@ public class FlickrFetchr {
                         ": with " +
                         urlSpec);
             }
-            int bytesRead = 0;
+            int bytesRead ;
             byte[] buffer = new byte[1024];
             while ((bytesRead = in.read(buffer)) > 0) {
                 out.write(buffer, 0, bytesRead);

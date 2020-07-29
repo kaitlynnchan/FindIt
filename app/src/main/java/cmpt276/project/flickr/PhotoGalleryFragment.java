@@ -1,4 +1,3 @@
-// This fragment displays the images available to the user, and downloads and saves them when a user clicks them
 package cmpt276.project.flickr;
 
 import android.content.Context;
@@ -31,7 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cmpt276.project.R;
-
+/**
+ * This fragment displays the images available to the user, and downloads and saves them when a user clicks them.
+ */
 public class PhotoGalleryFragment extends Fragment {
     private static final String TAG = "PhotoGalleryFragment";
     public static final String FILE_FLICKR_DRAWABLE = "flickrDrawable";
@@ -73,7 +74,7 @@ public class PhotoGalleryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_photo_gallery, container, false);
 
-        mPhotoRecyclerView = (RecyclerView) v.findViewById(R.id.photo_recycler_view);
+        mPhotoRecyclerView = v.findViewById(R.id.photo_recycler_view);
         mPhotoRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
         setupAdapter();
@@ -274,7 +275,7 @@ public class PhotoGalleryFragment extends Fragment {
 
                 File mypath = new File(directory, name);
 
-                FileOutputStream fos = null;
+                FileOutputStream fos ;
                 try {
                     fos = new FileOutputStream(mypath);
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);

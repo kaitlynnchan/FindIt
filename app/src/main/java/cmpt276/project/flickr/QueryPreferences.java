@@ -1,9 +1,11 @@
-// This class deals with search queries in flickr
+
 package cmpt276.project.flickr;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-
+/**
+ * Search queries in flickr
+ */
 public class QueryPreferences {
 
     private static final String PREF_SEARCH_QUERY = "searchQuery";
