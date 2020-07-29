@@ -1,6 +1,8 @@
-// This activity calls the Photogallery fragment
-package cmpt276.project.flickr;
 
+package cmpt276.project.flickr;
+/**
+ * This activity calls the Photogallery fragment
+ */
 import android.content.Context;
 import android.content.SharedPreferences;
 

@@ -1,4 +1,3 @@
-// This activity creates the basic structure of the flickr fragment
 package cmpt276.project.flickr;
 
 import android.os.Bundle;
@@ -8,7 +7,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cmpt276.project.R;
-
+/**
+ * Creates the basic structure of the flickr fragment
+ */
 public abstract class SingleFragmentActivity extends AppCompatActivity {
 
     protected abstract Fragment createFragment();
