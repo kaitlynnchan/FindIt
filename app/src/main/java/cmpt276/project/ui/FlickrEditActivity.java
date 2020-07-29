@@ -26,7 +26,10 @@ import java.io.FileNotFoundException;
 import cmpt276.project.R;
 import cmpt276.project.flickr.PhotoGalleryActivity;
 import cmpt276.project.flickr.PhotoGalleryFragment;
-
+/**
+ * Flicker Edit
+ * Showcase and delete pictures retrieved from Flicker API.
+ */
 public class FlickrEditActivity extends AppCompatActivity {
 
     private int numImages;
@@ -72,6 +75,7 @@ public class FlickrEditActivity extends AppCompatActivity {
         File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
         File dir = new File(directory.toString());
         File[] directoryListing = dir.listFiles();
+        assert directoryListing != null;
         numImages = directoryListing.length;
 
         numRows = 3;
