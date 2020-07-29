@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,6 +25,7 @@ import java.io.FileNotFoundException;
 
 import cmpt276.project.R;
 import cmpt276.project.flickr.PhotoGalleryActivity;
+import cmpt276.project.flickr.PhotoGalleryFragment;
 
 public class FlickrEditActivity extends AppCompatActivity {
 
@@ -57,6 +59,8 @@ public class FlickrEditActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+
+        setupBackButton();
     }
 
     // Calculates the number of rows and columns required for displaying the images, the number of images in the directory, and returns
@@ -65,7 +69,7 @@ public class FlickrEditActivity extends AppCompatActivity {
     // and: https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
     private File[] getNumImagesAndDirectory() {
         ContextWrapper cw = new ContextWrapper(this);
-        File directory = cw.getDir("flickrDrawable", Context.MODE_PRIVATE);
+        File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
         File dir = new File(directory.toString());
         File[] directoryListing = dir.listFiles();
         numImages = directoryListing.length;
@@ -148,7 +152,9 @@ public class FlickrEditActivity extends AppCompatActivity {
     // Got help and code from: https://stackoverflow.com/questions/2486934/programmatically-relaunch-recreate-an-activity
     // Deletes an image file, and reloads the activity
     private void deleteImageFile(File[] directoryListing, int index) {
-        if (directoryListing[index].delete()) System.out.println("Deleted successfully");
+        if (directoryListing[index].delete()) {
+            System.out.println("Deleted successfully");
+        }
         Intent intent = getIntent();
         finish();
         startActivity(intent);
@@ -162,5 +168,28 @@ public class FlickrEditActivity extends AppCompatActivity {
         Intent intent = getIntent();
         finish();
         startActivity(intent);
+    }
+
+    private void setupBackButton() {
+        Button backButton = findViewById(R.id.buttonBack);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(numImages < 7){
+                    Toast.makeText(FlickrEditActivity.this, R.string.toast_flickr_activity, Toast.LENGTH_LONG).show();
+                } else{
+                    finish();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(numImages < 7){
+            Toast.makeText(this, R.string.toast_flickr_activity, Toast.LENGTH_LONG).show();
+        } else{
+            super.onBackPressed();
+        }
     }
 }
