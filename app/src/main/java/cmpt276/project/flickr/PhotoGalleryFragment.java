@@ -43,9 +43,6 @@ public class PhotoGalleryFragment extends Fragment {
     private List<GalleryItem> mItems = new ArrayList<>();
     private ThumbnailDownloader<PhotoHolder> mThumbnailDownloader;
 
-    private int numImages; // Number of images to be saved
-    private ArrayList<String> imageUrls;
-
     public static PhotoGalleryFragment newInstance() {
         return new PhotoGalleryFragment();
     }
@@ -56,9 +53,6 @@ public class PhotoGalleryFragment extends Fragment {
         setRetainInstance(true);
         setHasOptionsMenu(true);
         updateItems();
-
-        numImages = 0;
-        imageUrls = new ArrayList<>();
 
         Handler responseHandler = new Handler();
         mThumbnailDownloader = new ThumbnailDownloader<>(responseHandler);
@@ -184,7 +178,6 @@ public class PhotoGalleryFragment extends Fragment {
                     String imageName = mItems.get(position).getCaption();
                     imageName += ".png";
 
-                    numImages++;
                     new DownloadFile(bitmapUrl, imageName).execute();
                 }
             });
@@ -248,9 +241,10 @@ public class PhotoGalleryFragment extends Fragment {
             mItems = items;
             setupAdapter();
         }
-
     }
 
+    // Got help and code from: https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
+    // Downloads and saves images to /data/data/cmpt276.project/app_flickrDrawable
     private class DownloadFile extends AsyncTask<String, Void, Bitmap> {
 
         String url;
@@ -303,7 +297,7 @@ public class PhotoGalleryFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-
+            System.out.println("SUCCESSFULLY SAVED");
         }
     }
 }
