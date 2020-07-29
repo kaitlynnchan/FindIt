@@ -141,7 +141,7 @@ public class OptionActivity extends AppCompatActivity {
         Object[] packArr;
 
         if(imageButtonID == R.id.imgButtonFlicker){
-            packArr = OptionActivity.setupFlickrImageTable(context);
+            packArr = OptionActivity.getFlickrArr(context);
         } else if(imageButtonID == R.id.imgButtonVegs){
             packArr =  new Object[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
                     R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
@@ -201,16 +201,10 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-                File[] directoryListing = getNumImagesAndDirectory(OptionActivity.this);
                 int imageNum = Integer.parseInt(text);
-                int totalImages;
-                if(imageNum == 3){
-                    totalImages = 7;
-                } else if(imageNum == 6){
-                    totalImages = 31;
-                } else{
-                    totalImages = 13;
-                }
+
+                getNumImagesAndDirectory(OptionActivity.this);
+                int totalImages = getTotalImages(imageNum);
 
                 if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
                     Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
@@ -331,9 +325,40 @@ public class OptionActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                getNumImagesAndDirectory(OptionActivity.this);
+                int totalImages = getTotalImages(numFlikrImages);
+
+                if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
+                    Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
+                } else{
+                    finish();
+                }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        getNumImagesAndDirectory(OptionActivity.this);
+        int totalImages = getTotalImages(numFlikrImages);
+
+        if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
+            Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
+        } else{
+            super.onBackPressed();
+        }
+    }
+
+    private int getTotalImages(int numFlikrImages) {
+        int totalImages;
+        if (numFlikrImages == 3) {
+            totalImages = 7;
+        } else if (numFlikrImages == 6) {
+            totalImages = 31;
+        } else {
+            totalImages = 13;
+        }
+        return totalImages;
     }
 
     public static Intent makeIntent(Context context){
@@ -351,8 +376,7 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
-    private static Object[] setupFlickrImageTable(Context context) {
-
+    private static Object[] getFlickrArr(Context context) {
         final File[] directoryListing = getNumImagesAndDirectory(context);
 
         Object[] objects = new Object[numFlikrImages];
@@ -364,7 +388,6 @@ public class OptionActivity extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            System.out.println(b);
             objects[i] = b;
         }
         return objects;
