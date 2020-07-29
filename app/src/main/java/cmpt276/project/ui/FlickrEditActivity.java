@@ -74,18 +74,8 @@ public class FlickrEditActivity extends AppCompatActivity {
         File[] directoryListing = dir.listFiles();
         numImages = directoryListing.length;
 
-        if (numImages < 4) {
-            numRows = 2;
-            numCols = 2;
-        }
-
-        else if (numImages % 2 == 0) {
-            numRows = numImages / 2;
-            numCols = numImages / 2;
-        } else {
-            numRows = (numImages / 2) + 1;
-            numCols = (numImages / 2) + 1;
-        }
+        numRows = 3;
+        numCols = (numImages % 3 == 0) ? numImages / 3: (numImages / 3) + 1;
 
         System.out.println("ROWS: " + numRows);
         System.out.println("COLS: " + numCols);
