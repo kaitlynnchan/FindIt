@@ -96,7 +96,7 @@ public class FlickrEditActivity extends AppCompatActivity {
     // and Brian's youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupFlickrImageTable() {
 
-        final File[] directoryListing = getNumImagesAndDirectory(this);
+        final File[] directoryListing = getNumImagesAndDirectory();
 
         TableLayout tableDraw = findViewById(R.id.flickrImageTable);
         for (int i = 0; i < numRows; i++) {

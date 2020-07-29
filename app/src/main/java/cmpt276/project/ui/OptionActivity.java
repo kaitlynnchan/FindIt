@@ -54,10 +54,7 @@ public class OptionActivity extends AppCompatActivity {
     private int imgButtonVegs;
     private int buttonNormal;
     private int buttonWordsImages;
-    private static int numRows = 0;
-    private static int numCols = 0;
-    private static int counter = 0;
-    private static int numImages =0;
+    private static int numImages = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -329,19 +326,6 @@ public class OptionActivity extends AppCompatActivity {
         File[] directoryListing = dir.listFiles();
         numImages = directoryListing.length;
 
-        if (numImages < 4) {
-            numRows = 2;
-            numCols = 2;
-        }
-
-        else if (numImages % 2 == 0) {
-            numRows = numImages / 2;
-            numCols = numImages / 2;
-        } else {
-            numRows = (numImages / 2) + 1;
-            numCols = (numImages / 2) + 1;
-        }
-
         return directoryListing;
     }
 
@@ -355,7 +339,7 @@ public class OptionActivity extends AppCompatActivity {
             Bitmap b = null;
             try {
                 b = BitmapFactory.decodeStream(new FileInputStream(directoryListing[i]));
-                System.out.println("" + directoryListing[counter].getName());
+                System.out.println("" + directoryListing[i].getName());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
