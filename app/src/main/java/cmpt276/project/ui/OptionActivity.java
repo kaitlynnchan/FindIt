@@ -352,6 +352,7 @@ public class OptionActivity extends AppCompatActivity {
         return new Intent(context, OptionActivity.class);
     }
 
+    //https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
     private static File[] getNumImagesAndDirectory(Context context) {
         ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);

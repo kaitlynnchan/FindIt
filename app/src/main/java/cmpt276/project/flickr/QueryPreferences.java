@@ -1,3 +1,4 @@
+// This class deals with search queries in flickr
 package cmpt276.project.flickr;
 
 import android.content.Context;

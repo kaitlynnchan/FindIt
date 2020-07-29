@@ -1,3 +1,4 @@
+// This class contains functions related to information about each image
 package cmpt276.project.flickr;
 
 public class GalleryItem {
