@@ -141,9 +141,9 @@ public class OptionActivity extends AppCompatActivity {
         int imageButtonID = OptionActivity.getImagePackId(context);
         Object[] packArr;
 
-        if(imageButtonID == R.id.imgButtonFlicker){
+        /*if(imageButtonID == R.id.imgButtonFlicker){
             packArr = OptionActivity.setupFlickrImageTable(context);
-        } else if(imageButtonID == R.id.imgButtonVegs){
+        } else*/ if(imageButtonID == R.id.imgButtonVegs){
             packArr =  new Object[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
                     R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
                     R.drawable.artichoke, R.drawable.asparagus, R.drawable.cabbage,
