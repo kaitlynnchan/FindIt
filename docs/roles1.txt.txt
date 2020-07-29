@@ -1,4 +1,0 @@
-Scrum Master:   Sami Ben Amara
-Product Owner:  Lakshay Sethi
-Repo Manager:   Kaitlynn Chan
-Team Member:    Yangyang Liu
