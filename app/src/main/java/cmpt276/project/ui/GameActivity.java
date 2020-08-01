@@ -194,7 +194,7 @@ public class GameActivity extends AppCompatActivity {
 
                 setButtonImage(button, rotate, scale, bitmapFlickr);
             } catch (Exception ex) {
-                System.out.println("not bitmap");
+                System.out.println("not bitmap image");
                 String word = "" + value;
                 SpannableString spannableStr = new SpannableString(word);
                 spannableStr.setSpan(new RelativeSizeSpan(
