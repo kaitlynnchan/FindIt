@@ -5,5 +5,5 @@ package cmpt276.project.model;
  * contains game modes
  */
 public enum Mode {
-    NORMAL, WORD_IMAGES
+    IMAGES, WORD_IMAGES, EASY, NORMAL, HARD
 }
