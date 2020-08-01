@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -378,7 +380,13 @@ public class OptionActivity extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            objects[i] = b;
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            b.compress(Bitmap.CompressFormat.PNG,100, byteArrayOutputStream);
+            byte[] byteArr = byteArrayOutputStream.toByteArray();
+            String imageStr = Base64.encodeToString(byteArr, Base64.DEFAULT);
+
+            objects[i] = imageStr;
         }
         return objects;
     }

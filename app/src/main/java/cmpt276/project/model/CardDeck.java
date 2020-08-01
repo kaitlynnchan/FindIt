@@ -41,12 +41,16 @@ public class CardDeck {
     }
 
     // Returns the image at the index on the selected card
-    public Object getCardObject(int card, int index) {
-        if(cards[card][index].getClass() == String.class){
-            String[] split = ((String) cards[card][index]).split(",");
-            return (Object) split[1];
+    public Object[] getCardObject(int card, int index) {
+        String[] split = ((String) cards[card][index]).split(",");
+        if(split.length == 4){
+            Object[] temp = new Object[3];
+            for(int i = 0; i < temp.length; i++){
+                temp[i] = split[i+1];
+            }
+            return temp;
         }
-        return cards[card][index];
+        return split;
     }
 
     public void setNumImages(int numImages) {
@@ -108,16 +112,21 @@ public class CardDeck {
         shuffleCardsAndImages();
     }
 
+    // Randomizes is the card object should be an image or word
+    // If 0, the object is an image, 1 for word
     private void addValue(int row, int rand, int col, int indx, Object[] packArr) {
+        // change based on easy, normal, hardMode
+        int rotate = 30;
+        int scale = 2;
         if(packArr[indx].getClass() == String.class){
             String[] split = ((String) packArr[indx]).split(",");
             if (rand == 0) {
-                cards[row][col] = Integer.parseInt(split[0]);
+                cards[row][col] = split[0] + "," + rotate + "," + scale;
             } else if (rand == 1) {
-                cards[row][col] = packArr[indx];
+                cards[row][col] = packArr[indx] + "," + rotate + "," + scale;
             }
         } else{
-            cards[row][col] = packArr[indx];
+            cards[row][col] = packArr[indx] + "," + rotate + "," + scale;
         }
     }
 
@@ -157,20 +166,12 @@ public class CardDeck {
         for(int i = 0; i < numImages; i++){
 
             Object drawValue;
-            if(cards[cardIndex][imageIndex].getClass() == String.class){
-                String[] split = ((String) cards[cardIndex][imageIndex]).split(",");
-                drawValue = Integer.parseInt(split[0]);
-            } else{
-                drawValue = cards[cardIndex][imageIndex];
-            }
+            String[] split = ((String) cards[cardIndex][imageIndex]).split(",");
+            drawValue = split[0];
 
             Object discardValue;
-            if(cards[cardIndex - 1][i].getClass() == String.class){
-                String[] split = ((String) cards[cardIndex - 1][i]).split(",");
-                discardValue = Integer.parseInt(split[0]);
-            } else{
-                discardValue = cards[cardIndex - 1][i];
-            }
+            split = ((String) cards[cardIndex - 1][i]).split(",");
+            discardValue = split[0];
 
             if(drawValue.equals(discardValue)){
                 return true;
