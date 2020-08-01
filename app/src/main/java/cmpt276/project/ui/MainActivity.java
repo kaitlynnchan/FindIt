@@ -135,12 +135,12 @@ public class MainActivity extends AppCompatActivity {
         int numImages = OptionActivity.getNumImages(MainActivity.this);
         int numCardsTotal = OptionActivity.getNumCardsTotal(numImages);
         Object[] packArr = OptionActivity.getPackArray(MainActivity.this);
-        Mode gameMode = OptionActivity.getGameMode(MainActivity.this);
+        Mode difficultyMode = OptionActivity.getDifficultyMode(MainActivity.this);
 
         cardDeck.setCardDeckSize(cardDeckSize);
         cardDeck.setNumImages(numImages);
         cardDeck.setNumCardsTotal(numCardsTotal);
-        cardDeck.setMode(gameMode);
+        cardDeck.setDifficultyMode(difficultyMode);
         cardDeck.setCardIndex();
         cardDeck.populateCards(packArr);
     }

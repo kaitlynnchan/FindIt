@@ -41,7 +41,7 @@ public class OptionActivity extends AppCompatActivity {
     public static final String EDITOR_NUM_IMAGES = "number of images";
     public static final String EDITOR_CARD_DECK_SIZE = "card deck size";
     public static final String EDITOR_MODE_ID = "id for mode button";
-    public static final String EDITOR_GAME_MODE = "string for game mode";
+    public static final String EDITOR_DIFFICULTY_MODE = "string for difficulty mode";
 
     private int imgButtonFruits;
     private int imgButtonVegs;
@@ -308,17 +308,17 @@ public class OptionActivity extends AppCompatActivity {
 
     private void modeSpinner() {
         Spinner spinner = findViewById(R.id.modeSpinner);
-        String[] cardDeckSizeArray = getResources().getStringArray(R.array.modeArray);
+        String[] modeArray = getResources().getStringArray(R.array.modeArray);
 
         ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
-                this, android.R.layout.simple_spinner_item, cardDeckSizeArray);
+                this, android.R.layout.simple_spinner_item, modeArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-                saveGameMode(text);
+                saveDifficultyMode(text);
             }
 
             @Override
@@ -326,32 +326,32 @@ public class OptionActivity extends AppCompatActivity {
             }
         });
 
-        for(int i = 0; i < cardDeckSizeArray.length; i++){
-            if(cardDeckSizeArray[i].equals(getGameModeString(this))){
+        for(int i = 0; i < modeArray.length; i++){
+            if(modeArray[i].equals(getDifficultyModeStr(this))){
                 spinner.setSelection(i);
             }
         }
     }
 
-    private void saveGameMode(String mode) {
+    private void saveDifficultyMode(String mode) {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(EDITOR_GAME_MODE, mode);
+        editor.putString(EDITOR_DIFFICULTY_MODE, mode);
         editor.apply();
     }
 
-    private static String getGameModeString(Context context){
+    private static String getDifficultyModeStr(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        String[] cardDeckSizeArray = context.getResources().getStringArray(R.array.modeArray);
-        return sharedPreferences.getString(EDITOR_GAME_MODE, cardDeckSizeArray[0]);
+        String[] modeArray = context.getResources().getStringArray(R.array.modeArray);
+        return sharedPreferences.getString(EDITOR_DIFFICULTY_MODE, modeArray[0]);
     }
 
-    public static Mode getGameMode(Context context){
-        String gameMode = getGameModeString(context);
-        String[] cardDeckSizeArray = context.getResources().getStringArray(R.array.modeArray);
-        if(gameMode.equals(cardDeckSizeArray[0])){
+    public static Mode getDifficultyMode(Context context){
+        String difficultyMode = getDifficultyModeStr(context);
+        String[] modeArray = context.getResources().getStringArray(R.array.modeArray);
+        if(difficultyMode.equals(modeArray[0])){
             return Mode.EASY;
-        } else if(gameMode.equals(cardDeckSizeArray[1])){
+        } else if(difficultyMode.equals(modeArray[1])){
             return Mode.NORMAL;
         } else{
             return Mode.HARD;
