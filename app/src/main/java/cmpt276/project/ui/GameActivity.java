@@ -8,9 +8,14 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
+import android.util.Base64;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -162,8 +167,8 @@ public class GameActivity extends AppCompatActivity {
     // Used code from Brians youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void updateCard() {
         for (int i = 0; i < numImages; i++) {
-            Object drawObject = cardDeck.getCardObject(cardDeck.getCardIndex(), i);
-            Object discardObject = cardDeck.getCardObject(cardDeck.getCardIndex() - 1, i);
+            Object[] drawObject = cardDeck.getCardObject(cardDeck.getCardIndex(), i);
+            Object[] discardObject = cardDeck.getCardObject(cardDeck.getCardIndex() - 1, i);
 
             lockButtonSizes();
 
@@ -172,31 +177,54 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void setButton(Object object, Button button) {
-        if (object.getClass() == Integer.class) {
-            int width = button.getWidth();
-            int height = button.getHeight();
+    private void setButton(Object[] object, Button button) {
+        Object value = object[0];
+        int rotate = Integer.parseInt((String) object[1]);
+        int scale = Integer.parseInt((String) object[2]);
+        try {
+            int image = Integer.parseInt((String) value);
+            Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), image);
 
-            Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), (int) object);
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, true);
-            Resources resource = getResources();
-            button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+            setButtonImage(button, rotate, scale, originalBitmap);
+        } catch (NumberFormatException e) {
+            System.out.println("not image");
+            try {
+                byte[] encodeByte = Base64.decode((String) value, Base64.DEFAULT);
+                Bitmap bitmapFlickr = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 
-            button.setText(null);
-        } else if (object.getClass() == String.class) {
-            button.setText("" + object);
-            button.setBackground(null);
-        } else if (object.getClass() == Bitmap.class){
-            int width = button.getWidth();
-            int height = button.getHeight();
+                setButtonImage(button, rotate, scale, bitmapFlickr);
+            } catch (Exception ex) {
+                System.out.println("not bitmap image");
+                String word = "" + value;
+                SpannableString spannableStr = new SpannableString(word);
+                spannableStr.setSpan(new RelativeSizeSpan(
+                        2f / (float) scale), 0, word.length(), Spanned.SPAN_COMPOSING);
 
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap((Bitmap) object, width, height, true);
-            Resources resource = getResources();
-            button.setBackground(new BitmapDrawable(resource, scaledBitmap));
-
-            button.setText(null);
+                button.setAllCaps(false);
+                button.setText(spannableStr);
+                button.setRotation(rotate);
+                button.setBackground(null);
+            }
         }
         button.setVisibility(View.VISIBLE);
+    }
+
+    private void setButtonImage(Button button, int rotate, int scale, Bitmap bitmapFlickr) {
+        Matrix matrix = new Matrix();
+        matrix.setRotate(rotate);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(
+                bitmapFlickr, 0, 0, bitmapFlickr.getWidth(), bitmapFlickr.getHeight(), matrix, false);
+
+        int width = button.getWidth();
+        int height = button.getHeight();
+
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(
+                rotatedBitmap, width / scale, height / scale, true);
+        Resources resource = getResources();
+        button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+
+        button.setRotation(0);
+        button.setText(null);
     }
 
     private void startTimer() {

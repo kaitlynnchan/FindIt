@@ -9,9 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.RelativeSizeSpan;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,6 +28,7 @@ import java.util.Arrays;
 
 import cmpt276.project.R;
 import cmpt276.project.flickr.PhotoGalleryFragment;
+import cmpt276.project.model.Mode;
 
 /**
  * OPTIONS SCREEN
@@ -41,11 +41,12 @@ public class OptionActivity extends AppCompatActivity {
     public static final String EDITOR_NUM_IMAGES = "number of images";
     public static final String EDITOR_CARD_DECK_SIZE = "card deck size";
     public static final String EDITOR_MODE_ID = "id for mode button";
+    public static final String EDITOR_DIFFICULTY_MODE = "string for difficulty mode";
 
     private int imgButtonFruits;
     private int imgButtonVegs;
     private int imgButtonFlicker;
-    private int buttonNormal;
+    private int buttonImages;
     private int buttonWordsImages;
     private static int numFlikrImages = 0;
 
@@ -58,17 +59,18 @@ public class OptionActivity extends AppCompatActivity {
         imgButtonFruits = R.id.imgButtonFruits;
         imgButtonVegs = R.id.imgButtonVegs;
         imgButtonFlicker = R.id.imgButtonFlicker;
-        buttonNormal = R.id.buttonNormal;
+        buttonImages = R.id.buttonImages;
         buttonWordsImages = R.id.buttonWordsImages;
 
         setupImageButton(imgButtonFruits);
         setupImageButton(imgButtonVegs);
         setupImageButton(imgButtonFlicker);
-        setupModeButton(buttonNormal);
+        setupModeButton(buttonImages);
         setupModeButton(buttonWordsImages);
 
         imageSpinner();
         cardSpinner();
+        modeSpinner();
 
         setupBackButton();
     }
@@ -107,18 +109,11 @@ public class OptionActivity extends AppCompatActivity {
                     Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
                 } else{
                     saveModeId(modeBtn);
-                    setupModeButton(buttonNormal);
+                    setupModeButton(buttonImages);
                     setupModeButton(buttonWordsImages);
                 }
             }
         });
-
-        if(modeBtn == buttonNormal){
-            String s = getString(R.string.normal);
-            SpannableString string = new SpannableString(s);
-            string.setSpan(new RelativeSizeSpan(0.75f), s.length() - 8, s.length(), Spanned.SPAN_COMPOSING);
-            button.setText(string);
-        }
 
         // Selecting/deselecting mode button
         if(getModeId(this) == modeBtn){
@@ -188,7 +183,7 @@ public class OptionActivity extends AppCompatActivity {
 
     private static int getModeId(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_MODE_ID, R.id.buttonNormal);
+        return sharedPreferences.getInt(EDITOR_MODE_ID, R.id.buttonImages);
     }
 
     private void imageSpinner() {
@@ -311,9 +306,61 @@ public class OptionActivity extends AppCompatActivity {
         return numCardsTotal;
     }
 
+    private void modeSpinner() {
+        Spinner spinner = findViewById(R.id.modeSpinner);
+        String[] modeArray = getResources().getStringArray(R.array.modeArray);
+
+        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
+                this, android.R.layout.simple_spinner_item, modeArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = parent.getItemAtPosition(position).toString();
+                saveDifficultyMode(text);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        for(int i = 0; i < modeArray.length; i++){
+            if(modeArray[i].equals(getDifficultyModeStr(this))){
+                spinner.setSelection(i);
+            }
+        }
+    }
+
+    private void saveDifficultyMode(String mode) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(EDITOR_DIFFICULTY_MODE, mode);
+        editor.apply();
+    }
+
+    private static String getDifficultyModeStr(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        String[] modeArray = context.getResources().getStringArray(R.array.modeArray);
+        return sharedPreferences.getString(EDITOR_DIFFICULTY_MODE, modeArray[0]);
+    }
+
+    public static Mode getDifficultyMode(Context context){
+        String difficultyMode = getDifficultyModeStr(context);
+        String[] modeArray = context.getResources().getStringArray(R.array.modeArray);
+        if(difficultyMode.equals(modeArray[0])){
+            return Mode.EASY;
+        } else if(difficultyMode.equals(modeArray[1])){
+            return Mode.NORMAL;
+        } else{
+            return Mode.HARD;
+        }
+    }
+
     @Override
     protected void onResume() {
-        if(getModeId(this) == buttonWordsImages){
+        if(getModeId(this) == buttonWordsImages && getImagePackId(this) == numFlikrImages){
             Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
         }
         imageSpinner();
@@ -366,6 +413,7 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
+    // Code for bitmap string conversion: https://stackoverflow.com/questions/22532136/android-how-to-create-a-bitmap-from-a-string
     private static Object[] getFlickrArr(Context context) {
         final File[] directoryListing = getNumImagesAndDirectory(context);
 
@@ -378,7 +426,13 @@ public class OptionActivity extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            objects[i] = b;
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            b.compress(Bitmap.CompressFormat.PNG,100, byteArrayOutputStream);
+            byte[] byteArr = byteArrayOutputStream.toByteArray();
+            String imageStr = Base64.encodeToString(byteArr, Base64.DEFAULT);
+
+            objects[i] = imageStr;
         }
         return objects;
     }
