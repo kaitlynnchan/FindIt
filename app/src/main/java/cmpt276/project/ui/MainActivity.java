@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
 import cmpt276.project.model.GameConfigs;
+import cmpt276.project.model.Mode;
 import cmpt276.project.model.ScoresManager;
 
 /**
@@ -134,10 +135,12 @@ public class MainActivity extends AppCompatActivity {
         int numImages = OptionActivity.getNumImages(MainActivity.this);
         int numCardsTotal = OptionActivity.getNumCardsTotal(numImages);
         Object[] packArr = OptionActivity.getPackArray(MainActivity.this);
+        Mode gameMode = OptionActivity.getGameMode(MainActivity.this);
 
         cardDeck.setCardDeckSize(cardDeckSize);
         cardDeck.setNumImages(numImages);
         cardDeck.setNumCardsTotal(numCardsTotal);
+        cardDeck.setMode(gameMode);
         cardDeck.setCardIndex();
         cardDeck.populateCards(packArr);
     }

@@ -90,6 +90,20 @@
         app:layout_constraintTop_toTopOf="@+id/textImageNum" />
 
     <Spinner
+        android:id="@+id/modeSpinner"
+        android:layout_width="85dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="16dp"
+
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/ic_arrow_down_24"
+        android:foregroundGravity="center_vertical|right"
+        android:foregroundTint="#000000"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toStartOf="@+id/buttonImages"
+        app:layout_constraintTop_toBottomOf="@+id/buttonImages" />
+
+    <Spinner
         android:id="@+id/numCardsSpinner"
         android:layout_width="65dp"
         android:layout_height="46dp"
@@ -107,7 +121,7 @@
         android:id="@+id/horizontalScrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -161,13 +175,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textImageNum" />
 
     <Button
-        android:id="@+id/buttonNormal"
+        android:id="@+id/buttonImages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@drawable/button_background"
-        android:text="@string/normal"
-        android:textAllCaps="false"
+        android:text="@string/mode_images"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/textMode"
         app:layout_constraintStart_toEndOf="@+id/textMode"
@@ -177,12 +190,12 @@
         android:id="@+id/buttonWordsImages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/button_background"
         android:text="@string/words_and_images"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonNormal"
-        app:layout_constraintStart_toEndOf="@+id/buttonNormal"
-        app:layout_constraintTop_toTopOf="@+id/buttonNormal" />
+        app:layout_constraintBottom_toBottomOf="@+id/buttonImages"
+        app:layout_constraintStart_toEndOf="@+id/buttonImages"
+        app:layout_constraintTop_toTopOf="@+id/buttonImages" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

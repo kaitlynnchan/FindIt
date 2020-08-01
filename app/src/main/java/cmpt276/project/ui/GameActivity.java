@@ -198,7 +198,7 @@ public class GameActivity extends AppCompatActivity {
                 String word = "" + value;
                 SpannableString spannableStr = new SpannableString(word);
                 spannableStr.setSpan(new RelativeSizeSpan(
-                        1.75f / (float) scale), 0, word.length(), Spanned.SPAN_COMPOSING);
+                        2f / (float) scale), 0, word.length(), Spanned.SPAN_COMPOSING);
 
                 button.setAllCaps(false);
                 button.setText(spannableStr);
