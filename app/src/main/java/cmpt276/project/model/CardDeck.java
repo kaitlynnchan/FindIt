@@ -13,6 +13,7 @@ public class CardDeck {
     private int numImages;      // Number of images on each card
     private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
     private Object[][] cards;   // Card array: first index indicates the card, second index indicates which images are on the card
+    private Mode mode;
 
     private static CardDeck instance;
 
@@ -63,6 +64,10 @@ public class CardDeck {
 
     public void setCardDeckSize(int cardDeckSize) {
         this.cardDeckSize = cardDeckSize;
+    }
+
+    public void setMode(Mode mode) {
+        this.mode = mode;
     }
 
     // Set cardIndex to 1, since card[0] is put into the discard pile when the game starts
@@ -116,8 +121,14 @@ public class CardDeck {
     // If 0, the object is an image, 1 for word
     private void addValue(int row, int rand, int col, int indx, Object[] packArr) {
         // change based on easy, normal, hardMode
-        int rotate = 30;
-        int scale = 2;
+        int rotate = 0;
+        if(mode == Mode.NORMAL || mode == Mode.HARD){
+            rotate = (int) (Math.random() * 360);
+        }
+        int scale = 1;
+        if(mode == Mode.HARD){
+            scale = (int) (Math.random() * 3) + 1;
+        }
         if(packArr[indx].getClass() == String.class){
             String[] split = ((String) packArr[indx]).split(",");
             if (rand == 0) {

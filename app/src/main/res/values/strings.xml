@@ -127,8 +127,13 @@
         <item>4</item>
         <item>6</item>
     </string-array>
+    <string-array name="modeArray">
+        <item>Easy</item>
+        <item>Normal</item>
+        <item>Hard</item>
+    </string-array>
     <string name="words_and_images">words and images</string>
-    <string name="normal">NORMAL\n(IMAGES)</string>
+    <string name="mode_images">IMAGES</string>
     <string name="mode">Mode:</string>
     <string name="date_format">Month DD, YYYY</string>
 
