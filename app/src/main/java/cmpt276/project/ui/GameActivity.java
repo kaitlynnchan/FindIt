@@ -4,11 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -22,6 +27,12 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
@@ -39,6 +50,8 @@ public class GameActivity extends AppCompatActivity {
     private Button[] drawPile;        // Contains the images of a card from the draw pile
     private Button[] discardPile;     // Contains the images of a card from the discard pile
 
+    MyDrawView myDrawView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +68,7 @@ public class GameActivity extends AppCompatActivity {
         setupDiscardCard();
         startGame();
         setupBackButton();
+
     }
 
     // Begin the game
@@ -72,8 +86,10 @@ public class GameActivity extends AppCompatActivity {
                 imgCard.setVisibility(View.GONE);
                 
                 startGameButton.setVisibility(View.INVISIBLE);
+
             }
         });
+
     }
 
     // Sets up the images of the cards in the draw pile
@@ -103,6 +119,7 @@ public class GameActivity extends AppCompatActivity {
             drawPile[i] = button;
             drawPile[i].setVisibility(View.INVISIBLE);
         }
+
     }
 
     // Sets up the images for the top card in the discard pile
@@ -175,6 +192,7 @@ public class GameActivity extends AppCompatActivity {
             setButton(drawObject, drawPile[i]);
             setButton(discardObject, discardPile[i]);
         }
+        saveCard();
     }
 
     private void setButton(Object[] object, Button button) {
@@ -252,6 +270,83 @@ public class GameActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void saveCard(){
+        myDrawView = findViewById(R.id.draw);
+        ContextWrapper cw = new ContextWrapper(getBaseContext());
+        File directory = cw.getDir("FILE_FLICKR_DRAWABLE", Context.MODE_PRIVATE);
+
+        File mypath = new File(directory, "new.png");
+
+        FileOutputStream fos ;
+
+
+
+
+
+        FileOutputStream ostream = null;
+        try
+        {
+            ostream = new FileOutputStream(mypath);
+
+            System.out.println(ostream);
+            View targetView = myDrawView;
+
+            // myDrawView.setDrawingCacheEnabled(true);
+            //   Bitmap save = Bitmap.createBitmap(myDrawView.getDrawingCache());
+            //   myDrawView.setDrawingCacheEnabled(false);
+            // copy this bitmap otherwise distroying the cache will destroy
+            // the bitmap for the referencing drawable and you'll not
+            // get the captured view
+            //   Bitmap save = b1.copy(Bitmap.Config.ARGB_8888, false);
+            //BitmapDrawable d = new BitmapDrawable(b);
+            //canvasView.setBackgroundDrawable(d);
+            //   myDrawView.destroyDrawingCache();
+            // Bitmap save = myDrawView.getBitmapFromMemCache("0");
+            // myDrawView.setDrawingCacheEnabled(true);
+            //Bitmap save = myDrawView.getDrawingCache(false);
+            Bitmap well = myDrawView.getBitmap();
+            Bitmap save = Bitmap.createBitmap(320, 480, Bitmap.Config.ARGB_8888);
+            Paint paint = new Paint();
+            paint.setColor(Color.WHITE);
+            Canvas now = new Canvas(save);
+            now.drawRect(new Rect(0,0,320,480), paint);
+            now.drawBitmap(well, new Rect(0,0,well.getWidth(),well.getHeight()), new Rect(0,0,320,480), null);
+
+            // Canvas now = new Canvas(save);
+            //myDrawView.layout(0, 0, 100, 100);
+            //myDrawView.draw(now);
+            if(save == null) {
+                System.out.println("NULL bitmap save\n");
+            }
+            save.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+            //bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+            ostream.flush();
+            ostream.close();
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Null error", Toast.LENGTH_SHORT).show();
+        }
+
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "File error", Toast.LENGTH_SHORT).show();
+        }
+
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "IO error", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+
+
+
 
     public static Intent makeIntent(Context context){
         return new Intent(context, GameActivity.class);
