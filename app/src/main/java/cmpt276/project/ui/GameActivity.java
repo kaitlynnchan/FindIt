@@ -15,6 +15,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.SpannableString;
@@ -33,6 +34,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
@@ -50,7 +52,7 @@ public class GameActivity extends AppCompatActivity {
     private Button[] drawPile;        // Contains the images of a card from the draw pile
     private Button[] discardPile;     // Contains the images of a card from the discard pile
 
-    MyDrawView myDrawView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +153,7 @@ public class GameActivity extends AppCompatActivity {
             } else {
                 cardDeck.incrementCardIndex();
                 updateCard();
+                takeScreenshot(cardDeck.getCardIndex());
             }
         }
     }
@@ -192,7 +195,7 @@ public class GameActivity extends AppCompatActivity {
             setButton(drawObject, drawPile[i]);
             setButton(discardObject, discardPile[i]);
         }
-        saveCard();
+
     }
 
     private void setButton(Object[] object, Button button) {
@@ -271,77 +274,42 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
-    private void saveCard(){
-        myDrawView = findViewById(R.id.draw);
-        ContextWrapper cw = new ContextWrapper(getBaseContext());
-        File directory = cw.getDir("FILE_FLICKR_DRAWABLE", Context.MODE_PRIVATE);
+    // Take Screen Shot of the card.
+    // Citation: https://stackoverflow.com/questions/2661536/how-to-programmatically-take-a-screenshot-on-android .
+    private void takeScreenshot(int imgNum) {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
 
-        File mypath = new File(directory, "new.png");
+        try {
 
-        FileOutputStream fos ;
+            // image naming and path, appending name you choose for file.
+            ContextWrapper cw = new ContextWrapper(getBaseContext());
+            File directory = cw.getDir("FILE_FLICKR_DRAWABLE", Context.MODE_PRIVATE);
+
+            File mypath = new File(directory, "screen"+imgNum+".jpg");
 
 
 
+            // create bitmap screen capture
+            View v1 = getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
 
 
-        FileOutputStream ostream = null;
-        try
-        {
-            ostream = new FileOutputStream(mypath);
 
-            System.out.println(ostream);
-            View targetView = myDrawView;
+            FileOutputStream outputStream = new FileOutputStream(mypath);
+            int quality = 100;
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+            outputStream.flush();
+            outputStream.close();
 
-            // myDrawView.setDrawingCacheEnabled(true);
-            //   Bitmap save = Bitmap.createBitmap(myDrawView.getDrawingCache());
-            //   myDrawView.setDrawingCacheEnabled(false);
-            // copy this bitmap otherwise distroying the cache will destroy
-            // the bitmap for the referencing drawable and you'll not
-            // get the captured view
-            //   Bitmap save = b1.copy(Bitmap.Config.ARGB_8888, false);
-            //BitmapDrawable d = new BitmapDrawable(b);
-            //canvasView.setBackgroundDrawable(d);
-            //   myDrawView.destroyDrawingCache();
-            // Bitmap save = myDrawView.getBitmapFromMemCache("0");
-            // myDrawView.setDrawingCacheEnabled(true);
-            //Bitmap save = myDrawView.getDrawingCache(false);
-            Bitmap well = myDrawView.getBitmap();
-            Bitmap save = Bitmap.createBitmap(320, 480, Bitmap.Config.ARGB_8888);
-            Paint paint = new Paint();
-            paint.setColor(Color.WHITE);
-            Canvas now = new Canvas(save);
-            now.drawRect(new Rect(0,0,320,480), paint);
-            now.drawBitmap(well, new Rect(0,0,well.getWidth(),well.getHeight()), new Rect(0,0,320,480), null);
-
-            // Canvas now = new Canvas(save);
-            //myDrawView.layout(0, 0, 100, 100);
-            //myDrawView.draw(now);
-            if(save == null) {
-                System.out.println("NULL bitmap save\n");
-            }
-            save.compress(Bitmap.CompressFormat.PNG, 100, ostream);
-            //bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
-            ostream.flush();
-            ostream.close();
-        }catch (NullPointerException e)
-        {
+        } catch (Throwable e) {
+            // Several error may come out with file handling or DOM
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Null error", Toast.LENGTH_SHORT).show();
         }
-
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "File error", Toast.LENGTH_SHORT).show();
-        }
-
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "IO error", Toast.LENGTH_SHORT).show();
-        }
-
     }
+
 
 
 
