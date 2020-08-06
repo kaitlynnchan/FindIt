@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -22,6 +23,13 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Date;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
@@ -72,6 +80,7 @@ public class GameActivity extends AppCompatActivity {
                 imgCard.setVisibility(View.GONE);
                 
                 startGameButton.setVisibility(View.INVISIBLE);
+
             }
         });
     }
@@ -90,6 +99,8 @@ public class GameActivity extends AppCompatActivity {
                     1.0f
             ));
 
+
+
             // Avoid clipping text on smaller buttons
             button.setPadding(0, 0, 0, 0);
             button.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +114,7 @@ public class GameActivity extends AppCompatActivity {
             drawPile[i] = button;
             drawPile[i].setVisibility(View.INVISIBLE);
         }
+
     }
 
     // Sets up the images for the top card in the discard pile
@@ -126,12 +138,15 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    // Checks if the selected image matches an image on on the discard pile card
+    // Checks if the selected image matches an image on on the discard pile card.
+    // Takes Screenshot of the cards in a given game.
     private void imageClicked(int index) {
         if (cardDeck.searchDiscardPile(index)) {
             if (cardDeck.getCardIndex() == cardDeck.getCardDeckSize() - 1) {
+                takeScreenshot(cardDeck.getCardIndex());
                 stopTimer();
             } else {
+                takeScreenshot(cardDeck.getCardIndex());
                 cardDeck.incrementCardIndex();
                 updateCard();
             }
@@ -175,6 +190,7 @@ public class GameActivity extends AppCompatActivity {
             setButton(drawObject, drawPile[i]);
             setButton(discardObject, discardPile[i]);
         }
+
     }
 
     private void setButton(Object[] object, Button button) {
@@ -252,6 +268,59 @@ public class GameActivity extends AppCompatActivity {
             }
         });
     }
+
+    // Take Screen Shot of the card.
+    // Citation: https://stackoverflow.com/questions/2661536/how-to-programmatically-take-a-screenshot-on-android .
+    private void takeScreenshot(int imgNum) {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+
+            // image naming and path, appending name you choose for file.
+            ContextWrapper cw = new ContextWrapper(getBaseContext());
+            File directory = cw.getDir("FILE_FLICKR_DRAWABLE", Context.MODE_PRIVATE);
+
+            File mypath1 = new File(directory, "Draw"+imgNum+".jpeg");
+            File mypath2 = new File(directory, "Discard"+imgNum+".jpg");
+
+
+
+            // create bitmap screen capture
+            View v1 = getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+            // create the cropped version of the bitmap.
+            Bitmap resizedBitmap1 =Bitmap.createBitmap(bitmap, 1070,160,bitmap.getWidth() - 1310, bitmap.getHeight()-180 );
+            Bitmap resizedBitmap2 =Bitmap.createBitmap(bitmap, 110,160,bitmap.getWidth() - 1310, bitmap.getHeight()-180);
+
+
+            FileOutputStream outputStream1 = new FileOutputStream(mypath1);
+            FileOutputStream outputStream2 = new FileOutputStream(mypath2);
+
+            int quality = 100;
+            resizedBitmap1.compress(Bitmap.CompressFormat.JPEG, quality, outputStream1);
+            resizedBitmap2.compress(Bitmap.CompressFormat.JPEG, quality, outputStream2);
+
+            outputStream1.flush();
+            outputStream1.close();
+
+            outputStream2.flush();
+            outputStream2.close();
+
+        } catch (Throwable e) {
+            // Several error may come out with file handling or DOM
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
 
     public static Intent makeIntent(Context context){
         return new Intent(context, GameActivity.class);
