@@ -88,15 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        Button ownImages = findViewById(R.id.ownImagesButton);
-        ownImages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, EditOwnImagesActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

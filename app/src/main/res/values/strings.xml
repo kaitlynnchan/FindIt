@@ -143,4 +143,5 @@
     <string name="toast_flickr_activity">You must select a minimum of 7 images</string>
     <string name="toast_options">There are not enough images in this packages to support this order</string>
     <string name="toast_options_mode">This mode is not supported for the selected image package</string>
+    <string name="launch_gallery">LAUNCH GALLERY</string>
 </resources>
