@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -292,9 +293,18 @@ public class GameActivity extends AppCompatActivity {
             Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
             v1.setDrawingCacheEnabled(false);
 
+            ImageView imgDiscard = findViewById(R.id.imageDiscardCard);
+            ImageView imgDraw = findViewById(R.id.imageDrawCard);
+            TextView txt = findViewById(R.id.textDiscard);
+            int height = (int) imgDiscard.getHeight() + txt.getHeight() - 30;
+            int width = (int) imgDiscard.getWidth() - ((imgDiscard.getWidth() / 7) * 2);
+            int xDiscard = (int) imgDiscard.getX() + (imgDiscard.getWidth() / 7);
+            int xDraw = (int) imgDraw.getX() + (imgDiscard.getWidth() / 7);
+            int y = (int) txt.getY() + 10;
+
             // create the cropped version of the bitmap.
-            Bitmap resizedBitmap1 =Bitmap.createBitmap(bitmap, 1070,160,bitmap.getWidth() - 1310, bitmap.getHeight()-180 );
-            Bitmap resizedBitmap2 =Bitmap.createBitmap(bitmap, 110,160,bitmap.getWidth() - 1310, bitmap.getHeight()-180);
+            Bitmap resizedBitmap1 = Bitmap.createBitmap(bitmap, xDraw, y, width, height);
+            Bitmap resizedBitmap2 = Bitmap.createBitmap(bitmap, xDiscard, y, width, height);
 
 
             FileOutputStream outputStream1 = new FileOutputStream(mypath1);
