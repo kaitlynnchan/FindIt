@@ -31,6 +31,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import cmpt276.project.R;
 import cmpt276.project.flickr.PhotoGalleryActivity;
@@ -223,6 +227,11 @@ public class FlickrEditActivity extends AppCompatActivity {
 
                             try {
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                                // https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
+                                sdf.setTimeZone(TimeZone.getTimeZone("PDT"));
+                                String temp = sdf.format(new Date());
+                                name += temp;
                                 name += ".png";
 
                                 new DownloadFile(bitmap, name).execute();
@@ -251,6 +260,11 @@ public class FlickrEditActivity extends AppCompatActivity {
                         System.out.println("IMAGE NAME: " + name);
                         try {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                            // https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
+                            sdf.setTimeZone(TimeZone.getTimeZone("PDT"));
+                            String temp = sdf.format(new Date());
+                            name += temp;
                             name += ".png";
 
                             new DownloadFile(bitmap, name).execute();
