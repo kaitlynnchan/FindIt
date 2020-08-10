@@ -26,8 +26,12 @@ import android.view.ViewGroup;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import cmpt276.project.R;
 /**
@@ -169,8 +173,15 @@ public class PhotoGalleryFragment extends Fragment {
 
                     itemView.setForeground(getResources().getDrawable(R.drawable.gallery_item_selected));
 
+                    // https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
+                    sdf.setTimeZone(TimeZone.getTimeZone("PDT"));
+
                     String bitmapUrl = mItems.get(position).getUrl();
                     String imageName = mItems.get(position).getCaption();
+
+                    String temp = sdf.format(new Date());
+                    imageName += temp;
                     imageName += ".png";
 
                     new DownloadFile(bitmapUrl, imageName).execute();
