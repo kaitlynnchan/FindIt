@@ -151,18 +151,20 @@ public class GameActivity extends AppCompatActivity {
 
     // Checks if the selected image matches an image on on the discard pile card
     private void imageClicked(int index) {
+        final MediaPlayer correctSound = MediaPlayer.create(this, R.raw.found);
+        final MediaPlayer incorrectSound = MediaPlayer.create(this, R.raw.incorrect_sound);
         if (cardDeck.searchDiscardPile(index)) {
-            MediaPlayer correctSound = MediaPlayer.create(this, R.raw.correct_sound);
             correctSound.start();
             if (cardDeck.getCardIndex() == cardDeck.getCardDeckSize() - 1) {
                 stopTimer();
             } else {
+
                 cardDeck.incrementCardIndex();
                 updateCard();
                 takeScreenshot(cardDeck.getCardIndex());
             }
         } else{
-            MediaPlayer incorrectSound = MediaPlayer.create(this, R.raw.incorrect_sound);
+
             incorrectSound.start();
         }
     }
