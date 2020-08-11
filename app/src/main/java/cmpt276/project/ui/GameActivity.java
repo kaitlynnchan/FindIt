@@ -296,10 +296,10 @@ public class GameActivity extends AppCompatActivity {
             ImageView imgDiscard = findViewById(R.id.imageDiscardCard);
             ImageView imgDraw = findViewById(R.id.imageDrawCard);
             TextView txt = findViewById(R.id.textDiscard);
-            int height = (int) imgDiscard.getHeight() + txt.getHeight() - 30;
-            int width = (int) imgDiscard.getWidth() - ((imgDiscard.getWidth() / 7) * 2);
-            int xDiscard = (int) imgDiscard.getX() + (imgDiscard.getWidth() / 7);
-            int xDraw = (int) imgDraw.getX() + (imgDiscard.getWidth() / 7);
+            int height = imgDiscard.getHeight() + txt.getHeight() - 30;
+            int width = (imgDiscard.getHeight() * 3) / 4;
+            int xDiscard = (int) imgDiscard.getX() + ((imgDiscard.getWidth() - width) / 2);
+            int xDraw = (int) imgDraw.getX() + ((imgDiscard.getWidth() - width) / 2);
             int y = (int) txt.getY() + 10;
 
             // create the cropped version of the bitmap.
