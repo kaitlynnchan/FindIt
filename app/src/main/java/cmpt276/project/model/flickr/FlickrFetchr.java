@@ -1,5 +1,5 @@
 
-package cmpt276.project.flickr;
+package cmpt276.project.model.flickr;
 
 import android.net.Uri;
 import android.util.Log;
