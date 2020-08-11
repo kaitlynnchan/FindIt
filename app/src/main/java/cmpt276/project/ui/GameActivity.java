@@ -227,19 +227,19 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setButtonImage(Button button, int rotate, int scale, Bitmap bitmap) {
+        Matrix matrix = new Matrix();
+        matrix.setRotate(rotate, bitmap.getWidth() / 2f, bitmap.getHeight() / 2f);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(
+                bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+
         int width = button.getWidth();
         int height = button.getHeight();
 
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(
-                bitmap, width / scale, height / scale, true);
-
-        Matrix matrix = new Matrix();
-        matrix.setRotate(rotate, scaledBitmap.getWidth() / 2f, scaledBitmap.getHeight() / 2f);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(
-                scaledBitmap, 0, 0, width / scale, height / scale, matrix, false);
+                rotatedBitmap, width / scale, height / scale, true);
 
         Resources resource = getResources();
-        button.setBackground(new BitmapDrawable(resource, rotatedBitmap));
+        button.setBackground(new BitmapDrawable(resource, scaledBitmap));
 
         button.setRotation(0);
         button.setText(null);
