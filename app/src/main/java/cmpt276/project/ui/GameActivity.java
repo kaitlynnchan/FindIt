@@ -9,14 +9,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.SpannableString;
@@ -30,17 +25,13 @@ import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Date;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
-import cmpt276.project.model.GameConfigs;
 
 /**
  * GAME SCREEN
@@ -292,15 +283,12 @@ public class GameActivity extends AppCompatActivity {
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
 
         try {
-
             // image naming and path, appending name you choose for file.
             ContextWrapper cw = new ContextWrapper(getBaseContext());
             File directory = cw.getDir("FILE_FLICKR_DRAWABLE", Context.MODE_PRIVATE);
 
-            File mypath1 = new File(directory, "Draw"+imgNum+".jpeg");
-            File mypath2 = new File(directory, "Discard"+imgNum+".jpg");
-
-
+            File mypathDraw = new File(directory, "Draw"+imgNum+".jpeg");
+            File mypathDiscard = new File(directory, "Discard"+imgNum+".jpg");
 
             // create bitmap screen capture
             View v1 = getWindow().getDecorView().getRootView();
@@ -318,34 +306,27 @@ public class GameActivity extends AppCompatActivity {
             int y = (int) txt.getY() + 10;
 
             // create the cropped version of the bitmap.
-            Bitmap resizedBitmap1 = Bitmap.createBitmap(bitmap, xDraw, y, width, height);
-            Bitmap resizedBitmap2 = Bitmap.createBitmap(bitmap, xDiscard, y, width, height);
+            Bitmap resizedBitmapDraw = Bitmap.createBitmap(bitmap, xDraw, y, width, height);
+            Bitmap resizedBitmapDiscard = Bitmap.createBitmap(bitmap, xDiscard, y, width, height);
 
-
-            FileOutputStream outputStream1 = new FileOutputStream(mypath1);
-            FileOutputStream outputStream2 = new FileOutputStream(mypath2);
+            FileOutputStream outputStreamDraw = new FileOutputStream(mypathDraw);
+            FileOutputStream outputStreamDiscard = new FileOutputStream(mypathDiscard);
 
             int quality = 100;
-            resizedBitmap1.compress(Bitmap.CompressFormat.JPEG, quality, outputStream1);
-            resizedBitmap2.compress(Bitmap.CompressFormat.JPEG, quality, outputStream2);
+            resizedBitmapDraw.compress(Bitmap.CompressFormat.JPEG, quality, outputStreamDraw);
+            resizedBitmapDiscard.compress(Bitmap.CompressFormat.JPEG, quality, outputStreamDiscard);
 
-            outputStream1.flush();
-            outputStream1.close();
+            outputStreamDraw.flush();
+            outputStreamDraw.close();
 
-            outputStream2.flush();
-            outputStream2.close();
+            outputStreamDiscard.flush();
+            outputStreamDiscard.close();
 
         } catch (Throwable e) {
             // Several error may come out with file handling or DOM
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
 
     public static Intent makeIntent(Context context){
         return new Intent(context, GameActivity.class);

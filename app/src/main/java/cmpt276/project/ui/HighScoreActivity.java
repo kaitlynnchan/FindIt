@@ -188,7 +188,6 @@ public class HighScoreActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-//                String[] numCardsArray = parent.getResources().getStringArray(R.array.cardDeckSizeArray);
 
                 if(text.equals(cardDeckSizeArray[0])) {
                     cardDeckSize = getNumCardsTotal();
