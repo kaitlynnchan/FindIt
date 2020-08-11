@@ -50,15 +50,15 @@
         android:id="@+id/textImageNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="@string/num_of_images"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.293"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textBoardSize"
@@ -93,15 +93,16 @@
         android:id="@+id/modeSpinner"
         android:layout_width="85dp"
         android:layout_height="46dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
 
         android:background="@drawable/button_background"
         android:foreground="@drawable/ic_arrow_down_24"
         android:foregroundGravity="center_vertical|right"
         android:foregroundTint="#000000"
         android:spinnerMode="dropdown"
-        app:layout_constraintStart_toStartOf="@+id/buttonImages"
-        app:layout_constraintTop_toBottomOf="@+id/buttonImages" />
+        app:layout_constraintBottom_toBottomOf="@+id/textModeDifficulty"
+        app:layout_constraintStart_toEndOf="@+id/textModeDifficulty"
+        app:layout_constraintTop_toTopOf="@+id/textModeDifficulty" />
 
     <Spinner
         android:id="@+id/numCardsSpinner"
@@ -166,13 +167,31 @@
         android:id="@+id/textMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="@string/mode"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/textImageNum"
-        app:layout_constraintTop_toBottomOf="@+id/textImageNum" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.73" />
+
+    <TextView
+        android:id="@+id/textModeDifficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/difficulty_mode"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.325"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.907" />
 
     <Button
         android:id="@+id/buttonImages"
