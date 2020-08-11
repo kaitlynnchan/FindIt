@@ -81,7 +81,7 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(imageId == imgButtonCustom){
-                    Intent intent = FlickrGalleryActivity.makeIntent(OptionActivity.this);
+                    Intent intent = CustomImagesActivity.makeIntent(OptionActivity.this);
                     startActivity(intent);
                 }
                 saveImagePackId(imageId);
