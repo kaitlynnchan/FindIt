@@ -40,10 +40,10 @@ import cmpt276.project.ui.flickr.PhotoGalleryActivity;
 import cmpt276.project.ui.flickr.PhotoGalleryFragment;
 
 /**
- * FLICKR GALLERY SCREEN
+ * CUSTOM IMAGES SCREEN
  * Allows users to remove and add images, include launch flickr and gallery buttons
  */
-public class FlickrGalleryActivity extends AppCompatActivity {
+public class CustomImagesActivity extends AppCompatActivity {
 
     private int numImages;
     private int counter;
@@ -60,7 +60,7 @@ public class FlickrGalleryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_flickr_gallery);
+        setContentView(R.layout.activity_custom_images);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         numImages = 0;
@@ -275,8 +275,8 @@ public class FlickrGalleryActivity extends AppCompatActivity {
             try {
                 if (bitmap == null) return null;
 
-                ContextWrapper cw = new ContextWrapper(FlickrGalleryActivity.this);
-                File directory = cw.getDir("flickrDrawable", Context.MODE_PRIVATE);
+                ContextWrapper cw = new ContextWrapper(CustomImagesActivity.this);
+                File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
 
                 File mypath = new File(directory, name);
 
@@ -315,7 +315,7 @@ public class FlickrGalleryActivity extends AppCompatActivity {
         launchFlickrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = PhotoGalleryActivity.makeIntent(FlickrGalleryActivity.this);
+                Intent intent = PhotoGalleryActivity.makeIntent(CustomImagesActivity.this);
                 startActivityForResult(intent, 1);
             }
         });
@@ -344,6 +344,6 @@ public class FlickrGalleryActivity extends AppCompatActivity {
     }
 
     public static Intent makeIntent(Context context){
-        return new Intent(context, FlickrGalleryActivity.class);
+        return new Intent(context, CustomImagesActivity.class);
     }
 }

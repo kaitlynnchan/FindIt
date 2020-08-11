@@ -25,7 +25,7 @@ import cmpt276.project.model.ScoresManager;
 
 /**
  * WIN FRAGMENT
- * Displays win screen, OK button, and allows user to
+ * Displays win screen, OK button, EXPORT IMAGES button, and allows user to
  *  input a nickname when appropriate
  */
 public class WinFragment extends AppCompatDialogFragment {

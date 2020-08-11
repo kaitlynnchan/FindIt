@@ -39,6 +39,8 @@ import cmpt276.project.model.CardDeck;
  */
 public class GameActivity extends AppCompatActivity {
 
+    public static final String FILE_EXPORT_CARDS = "file_export_cards";
+
     private Chronometer timer;
     private CardDeck cardDeck;
     private int numImages;
@@ -286,7 +288,7 @@ public class GameActivity extends AppCompatActivity {
         try {
             // image naming and path, appending name you choose for file.
             ContextWrapper cw = new ContextWrapper(getBaseContext());
-            File directory = cw.getDir("FILE_FLICKR_DRAWABLE", Context.MODE_PRIVATE);
+            File directory = cw.getDir(FILE_EXPORT_CARDS, Context.MODE_PRIVATE);
 
             File mypathDraw = new File(directory, "Draw"+imgNum+".jpeg");
             File mypathDiscard = new File(directory, "Discard"+imgNum+".jpg");
