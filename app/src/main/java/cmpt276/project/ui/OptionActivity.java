@@ -32,7 +32,7 @@ import cmpt276.project.model.Mode;
 
 /**
  * OPTIONS SCREEN
- * Allows users to select an image package and mode.
+ * Allows users to select an image package and mode .
  */
 public class OptionActivity extends AppCompatActivity {
 
