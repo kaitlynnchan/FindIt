@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -87,6 +88,14 @@ public class WinFragment extends AppCompatDialogFragment {
                 MainActivity.saveGameConfigs(getActivity(), gameConfigs);
 
                 getActivity().finish();
+            }
+        });
+
+        Button export = view.findViewById(R.id.buttonExport);
+        export.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), R.string.toast_export, Toast.LENGTH_LONG).show();
             }
         });
     }
