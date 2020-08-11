@@ -102,6 +102,9 @@
         <a href="https://www.cleanpng.com/png-yam-sweet-potato-clip-art-potato-640425/">yam</a>,
         <a href="https://www.vectorstock.com/royalty-free-vector/cartoon-red-onion-bulb-vector-29564575">red onion</a>,
         <a href="https://clipartix.com/spinach-clipart-image-56587/">spinach</a>
+        \nAudio: <a href="https://www.youtube.com/watch?v=worclOeTALw">correct/incorrect</a>,
+        <a href="https://www.youtube.com/watch?v=GGoYBJvPEdY">win</a>,
+        <a href="https://www.youtube.com/watch?v=aUOw02s9yV0">start</a>
     </string>
     <string name="enter_your_name">Enter a nickname:</string>
     <string name="your_name">your name</string>
@@ -145,4 +148,5 @@
     <string name="toast_options_mode">This mode is not supported for the selected image package</string>
     <string name="export_images">Export Images</string>
     <string name="toast_export">Images have been exported to Device File Explorer in data\\data\\cmpt276.project\\app_FILE_FLICKR_DRAWABLE</string>
+    <string name="launch_gallery">LAUNCH GALLERY</string>
 </resources>
