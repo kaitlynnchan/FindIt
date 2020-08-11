@@ -1,4 +1,4 @@
-package cmpt276.project.ui.flicker;
+package cmpt276.project.ui;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,22 +36,21 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import cmpt276.project.R;
+import cmpt276.project.ui.flickr.PhotoGalleryActivity;
+import cmpt276.project.ui.flickr.PhotoGalleryFragment;
 
 /**
- * FLICKR EDIT SCREEN
- * Allows users to remove and add images, include launch flicker button
+ * FLICKR GALLERY SCREEN
+ * Allows users to remove and add images, include launch flickr and gallery buttons
  */
-public class FlickrEditActivity extends AppCompatActivity {
+public class FlickrGalleryActivity extends AppCompatActivity {
 
     private int numImages;
     private int counter;
 
-    private Button launchFlickrButton;
-    private Button launchGalleryButton;
-
     private ImageView[] imageList;
 
-    private LinearLayout ownFlickrLinearLayout;
+    private LinearLayout ownLinearLayout;
 
     private RelativeLayout loadingPanel;
 
@@ -61,7 +60,7 @@ public class FlickrEditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_flickr_edit);
+        setContentView(R.layout.activity_flickr_gallery);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         numImages = 0;
@@ -70,37 +69,14 @@ public class FlickrEditActivity extends AppCompatActivity {
         onActivityResultNumImages = 0;
         onActivityResultCounter = 0;
 
-        ownFlickrLinearLayout = findViewById(R.id.ownFlickrLinearLayout);
+        ownLinearLayout = findViewById(R.id.ownLinearLayout);
 
         loadingPanel = findViewById(R.id.loadingPanel);
         loadingPanel.setVisibility(View.INVISIBLE);
 
-        setupFlickrImageTable();
+        setupImageTable();
 
-        launchFlickrButton = findViewById(R.id.launchFlickrButton);
-        launchFlickrButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = PhotoGalleryActivity.makeIntent(FlickrEditActivity.this);
-                startActivityForResult(intent, 1);
-            }
-        });
-
-        // https://stackoverflow.com/questions/19585815/select-multiple-images-from-android-gallery
-        // https://stackoverflow.com/questions/38352148/get-image-from-the-gallery-and-show-in-imageview
-        launchGalleryButton = findViewById(R.id.launchGalleryButton);
-        launchGalleryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"), 2);
-            }
-        });
-
-        setupBackButton();
+        setupButtons();
     }
 
     // Calculates the number of rows and columns required for displaying the images, the number of images in the directory, and returns
@@ -118,11 +94,11 @@ public class FlickrEditActivity extends AppCompatActivity {
         return directoryListing;
     }
 
-    // Displays the flickr image set
+    // Displays the image set
     // Got help and code from: https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
     // and https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
     // and Brian's youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
-    private void setupFlickrImageTable() {
+    private void setupImageTable() {
 
         final File[] directoryListing = getNumImagesAndDirectory();
 
@@ -136,7 +112,7 @@ public class FlickrEditActivity extends AppCompatActivity {
                     TableLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             ));
-            ownFlickrLinearLayout.addView(tableRow);
+            ownLinearLayout.addView(tableRow);
 
             for (int j = 0; j < 4; j++) {
                 final int index = counter;
@@ -209,7 +185,7 @@ public class FlickrEditActivity extends AppCompatActivity {
 
                 // If the user selects multiple images by tapping and holding, or one image by tapping and holding
             else if(data.getClipData() != null) {
-                ownFlickrLinearLayout.setVisibility(View.INVISIBLE);
+                ownLinearLayout.setVisibility(View.INVISIBLE);
                 loadingPanel.setVisibility(View.VISIBLE);
                 int count = data.getClipData().getItemCount(); //evaluate the count before the for loop --- otherwise, the count is evaluated every loop.
                 onActivityResultNumImages = count;
@@ -245,7 +221,7 @@ public class FlickrEditActivity extends AppCompatActivity {
 
             // If the user selects one image by tapping
             else if (data != null) {
-                ownFlickrLinearLayout.setVisibility(View.INVISIBLE);
+                ownLinearLayout.setVisibility(View.INVISIBLE);
                 loadingPanel.setVisibility(View.VISIBLE);
                 onActivityResultNumImages = 1;
                 final Uri uri = data.getData();
@@ -299,7 +275,7 @@ public class FlickrEditActivity extends AppCompatActivity {
             try {
                 if (bitmap == null) return null;
 
-                ContextWrapper cw = new ContextWrapper(FlickrEditActivity.this);
+                ContextWrapper cw = new ContextWrapper(FlickrGalleryActivity.this);
                 File directory = cw.getDir("flickrDrawable", Context.MODE_PRIVATE);
 
                 File mypath = new File(directory, name);
@@ -334,7 +310,30 @@ public class FlickrEditActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void setupBackButton() {
+    private void setupButtons() {
+        Button launchFlickrButton = findViewById(R.id.launchFlickrButton);
+        launchFlickrButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = PhotoGalleryActivity.makeIntent(FlickrGalleryActivity.this);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        // https://stackoverflow.com/questions/19585815/select-multiple-images-from-android-gallery
+        // https://stackoverflow.com/questions/38352148/get-image-from-the-gallery-and-show-in-imageview
+        Button launchGalleryButton = findViewById(R.id.launchGalleryButton);
+        launchGalleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,"Select Picture"), 2);
+            }
+        });
+
         Button backButton = findViewById(R.id.buttonBack);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,6 +344,6 @@ public class FlickrEditActivity extends AppCompatActivity {
     }
 
     public static Intent makeIntent(Context context){
-        return new Intent(context, FlickrEditActivity.class);
+        return new Intent(context, FlickrGalleryActivity.class);
     }
 }

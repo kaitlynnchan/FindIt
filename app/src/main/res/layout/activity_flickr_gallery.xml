@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.flicker.FlickrEditActivity"
+    tools:context=".ui.FlickrGalleryActivity"
     android:background="@drawable/garden">
 
     <Button
@@ -51,7 +51,7 @@
         app:layout_constraintVertical_bias="0.895" />
 
     <ScrollView
-        android:id="@+id/ownFlickrScrollView"
+        android:id="@+id/ownScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="64dp"
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/ownFlickrLinearLayout"
+            android:id="@+id/ownLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />

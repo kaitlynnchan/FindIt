@@ -207,9 +207,9 @@ public class GameActivity extends AppCompatActivity {
             System.out.println("not image");
             try {
                 byte[] encodeByte = Base64.decode((String) value, Base64.DEFAULT);
-                Bitmap bitmapFlickr = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+                Bitmap bitmapCustom = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 
-                setButtonImage(button, rotate, scale, bitmapFlickr);
+                setButtonImage(button, rotate, scale, bitmapCustom);
             } catch (Exception ex) {
                 System.out.println("not bitmap image");
                 String word = "" + value;
