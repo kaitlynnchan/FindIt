@@ -23,18 +23,23 @@
         \n\n<b>How to Play</b>
         \nThe objective of the game is to match all the images in the least amount of time.
         \n1 . You can change the image package, number of images on the card, number of cards, and mode in OPTIONS in main menu.
-        If you want to get your own images from flickr click the + button. To remove images, simply click on the image you would like to remove.
-        To add images click LAUNCH FLICKR and select the images you like, then you can press the back button.
+        If you want to get images from flickr or your own images click the + button.
+        To remove images, simply click on the image you would like to remove.
+        To add images click LAUNCH FLICKR or LAUNCH GALLERY and select the images you like, then you can press the back button.
         \n2 . Once you click START GAME the cards will flip, and will show a number of images.
         \n3 . Find and click the image on the draw pile which matches one on the discard pile.
         \n4 . Then the card on the draw pile is moved to the discard pile and the next card in the draw pile will flip.
         \n5 . This process is repeated until there are no more cards in the draw pile.
         \n6 . If your score is good enough you will be able to save your high score with a nickname.
         \n7 . The top 5 high scores can be viewed by clicking the trophy on the main menu.
-        \n8 . Click OK to go back to the main menu.
+        \n8 . If you would like to export the cards from the game, you can do so when the game is finished.
+        Simply click the EXPORT IMAGES button and it will give you instructions on where to find them.
+        \n9 . Click OK to go back to the main menu.
 
         \n\n<b>Citations</b>
-        \nHelp: <a href="https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/">algorithm help</a>
+        \nHelp: <a href="https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/">algorithm help</a>,
+        <a href="https://stackoverflow.com/questions/2661536/how-to-programmatically-take-a-screenshot-on-android ">screen shot</a>,
+        <a href="https://stackoverflow.com/questions/22532136/android-how-to-create-a-bitmap-from-a-string">bitmap to string</a>
         \nImages: <a href="http://www.clker.com/clipart-magnifying-glass-4.html">magnifying glass</a>,
         <a href="https://www.shutterstock.com/image-vector/apple-icon-vector-eps-10-1700911795">red apple</a>,
         <a href="https://www.dreamstime.com/fresh-cut-slice-orange-fruit-isolated-white-background-tangerine-organic-cartoon-style-vector-illustration-any-design-image172278946">orange</a>,
@@ -147,6 +152,9 @@
     <string name="toast_options">There are not enough images in this packages to support this order</string>
     <string name="toast_options_mode">This mode is not supported for the selected image package</string>
     <string name="export_images">Export Images</string>
-    <string name="toast_export">Images have been exported to Device File Explorer in data\\data\\cmpt276.project\\app_FILE_FLICKR_DRAWABLE</string>
+    <string name="toast_export">Images have been exported to Device File Explorer in data\\data\\cmpt276.project\\app_file_export_cards</string>
     <string name="launch_gallery">LAUNCH GALLERY</string>
+    <string name="difficulty_mode">Difficulty Mode:</string>
+    <string name="toast_fail">EditOwnImages failed to return from gallery</string>
+    <string name="toast_null_data">Data is null</string>
 </resources>

@@ -1,5 +1,5 @@
 
-package cmpt276.project.flickr;
+package cmpt276.project.model.flickr;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
