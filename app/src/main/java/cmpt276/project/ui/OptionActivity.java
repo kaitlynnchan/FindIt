@@ -27,8 +27,9 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 import cmpt276.project.R;
-import cmpt276.project.flickr.PhotoGalleryFragment;
+import cmpt276.project.ui.flicker.PhotoGalleryFragment;
 import cmpt276.project.model.Mode;
+import cmpt276.project.ui.flicker.FlickrEditActivity;
 
 /**
  * OPTIONS SCREEN
