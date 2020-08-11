@@ -1,4 +1,4 @@
-package cmpt276.project.ui;
+package cmpt276.project.ui.flicker;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,8 +36,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import cmpt276.project.R;
-import cmpt276.project.flickr.PhotoGalleryActivity;
-import cmpt276.project.flickr.PhotoGalleryFragment;
 
 /**
  * FLICKR EDIT SCREEN
@@ -221,7 +219,7 @@ public class FlickrEditActivity extends AppCompatActivity {
                     System.out.println("IMAGE URI: " + uri);
                     for (int j = address.length() - 1; j > 0; j--) {
                         if (address.substring(j, j + 1).equals("/")) {
-                            String name = address.substring(j + 1, address.length());
+                            String name = address.substring(j + 1);
                             System.out.println("IMAGE NAME: " + name);
 
                             try {
@@ -255,7 +253,7 @@ public class FlickrEditActivity extends AppCompatActivity {
                 System.out.println("IMAGE URI: " + uri);
                 for (int j = address.length() - 1; j > 0; j--) {
                     if (address.substring(j, j + 1).equals("/")) {
-                        String name = address.substring(j + 1, address.length());
+                        String name = address.substring(j + 1);
                         System.out.println("IMAGE NAME: " + name);
                         try {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
