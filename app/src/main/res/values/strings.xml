@@ -151,4 +151,6 @@
     <string name="toast_export">Images have been exported to Device File Explorer in data\\data\\cmpt276.project\\app_FILE_FLICKR_DRAWABLE</string>
     <string name="launch_gallery">LAUNCH GALLERY</string>
     <string name="difficulty_mode">Difficulty Mode:</string>
+    <string name="toast_fail">EditOwnImages failed to return from gallery</string>
+    <string name="toast_null_data">Data is null</string>
 </resources>

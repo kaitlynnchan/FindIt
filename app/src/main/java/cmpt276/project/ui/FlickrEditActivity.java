@@ -204,10 +204,10 @@ public class FlickrEditActivity extends AppCompatActivity {
 
         else if (requestCode == 2) {
             if(resultCode != Activity.RESULT_OK)
-                Toast.makeText(this, "EditOwnImages failed to return from gallery", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.toast_fail, Toast.LENGTH_SHORT).show();
 
             else if (data == null)
-                Toast.makeText(this, "Data is null", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.toast_null_data, Toast.LENGTH_SHORT).show();
 
                 // If the user selects multiple images by tapping and holding, or one image by tapping and holding
             else if(data.getClipData() != null) {
