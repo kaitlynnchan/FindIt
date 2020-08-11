@@ -9,8 +9,14 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.SpannableString;
@@ -34,6 +40,7 @@ import java.util.Date;
 
 import cmpt276.project.R;
 import cmpt276.project.model.CardDeck;
+import cmpt276.project.model.GameConfigs;
 
 /**
  * GAME SCREEN
@@ -69,6 +76,7 @@ public class GameActivity extends AppCompatActivity {
     // Begin the game
     private void startGame() {
         final Button startGameButton = findViewById(R.id.buttonStartGame);
+        startGameButton.setSoundEffectsEnabled(false);
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,9 +87,8 @@ public class GameActivity extends AppCompatActivity {
                 imgDiscard.setVisibility(View.VISIBLE);
                 ImageView imgCard = findViewById(R.id.imageCardBack);
                 imgCard.setVisibility(View.GONE);
-                
-                startGameButton.setVisibility(View.INVISIBLE);
 
+                startGameButton.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -100,8 +107,6 @@ public class GameActivity extends AppCompatActivity {
                     1.0f
             ));
 
-
-
             // Avoid clipping text on smaller buttons
             button.setPadding(0, 0, 0, 0);
             button.setOnClickListener(new View.OnClickListener() {
@@ -110,12 +115,12 @@ public class GameActivity extends AppCompatActivity {
                     imageClicked(cardIndex);
                 }
             });
+            button.setSoundEffectsEnabled(false);
 
             tableDraw.addView(button);
             drawPile[i] = button;
             drawPile[i].setVisibility(View.INVISIBLE);
         }
-
     }
 
     // Sets up the images for the top card in the discard pile
@@ -142,7 +147,10 @@ public class GameActivity extends AppCompatActivity {
     // Checks if the selected image matches an image on on the discard pile card.
     // Takes Screenshot of the cards in a given game.
     private void imageClicked(int index) {
+        MediaPlayer foundSound = MediaPlayer.create(this, R.raw.found);
+        MediaPlayer incorrectSound = MediaPlayer.create(this, R.raw.incorrect_sound);
         if (cardDeck.searchDiscardPile(index)) {
+            foundSound.start();
             if (cardDeck.getCardIndex() == cardDeck.getCardDeckSize() - 1) {
                 takeScreenshot(cardDeck.getCardIndex());
                 stopTimer();
@@ -151,6 +159,8 @@ public class GameActivity extends AppCompatActivity {
                 cardDeck.incrementCardIndex();
                 updateCard();
             }
+        } else{
+            incorrectSound.start();
         }
     }
 
@@ -191,7 +201,6 @@ public class GameActivity extends AppCompatActivity {
             setButton(drawObject, drawPile[i]);
             setButton(discardObject, discardPile[i]);
         }
-
     }
 
     private void setButton(Object[] object, Button button) {
@@ -248,10 +257,16 @@ public class GameActivity extends AppCompatActivity {
         timer = findViewById(R.id.chronometer);
         timer.start();
         timer.setBase(SystemClock.elapsedRealtime());
+
+        MediaPlayer startSound = MediaPlayer.create(GameActivity.this, R.raw.start_sound);
+        startSound.start();
     }
 
     private void stopTimer() {
         timer.stop();
+
+        MediaPlayer winSound = MediaPlayer.create(this, R.raw.win_sound);
+        winSound.start();
 
         // divide by 1000 to convert values from milliseconds to seconds
         int time = (int) ((SystemClock.elapsedRealtime() - timer.getBase()) / 1000.0);
