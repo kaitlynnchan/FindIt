@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -54,8 +55,6 @@ public class GameActivity extends AppCompatActivity {
     private Button[] drawPile;        // Contains the images of a card from the draw pile
     private Button[] discardPile;     // Contains the images of a card from the discard pile
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +71,6 @@ public class GameActivity extends AppCompatActivity {
         setupDiscardCard();
         startGame();
         setupBackButton();
-
     }
 
     // Begin the game
@@ -91,10 +89,8 @@ public class GameActivity extends AppCompatActivity {
                 imgCard.setVisibility(View.GONE);
 
                 startGameButton.setVisibility(View.INVISIBLE);
-
             }
         });
-
     }
 
     // Sets up the images of the cards in the draw pile
@@ -125,7 +121,6 @@ public class GameActivity extends AppCompatActivity {
             drawPile[i] = button;
             drawPile[i].setVisibility(View.INVISIBLE);
         }
-
     }
 
     // Sets up the images for the top card in the discard pile
@@ -149,18 +144,20 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    // Checks if the selected image matches an image on on the discard pile card
+    // Checks if the selected image matches an image on on the discard pile card.
+    // Takes Screenshot of the cards in a given game.
     private void imageClicked(int index) {
         MediaPlayer foundSound = MediaPlayer.create(this, R.raw.found);
         MediaPlayer incorrectSound = MediaPlayer.create(this, R.raw.incorrect_sound);
         if (cardDeck.searchDiscardPile(index)) {
             foundSound.start();
             if (cardDeck.getCardIndex() == cardDeck.getCardDeckSize() - 1) {
+                takeScreenshot(cardDeck.getCardIndex());
                 stopTimer();
             } else {
+                takeScreenshot(cardDeck.getCardIndex());
                 cardDeck.incrementCardIndex();
                 updateCard();
-                takeScreenshot(cardDeck.getCardIndex());
             }
         } else{
             incorrectSound.start();
@@ -204,7 +201,6 @@ public class GameActivity extends AppCompatActivity {
             setButton(drawObject, drawPile[i]);
             setButton(discardObject, discardPile[i]);
         }
-
     }
 
     private void setButton(Object[] object, Button button) {
@@ -301,7 +297,8 @@ public class GameActivity extends AppCompatActivity {
             ContextWrapper cw = new ContextWrapper(getBaseContext());
             File directory = cw.getDir("FILE_FLICKR_DRAWABLE", Context.MODE_PRIVATE);
 
-            File mypath = new File(directory, "screen"+imgNum+".jpg");
+            File mypath1 = new File(directory, "Draw"+imgNum+".jpeg");
+            File mypath2 = new File(directory, "Discard"+imgNum+".jpg");
 
 
 
@@ -311,13 +308,32 @@ public class GameActivity extends AppCompatActivity {
             Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
             v1.setDrawingCacheEnabled(false);
 
+            ImageView imgDiscard = findViewById(R.id.imageDiscardCard);
+            ImageView imgDraw = findViewById(R.id.imageDrawCard);
+            TextView txt = findViewById(R.id.textDiscard);
+            int height = imgDiscard.getHeight() + txt.getHeight() - 30;
+            int width = (imgDiscard.getHeight() * 3) / 4;
+            int xDiscard = (int) imgDiscard.getX() + ((imgDiscard.getWidth() - width) / 2);
+            int xDraw = (int) imgDraw.getX() + ((imgDiscard.getWidth() - width) / 2);
+            int y = (int) txt.getY() + 10;
+
+            // create the cropped version of the bitmap.
+            Bitmap resizedBitmap1 = Bitmap.createBitmap(bitmap, xDraw, y, width, height);
+            Bitmap resizedBitmap2 = Bitmap.createBitmap(bitmap, xDiscard, y, width, height);
 
 
-            FileOutputStream outputStream = new FileOutputStream(mypath);
+            FileOutputStream outputStream1 = new FileOutputStream(mypath1);
+            FileOutputStream outputStream2 = new FileOutputStream(mypath2);
+
             int quality = 100;
-            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
-            outputStream.flush();
-            outputStream.close();
+            resizedBitmap1.compress(Bitmap.CompressFormat.JPEG, quality, outputStream1);
+            resizedBitmap2.compress(Bitmap.CompressFormat.JPEG, quality, outputStream2);
+
+            outputStream1.flush();
+            outputStream1.close();
+
+            outputStream2.flush();
+            outputStream2.close();
 
         } catch (Throwable e) {
             // Several error may come out with file handling or DOM
