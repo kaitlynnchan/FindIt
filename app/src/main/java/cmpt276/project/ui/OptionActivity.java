@@ -27,9 +27,8 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 import cmpt276.project.R;
-import cmpt276.project.ui.flicker.PhotoGalleryFragment;
+import cmpt276.project.ui.flickr.PhotoGalleryFragment;
 import cmpt276.project.model.Mode;
-import cmpt276.project.ui.flicker.FlickrEditActivity;
 
 /**
  * OPTIONS SCREEN
@@ -46,7 +45,7 @@ public class OptionActivity extends AppCompatActivity {
 
     private int imgButtonFruits;
     private int imgButtonVegs;
-    private int imgButtonFlicker;
+    private int imgButtonCustom;
     private int buttonImages;
     private int buttonWordsImages;
     private static int numFlikrImages = 0;
@@ -59,13 +58,13 @@ public class OptionActivity extends AppCompatActivity {
 
         imgButtonFruits = R.id.imgButtonFruits;
         imgButtonVegs = R.id.imgButtonVegs;
-        imgButtonFlicker = R.id.imgButtonFlicker;
+        imgButtonCustom = R.id.imgButtonCustom;
         buttonImages = R.id.buttonImages;
         buttonWordsImages = R.id.buttonWordsImages;
 
         setupImageButton(imgButtonFruits);
         setupImageButton(imgButtonVegs);
-        setupImageButton(imgButtonFlicker);
+        setupImageButton(imgButtonCustom);
         setupModeButton(buttonImages);
         setupModeButton(buttonWordsImages);
 
@@ -81,14 +80,14 @@ public class OptionActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(imageId == imgButtonFlicker){
-                    Intent intent = FlickrEditActivity.makeIntent(OptionActivity.this);
+                if(imageId == imgButtonCustom){
+                    Intent intent = FlickrGalleryActivity.makeIntent(OptionActivity.this);
                     startActivity(intent);
                 }
                 saveImagePackId(imageId);
                 setupImageButton(imgButtonFruits);
                 setupImageButton(imgButtonVegs);
-                setupImageButton(imgButtonFlicker);
+                setupImageButton(imgButtonCustom);
             }
         });
 
@@ -106,7 +105,7 @@ public class OptionActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(getImagePackId(OptionActivity.this) == imgButtonFlicker && modeBtn == buttonWordsImages){
+                if(getImagePackId(OptionActivity.this) == imgButtonCustom && modeBtn == buttonWordsImages){
                     Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
                 } else{
                     saveModeId(modeBtn);
@@ -136,8 +135,8 @@ public class OptionActivity extends AppCompatActivity {
         int imageButtonID = OptionActivity.getImagePackId(context);
         Object[] packArr;
 
-        if(imageButtonID == R.id.imgButtonFlicker){
-            packArr = OptionActivity.getFlickrArr(context);
+        if(imageButtonID == R.id.imgButtonCustom){
+            packArr = OptionActivity.getCustomArr(context);
         } else if(imageButtonID == R.id.imgButtonVegs){
             packArr =  new Object[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
                     R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
@@ -161,7 +160,7 @@ public class OptionActivity extends AppCompatActivity {
                     R.drawable.raspberry, R.drawable.squash, R.drawable.starfruit, R.drawable.strawberry};
         }
 
-        if(getModeId(context) == R.id.buttonWordsImages && imageButtonID != R.id.imgButtonFlicker){
+        if(getModeId(context) == R.id.buttonWordsImages && imageButtonID != R.id.imgButtonCustom){
             for(int i = 0; i < packArr.length; i++){
                 String temp = context.getResources().getResourceEntryName((int) packArr[i]);
                 packArr[i] += "," + temp.replace("_", " ");
@@ -202,7 +201,7 @@ public class OptionActivity extends AppCompatActivity {
                 getNumImagesAndDirectory(OptionActivity.this);
                 int totalImages = getNumCardsTotal(imageNum);
 
-                if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
+                if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
                     Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
                 } else{
                     saveNumImages(imageNum);
@@ -378,9 +377,9 @@ public class OptionActivity extends AppCompatActivity {
                 getNumImagesAndDirectory(OptionActivity.this);
                 int totalImages = getNumCardsTotal(OptionActivity.getNumImages(getBaseContext()));
 
-                if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
+                if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
                     Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
-                } else if (getImagePackId(OptionActivity.this) == imgButtonFlicker && getModeId(OptionActivity.this) == buttonWordsImages){
+                } else if (getImagePackId(OptionActivity.this) == imgButtonCustom && getModeId(OptionActivity.this) == buttonWordsImages){
                     Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
                 } else{
                     finish();
@@ -394,9 +393,9 @@ public class OptionActivity extends AppCompatActivity {
         getNumImagesAndDirectory(OptionActivity.this);
         int totalImages = getNumCardsTotal(OptionActivity.getNumImages(this));
 
-        if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonFlicker){
+        if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
             Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
-        }  else if (getImagePackId(OptionActivity.this) == imgButtonFlicker && getModeId(OptionActivity.this) == buttonWordsImages){
+        }  else if (getImagePackId(OptionActivity.this) == imgButtonCustom && getModeId(OptionActivity.this) == buttonWordsImages){
             Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
         } else{
             super.onBackPressed();
@@ -415,7 +414,7 @@ public class OptionActivity extends AppCompatActivity {
 
     // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
     // Code for bitmap string conversion: https://stackoverflow.com/questions/22532136/android-how-to-create-a-bitmap-from-a-string
-    private static Object[] getFlickrArr(Context context) {
+    private static Object[] getCustomArr(Context context) {
         final File[] directoryListing = getNumImagesAndDirectory(context);
 
         Object[] objects = new Object[numFlikrImages];

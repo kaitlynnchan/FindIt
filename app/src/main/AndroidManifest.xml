@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.flicker.FlickrEditActivity"
+            android:name=".ui.FlickrGalleryActivity"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -34,7 +34,7 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.flicker.PhotoGalleryActivity"
+            android:name=".ui.flickr.PhotoGalleryActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.WelcomeActivity"

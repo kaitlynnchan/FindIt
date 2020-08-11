@@ -1,4 +1,4 @@
-package cmpt276.project.ui.flicker;
+package cmpt276.project.ui.flickr;
 
 import android.content.Context;
 import android.content.ContextWrapper;

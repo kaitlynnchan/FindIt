@@ -1,4 +1,4 @@
-package cmpt276.project.ui.flicker;
+package cmpt276.project.ui.flickr;
 
 import android.os.Bundle;
 import androidx.annotation.LayoutRes;
