@@ -1,5 +1,5 @@
 
-package cmpt276.project.flickr;
+package cmpt276.project.ui.flickr;
 /**
  * This activity calls the Photogallery fragment
  */
