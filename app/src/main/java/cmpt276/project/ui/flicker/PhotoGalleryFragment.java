@@ -1,4 +1,4 @@
-package cmpt276.project.flickr;
+package cmpt276.project.ui.flicker;
 
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -34,6 +34,11 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import cmpt276.project.R;
+import cmpt276.project.model.flickr.FlickrFetchr;
+import cmpt276.project.model.flickr.GalleryItem;
+import cmpt276.project.model.flickr.QueryPreferences;
+import cmpt276.project.model.flickr.ThumbnailDownloader;
+
 /**
  * This fragment displays the images available to the user, and downloads and saves them when a user clicks them.
  */
