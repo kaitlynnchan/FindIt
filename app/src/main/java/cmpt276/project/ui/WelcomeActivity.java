@@ -27,20 +27,22 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
 
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = MainActivity.makeIntent(WelcomeActivity.this);
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
                 startActivity(intent);
                 finish();
             }
         }, 9000);
 
         moveAnimation();
-        setupSkipBtn();
+        setupSkipButton();
     }
 
     private void moveAnimation() {
@@ -59,7 +61,7 @@ public class WelcomeActivity extends AppCompatActivity {
         authors.setY(NEGATIVE_HEIGHT);
         magnifyGlass.setY(NEGATIVE_HEIGHT);
 
-        ImageView apple = findViewById(R.id.imageApple);
+        ImageView appleRed = findViewById(R.id.imageRedApple);
         ImageView lettuce = findViewById(R.id.imageLettuce);
         ImageView carrot = findViewById(R.id.imageCarrot);
         ImageView eggplant = findViewById(R.id.imageEggplant);
@@ -83,7 +85,7 @@ public class WelcomeActivity extends AppCompatActivity {
         title.startAnimation(moveDown);
         magnifyGlass.startAnimation(moveDown);
         authors.setAnimation(moveDown);
-        apple.startAnimation(moveDown);
+        appleRed.startAnimation(moveDown);
         broccoli.startAnimation(moveDown);
         carrot.startAnimation(moveDown);
         eggplant.startAnimation(moveDown);
@@ -99,12 +101,12 @@ public class WelcomeActivity extends AppCompatActivity {
         watermelon.startAnimation(moveDown);
     }
 
-    private void setupSkipBtn() {
-        Button skip = findViewById(R.id.buttonSkip);
-        skip.setOnClickListener(new View.OnClickListener() {
+    private void setupSkipButton() {
+        Button buttonSkip = findViewById(R.id.buttonSkip);
+        buttonSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MainActivity.makeIntent(WelcomeActivity.this);
+                Intent intent = MainActivity.makeLaunchIntent(WelcomeActivity.this);
                 startActivity(intent);
                 handler.removeCallbacksAndMessages(null);
                 finish();

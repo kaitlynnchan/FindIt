@@ -50,11 +50,17 @@ public class OptionActivity extends AppCompatActivity {
     private int buttonWordsImages;
     private static int numFlikrImages = 0;
 
+    public static Intent makeLaunchIntent(Context context){
+        return new Intent(context, OptionActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
 
         imgButtonFruits = R.id.imgButtonFruits;
         imgButtonVegs = R.id.imgButtonVegs;
@@ -68,9 +74,9 @@ public class OptionActivity extends AppCompatActivity {
         setupModeButton(buttonImages);
         setupModeButton(buttonWordsImages);
 
-        imageSpinner();
-        cardSpinner();
-        modeSpinner();
+        setNumImagesSpinner();
+        setNumCardsSpinner();
+        setDifficultyModeSpinner();
 
         setupBackButton();
     }
@@ -81,10 +87,11 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(imageId == imgButtonCustom){
-                    Intent intent = CustomImagesActivity.makeIntent(OptionActivity.this);
+                    Intent intent = CustomImagesActivity.makeLaunchIntent(OptionActivity.this);
                     startActivity(intent);
                 }
                 saveImagePackId(imageId);
+
                 setupImageButton(imgButtonFruits);
                 setupImageButton(imgButtonVegs);
                 setupImageButton(imgButtonCustom);
@@ -109,6 +116,7 @@ public class OptionActivity extends AppCompatActivity {
                     Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
                 } else{
                     saveModeId(modeBtn);
+
                     setupModeButton(buttonImages);
                     setupModeButton(buttonWordsImages);
                 }
@@ -149,7 +157,7 @@ public class OptionActivity extends AppCompatActivity {
                     R.drawable.turnip, R.drawable.yam, R.drawable.yellow_bell_pepper,
                     R.drawable.zucchini};
         } else{
-            packArr = new Object[]{R.drawable.apple, R.drawable.green_apple, R.drawable.lemon,
+            packArr = new Object[]{R.drawable.red_apple, R.drawable.green_apple, R.drawable.lemon,
                     R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
                     R.drawable.watermelon, R.drawable.avocado, R.drawable.banana, R.drawable.blackberry,
                     R.drawable.blueberry, R.drawable.cherry, R.drawable.coconut,
@@ -186,8 +194,8 @@ public class OptionActivity extends AppCompatActivity {
         return sharedPreferences.getInt(EDITOR_MODE_ID, R.id.buttonImages);
     }
 
-    private void imageSpinner() {
-        Spinner spinner = findViewById(R.id.numImagesSpinner);
+    private void setNumImagesSpinner() {
+        Spinner spinner = findViewById(R.id.spinnerNumImages);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.numImagesArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -205,7 +213,7 @@ public class OptionActivity extends AppCompatActivity {
                     Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
                 } else{
                     saveNumImages(imageNum);
-                    cardSpinner();
+                    setNumCardsSpinner();
                 }
             }
 
@@ -222,8 +230,8 @@ public class OptionActivity extends AppCompatActivity {
         }
     }
 
-    private void cardSpinner() {
-        Spinner spinner = findViewById(R.id.numCardsSpinner);
+    private void setNumCardsSpinner() {
+        Spinner spinner = findViewById(R.id.spinnerNumCards);
         final String[] cardDeckSizeArray = getResources().getStringArray(R.array.cardDeckSizeArray);
         String[] textArray = setTextArray(cardDeckSizeArray);
 
@@ -306,7 +314,7 @@ public class OptionActivity extends AppCompatActivity {
         return numCardsTotal;
     }
 
-    private void modeSpinner() {
+    private void setDifficultyModeSpinner() {
         Spinner spinner = findViewById(R.id.modeSpinner);
         String[] modeArray = getResources().getStringArray(R.array.modeArray);
 
@@ -363,8 +371,8 @@ public class OptionActivity extends AppCompatActivity {
         if(getModeId(this) == buttonWordsImages && getImagePackId(this) == numFlikrImages){
             Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
         }
-        imageSpinner();
-        cardSpinner();
+        setNumImagesSpinner();
+        setNumCardsSpinner();
 
         super.onResume();
     }
@@ -435,9 +443,5 @@ public class OptionActivity extends AppCompatActivity {
             objects[i] = imageStr;
         }
         return objects;
-    }
-
-    public static Intent makeIntent(Context context){
-        return new Intent(context, OptionActivity.class);
     }
 }

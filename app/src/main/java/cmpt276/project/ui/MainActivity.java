@@ -27,7 +27,7 @@ import cmpt276.project.model.ScoresManager;
 
 /**
  * MAIN MENU
- * Includes play, options, help, and high score
+ * Includes play, options, help, and leader board
  *  buttons to navigate through the app
  */
 public class MainActivity extends AppCompatActivity {
@@ -39,11 +39,17 @@ public class MainActivity extends AppCompatActivity {
     private CardDeck cardDeck;
     private GameConfigs gameConfigs;
 
+    public static Intent makeLaunchIntent(Context context){
+        return new Intent(context, MainActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
 
         cardDeck = CardDeck.getInstance();
         gameConfigs = GameConfigs.getInstance();
@@ -52,39 +58,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        Button btnPlay = findViewById(R.id.buttonPlay);
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+        Button buttonPlay = findViewById(R.id.buttonPlay);
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = GameActivity.makeIntent(MainActivity.this);
+                Intent intent = GameActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
 
-        ImageButton btnHighScores = findViewById(R.id.buttonHighScores);
-        btnHighScores.setOnClickListener(new View.OnClickListener() {
+        ImageButton buttonLeaderBoard = findViewById(R.id.buttonLeaderBoard);
+        buttonLeaderBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = HighScoreActivity.makeIntent(
+                Intent intent = LeaderBoardActivity.makeLaunchIntent(
                         MainActivity.this, gameConfigs.getCardDeckIndex(cardDeck));
                 startActivity(intent);
             }
         });
 
-        Button btnOptions = findViewById(R.id.buttonOptions);
-        btnOptions.setOnClickListener(new View.OnClickListener() {
+        Button buttonOptions = findViewById(R.id.buttonOptions);
+        buttonOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = OptionActivity.makeIntent(MainActivity.this);
+                Intent intent = OptionActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
 
-        Button btnHelp = findViewById(R.id.buttonHelp);
-        btnHelp.setOnClickListener(new View.OnClickListener() {
+        Button buttonHelp = findViewById(R.id.buttonHelp);
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = HelpActivity.makeIntent(MainActivity.this);
+                Intent intent = HelpActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
@@ -104,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPreferences.getString(EDITOR_CARD_DECKS, null);
         Type type = new TypeToken<ArrayList<CardDeck>>() {}.getType();
-        ArrayList<CardDeck> arrCardDeckTemp = gson.fromJson(json, type);
-        if(arrCardDeckTemp != null) {
-            gameConfigs.setCardDecks(arrCardDeckTemp);
+        ArrayList<CardDeck> arrayCardDeckTemp = gson.fromJson(json, type);
+        if(arrayCardDeckTemp != null) {
+            gameConfigs.setCardDecks(arrayCardDeckTemp);
         }
 
         json = sharedPreferences.getString(EDITOR_SCORES_MANAGERS, null);
@@ -114,6 +120,34 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<ScoresManager> arrScoreManagerTemp = gson.fromJson(json, type);
         if(arrScoreManagerTemp != null) {
             gameConfigs.setScoresManagers(arrScoreManagerTemp);
+        }
+    }
+
+    private void createCardDeck() {
+        int cardDeckSize = OptionActivity.getCardDeckSize(MainActivity.this);
+        int numImages = OptionActivity.getNumImages(MainActivity.this);
+        int numCardsTotal = OptionActivity.getNumCardsTotal(numImages);
+        Object[] packArr = OptionActivity.getPackArray(MainActivity.this);
+        Mode difficultyMode = OptionActivity.getDifficultyMode(MainActivity.this);
+
+        cardDeck.setCardDeckSize(cardDeckSize);
+        cardDeck.setNumImagesOnCard(numImages);
+        cardDeck.setNumCardsTotal(numCardsTotal);
+        cardDeck.setDifficultyMode(difficultyMode);
+        cardDeck.setCardIndex();
+        cardDeck.populateCards(packArr);
+    }
+
+    private void setupSavedScores() {
+        int index = gameConfigs.getCardDeckIndex(cardDeck);
+        ScoresManager scoresManager = new ScoresManager();
+        if(index == -1){
+            scoresManager.setNumMaxScores(5);
+            LeaderBoardActivity.setDefaultScores(this, scoresManager);
+            gameConfigs.add(cardDeck, scoresManager);
+        } else{
+            scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
+            scoresManager.setScoreArray(gameConfigs.getScoreManager(index).getScoreArray());
         }
     }
 
@@ -128,37 +162,5 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(EDITOR_SCORES_MANAGERS, json);
 
         editor.apply();
-    }
-
-    private void createCardDeck() {
-        int cardDeckSize = OptionActivity.getCardDeckSize(MainActivity.this);
-        int numImages = OptionActivity.getNumImages(MainActivity.this);
-        int numCardsTotal = OptionActivity.getNumCardsTotal(numImages);
-        Object[] packArr = OptionActivity.getPackArray(MainActivity.this);
-        Mode difficultyMode = OptionActivity.getDifficultyMode(MainActivity.this);
-
-        cardDeck.setCardDeckSize(cardDeckSize);
-        cardDeck.setNumImages(numImages);
-        cardDeck.setNumCardsTotal(numCardsTotal);
-        cardDeck.setDifficultyMode(difficultyMode);
-        cardDeck.setCardIndex();
-        cardDeck.populateCards(packArr);
-    }
-
-    private void setupSavedScores() {
-        int index = gameConfigs.getCardDeckIndex(cardDeck);
-        ScoresManager scoresManager = new ScoresManager();
-        if(index == -1){
-            scoresManager.setNumMaxScores(5);
-            HighScoreActivity.setDefaultScores(this, scoresManager);
-            gameConfigs.add(cardDeck, scoresManager);
-        } else{
-            scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
-            scoresManager.setScoreArray(gameConfigs.getScoreManager(index).getScoreArray());
-        }
-    }
-
-    public static Intent makeIntent(Context context){
-        return new Intent(context, MainActivity.class);
     }
 }

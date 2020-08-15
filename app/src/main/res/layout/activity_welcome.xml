@@ -101,19 +101,19 @@
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageApple"
-        app:layout_constraintTop_toTopOf="@+id/imageApple"
+        app:layout_constraintEnd_toStartOf="@+id/imageRedApple"
+        app:layout_constraintTop_toTopOf="@+id/imageRedApple"
         app:srcCompat="@drawable/lemon"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageApple"
+        android:id="@+id/imageRedApple"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/imageOrange"
         app:layout_constraintTop_toTopOf="@+id/imageOrange"
-        app:srcCompat="@drawable/apple"
+        app:srcCompat="@drawable/red_apple"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
