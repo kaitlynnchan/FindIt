@@ -19,25 +19,27 @@ import cmpt276.project.R;
  */
 public class HelpActivity extends AppCompatActivity {
 
+    public static Intent makeLaunchIntent(Context context){
+        return new Intent(context, HelpActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
 
-        TextView txtBox = findViewById(R.id.textBox);
-        txtBox.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView textContent = findViewById(R.id.textContent);
+        textContent.setMovementMethod(LinkMovementMethod.getInstance());
 
-        Button btn = findViewById(R.id.buttonBack);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-    }
-
-    public static Intent makeIntent(Context context){
-        return new Intent(context, HelpActivity.class);
     }
 }

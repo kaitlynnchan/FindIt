@@ -8,21 +8,6 @@
     android:background="@drawable/garden">
 
     <Button
-        android:id="@+id/launchGalleryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_background"
-        android:text="@string/launch_gallery"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.771"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.895" />
-
-    <Button
         android:id="@+id/buttonBack"
         android:layout_width="40dp"
         android:layout_height="45dp"
@@ -36,9 +21,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/launchFlickrButton"
+        android:id="@+id/buttonLaunchFlickr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/button_background"
         android:text="@string/launch_flickr"
         android:textColor="#000000"
@@ -46,26 +32,38 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.255"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.895" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonLaunchGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_background"
+        android:text="@string/launch_gallery"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.771"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
-        android:id="@+id/ownScrollView"
+        android:id="@+id/scrollViewImages"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="64dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/launchGalleryButton"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLaunchGallery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/ownLinearLayout"
+            android:id="@+id/linearLayoutImages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
@@ -74,13 +72,13 @@
     <!-- https://stackoverflow.com/questions/5442183/using-the-animated-circle-in-an-imageview-while-loading-stuff -->
     <RelativeLayout
         android:id="@+id/loadingPanel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="@+id/scrollViewImages"
+        app:layout_constraintEnd_toEndOf="@+id/scrollViewImages"
+        app:layout_constraintStart_toStartOf="@+id/scrollViewImages"
+        app:layout_constraintTop_toTopOf="@+id/scrollViewImages">
 
         <ProgressBar
             android:layout_width="201dp"

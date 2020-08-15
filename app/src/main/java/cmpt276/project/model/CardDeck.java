@@ -8,12 +8,12 @@ package cmpt276.project.model;
  */
 public class CardDeck {
 
-    private int numCardsTotal;  // Total number of cards possible
-    private int cardDeckSize;   // Number of cards in deck
-    private int numImages;      // Number of images on each card
-    private int cardIndex;      // Stores the index of the card that is on the top of the draw pile
-    private Object[][] cards;   // Card array: first index indicates the card, second index indicates which images are on the card
-    private Mode difficultyMode;// Specifies the difficulty of the game
+    private int numCardsTotal;      // Total number of cards possible
+    private int cardDeckSize;       // Number of cards in deck
+    private int numImagesOnCard;    // Number of images on each card
+    private int currentCardIndex;   // Stores the index of the card that is on the top of the draw pile
+    private Object[][] cards;       // Card array: first index indicates the card, second index indicates which images are on the card
+    private Mode difficultyMode;    // Specifies the difficulty of the game
 
     private static CardDeck instance;
 
@@ -25,16 +25,12 @@ public class CardDeck {
         return instance;
     }
 
-    public int getNumCardsTotal() {
-        return numCardsTotal;
+    public int getNumImagesOnCard() {
+        return numImagesOnCard;
     }
 
-    public int getNumImages() {
-        return numImages;
-    }
-
-    public int getCardIndex() {
-        return cardIndex;
+    public int getCurrentCardIndex() {
+        return currentCardIndex;
     }
 
     public int getCardDeckSize() {
@@ -54,8 +50,8 @@ public class CardDeck {
         return split;
     }
 
-    public void setNumImages(int numImages) {
-        this.numImages = numImages;
+    public void setNumImagesOnCard(int numImagesOnCard) {
+        this.numImagesOnCard = numImagesOnCard;
     }
 
     public void setNumCardsTotal(int numCardsTotal) {
@@ -72,25 +68,25 @@ public class CardDeck {
 
     // Set cardIndex to 1, since card[0] is put into the discard pile when the game starts
     public void setCardIndex() {
-        this.cardIndex = 1;
+        this.currentCardIndex = 1;
     }
 
     public void incrementCardIndex() {
-        this.cardIndex++;
+        this.currentCardIndex++;
     }
 
     public void populateCards(Object[] packArr){
-        cards = new Object[numCardsTotal][numImages];
+        cards = new Object[numCardsTotal][numImagesOnCard];
         int row = 0;
 
         // Help taken from: https://www.ryadel.com/en/dobble-spot-it-algorithm-math-function-javascript/
         // Generate series from imageArr[0] to imageArr[numImages - 1]
-        for (int i = 0; i <= numImages - 1; i++)  {
+        for (int i = 0; i <= numImagesOnCard - 1; i++)  {
             int rand = checkRandom(0, 0);
             addValue(row, rand, 0, 0, packArr);
 
-            for (int i2 = 1; i2 <= numImages - 1; i2++) {
-                int indx = (numImages * i) - i + i2;
+            for (int i2 = 1; i2 <= numImagesOnCard - 1; i2++) {
+                int indx = (numImagesOnCard * i) - i + i2;
                 rand = checkRandom(rand, i2);
                 addValue(row, rand, i2, indx, packArr);
             }
@@ -98,15 +94,15 @@ public class CardDeck {
         }
 
         // Generate series from imageArr[numImages] to imageArr[numImages * (numImages - 1)]
-        for (int i = 1; i <= numImages-1; i++) {
-            for (int i2 = 1; i2 <= numImages - 1; i2++) {
+        for (int i = 1; i <= numImagesOnCard -1; i++) {
+            for (int i2 = 1; i2 <= numImagesOnCard - 1; i2++) {
                 int rand = checkRandom(0, 0);
                 addValue(row, rand, 0, i, packArr);
 
-                for (int i3 = 1; i3 <= numImages - 1; i3++) {
-                    int indx = numImages + (numImages - 1) * (i3 - 1)
+                for (int i3 = 1; i3 <= numImagesOnCard - 1; i3++) {
+                    int indx = numImagesOnCard + (numImagesOnCard - 1) * (i3 - 1)
                             + ( (i - 1) * (i3 - 1) + (i2 - 1) )
-                            % (numImages - 1);
+                            % (numImagesOnCard - 1);
                     rand = checkRandom(rand, i3);
                     addValue(row, rand, i3, indx, packArr);
                 }
@@ -142,7 +138,7 @@ public class CardDeck {
     }
 
     private int checkRandom(int rand, int col) {
-        if (col == numImages - 1) {
+        if (col == numImagesOnCard - 1) {
             if (rand == 0) {
                 rand = 1;
             } else {
@@ -161,8 +157,8 @@ public class CardDeck {
             cards[i] = cards[rand];
             cards[rand] = tempCard;
 
-            for (int j = 0; j < numImages; j++) {
-                rand = (int) ((Math.random() * (numImages - j)) + j);
+            for (int j = 0; j < numImagesOnCard; j++) {
+                rand = (int) ((Math.random() * (numImagesOnCard - j)) + j);
                 Object tempImage = cards[i][j];
                 cards[i][j] = cards[i][rand];
                 cards[i][rand] = tempImage;
@@ -174,14 +170,14 @@ public class CardDeck {
     // cardIndex - 1 refers to the card on top of the discard pile since the card in the discard pile is always one index behind the card in the draw pile
     // cardIndex refers to the index of the card on the top of the draw pile
     public boolean searchDiscardPile(int imageIndex) {
-        for(int i = 0; i < numImages; i++){
+        for(int i = 0; i < numImagesOnCard; i++){
 
             Object drawValue;
-            String[] split = ((String) cards[cardIndex][imageIndex]).split(",");
+            String[] split = ((String) cards[currentCardIndex][imageIndex]).split(",");
             drawValue = split[0];
 
             Object discardValue;
-            split = ((String) cards[cardIndex - 1][i]).split(",");
+            split = ((String) cards[currentCardIndex - 1][i]).split(",");
             discardValue = split[0];
 
             if(drawValue.equals(discardValue)){

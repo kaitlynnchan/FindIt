@@ -43,22 +43,28 @@ public class GameActivity extends AppCompatActivity {
 
     private Chronometer timer;
     private CardDeck cardDeck;
-    private int numImages;
+    private int numImagesOnCard;
 
     private Button[] drawPile;        // Contains the images of a card from the draw pile
     private Button[] discardPile;     // Contains the images of a card from the discard pile
+
+    public static Intent makeLaunchIntent(Context context){
+        return new Intent(context, GameActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
 
         cardDeck = CardDeck.getInstance();
-        numImages = cardDeck.getNumImages();
+        numImagesOnCard = cardDeck.getNumImagesOnCard();
 
-        drawPile = new Button[numImages];
-        discardPile = new Button[numImages];
+        drawPile = new Button[numImagesOnCard];
+        discardPile = new Button[numImagesOnCard];
 
         setupDrawCard();
         setupDiscardCard();
@@ -66,32 +72,12 @@ public class GameActivity extends AppCompatActivity {
         setupBackButton();
     }
 
-    // Begin the game
-    private void startGame() {
-        final Button startGameButton = findViewById(R.id.buttonStartGame);
-        startGameButton.setSoundEffectsEnabled(false);
-        startGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startTimer();
-                updateCard();
-
-                ImageView imgDiscard = findViewById(R.id.imageDiscardCard);
-                imgDiscard.setVisibility(View.VISIBLE);
-                ImageView imgCard = findViewById(R.id.imageCardBack);
-                imgCard.setVisibility(View.GONE);
-
-                startGameButton.setVisibility(View.INVISIBLE);
-            }
-        });
-    }
-
     // Sets up the images of the cards in the draw pile
     // The three buttons correspond to the three images on each card
     // Help taken from Brian: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupDrawCard() {
         TableLayout tableDraw = findViewById(R.id.tableLayoutDraw);
-        for(int i = 0; i < numImages; i++){
+        for(int i = 0; i < numImagesOnCard; i++){
             final int cardIndex = i;
             Button button = new Button(this);
             button.setLayoutParams(new TableLayout.LayoutParams(
@@ -121,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
     // Help taken from Brian: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupDiscardCard() {
         TableLayout tableDiscard = findViewById(R.id.tableLayoutDiscard);
-        for(int i = 0; i < numImages; i++){
+        for(int i = 0; i < numImagesOnCard; i++){
             Button button = new Button(this);
             button.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
@@ -140,88 +126,80 @@ public class GameActivity extends AppCompatActivity {
     // Checks if the selected image matches an image on on the discard pile card.
     // Takes Screenshot of the cards in a given game.
     private void imageClicked(int index) {
-        MediaPlayer foundSound = MediaPlayer.create(this, R.raw.found);
-        MediaPlayer incorrectSound = MediaPlayer.create(this, R.raw.incorrect_sound);
+        MediaPlayer soundFound = MediaPlayer.create(this, R.raw.found);
+        MediaPlayer soundIncorrect = MediaPlayer.create(this, R.raw.incorrect_sound);
         if (cardDeck.searchDiscardPile(index)) {
-            foundSound.start();
-            if (cardDeck.getCardIndex() == cardDeck.getCardDeckSize() - 1) {
-                takeScreenshot(cardDeck.getCardIndex());
+            soundFound.start();
+            if (cardDeck.getCurrentCardIndex() == cardDeck.getCardDeckSize() - 1) {
+                takeScreenshot(cardDeck.getCurrentCardIndex());
                 stopTimer();
             } else {
-                takeScreenshot(cardDeck.getCardIndex());
+                takeScreenshot(cardDeck.getCurrentCardIndex());
                 cardDeck.incrementCardIndex();
                 updateCard();
             }
         } else{
-            incorrectSound.start();
-        }
-    }
-
-    // Locks the button sizes
-    // Taken from Brians youtube videos: https://www.youtube.com/watch?v=4MFzuP1F-xQ
-    private void lockButtonSizes() {
-        for (int i = 0; i < 3; i++) {
-            Button drawButton = drawPile[i];
-            Button discardButton = discardPile[i];
-
-            int drawHeight = drawButton.getHeight();
-            drawButton.setMinHeight(drawHeight);
-            drawButton.setMaxHeight(drawHeight);
-
-            int drawWidth = drawButton.getWidth();
-            drawButton.setMinWidth(drawWidth);
-            drawButton.setMaxWidth(drawWidth);
-
-            int discardHeight = discardButton.getHeight();
-            drawButton.setMinHeight(discardHeight);
-            drawButton.setMaxHeight(discardHeight);
-
-            int discardWidth = discardButton.getWidth();
-            drawButton.setMinWidth(discardWidth);
-            drawButton.setMaxWidth(discardWidth);
+            soundIncorrect.start();
         }
     }
 
     // Change the button icons to the appropriate pictures
     // Used code from Brians youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void updateCard() {
-        for (int i = 0; i < numImages; i++) {
-            Object[] drawObject = cardDeck.getCardObject(cardDeck.getCardIndex(), i);
-            Object[] discardObject = cardDeck.getCardObject(cardDeck.getCardIndex() - 1, i);
+        for (int i = 0; i < numImagesOnCard; i++) {
+            Object[] objectDraw = cardDeck.getCardObject(cardDeck.getCurrentCardIndex(), i);
+            Object[] objectDiscard = cardDeck.getCardObject(cardDeck.getCurrentCardIndex() - 1, i);
 
-            lockButtonSizes();
+            lockButtonSizes(drawPile);
+            lockButtonSizes(discardPile);
 
-            setButton(drawObject, drawPile[i]);
-            setButton(discardObject, discardPile[i]);
+            setButton(objectDraw, drawPile[i]);
+            setButton(objectDiscard, discardPile[i]);
+        }
+    }
+
+    // Locks the button sizes
+    // Taken from Brians youtube videos: https://www.youtube.com/watch?v=4MFzuP1F-xQ
+    private void lockButtonSizes(Button[] pile) {
+        for (int i = 0; i < numImagesOnCard; i++) {
+            Button button = pile[i];
+
+            int height = button.getHeight();
+            button.setMinHeight(height);
+            button.setMaxHeight(height);
+
+            int width = button.getWidth();
+            button.setMinWidth(width);
+            button.setMaxWidth(width);
         }
     }
 
     private void setButton(Object[] object, Button button) {
         Object value = object[0];
-        int rotate = Integer.parseInt((String) object[1]);
+        int rotation = Integer.parseInt((String) object[1]);
         int scale = Integer.parseInt((String) object[2]);
         try {
             int image = Integer.parseInt((String) value);
             Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), image);
 
-            setButtonImage(button, rotate, scale, originalBitmap);
+            setButtonImage(button, rotation, scale, originalBitmap);
         } catch (NumberFormatException e) {
             System.out.println("not image");
             try {
                 byte[] encodeByte = Base64.decode((String) value, Base64.DEFAULT);
                 Bitmap bitmapCustom = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 
-                setButtonImage(button, rotate, scale, bitmapCustom);
+                setButtonImage(button, rotation, scale, bitmapCustom);
             } catch (Exception ex) {
                 System.out.println("not bitmap image");
                 String word = "" + value;
-                SpannableString spannableStr = new SpannableString(word);
-                spannableStr.setSpan(new RelativeSizeSpan(
+                SpannableString strSpannable = new SpannableString(word);
+                strSpannable.setSpan(new RelativeSizeSpan(
                         2f / (float) scale), 0, word.length(), Spanned.SPAN_COMPOSING);
 
                 button.setAllCaps(false);
-                button.setText(spannableStr);
-                button.setRotation(rotate);
+                button.setText(strSpannable);
+                button.setRotation(rotation);
                 button.setBackground(null);
             }
         }
@@ -247,31 +225,50 @@ public class GameActivity extends AppCompatActivity {
         button.setText(null);
     }
 
+    private void startGame() {
+        final Button buttonStartGame = findViewById(R.id.buttonStartGame);
+        buttonStartGame.setSoundEffectsEnabled(false);
+        buttonStartGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startTimer();
+                updateCard();
+
+                ImageView imgDiscard = findViewById(R.id.imageDiscardCard);
+                imgDiscard.setVisibility(View.VISIBLE);
+                ImageView imgCard = findViewById(R.id.imageCardBack);
+                imgCard.setVisibility(View.GONE);
+
+                buttonStartGame.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
     private void startTimer() {
         timer = findViewById(R.id.chronometer);
         timer.start();
         timer.setBase(SystemClock.elapsedRealtime());
 
-        MediaPlayer startSound = MediaPlayer.create(GameActivity.this, R.raw.start_sound);
-        startSound.start();
+        MediaPlayer soundStart = MediaPlayer.create(GameActivity.this, R.raw.start_sound);
+        soundStart.start();
     }
 
     private void stopTimer() {
         timer.stop();
 
-        MediaPlayer winSound = MediaPlayer.create(this, R.raw.win_sound);
-        winSound.start();
+        MediaPlayer soundWin = MediaPlayer.create(this, R.raw.win_sound);
+        soundWin.start();
 
         // divide by 1000 to convert values from milliseconds to seconds
-        int time = (int) ((SystemClock.elapsedRealtime() - timer.getBase()) / 1000.0);
+        int timeInSeconds = (int) ((SystemClock.elapsedRealtime() - timer.getBase()) / 1000.0);
         FragmentManager manager = getSupportFragmentManager();
-        WinFragment dialog = new WinFragment(time);
+        WinFragment dialog = new WinFragment(timeInSeconds);
         dialog.show(manager, "");
     }
 
     private void setupBackButton() {
-        Button backButton = findViewById(R.id.buttonBack);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        Button buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -282,8 +279,8 @@ public class GameActivity extends AppCompatActivity {
     // Take Screen Shot of the card.
     // Citation: https://stackoverflow.com/questions/2661536/how-to-programmatically-take-a-screenshot-on-android .
     private void takeScreenshot(int imgNum) {
-        Date now = new Date();
-        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+        Date date = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", date);
 
         try {
             // image naming and path, appending name you choose for file.
@@ -294,10 +291,10 @@ public class GameActivity extends AppCompatActivity {
             File mypathDiscard = new File(directory, "Discard"+imgNum+".jpg");
 
             // create bitmap screen capture
-            View v1 = getWindow().getDecorView().getRootView();
-            v1.setDrawingCacheEnabled(true);
-            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-            v1.setDrawingCacheEnabled(false);
+            View view = getWindow().getDecorView().getRootView();
+            view.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+            view.setDrawingCacheEnabled(false);
 
             ImageView imgDiscard = findViewById(R.id.imageDiscardCard);
             ImageView imgDraw = findViewById(R.id.imageDrawCard);
@@ -329,9 +326,5 @@ public class GameActivity extends AppCompatActivity {
             // Several error may come out with file handling or DOM
             e.printStackTrace();
         }
-    }
-
-    public static Intent makeIntent(Context context){
-        return new Intent(context, GameActivity.class);
     }
 }

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/high_score_background"
-    tools:context="cmpt276.project.ui.HighScoreActivity">
+    android:background="@drawable/leader_board_background"
+    tools:context="cmpt276.project.ui.LeaderBoardActivity">
 
     <Button
         android:id="@+id/buttonBack"
@@ -34,16 +34,16 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/textHighScoreTitle"
+        android:id="@+id/textLeaderBoardTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/high_score_recording_text"
+        android:text="@string/leader_board_title"
         android:textColor="#000000"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.201"
+        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,47 +51,46 @@
         android:id="@+id/linearLayoutScores"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="125dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="125dp"
+        android:layout_marginEnd="64dp"
         android:layout_marginBottom="24dp"
-        android:background="#9AFFFFFF"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textHighScoreTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/textLeaderBoardTitle" />
 
     <TextView
-        android:id="@+id/textImageNum2"
+        android:id="@+id/textNumImages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/num_of_images"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textHighScoreTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/textLeaderBoardTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textHighScoreTitle" />
+        app:layout_constraintTop_toTopOf="@+id/textLeaderBoardTitle" />
 
     <TextView
-        android:id="@+id/textBoardSize2"
+        android:id="@+id/textNumCards"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/num_of_cards"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imagesSpinnerHighScore"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerNumImagesScores"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.727"
+        app:layout_constraintHorizontal_bias="0.77"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imagesSpinnerHighScore" />
+        app:layout_constraintTop_toTopOf="@+id/spinnerNumImagesScores" />
 
     <Spinner
-        android:id="@+id/imagesSpinnerHighScore"
+        android:id="@+id/spinnerNumImagesScores"
         android:layout_width="60dp"
         android:layout_height="46dp"
 
@@ -100,12 +99,12 @@
         android:foreground="@drawable/ic_arrow_down_24"
         android:foregroundGravity="center_vertical|right"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="@+id/textImageNum2"
-        app:layout_constraintStart_toEndOf="@+id/textImageNum2"
-        app:layout_constraintTop_toTopOf="@+id/textImageNum2" />
+        app:layout_constraintBottom_toBottomOf="@+id/textNumImages"
+        app:layout_constraintStart_toEndOf="@+id/textNumImages"
+        app:layout_constraintTop_toTopOf="@+id/textNumImages" />
 
     <Spinner
-        android:id="@+id/cardsSpinnerHighScore"
+        android:id="@+id/spinnerNumCardsScores"
         android:layout_width="60dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
@@ -113,8 +112,8 @@
         android:foreground="@drawable/ic_arrow_down_24"
         android:foregroundGravity="center_vertical|right"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="@+id/textBoardSize2"
-        app:layout_constraintStart_toEndOf="@+id/textBoardSize2"
-        app:layout_constraintTop_toTopOf="@+id/textBoardSize2" />
+        app:layout_constraintBottom_toBottomOf="@+id/textNumCards"
+        app:layout_constraintStart_toEndOf="@+id/textNumCards"
+        app:layout_constraintTop_toTopOf="@+id/textNumCards" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

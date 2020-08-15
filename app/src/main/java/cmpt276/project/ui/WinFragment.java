@@ -67,8 +67,8 @@ public class WinFragment extends AppCompatDialogFragment {
     }
 
     private void setupButton() {
-        Button btnOk = view.findViewById(R.id.buttonOK);
-        btnOk.setOnClickListener(new View.OnClickListener() {
+        Button buttonOk = view.findViewById(R.id.buttonOK);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText userNameEntry = view.findViewById(R.id.editTextNickname);
@@ -91,8 +91,8 @@ public class WinFragment extends AppCompatDialogFragment {
             }
         });
 
-        Button export = view.findViewById(R.id.buttonExport);
-        export.setOnClickListener(new View.OnClickListener() {
+        Button buttonExport = view.findViewById(R.id.buttonExport);
+        buttonExport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), R.string.toast_export, Toast.LENGTH_LONG).show();

@@ -45,23 +45,31 @@ import cmpt276.project.ui.flickr.PhotoGalleryFragment;
  */
 public class CustomImagesActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_FLICKR = 1;
+    public static final int REQUEST_CODE_GALLERY = 2;
     private int numImages;
     private int counter;
 
     private ImageView[] imageList;
 
-    private LinearLayout ownLinearLayout;
+    private LinearLayout linearImages;
 
     private RelativeLayout loadingPanel;
 
     private int onActivityResultNumImages;
     private int onActivityResultCounter;
 
+    public static Intent makeLaunchIntent(Context context){
+        return new Intent(context, CustomImagesActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_images);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
 
         numImages = 0;
         counter = 0;
@@ -69,29 +77,13 @@ public class CustomImagesActivity extends AppCompatActivity {
         onActivityResultNumImages = 0;
         onActivityResultCounter = 0;
 
-        ownLinearLayout = findViewById(R.id.ownLinearLayout);
+        linearImages = findViewById(R.id.linearLayoutImages);
 
         loadingPanel = findViewById(R.id.loadingPanel);
         loadingPanel.setVisibility(View.INVISIBLE);
 
         setupImageTable();
-
         setupButtons();
-    }
-
-    // Calculates the number of rows and columns required for displaying the images, the number of images in the directory, and returns
-    // an array that contains the files in the directory
-    // Got help and code from: https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
-    // and: https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
-    private File[] getNumImagesAndDirectory() {
-        ContextWrapper cw = new ContextWrapper(this);
-        File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
-        File dir = new File(directory.toString());
-        File[] directoryListing = dir.listFiles();
-        assert directoryListing != null;
-        numImages = directoryListing.length;
-
-        return directoryListing;
     }
 
     // Displays the image set
@@ -112,7 +104,7 @@ public class CustomImagesActivity extends AppCompatActivity {
                     TableLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             ));
-            ownLinearLayout.addView(tableRow);
+            linearImages.addView(tableRow);
 
             for (int j = 0; j < 4; j++) {
                 final int index = counter;
@@ -156,6 +148,21 @@ public class CustomImagesActivity extends AppCompatActivity {
         }
     }
 
+    // Calculates the number of rows and columns required for displaying the images, the number of images in the directory, and returns
+    // an array that contains the files in the directory
+    // Got help and code from: https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
+    // and: https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
+    private File[] getNumImagesAndDirectory() {
+        ContextWrapper cw = new ContextWrapper(this);
+        File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
+        File dir = new File(directory.toString());
+        File[] directoryListing = dir.listFiles();
+        assert directoryListing != null;
+        numImages = directoryListing.length;
+
+        return directoryListing;
+    }
+
     // Got help and code from: https://stackoverflow.com/questions/2486934/programmatically-relaunch-recreate-an-activity
     // Deletes an image file, and reloads the activity
     private void deleteImageFile(File[] directoryListing, int index) {
@@ -174,80 +181,68 @@ public class CustomImagesActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1) restartActivity();
+        switch (requestCode){
+            case REQUEST_CODE_FLICKR:
+                restartActivity();
+                break;
+            case REQUEST_CODE_GALLERY:
+                if(resultCode != Activity.RESULT_OK){
+                    Toast.makeText(this, R.string.toast_fail, Toast.LENGTH_SHORT).show();
+                } else if (data == null){
+                    Toast.makeText(this, R.string.toast_null_data, Toast.LENGTH_SHORT).show();
+                } else if(data.getClipData() != null) {
+                    // If the user selects multiple images by tapping and holding, or one image by
+                    // tapping and holding, loading bar will show since of delay
+                    linearImages.setVisibility(View.INVISIBLE);
+                    loadingPanel.setVisibility(View.VISIBLE);
 
-        else if (requestCode == 2) {
-            if(resultCode != Activity.RESULT_OK)
-                Toast.makeText(this, R.string.toast_fail, Toast.LENGTH_SHORT).show();
-
-            else if (data == null)
-                Toast.makeText(this, R.string.toast_null_data, Toast.LENGTH_SHORT).show();
-
-                // If the user selects multiple images by tapping and holding, or one image by tapping and holding
-            else if(data.getClipData() != null) {
-                ownLinearLayout.setVisibility(View.INVISIBLE);
-                loadingPanel.setVisibility(View.VISIBLE);
-                int count = data.getClipData().getItemCount(); //evaluate the count before the for loop --- otherwise, the count is evaluated every loop.
-                onActivityResultNumImages = count;
-                for(int i = 0; i < count; i++) {
-                    final Uri uri = data.getClipData().getItemAt(i).getUri();
-                    final String address = uri.toString();
-                    System.out.println("IMAGE URI: " + uri);
-                    for (int j = address.length() - 1; j > 0; j--) {
-                        if (address.substring(j, j + 1).equals("/")) {
-                            String name = address.substring(j + 1);
-                            System.out.println("IMAGE NAME: " + name);
-
-                            try {
-                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                                // https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
-                                sdf.setTimeZone(TimeZone.getTimeZone("PDT"));
-                                String temp = sdf.format(new Date());
-                                name += temp;
-                                name += ".png";
-
-                                new DownloadFile(bitmap, name).execute();
-                            } catch (IOException e) {
-                                System.out.println("useBitmap function failed");
-                                e.printStackTrace();
-                            }
-
-                            break;
-                        }
+                    // evaluate the count before the for loop --- otherwise, the count is evaluated every loop.
+                    int count = data.getClipData().getItemCount();
+                    onActivityResultNumImages = count;
+                    for(int i = 0; i < count; i++) {
+                        Uri uri = data.getClipData().getItemAt(i).getUri();
+                        saveImageBitmap(uri);
+                    }
+                } else if (data != null) {
+                    // If the user selects one image by tapping
+                    linearImages.setVisibility(View.INVISIBLE);
+                    loadingPanel.setVisibility(View.VISIBLE);
+                    onActivityResultNumImages = 1;
+                    Uri uri = data.getData();
+                    if(uri != null){
+                        saveImageBitmap(uri);
                     }
                 }
-            }
+                break;
+            default:
+                assert false;
+        }
+    }
 
-            // If the user selects one image by tapping
-            else if (data != null) {
-                ownLinearLayout.setVisibility(View.INVISIBLE);
-                loadingPanel.setVisibility(View.VISIBLE);
-                onActivityResultNumImages = 1;
-                final Uri uri = data.getData();
-                final String address = uri.toString();
-                System.out.println("IMAGE URI: " + uri);
-                for (int j = address.length() - 1; j > 0; j--) {
-                    if (address.substring(j, j + 1).equals("/")) {
-                        String name = address.substring(j + 1);
-                        System.out.println("IMAGE NAME: " + name);
-                        try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                            // https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
-                            sdf.setTimeZone(TimeZone.getTimeZone("PDT"));
-                            String temp = sdf.format(new Date());
-                            name += temp;
-                            name += ".png";
+    private void saveImageBitmap(Uri uri) {
+        final String address = uri.toString();
+        System.out.println("IMAGE URI: " + uri);
+        for (int i = address.length() - 1; i > 0; i--) {
+            if (address.substring(i, i + 1).equals("/")) {
+                String name = address.substring(i + 1);
+                System.out.println("IMAGE NAME: " + name);
 
-                            new DownloadFile(bitmap, name).execute();
-                        } catch (IOException e) {
-                            System.out.println("useBitmap function failed");
-                            e.printStackTrace();
-                        }
-                        break;
-                    }
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    // https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
+                    sdf.setTimeZone(TimeZone.getTimeZone("PDT"));
+                    String temp = sdf.format(new Date());
+                    name += temp;
+                    name += ".png";
+
+                    new DownloadFile(bitmap, name).execute();
+                } catch (IOException e) {
+                    System.out.println("useBitmap function failed");
+                    e.printStackTrace();
                 }
+
+                break;
             }
         }
     }
@@ -300,7 +295,9 @@ public class CustomImagesActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Bitmap result) {
             System.out.println("SUCCESSFULLY SAVED");
-            if (onActivityResultCounter >= onActivityResultNumImages) restartActivity();
+            if (onActivityResultCounter >= onActivityResultNumImages){
+                restartActivity();
+            }
         }
     }
 
@@ -311,39 +308,35 @@ public class CustomImagesActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        Button launchFlickrButton = findViewById(R.id.launchFlickrButton);
-        launchFlickrButton.setOnClickListener(new View.OnClickListener() {
+        Button buttonLaunchFlickr = findViewById(R.id.buttonLaunchFlickr);
+        buttonLaunchFlickr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = PhotoGalleryActivity.makeIntent(CustomImagesActivity.this);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, REQUEST_CODE_FLICKR);
             }
         });
 
         // https://stackoverflow.com/questions/19585815/select-multiple-images-from-android-gallery
         // https://stackoverflow.com/questions/38352148/get-image-from-the-gallery-and-show-in-imageview
-        Button launchGalleryButton = findViewById(R.id.launchGalleryButton);
-        launchGalleryButton.setOnClickListener(new View.OnClickListener() {
+        Button buttonLaunchGallery = findViewById(R.id.buttonLaunchGallery);
+        buttonLaunchGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"), 2);
+                startActivityForResult(Intent.createChooser(intent,"Select Picture"), REQUEST_CODE_GALLERY);
             }
         });
 
-        Button backButton = findViewById(R.id.buttonBack);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        Button buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-    }
-
-    public static Intent makeIntent(Context context){
-        return new Intent(context, CustomImagesActivity.class);
     }
 }

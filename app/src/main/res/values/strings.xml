@@ -7,19 +7,17 @@
     <string name="options">OPTIONS</string>
     <string name="help">HELP</string>
     <string name="imageView">TODO</string>
-    <string name="optionHeading">Choose \nWisely!!!!</string>
+    <string name="option_heading">Choose \nWisely!!!!</string>
     <string name="back">BACK</string>
-    <string name="resetString">Reset High Score</string>
     <string name="authors">By Kaitlynn, Lakshay, Sami, and Yangyang</string>
     <string name="skip">SKIP</string>
     <string name="score">Score:</string>
-    <string name="high_score">High Score:\u0020</string>
     <string name="draw_pile">Draw Pile</string>
     <string name="discard_pile">Discard Pile</string>
     <string name="start_game">START GAME</string>
     <string name="you_win">You Win!</string>
-    <string name="helpTitle">HELP</string>
-    <string name="helpContent">Link: <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">SFU HOME</a>
+    <string name="help_title">HELP</string>
+    <string name="help_content">Link: <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">SFU HOME</a>
         \n\n<b>How to Play</b>
         \nThe objective of the game is to match all the images in the least amount of time.
         \n1 . You can change the image package, number of images on the card, number of cards, and mode in OPTIONS in main menu.
@@ -116,8 +114,7 @@
     <string name="month_day_year">Month day, year</string>
     <string name="enter_played_date">Enter played date:</string>
     <string name="reset">Reset</string>
-    <string name="high_score_recording" />
-    <string name="high_score_recording_text">High Scores</string>
+    <string name="leader_board_title">Leader Board</string>
     <string name="nickname">Nickname</string>
     <string name="no_answer">N/A</string>
     <string name="new_high_score">New High Score</string>
@@ -140,20 +137,19 @@
         <item>Normal</item>
         <item>Hard</item>
     </string-array>
-    <string name="words_and_images">words and images</string>
+    <string name="mode_words_and_images">words and images</string>
     <string name="mode_images">IMAGES</string>
     <string name="mode">Mode:</string>
     <string name="date_format">Month DD, YYYY</string>
-
     <string name="search">Search</string>
     <string name="clear_search">Clear Search</string>
-    <string name="launch_flickr">LAUNCH FLICKR</string>
+    <string name="launch_flickr">FLICKR</string>
     <string name="toast_flickr_activity">You must select a minimum of 7 images</string>
     <string name="toast_options">There are not enough images in this packages to support this order</string>
     <string name="toast_options_mode">This mode is not supported for the selected image package</string>
     <string name="export_images">Export Images</string>
     <string name="toast_export">Images have been exported to Device File Explorer in data\\data\\cmpt276.project\\app_file_export_cards</string>
-    <string name="launch_gallery">LAUNCH GALLERY</string>
+    <string name="launch_gallery">GALLERY</string>
     <string name="difficulty_mode">Difficulty Mode:</string>
     <string name="toast_fail">EditOwnImages failed to return from gallery</string>
     <string name="toast_null_data">Data is null</string>
