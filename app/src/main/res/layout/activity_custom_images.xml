@@ -71,14 +71,15 @@
 
     <!-- https://stackoverflow.com/questions/5442183/using-the-animated-circle-in-an-imageview-while-loading-stuff -->
     <RelativeLayout
-        android:id="@+id/loadingPanel"
+        android:id="@+id/layoutLoadingPanel"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/scrollViewImages"
         app:layout_constraintEnd_toEndOf="@+id/scrollViewImages"
         app:layout_constraintStart_toStartOf="@+id/scrollViewImages"
-        app:layout_constraintTop_toTopOf="@+id/scrollViewImages">
+        app:layout_constraintTop_toTopOf="@+id/scrollViewImages" >
 
         <ProgressBar
             android:layout_width="201dp"
