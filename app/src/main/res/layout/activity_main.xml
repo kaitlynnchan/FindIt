@@ -75,9 +75,10 @@
         android:contentDescription="@string/imageView"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:tint="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/buttonPlay"
         app:layout_constraintStart_toEndOf="@+id/buttonPlay"
         app:layout_constraintTop_toTopOf="@+id/buttonPlay"
-        app:srcCompat="@drawable/ic_trophy_black_30" />
+        app:srcCompat="@drawable/ic_trophy_black" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

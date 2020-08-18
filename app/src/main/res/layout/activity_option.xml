@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_background"
-        android:foreground="@drawable/ic_arrow_back_24"
+        android:foreground="@drawable/ic_arrow_back"
         android:foregroundGravity="center_vertical|right"
         android:foregroundTint="#000000"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,8 +72,10 @@
                 android:layout_marginStart="20dp"
                 android:background="@drawable/button_background"
                 android:contentDescription="@string/imageView"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@android:drawable/ic_menu_add" />
+                app:srcCompat="@drawable/custom_images" />
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -113,7 +115,7 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/button_background"
 
-        android:foreground="@drawable/ic_arrow_down_24"
+        android:foreground="@drawable/ic_arrow_down"
         android:foregroundGravity="center_vertical|right"
         android:foregroundTint="#000000"
         android:spinnerMode="dropdown"
@@ -127,7 +129,7 @@
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/button_background"
-        android:foreground="@drawable/ic_arrow_down_24"
+        android:foreground="@drawable/ic_arrow_down"
         android:foregroundGravity="center_vertical|right"
         android:foregroundTint="#000000"
         android:spinnerMode="dropdown"
@@ -196,7 +198,7 @@
         android:layout_marginStart="16dp"
 
         android:background="@drawable/button_background"
-        android:foreground="@drawable/ic_arrow_down_24"
+        android:foreground="@drawable/ic_arrow_down"
         android:foregroundGravity="center_vertical|right"
         android:foregroundTint="#000000"
         android:spinnerMode="dropdown"

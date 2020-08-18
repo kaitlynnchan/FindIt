@@ -32,7 +32,7 @@ import cmpt276.project.model.Mode;
 
 /**
  * OPTIONS SCREEN
- * Allows users to select an image package and mode .
+ * Allows users to select an image package and mode
  */
 public class OptionActivity extends AppCompatActivity {
 
@@ -101,6 +101,53 @@ public class OptionActivity extends AppCompatActivity {
         }
     }
 
+    private void saveImagePackId(int imagePack) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_IMAGE_PACK_ID, imagePack);
+        editor.apply();
+    }
+
+    private static int getImagePackId(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, OptionActivity.imgButtonFruits);
+    }
+
+    // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
+    // Code for bitmap string conversion: https://stackoverflow.com/questions/22532136/android-how-to-create-a-bitmap-from-a-string
+    private static Object[] getCustomArr(Context context) {
+        final File[] directoryListing = getDirectory(context);
+
+        Object[] objects = new Object[numCustomImages];
+        for(int i = 0; i < numCustomImages; i++){
+            Bitmap b = null;
+            try {
+                b = BitmapFactory.decodeStream(new FileInputStream(directoryListing[i]));
+                System.out.println("" + directoryListing[i].getName());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            b.compress(Bitmap.CompressFormat.PNG,100, byteArrayOutputStream);
+            byte[] byteArr = byteArrayOutputStream.toByteArray();
+            String imageStr = Base64.encodeToString(byteArr, Base64.DEFAULT);
+
+            objects[i] = imageStr;
+        }
+        return objects;
+    }
+
+    private static File[] getDirectory(Context context) {
+        ContextWrapper cw = new ContextWrapper(context);
+        File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
+        File dir = new File(directory.toString());
+        File[] directoryListing = dir.listFiles();
+        numCustomImages = directoryListing.length;
+
+        return directoryListing;
+    }
+
     private void setupModeButton(final int modeBtn) {
         Button button = findViewById(modeBtn);
         button.setOnClickListener(new View.OnClickListener() {
@@ -126,11 +173,16 @@ public class OptionActivity extends AppCompatActivity {
         }
     }
 
-    private void saveImagePackId(int imagePack) {
+    private void saveModeId(int mode) {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_IMAGE_PACK_ID, imagePack);
+        editor.putInt(EDITOR_MODE_ID, mode);
         editor.apply();
+    }
+
+    private static int getModeId(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_MODE_ID, OptionActivity.buttonImages);
     }
 
     public static Object[] getPackArray(Context context){
@@ -171,23 +223,6 @@ public class OptionActivity extends AppCompatActivity {
         return packArr;
     }
 
-    private static int getImagePackId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, OptionActivity.imgButtonFruits);
-    }
-
-    private void saveModeId(int mode) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_MODE_ID, mode);
-        editor.apply();
-    }
-
-    private static int getModeId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_MODE_ID, OptionActivity.buttonImages);
-    }
-
     private void setNumImagesSpinner() {
         Spinner spinner = findViewById(R.id.spinnerNumImages);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -200,7 +235,7 @@ public class OptionActivity extends AppCompatActivity {
                 String text = parent.getItemAtPosition(position).toString();
                 int imageNum = Integer.parseInt(text);
 
-                getNumImagesAndDirectory(OptionActivity.this);
+                getDirectory(OptionActivity.this);
                 int totalImages = getNumCardsTotal(imageNum);
 
                 if(numCustomImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
@@ -224,12 +259,24 @@ public class OptionActivity extends AppCompatActivity {
         }
     }
 
+    private void saveNumImages(int numImages){
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_NUM_IMAGES, numImages);
+        editor.apply();
+    }
+
+    public static int getNumImages(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_NUM_IMAGES, 3);
+    }
+
     private void setNumCardsSpinner() {
         Spinner spinner = findViewById(R.id.spinnerNumCards);
         final String[] cardDeckSizeArray = getResources().getStringArray(R.array.cardDeckSizeArray);
         String[] textArray = setTextArray(cardDeckSizeArray);
 
-        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
                 this, android.R.layout.simple_spinner_item, textArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -272,16 +319,16 @@ public class OptionActivity extends AppCompatActivity {
         return textArray;
     }
 
-    private void saveNumImages(int numImages){
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_NUM_IMAGES, numImages);
-        editor.apply();
-    }
-
-    public static int getNumImages(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_NUM_IMAGES, 3);
+    public static int getNumCardsTotal(int numImages) {
+        int numCardsTotal;
+        if(numImages == 3){
+            numCardsTotal = 7;
+        } else if(numImages == 6){
+            numCardsTotal = 31;
+        } else{
+            numCardsTotal = 13;
+        }
+        return numCardsTotal;
     }
 
     private void saveCardDeckSize(int cardDeckSize){
@@ -296,23 +343,11 @@ public class OptionActivity extends AppCompatActivity {
         return sharedPreferences.getInt(EDITOR_CARD_DECK_SIZE, 5);
     }
 
-    public static int getNumCardsTotal(int numImages) {
-        int numCardsTotal;
-        if(numImages == 3){
-            numCardsTotal = 7;
-        } else if(numImages == 6){
-            numCardsTotal = 31;
-        } else{
-            numCardsTotal = 13;
-        }
-        return numCardsTotal;
-    }
-
     private void setDifficultyModeSpinner() {
         Spinner spinner = findViewById(R.id.modeSpinner);
         String[] modeArray = getResources().getStringArray(R.array.modeArray);
 
-        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
                 this, android.R.layout.simple_spinner_item, modeArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -376,7 +411,7 @@ public class OptionActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getNumImagesAndDirectory(OptionActivity.this);
+                getDirectory(OptionActivity.this);
                 int totalImages = getNumCardsTotal(OptionActivity.getNumImages(getBaseContext()));
 
                 if(numCustomImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
@@ -392,7 +427,7 @@ public class OptionActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        getNumImagesAndDirectory(OptionActivity.this);
+        getDirectory(OptionActivity.this);
         int totalImages = getNumCardsTotal(OptionActivity.getNumImages(this));
 
         if(numCustomImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
@@ -402,40 +437,5 @@ public class OptionActivity extends AppCompatActivity {
         } else{
             super.onBackPressed();
         }
-    }
-
-    private static File[] getNumImagesAndDirectory(Context context) {
-        ContextWrapper cw = new ContextWrapper(context);
-        File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
-        File dir = new File(directory.toString());
-        File[] directoryListing = dir.listFiles();
-        numCustomImages = directoryListing.length;
-
-        return directoryListing;
-    }
-
-    // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
-    // Code for bitmap string conversion: https://stackoverflow.com/questions/22532136/android-how-to-create-a-bitmap-from-a-string
-    private static Object[] getCustomArr(Context context) {
-        final File[] directoryListing = getNumImagesAndDirectory(context);
-
-        Object[] objects = new Object[numCustomImages];
-        for(int i = 0; i < numCustomImages; i++){
-            Bitmap b = null;
-            try {
-                b = BitmapFactory.decodeStream(new FileInputStream(directoryListing[i]));
-                System.out.println("" + directoryListing[i].getName());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            b.compress(Bitmap.CompressFormat.PNG,100, byteArrayOutputStream);
-            byte[] byteArr = byteArrayOutputStream.toByteArray();
-            String imageStr = Base64.encodeToString(byteArr, Base64.DEFAULT);
-
-            objects[i] = imageStr;
-        }
-        return objects;
     }
 }

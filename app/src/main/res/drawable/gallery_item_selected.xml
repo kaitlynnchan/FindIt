@@ -17,7 +17,7 @@
                         </shape>
                     </item>
                     <item
-                        android:drawable="@drawable/ic_check_24">
+                        android:drawable="@drawable/ic_check">
                     </item>
                 </layer-list>
             </item>
