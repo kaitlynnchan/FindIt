@@ -1,4 +1,3 @@
-
 package cmpt276.project.model.flickr;
 
 import android.annotation.SuppressLint;
@@ -13,8 +12,10 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
 /**
- * Retrieves the bitmap thumbnails.
+ * THUMBNAIL DOWNLOADER
+ * Retrieves the bitmap thumbnails
  */
 public class ThumbnailDownloader<T> extends HandlerThread {
     private static final String TAG = "ThumbnailDownloader";

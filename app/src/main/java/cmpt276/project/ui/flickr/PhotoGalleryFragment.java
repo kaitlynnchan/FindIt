@@ -1,5 +1,6 @@
 package cmpt276.project.ui.flickr;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
@@ -9,6 +10,10 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,12 +45,14 @@ import cmpt276.project.model.flickr.QueryPreferences;
 import cmpt276.project.model.flickr.ThumbnailDownloader;
 
 /**
- * This fragment displays the images available to the user, and downloads and saves them when a user clicks them.
+ * PHOTO GALLERY FRAGMENT
+ * Displays the images available to the user,
+ *  and downloads and saves them when a user clicks them
  */
 public class PhotoGalleryFragment extends Fragment {
-    private static final String TAG = "PhotoGalleryFragment";
-    public static final String FILE_FLICKR_DRAWABLE = "flickrDrawable";
+    public static final String FILE_CUSTOM_DRAWABLE = "file_custom_drawable";
     public static final String LOG_SAVE_IMAGE = "SAVE_IMAGE";
+    private static final String TAG = "PhotoGalleryFragment";
 
     private RecyclerView mPhotoRecyclerView;
     private List<GalleryItem> mItems = new ArrayList<>();
@@ -81,14 +88,18 @@ public class PhotoGalleryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_photo_gallery, container, false);
-
-        mPhotoRecyclerView = v.findViewById(R.id.photo_recycler_view);
+        View view = inflater.inflate(R.layout.fragment_photo_gallery, container, false);
+        mPhotoRecyclerView = view.findViewById(R.id.photo_recycler_view);
         mPhotoRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Flickr");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupAdapter();
 
-        return v;
+        return view;
     }
 
     @Override
@@ -105,27 +116,27 @@ public class PhotoGalleryFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
         super.onCreateOptionsMenu(menu, menuInflater);
         menuInflater.inflate(R.menu.fragment_photo_gallery, menu);
         MenuItem searchItem = menu.findItem(R.id.menu_item_search);
         final SearchView searchView = (SearchView) searchItem.getActionView();
 
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String s) {
-                    Log.d(TAG, "QueryTextSubmit: " + s);
-                    QueryPreferences.setStoredQuery(getActivity(), s);
-                    updateItems();
-                    return true;
-                }
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Log.d(TAG, "QueryTextSubmit: " + s);
+                QueryPreferences.setStoredQuery(getActivity(), s);
+                updateItems();
+                return true;
+            }
 
-                @Override
-                public boolean onQueryTextChange(String s) {
-                    Log.d(TAG, "QueryTextChange: " + s);
-                    return false;
-                }
-            });
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Log.d(TAG, "QueryTextChange: " + s);
+                return false;
+            }
+        });
 
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -164,8 +175,7 @@ public class PhotoGalleryFragment extends Fragment {
 
         public PhotoHolder(final View itemView) {
             super(itemView);
-
-            mItemImageView = (ImageView) itemView.findViewById(R.id.item_image_view);
+            mItemImageView = itemView.findViewById(R.id.item_image_view);
         }
 
         public void registerClicks(final int position){
@@ -178,8 +188,10 @@ public class PhotoGalleryFragment extends Fragment {
 
                     itemView.setForeground(getResources().getDrawable(R.drawable.gallery_item_selected));
 
-                    // https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
+                    // Got help from:
+                    //  https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
+                    SimpleDateFormat sdf = new SimpleDateFormat(
+                            "yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
                     sdf.setTimeZone(TimeZone.getTimeZone("PDT"));
 
                     String bitmapUrl = mItems.get(position).getUrl();
@@ -207,8 +219,9 @@ public class PhotoGalleryFragment extends Fragment {
             mGalleryItems = galleryItems;
         }
 
+        @NonNull
         @Override
-        public PhotoHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        public PhotoHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
             View view = inflater.inflate(R.layout.list_item_gallery, viewGroup, false);
             return new PhotoHolder(view);
@@ -229,6 +242,7 @@ public class PhotoGalleryFragment extends Fragment {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class FetchItemsTask extends AsyncTask<Void,Void,List<GalleryItem>> {
 
         private String mQuery;
@@ -254,8 +268,10 @@ public class PhotoGalleryFragment extends Fragment {
         }
     }
 
-    // Got help and code from: https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
+    // Got help from:
+    //  https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
     // Downloads and saves images to /data/data/cmpt276.project/app_flickrDrawable
+    @SuppressLint("StaticFieldLeak")
     private class DownloadFile extends AsyncTask<String, Void, Bitmap> {
 
         String url;
@@ -281,25 +297,24 @@ public class PhotoGalleryFragment extends Fragment {
             try {
                 // Download Image from URL
                 InputStream input = new java.net.URL(url).openStream();
+
                 // Decode Bitmap
                 bitmap = BitmapFactory.decodeStream(input);
-
-                if (bitmap == null) return null;
+                if (bitmap == null) {
+                    return null;
+                }
 
                 ContextWrapper cw = new ContextWrapper(getContext());
-                File directory = cw.getDir(FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
-
-                File mypath = new File(directory, name);
-
-                FileOutputStream fos ;
+                File directory = cw.getDir(FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
+                File myPath = new File(directory, name);
+                FileOutputStream fos;
                 try {
-                    fos = new FileOutputStream(mypath);
+                    fos = new FileOutputStream(myPath);
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                     fos.close();
                 } catch (Exception e) {
                     Log.e(LOG_SAVE_IMAGE, e.getMessage(), e);
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

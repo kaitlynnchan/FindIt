@@ -5,7 +5,7 @@
             <item>
                 <shape android:shape="rectangle">
                     <stroke
-                        android:color="#09170E"
+                        android:color="#1B1B1B"
                         android:width="6dp" />
                 </shape>
             </item>
@@ -17,7 +17,7 @@
                         </shape>
                     </item>
                     <item
-                        android:drawable="@drawable/ic_check_24">
+                        android:drawable="@drawable/ic_check">
                     </item>
                 </layer-list>
             </item>

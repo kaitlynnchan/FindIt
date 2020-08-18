@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer-array name="image_pack_fruits">
-        <item>@drawable/apple</item>
+        <item>@drawable/red_apple</item>
         <item>@drawable/avocado</item>
         <item>@drawable/banana</item>
         <item>@drawable/blackberry</item>

@@ -12,34 +12,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_magnify_glass_shadow_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".ui.CustomImagesActivity"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".ui.HighScoreActivity"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".ui.LeaderBoardActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.HelpActivity"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.OptionActivity"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.GameActivity"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.flickr.PhotoGalleryActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.WelcomeActivity"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="sensorLandscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,8 +43,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="sensorLandscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
