@@ -45,11 +45,12 @@ import cmpt276.project.model.flickr.QueryPreferences;
 import cmpt276.project.model.flickr.ThumbnailDownloader;
 
 /**
- * This fragment displays the images available to the user,
- *  and downloads and saves them when a user clicks them.
+ * PHOTO GALLERY FRAGMENT
+ * Displays the images available to the user,
+ *  and downloads and saves them when a user clicks them
  */
 public class PhotoGalleryFragment extends Fragment {
-    public static final String FILE_FLICKR_DRAWABLE = "flickr_drawable";
+    public static final String FILE_CUSTOM_DRAWABLE = "file_custom_drawable";
     public static final String LOG_SAVE_IMAGE = "SAVE_IMAGE";
     private static final String TAG = "PhotoGalleryFragment";
 
@@ -304,7 +305,7 @@ public class PhotoGalleryFragment extends Fragment {
                 }
 
                 ContextWrapper cw = new ContextWrapper(getContext());
-                File directory = cw.getDir(FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
+                File directory = cw.getDir(FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
                 File myPath = new File(directory, name);
                 FileOutputStream fos;
                 try {

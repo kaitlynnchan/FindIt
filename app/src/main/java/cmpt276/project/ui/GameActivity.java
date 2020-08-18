@@ -44,7 +44,6 @@ public class GameActivity extends AppCompatActivity {
     private Chronometer timer;
     private CardDeck cardDeck;
     private int numImagesOnCard;
-
     private Button[] drawPile;        // Contains the images of a card from the draw pile
     private Button[] discardPile;     // Contains the images of a card from the discard pile
 

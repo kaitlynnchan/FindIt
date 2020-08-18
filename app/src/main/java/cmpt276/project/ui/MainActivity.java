@@ -32,9 +32,9 @@ import cmpt276.project.model.ScoresManager;
  */
 public class MainActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFERENCES = "shared prefs";
-    public static final String EDITOR_CARD_DECKS = "card decks";
-    public static final String EDITOR_SCORES_MANAGERS = "scores managers";
+    public static final String SHARED_PREFS_GAMES = "shared_preferences_games";
+    public static final String EDITOR_CARD_DECKS = "card_decks";
+    public static final String EDITOR_SCORES_MANAGERS = "scores_managers";
 
     private CardDeck cardDeck;
     private GameConfigs gameConfigs;
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadGameConfigs() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(EDITOR_CARD_DECKS, null);
         Type type = new TypeToken<ArrayList<CardDeck>>() {}.getType();
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void saveGameConfigs(Context context, GameConfigs gameConfigs) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(gameConfigs.getCardDecks());

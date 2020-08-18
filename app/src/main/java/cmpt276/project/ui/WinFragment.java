@@ -33,7 +33,6 @@ public class WinFragment extends AppCompatDialogFragment {
     private View view;
     private int time;
     private int index;
-    private CardDeck cardDeck;
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
 
@@ -47,7 +46,7 @@ public class WinFragment extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_win, null);
-        cardDeck = CardDeck.getInstance();
+        CardDeck cardDeck = CardDeck.getInstance();
         gameConfigs = GameConfigs.getInstance();
         index = gameConfigs.getCardDeckIndex(cardDeck);
         scoresManager = gameConfigs.getScoreManager(index);

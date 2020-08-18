@@ -30,7 +30,7 @@ import cmpt276.project.model.ScoresManager;
  */
 public class LeaderBoardActivity extends AppCompatActivity {
 
-    public static final String EXTRA_INDEX = "extra for index";
+    public static final String EXTRA_INDEX = "extra_index";
 
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
