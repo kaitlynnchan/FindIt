@@ -23,7 +23,7 @@
             android:name=".ui.HelpActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".ui.OptionActivity"
+            android:name=".ui.OptionsActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.GameActivity"

@@ -1,15 +1,13 @@
 package cmpt276.project.ui;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,38 +18,34 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 import cmpt276.project.R;
-import cmpt276.project.ui.flickr.PhotoGalleryFragment;
 import cmpt276.project.model.Mode;
 
 /**
  * OPTIONS SCREEN
  * Allows users to select an image package and mode
  */
-public class OptionActivity extends AppCompatActivity {
+public class OptionsActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFS_OPTIONS = "shared_preferences_options";
-    public static final String EDITOR_IMAGE_PACK_ID = "id_image_pack";
-    public static final String EDITOR_NUM_IMAGES = "num_images";
-    public static final String EDITOR_CARD_DECK_SIZE = "card_deck_size";
-    public static final String EDITOR_MODE_ID = "id_mode_button";
-    public static final String EDITOR_DIFFICULTY_MODE = "difficulty_mode_string";
+    private static final String SHARED_PREFS_OPTIONS = "shared_preferences_options";
+    private static final String EDITOR_IMAGE_PACK_ID = "id_image_pack";
+    private static final String EDITOR_NUM_IMAGES = "num_images";
+    private static final String EDITOR_CARD_DECK_SIZE = "card_deck_size";
+    private static final String EDITOR_MODE_ID = "id_mode_button";
+    private static final String EDITOR_DIFFICULTY_MODE = "difficulty_mode_string";
+    private static final int REQUEST_CODE_CUSTOM = 42;
 
     private static int imgButtonFruits = R.id.imgButtonFruits;
     private static int imgButtonVegs = R.id.imgButtonVegs;
     private static int imgButtonCustom = R.id.imgButtonCustom;
     private static int buttonImages = R.id.buttonImages;
     private static int buttonWordsImages = R.id.buttonWordsImages;
-    private static int numCustomImages = 0;
+    private static int numCustomImages;
 
     public static Intent makeLaunchIntent(Context context){
-        return new Intent(context, OptionActivity.class);
+        return new Intent(context, OptionsActivity.class);
     }
 
     @Override
@@ -61,6 +55,8 @@ public class OptionActivity extends AppCompatActivity {
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
+
+        numCustomImages = CustomImagesActivity.getNumCustomImages(this);
 
         setupImageButton(imgButtonFruits);
         setupImageButton(imgButtonVegs);
@@ -81,14 +77,18 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(imageId == imgButtonCustom){
-                    Intent intent = CustomImagesActivity.makeLaunchIntent(OptionActivity.this);
-                    startActivity(intent);
-                }
-                saveImagePackId(imageId);
+                    Intent intent = CustomImagesActivity.makeLaunchIntent(OptionsActivity.this);
+                    startActivityForResult(intent, REQUEST_CODE_CUSTOM);
+                    if(getImagePackId(OptionsActivity.this) == imgButtonCustom){
+                        saveImagePackId(imgButtonFruits);
+                    }
+                } else{
+                    saveImagePackId(imageId);
 
-                setupImageButton(imgButtonFruits);
-                setupImageButton(imgButtonVegs);
-                setupImageButton(imgButtonCustom);
+                    setupImageButton(imgButtonFruits);
+                    setupImageButton(imgButtonVegs);
+                    setupImageButton(imgButtonCustom);
+                }
             }
         });
 
@@ -110,42 +110,7 @@ public class OptionActivity extends AppCompatActivity {
 
     private static int getImagePackId(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, OptionActivity.imgButtonFruits);
-    }
-
-    // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
-    // Code for bitmap string conversion: https://stackoverflow.com/questions/22532136/android-how-to-create-a-bitmap-from-a-string
-    private static Object[] getCustomArr(Context context) {
-        final File[] directoryListing = getDirectory(context);
-
-        Object[] objects = new Object[numCustomImages];
-        for(int i = 0; i < numCustomImages; i++){
-            Bitmap b = null;
-            try {
-                b = BitmapFactory.decodeStream(new FileInputStream(directoryListing[i]));
-                System.out.println("" + directoryListing[i].getName());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            b.compress(Bitmap.CompressFormat.PNG,100, byteArrayOutputStream);
-            byte[] byteArr = byteArrayOutputStream.toByteArray();
-            String imageStr = Base64.encodeToString(byteArr, Base64.DEFAULT);
-
-            objects[i] = imageStr;
-        }
-        return objects;
-    }
-
-    private static File[] getDirectory(Context context) {
-        ContextWrapper cw = new ContextWrapper(context);
-        File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
-        File dir = new File(directory.toString());
-        File[] directoryListing = dir.listFiles();
-        numCustomImages = directoryListing.length;
-
-        return directoryListing;
+        return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, imgButtonFruits);
     }
 
     private void setupModeButton(final int modeBtn) {
@@ -153,8 +118,8 @@ public class OptionActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(getImagePackId(OptionActivity.this) == imgButtonCustom && modeBtn == buttonWordsImages){
-                    Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
+                if(modeBtn == buttonWordsImages && getImagePackId(OptionsActivity.this) == imgButtonCustom){
+                    Toast.makeText(OptionsActivity.this, R.string.toast_options_mode, Toast.LENGTH_SHORT).show();
                 } else{
                     saveModeId(modeBtn);
 
@@ -182,16 +147,15 @@ public class OptionActivity extends AppCompatActivity {
 
     private static int getModeId(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_MODE_ID, OptionActivity.buttonImages);
+        return sharedPreferences.getInt(EDITOR_MODE_ID, buttonImages);
     }
 
     public static Object[] getPackArray(Context context){
-        int imageButtonID = OptionActivity.getImagePackId(context);
+        int imageButtonID = getImagePackId(context);
         Object[] packArr;
-
-        if(imageButtonID == OptionActivity.imgButtonCustom){
-            packArr = OptionActivity.getCustomArr(context);
-        } else if(imageButtonID == OptionActivity.imgButtonVegs){
+        if(imageButtonID == imgButtonCustom){
+            packArr = CustomImagesActivity.getCustomArr(context);
+        } else if(imageButtonID == imgButtonVegs){
             packArr =  new Object[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
                     R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
                     R.drawable.artichoke, R.drawable.asparagus, R.drawable.cabbage,
@@ -214,7 +178,7 @@ public class OptionActivity extends AppCompatActivity {
                     R.drawable.raspberry, R.drawable.squash, R.drawable.starfruit, R.drawable.strawberry};
         }
 
-        if(getModeId(context) == OptionActivity.buttonWordsImages && imageButtonID != OptionActivity.imgButtonCustom){
+        if(getModeId(context) == buttonWordsImages && imageButtonID != imgButtonCustom){
             for(int i = 0; i < packArr.length; i++){
                 String temp = context.getResources().getResourceEntryName((int) packArr[i]);
                 packArr[i] += "," + temp.replace("_", " ");
@@ -233,15 +197,14 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-                int imageNum = Integer.parseInt(text);
+                int numImages = Integer.parseInt(text);
 
-                getDirectory(OptionActivity.this);
-                int totalImages = getNumCardsTotal(imageNum);
-
-                if(numCustomImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
-                    Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
+                if(numCustomImages < getNumCardsTotal(numImages)
+                        && getImagePackId(OptionsActivity.this) == imgButtonCustom){
+                    Toast.makeText(OptionsActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
+                    setNumImagesSpinner();
                 } else{
-                    saveNumImages(imageNum);
+                    saveNumImages(numImages);
                     setNumCardsSpinner();
                 }
             }
@@ -285,7 +248,7 @@ public class OptionActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
                 if(text.equals(cardDeckSizeArray[0])) {
-                    saveCardDeckSize(getNumCardsTotal(OptionActivity.getNumImages(getBaseContext())));
+                    saveCardDeckSize(getNumCardsTotal(getNumImages(getBaseContext())));
                 } else {
                     saveCardDeckSize(Integer.parseInt(text));
                 }
@@ -298,7 +261,7 @@ public class OptionActivity extends AppCompatActivity {
 
         for(int i = 0; i < textArray.length; i++){
             if(i == 0){
-                if(getCardDeckSize(this) == getNumCardsTotal(OptionActivity.getNumImages(this))){
+                if(getCardDeckSize(this) == getNumCardsTotal(getNumImages(this))){
                     spinner.setSelection(i);
                 }
             } else if(textArray[i].equals("" + getCardDeckSize(this))){
@@ -308,27 +271,17 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     private String[] setTextArray(String[] cardDeckSizeArray) {
-        String[] textArray;
-        if(getNumCardsTotal(OptionActivity.getNumImages(this)) == 7){
-            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 2);
-        } else if(getNumCardsTotal(OptionActivity.getNumImages(this)) == 13){
-            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 3);
-        } else{
-            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, cardDeckSizeArray.length);
+        int totalCards = getNumCardsTotal(getNumImages(this));
+        for(int i = 1; i < cardDeckSizeArray.length; i++){
+            if(Integer.parseInt(cardDeckSizeArray[i]) > totalCards){
+                return Arrays.copyOfRange(cardDeckSizeArray, 0, i);
+            }
         }
-        return textArray;
+        return Arrays.copyOfRange(cardDeckSizeArray, 0, cardDeckSizeArray.length);
     }
 
-    public static int getNumCardsTotal(int numImages) {
-        int numCardsTotal;
-        if(numImages == 3){
-            numCardsTotal = 7;
-        } else if(numImages == 6){
-            numCardsTotal = 31;
-        } else{
-            numCardsTotal = 13;
-        }
-        return numCardsTotal;
+    private static int getNumCardsTotal(int numImages) {
+        return (numImages * numImages) - numImages + 1;
     }
 
     private void saveCardDeckSize(int cardDeckSize){
@@ -396,14 +349,54 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        if(getModeId(this) == buttonWordsImages && getImagePackId(this) == numCustomImages){
-            Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
-        }
-        setNumImagesSpinner();
-        setNumCardsSpinner();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        super.onResume();
+        if(resultCode == Activity.RESULT_CANCELED){
+            return;
+        }
+
+        switch (requestCode){
+            case REQUEST_CODE_CUSTOM:
+                numCustomImages = CustomImagesActivity.getNumCustomImages(this);
+                if(numCustomImages >= 7){
+                    saveImagePackId(imgButtonCustom);
+
+                    if(numCustomImages < getNumCardsTotal(getNumImages(this))){
+                        Toast.makeText(OptionsActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
+
+                        int temp = 3;
+                        final String[] numImagesArray = getResources().getStringArray(R.array.numImagesArray);
+                        for(int i = 0; i < numImagesArray.length; i++){
+                            if(getNumCardsTotal(Integer.parseInt(numImagesArray[i])) <= numCustomImages){
+                                temp = Integer.parseInt(numImagesArray[i]);
+                            }
+                        }
+                        saveNumImages(temp);
+                        setNumImagesSpinner();
+                        setNumCardsSpinner();
+                    }
+
+                    if(getModeId(this) == buttonWordsImages){
+                        Toast.makeText(OptionsActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
+                        saveModeId(buttonImages);
+                        setupModeButton(buttonImages);
+                        setupModeButton(buttonWordsImages);
+                    }
+                } else{
+                    Toast.makeText(OptionsActivity.this, R.string.toast_no_images, Toast.LENGTH_LONG).show();
+                    if(getImagePackId(this) == imgButtonCustom){
+                        saveImagePackId(imgButtonFruits);
+                    }
+                }
+                setupImageButton(imgButtonFruits);
+                setupImageButton(imgButtonVegs);
+                setupImageButton(imgButtonCustom);
+
+                break;
+            default:
+                assert false;
+        }
     }
 
     private void setupBackButton() {
@@ -411,31 +404,8 @@ public class OptionActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDirectory(OptionActivity.this);
-                int totalImages = getNumCardsTotal(OptionActivity.getNumImages(getBaseContext()));
-
-                if(numCustomImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
-                    Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
-                } else if (getImagePackId(OptionActivity.this) == imgButtonCustom && getModeId(OptionActivity.this) == buttonWordsImages){
-                    Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
-                } else{
-                    finish();
-                }
+                finish();
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        getDirectory(OptionActivity.this);
-        int totalImages = getNumCardsTotal(OptionActivity.getNumImages(this));
-
-        if(numCustomImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
-            Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
-        }  else if (getImagePackId(OptionActivity.this) == imgButtonCustom && getModeId(OptionActivity.this) == buttonWordsImages){
-            Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
-        } else{
-            super.onBackPressed();
-        }
     }
 }
