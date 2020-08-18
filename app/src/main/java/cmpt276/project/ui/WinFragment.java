@@ -33,7 +33,6 @@ public class WinFragment extends AppCompatDialogFragment {
     private View view;
     private int time;
     private int index;
-    private CardDeck cardDeck;
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
 
@@ -46,8 +45,8 @@ public class WinFragment extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
-        view = LayoutInflater.from(getActivity()).inflate(R.layout.windialog_layout, null);
-        cardDeck = CardDeck.getInstance();
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_win, null);
+        CardDeck cardDeck = CardDeck.getInstance();
         gameConfigs = GameConfigs.getInstance();
         index = gameConfigs.getCardDeckIndex(cardDeck);
         scoresManager = gameConfigs.getScoreManager(index);
@@ -67,8 +66,8 @@ public class WinFragment extends AppCompatDialogFragment {
     }
 
     private void setupButton() {
-        Button btnOk = view.findViewById(R.id.buttonOK);
-        btnOk.setOnClickListener(new View.OnClickListener() {
+        Button buttonOk = view.findViewById(R.id.buttonOK);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText userNameEntry = view.findViewById(R.id.editTextNickname);
@@ -91,8 +90,8 @@ public class WinFragment extends AppCompatDialogFragment {
             }
         });
 
-        Button export = view.findViewById(R.id.buttonExport);
-        export.setOnClickListener(new View.OnClickListener() {
+        Button buttonExport = view.findViewById(R.id.buttonExport);
+        buttonExport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), R.string.toast_export, Toast.LENGTH_LONG).show();

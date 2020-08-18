@@ -8,7 +8,7 @@
     tools:context=".ui.MainActivity">
 
     <TextView
-        android:id="@+id/textViewTitle"
+        android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:shadowColor="#000000"
@@ -32,10 +32,10 @@
         android:background="@drawable/button_background"
         android:text="@string/play"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTitle"
-        app:layout_constraintHorizontal_bias="0.397"
-        app:layout_constraintStart_toStartOf="@+id/textViewTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+        app:layout_constraintEnd_toEndOf="@+id/textTitle"
+        app:layout_constraintHorizontal_bias="0.31"
+        app:layout_constraintStart_toStartOf="@+id/textTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
 
     <Button
         android:id="@+id/buttonOptions"
@@ -49,9 +49,9 @@
         android:paddingBottom="3dp"
         android:text="@string/options"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTitle"
-        app:layout_constraintHorizontal_bias="0.285"
-        app:layout_constraintStart_toStartOf="@+id/textViewTitle"
+        app:layout_constraintEnd_toEndOf="@+id/textTitle"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="@+id/textTitle"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
 
     <Button
@@ -67,7 +67,7 @@
         app:layout_constraintTop_toTopOf="@+id/buttonOptions" />
 
     <ImageButton
-        android:id="@+id/buttonHighScores"
+        android:id="@+id/buttonLeaderBoard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -75,9 +75,10 @@
         android:contentDescription="@string/imageView"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:tint="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/buttonPlay"
         app:layout_constraintStart_toEndOf="@+id/buttonPlay"
         app:layout_constraintTop_toTopOf="@+id/buttonPlay"
-        app:srcCompat="@drawable/ic_trophy_black_30" />
+        app:srcCompat="@drawable/ic_trophy_black" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

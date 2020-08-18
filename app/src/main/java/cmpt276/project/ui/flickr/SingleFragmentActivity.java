@@ -7,7 +7,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cmpt276.project.R;
+
 /**
+ * SINGLE FRAGMENT CLASS
  * Creates the basic structure of the flickr fragment
  */
 public abstract class SingleFragmentActivity extends AppCompatActivity {

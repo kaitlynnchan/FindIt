@@ -1,10 +1,10 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorDarkBlue</item>
-        <item name="colorAccent">@color/colorLightBlue</item>
+        <item name="colorPrimary">@color/colorLightGreen</item>
+        <item name="colorPrimaryDark">@color/colorGreen</item>
+        <item name="colorAccent">@color/colorDarkGreen</item>
         <item name="fontFamily">@font/atma_medium</item>
     </style>
 

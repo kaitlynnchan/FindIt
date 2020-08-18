@@ -46,7 +46,7 @@ public class GameConfigs {
 
     public int getCardDeckIndex(CardDeck cardDeck){
         for(int i = 0; i < cardDecks.size(); i++){
-            if(cardDecks.get(i).getNumImages() == cardDeck.getNumImages()
+            if(cardDecks.get(i).getNumImagesOnCard() == cardDeck.getNumImagesOnCard()
                     && cardDecks.get(i).getCardDeckSize() == cardDeck.getCardDeckSize()){
                 return i;
             }
@@ -56,7 +56,7 @@ public class GameConfigs {
 
     public int getCardDeckIndex(int numImages, int cardDeckSize){
         for(int i = 0; i < cardDecks.size(); i++){
-            if(cardDecks.get(i).getNumImages() == numImages
+            if(cardDecks.get(i).getNumImagesOnCard() == numImages
                     && cardDecks.get(i).getCardDeckSize() == cardDeckSize){
                 return i;
             }

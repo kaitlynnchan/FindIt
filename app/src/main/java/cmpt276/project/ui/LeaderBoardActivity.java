@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -23,27 +24,35 @@ import cmpt276.project.model.Score;
 import cmpt276.project.model.ScoresManager;
 
 /**
- * HIGH SCORE SCREEN
+ * LEADER BOARD SCREEN
  * Displays top number of scores for selected configuration
  * Allows user to reset scores
  */
-public class HighScoreActivity extends AppCompatActivity {
+public class LeaderBoardActivity extends AppCompatActivity {
 
-    public static final String EXTRA_INDEX = "extra for index";
+    public static final String EXTRA_INDEX = "extra_index";
 
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
     private TextView[] scoresTxtView;
     private int numMaxScores;
     private int index;
-    private int numImages;
+    private int numImagesOnCard;
     private int cardDeckSize;
+
+    public static Intent makeLaunchIntent(Context context, int index){
+        Intent intent = new Intent(context, LeaderBoardActivity.class);
+        intent.putExtra(EXTRA_INDEX, index);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_high_score);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_leader_board);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
 
         Intent intent = getIntent();
         index = intent.getIntExtra(EXTRA_INDEX, -1);
@@ -53,18 +62,18 @@ public class HighScoreActivity extends AppCompatActivity {
         numMaxScores = scoresManager.getNumMaxScores();
         scoresTxtView = new TextView[numMaxScores];
 
-        numImages = gameConfigs.getCardDecks().get(index).getNumImages();
+        numImagesOnCard = gameConfigs.getCardDecks().get(index).getNumImagesOnCard();
         cardDeckSize = gameConfigs.getCardDecks().get(index).getCardDeckSize();
 
         setupHighScores();
         setupResetButton();
-        imageSpinner();
-        cardSpinner();
+        setNumImagesSpinner();
+        setNumCardsSpinner();
         setupBackButton();
     }
 
     private void setupHighScores() {
-        LinearLayout layout = findViewById(R.id.linearLayoutScores);
+        LinearLayout layoutScores = findViewById(R.id.linearLayoutScores);
         for(int i = 0; i < numMaxScores; i++){
             TextView text = new TextView(this);
             text.setLayoutParams(new LinearLayout.LayoutParams(
@@ -74,9 +83,9 @@ public class HighScoreActivity extends AppCompatActivity {
             ));
             text.setTextColor(Color.parseColor("#000000"));
             text.setTextSize(18);
-            text.setPadding(0, 0, 0, 0);
+            text.setGravity(Gravity.CENTER);
 
-            layout.addView(text);
+            layoutScores.addView(text);
             scoresTxtView[i] = text;
         }
         setTexts();
@@ -84,9 +93,9 @@ public class HighScoreActivity extends AppCompatActivity {
 
     private void setTexts() {
         for(int i = 0; i < scoresTxtView.length; i++){
-            int time = scoresManager.getScore(i).getTimeBySeconds();
-            int minutes = time / 60;
-            int seconds = time % 60;
+            int timeInSeconds = scoresManager.getScore(i).getTimeBySeconds();
+            int minutes = timeInSeconds / 60;
+            int seconds = timeInSeconds % 60;
 
             String strSeconds = seconds + "";
             if(seconds / 10 < 1){
@@ -102,15 +111,15 @@ public class HighScoreActivity extends AppCompatActivity {
     }
 
     private void setupResetButton() {
-        Button btReset = findViewById(R.id.buttonReset);
-        btReset.setOnClickListener(new View.OnClickListener() {
+        Button buttonReset = findViewById(R.id.buttonReset);
+        buttonReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(index != -1){
                     scoresManager.resetScoreArray();
-                    setDefaultScores(HighScoreActivity.this, scoresManager);
+                    setDefaultScores(LeaderBoardActivity.this, scoresManager);
                     gameConfigs.getScoreManager(index).setScoreArray(scoresManager.getScoreArray());
-                    MainActivity.saveGameConfigs(HighScoreActivity.this, gameConfigs);
+                    MainActivity.saveGameConfigs(LeaderBoardActivity.this, gameConfigs);
                     setTexts();
                 }
             }
@@ -145,8 +154,8 @@ public class HighScoreActivity extends AppCompatActivity {
         );
     }
 
-    private void imageSpinner() {
-        Spinner spinner = findViewById(R.id.imagesSpinnerHighScore);
+    private void setNumImagesSpinner() {
+        Spinner spinner = findViewById(R.id.spinnerNumImagesScores);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.numImagesArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -155,11 +164,11 @@ public class HighScoreActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-                numImages = Integer.parseInt(text);
+                numImagesOnCard = Integer.parseInt(text);
                 updateScoresManager();
 
                 setTexts();
-                cardSpinner();
+                setNumCardsSpinner();
             }
 
             @Override
@@ -169,14 +178,14 @@ public class HighScoreActivity extends AppCompatActivity {
 
         String[] numImagesArray = getResources().getStringArray(R.array.numImagesArray);
         for(int i = 0; i < numImagesArray.length; i++){
-            if(numImagesArray[i].equals("" + numImages)){
+            if(numImagesArray[i].equals("" + numImagesOnCard)){
                 spinner.setSelection(i);
             }
         }
     }
 
-    private void cardSpinner() {
-        Spinner spinner = findViewById(R.id.cardsSpinnerHighScore);
+    private void setNumCardsSpinner() {
+        Spinner spinner = findViewById(R.id.spinnerNumCardsScores);
         final String[] cardDeckSizeArray = getResources().getStringArray(R.array.cardDeckSizeArray);
         String[] textArray = setTextArray(cardDeckSizeArray);
 
@@ -232,9 +241,9 @@ public class HighScoreActivity extends AppCompatActivity {
 
     private int getNumCardsTotal() {
         int numCardsTotal;
-        if (numImages == 3) {
+        if (numImagesOnCard == 3) {
             numCardsTotal = 7;
-        } else if (numImages == 6) {
+        } else if (numImagesOnCard == 6) {
             numCardsTotal = 31;
         } else {
             numCardsTotal = 13;
@@ -243,7 +252,7 @@ public class HighScoreActivity extends AppCompatActivity {
     }
 
     private void updateScoresManager() {
-        index = gameConfigs.getCardDeckIndex(numImages, cardDeckSize);
+        index = gameConfigs.getCardDeckIndex(numImagesOnCard, cardDeckSize);
         scoresManager = new ScoresManager();
         if (index == -1) {
             scoresManager.setNumMaxScores(5);
@@ -255,18 +264,12 @@ public class HighScoreActivity extends AppCompatActivity {
     }
 
     private void setupBackButton() {
-        Button btn = findViewById(R.id.buttonBack);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button buttonBack = findViewById(R.id.buttonBack);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-    }
-
-    public static Intent makeIntent(Context context, int index){
-        Intent intent = new Intent(context, HighScoreActivity.class);
-        intent.putExtra(EXTRA_INDEX, index);
-        return intent;
     }
 }
