@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_magnify_glass_shadow_background">#8BC34A</color>
+    <color name="ic_magnify_glass_shadow_background">@color/colorLightGreen</color>
 </resources>

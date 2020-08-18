@@ -79,7 +79,7 @@ public class CustomImagesActivity extends AppCompatActivity {
         int numImages = directoryListing.length;
         int counter = 0;
         int numCols = 4;
-        int numRows = (numImages % numCols == 0) ?  numImages / numCols : (numImages / numCols) + 1;
+        int numRows = (int) Math.ceil(numImages / (double) numCols);
 
         for (int row = 0; row < numRows; row++) {
             TableRow tableRow = new TableRow(this);
@@ -103,7 +103,7 @@ public class CustomImagesActivity extends AppCompatActivity {
                     Bitmap bitmap;
                     try {
                         bitmap = BitmapFactory.decodeStream(new FileInputStream(directoryListing[counter]));
-                        System.out.println("" + directoryListing[counter].getName());
+                        System.out.println(directoryListing[counter].getName());
                         imageView.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -207,7 +207,7 @@ public class CustomImagesActivity extends AppCompatActivity {
                     // Got help from:
                     //  https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
                     sdf.setTimeZone(TimeZone.getTimeZone("PDT"));
                     String temp = sdf.format(new Date());
                     name += temp;
@@ -245,7 +245,9 @@ public class CustomImagesActivity extends AppCompatActivity {
             System.out.println("IMAGE CAPTION: " + name);
 
             try {
-                if (bitmap == null) return null;
+                if (bitmap == null){
+                    return null;
+                }
 
                 ContextWrapper cw = new ContextWrapper(CustomImagesActivity.this);
                 File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
@@ -277,7 +279,7 @@ public class CustomImagesActivity extends AppCompatActivity {
         buttonLaunchFlickr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = PhotoGalleryActivity.makeIntent(CustomImagesActivity.this);
+                Intent intent = PhotoGalleryActivity.makeLaunchIntent(CustomImagesActivity.this);
                 startActivityForResult(intent, REQUEST_CODE_FLICKR);
             }
         });

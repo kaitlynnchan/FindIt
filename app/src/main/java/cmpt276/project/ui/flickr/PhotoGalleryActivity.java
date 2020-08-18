@@ -1,21 +1,31 @@
-
 package cmpt276.project.ui.flickr;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 /**
  * This activity calls the Photogallery fragment
  */
-import android.content.Context;
-import android.content.Intent;
-
-import androidx.fragment.app.Fragment;
-
 public class PhotoGalleryActivity extends SingleFragmentActivity {
+
+    public static Intent makeLaunchIntent(Context context){
+        return new Intent(context, PhotoGalleryActivity.class);
+    }
 
     @Override
     protected Fragment createFragment() {
         return PhotoGalleryFragment.newInstance();
     }
 
-    public static Intent makeIntent(Context context){
-        return new Intent(context, PhotoGalleryActivity.class);
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

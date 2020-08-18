@@ -46,7 +46,7 @@ public class WinFragment extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
-        view = LayoutInflater.from(getActivity()).inflate(R.layout.windialog_layout, null);
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_win, null);
         cardDeck = CardDeck.getInstance();
         gameConfigs = GameConfigs.getInstance();
         index = gameConfigs.getCardDeckIndex(cardDeck);
