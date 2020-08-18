@@ -1,10 +1,10 @@
-
 package cmpt276.project.model.flickr;
 
 import androidx.annotation.NonNull;
 
 /**
- * This class contains functions related to information about each image
+ * GALLERY ITEM CLASS
+ * Contains functions related to information about each image
  */
 public class GalleryItem {
     private String mCaption;

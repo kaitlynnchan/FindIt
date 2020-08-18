@@ -36,19 +36,19 @@ import cmpt276.project.model.Mode;
  */
 public class OptionActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFS_OPTIONS = "shared preferences for options";
-    public static final String EDITOR_IMAGE_PACK_ID = "id for image pack";
-    public static final String EDITOR_NUM_IMAGES = "number of images";
-    public static final String EDITOR_CARD_DECK_SIZE = "card deck size";
-    public static final String EDITOR_MODE_ID = "id for mode button";
-    public static final String EDITOR_DIFFICULTY_MODE = "string for difficulty mode";
+    public static final String SHARED_PREFS_OPTIONS = "shared_preferences_options";
+    public static final String EDITOR_IMAGE_PACK_ID = "id_image_pack";
+    public static final String EDITOR_NUM_IMAGES = "num_images";
+    public static final String EDITOR_CARD_DECK_SIZE = "card_deck_size";
+    public static final String EDITOR_MODE_ID = "id_mode_button";
+    public static final String EDITOR_DIFFICULTY_MODE = "difficulty_mode_string";
 
-    private int imgButtonFruits;
-    private int imgButtonVegs;
-    private int imgButtonCustom;
-    private int buttonImages;
-    private int buttonWordsImages;
-    private static int numFlikrImages = 0;
+    private static int imgButtonFruits = R.id.imgButtonFruits;
+    private static int imgButtonVegs = R.id.imgButtonVegs;
+    private static int imgButtonCustom = R.id.imgButtonCustom;
+    private static int buttonImages = R.id.buttonImages;
+    private static int buttonWordsImages = R.id.buttonWordsImages;
+    private static int numCustomImages = 0;
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, OptionActivity.class);
@@ -61,12 +61,6 @@ public class OptionActivity extends AppCompatActivity {
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
-
-        imgButtonFruits = R.id.imgButtonFruits;
-        imgButtonVegs = R.id.imgButtonVegs;
-        imgButtonCustom = R.id.imgButtonCustom;
-        buttonImages = R.id.buttonImages;
-        buttonWordsImages = R.id.buttonWordsImages;
 
         setupImageButton(imgButtonFruits);
         setupImageButton(imgButtonVegs);
@@ -143,9 +137,9 @@ public class OptionActivity extends AppCompatActivity {
         int imageButtonID = OptionActivity.getImagePackId(context);
         Object[] packArr;
 
-        if(imageButtonID == R.id.imgButtonCustom){
+        if(imageButtonID == OptionActivity.imgButtonCustom){
             packArr = OptionActivity.getCustomArr(context);
-        } else if(imageButtonID == R.id.imgButtonVegs){
+        } else if(imageButtonID == OptionActivity.imgButtonVegs){
             packArr =  new Object[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
                     R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
                     R.drawable.artichoke, R.drawable.asparagus, R.drawable.cabbage,
@@ -168,7 +162,7 @@ public class OptionActivity extends AppCompatActivity {
                     R.drawable.raspberry, R.drawable.squash, R.drawable.starfruit, R.drawable.strawberry};
         }
 
-        if(getModeId(context) == R.id.buttonWordsImages && imageButtonID != R.id.imgButtonCustom){
+        if(getModeId(context) == OptionActivity.buttonWordsImages && imageButtonID != OptionActivity.imgButtonCustom){
             for(int i = 0; i < packArr.length; i++){
                 String temp = context.getResources().getResourceEntryName((int) packArr[i]);
                 packArr[i] += "," + temp.replace("_", " ");
@@ -179,7 +173,7 @@ public class OptionActivity extends AppCompatActivity {
 
     private static int getImagePackId(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, R.id.imgButtonFruits);
+        return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, OptionActivity.imgButtonFruits);
     }
 
     private void saveModeId(int mode) {
@@ -191,7 +185,7 @@ public class OptionActivity extends AppCompatActivity {
 
     private static int getModeId(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_MODE_ID, R.id.buttonImages);
+        return sharedPreferences.getInt(EDITOR_MODE_ID, OptionActivity.buttonImages);
     }
 
     private void setNumImagesSpinner() {
@@ -209,7 +203,7 @@ public class OptionActivity extends AppCompatActivity {
                 getNumImagesAndDirectory(OptionActivity.this);
                 int totalImages = getNumCardsTotal(imageNum);
 
-                if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
+                if(numCustomImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
                     Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
                 } else{
                     saveNumImages(imageNum);
@@ -368,7 +362,7 @@ public class OptionActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        if(getModeId(this) == buttonWordsImages && getImagePackId(this) == numFlikrImages){
+        if(getModeId(this) == buttonWordsImages && getImagePackId(this) == numCustomImages){
             Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
         }
         setNumImagesSpinner();
@@ -385,7 +379,7 @@ public class OptionActivity extends AppCompatActivity {
                 getNumImagesAndDirectory(OptionActivity.this);
                 int totalImages = getNumCardsTotal(OptionActivity.getNumImages(getBaseContext()));
 
-                if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
+                if(numCustomImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
                     Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
                 } else if (getImagePackId(OptionActivity.this) == imgButtonCustom && getModeId(OptionActivity.this) == buttonWordsImages){
                     Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
@@ -401,7 +395,7 @@ public class OptionActivity extends AppCompatActivity {
         getNumImagesAndDirectory(OptionActivity.this);
         int totalImages = getNumCardsTotal(OptionActivity.getNumImages(this));
 
-        if(numFlikrImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
+        if(numCustomImages < totalImages && getImagePackId(OptionActivity.this) == imgButtonCustom){
             Toast.makeText(OptionActivity.this, R.string.toast_options, Toast.LENGTH_LONG).show();
         }  else if (getImagePackId(OptionActivity.this) == imgButtonCustom && getModeId(OptionActivity.this) == buttonWordsImages){
             Toast.makeText(OptionActivity.this, R.string.toast_options_mode, Toast.LENGTH_LONG).show();
@@ -412,10 +406,10 @@ public class OptionActivity extends AppCompatActivity {
 
     private static File[] getNumImagesAndDirectory(Context context) {
         ContextWrapper cw = new ContextWrapper(context);
-        File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
+        File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
         File dir = new File(directory.toString());
         File[] directoryListing = dir.listFiles();
-        numFlikrImages = directoryListing.length;
+        numCustomImages = directoryListing.length;
 
         return directoryListing;
     }
@@ -425,8 +419,8 @@ public class OptionActivity extends AppCompatActivity {
     private static Object[] getCustomArr(Context context) {
         final File[] directoryListing = getNumImagesAndDirectory(context);
 
-        Object[] objects = new Object[numFlikrImages];
-        for(int i = 0; i < numFlikrImages; i++){
+        Object[] objects = new Object[numCustomImages];
+        for(int i = 0; i < numCustomImages; i++){
             Bitmap b = null;
             try {
                 b = BitmapFactory.decodeStream(new FileInputStream(directoryListing[i]));

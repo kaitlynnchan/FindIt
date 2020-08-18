@@ -1,9 +1,10 @@
-
 package cmpt276.project.model.flickr;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+
 /**
+ * QUERY PREFERENCES
  * Search queries in flickr
  */
 public class QueryPreferences {

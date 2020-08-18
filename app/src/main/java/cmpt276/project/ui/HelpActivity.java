@@ -15,7 +15,9 @@ import cmpt276.project.R;
 
 /**
  * HELP SCREEN
- * Displays how to play the game, a hyperlink to the 276 website and the necessary citations as required.
+ * Displays how to play the game,
+ *  a hyperlink to the 276 website,
+ *  and the necessary citations as required.
  */
 public class HelpActivity extends AppCompatActivity {
 

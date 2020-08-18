@@ -129,7 +129,7 @@ public class CustomImagesActivity extends AppCompatActivity {
     //  https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
     private File[] getDirectory() {
         ContextWrapper cw = new ContextWrapper(this);
-        File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
+        File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
         File dir = new File(directory.toString());
         File[] directoryListing = dir.listFiles();
         assert directoryListing != null;
@@ -250,7 +250,7 @@ public class CustomImagesActivity extends AppCompatActivity {
                 }
 
                 ContextWrapper cw = new ContextWrapper(CustomImagesActivity.this);
-                File directory = cw.getDir(PhotoGalleryFragment.FILE_FLICKR_DRAWABLE, Context.MODE_PRIVATE);
+                File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
                 File myPath = new File(directory, name);
                 FileOutputStream fos;
                 try {
