@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         buttonOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = OptionActivity.makeLaunchIntent(MainActivity.this);
+                Intent intent = OptionsActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
@@ -124,15 +124,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createCardDeck() {
-        int cardDeckSize = OptionActivity.getCardDeckSize(MainActivity.this);
-        int numImages = OptionActivity.getNumImages(MainActivity.this);
-        int numCardsTotal = OptionActivity.getNumCardsTotal(numImages);
-        Object[] packArr = OptionActivity.getPackArray(MainActivity.this);
-        Mode difficultyMode = OptionActivity.getDifficultyMode(MainActivity.this);
+        int cardDeckSize = OptionsActivity.getCardDeckSize(MainActivity.this);
+        int numImages = OptionsActivity.getNumImages(MainActivity.this);
+        Object[] packArr = OptionsActivity.getPackArray(MainActivity.this);
+        Mode difficultyMode = OptionsActivity.getDifficultyMode(MainActivity.this);
 
         cardDeck.setCardDeckSize(cardDeckSize);
         cardDeck.setNumImagesOnCard(numImages);
-        cardDeck.setNumCardsTotal(numCardsTotal);
         cardDeck.setDifficultyMode(difficultyMode);
         cardDeck.setCardIndex();
         cardDeck.populateCards(packArr);

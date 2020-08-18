@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,6 +27,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -46,8 +48,8 @@ import cmpt276.project.ui.flickr.PhotoGalleryFragment;
  */
 public class CustomImagesActivity extends AppCompatActivity {
 
-    public static final int REQUEST_CODE_FLICKR = 1;
-    public static final int REQUEST_CODE_GALLERY = 2;
+    private static final int REQUEST_CODE_FLICKR = 1;
+    private static final int REQUEST_CODE_GALLERY = 2;
 
     private LinearLayout linearLayoutImages;
     private RelativeLayout layoutLoadingPanel;
@@ -75,7 +77,7 @@ public class CustomImagesActivity extends AppCompatActivity {
     //  https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
     //  https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupImageTable() {
-        final File[] directoryListing = getDirectory();
+        final File[] directoryListing = getDirectory(this);
         int numImages = directoryListing.length;
         int counter = 0;
         int numCols = 4;
@@ -100,15 +102,8 @@ public class CustomImagesActivity extends AppCompatActivity {
                 imageView.setImageResource(R.drawable.empty_image);
 
                 if(counter < numImages){
-                    Bitmap bitmap;
-                    try {
-                        bitmap = BitmapFactory.decodeStream(new FileInputStream(directoryListing[counter]));
-                        System.out.println(directoryListing[counter].getName());
-                        imageView.setImageBitmap(bitmap);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                        imageView.setImageResource(R.drawable.magnifying_glass);
-                    }
+                    Bitmap bitmap = getBitmap(directoryListing[counter], this);
+                    imageView.setImageBitmap(bitmap);
 
                     final int index = counter;
                     imageView.setOnClickListener(new View.OnClickListener() {
@@ -125,15 +120,36 @@ public class CustomImagesActivity extends AppCompatActivity {
         }
     }
 
+    private static Bitmap getBitmap(File file, Context context) {
+        Bitmap bitmap;
+        try {
+            bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+            System.out.println(file.getName());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.magnifying_glass);
+        }
+        return bitmap;
+    }
+
     // Got help from:
     //  https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
-    private File[] getDirectory() {
-        ContextWrapper cw = new ContextWrapper(this);
+    private static File[] getDirectory(Context context) {
+        ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
         File dir = new File(directory.toString());
         File[] directoryListing = dir.listFiles();
         assert directoryListing != null;
         return directoryListing;
+    }
+
+    public static int getNumCustomImages(Context context) {
+        ContextWrapper cw = new ContextWrapper(context);
+        File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
+        File dir = new File(directory.toString());
+        File[] directoryListing = dir.listFiles();
+        assert directoryListing != null;
+        return directoryListing.length;
     }
 
     private void deleteImageFile(File[] directoryListing, int index) {
@@ -223,6 +239,25 @@ public class CustomImagesActivity extends AppCompatActivity {
         }
     }
 
+    // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
+    // Code for bitmap string conversion: https://stackoverflow.com/questions/22532136/android-how-to-create-a-bitmap-from-a-string
+    public static Object[] getCustomArr(Context context) {
+        final File[] directoryListing = getDirectory(context);
+
+        Object[] objects = new Object[getNumCustomImages(context)];
+        for(int i = 0; i < objects.length; i++){
+            Bitmap b = getBitmap(directoryListing[i], context);
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            b.compress(Bitmap.CompressFormat.PNG,100, byteArrayOutputStream);
+            byte[] byteArr = byteArrayOutputStream.toByteArray();
+            String imageStr = Base64.encodeToString(byteArr, Base64.DEFAULT);
+
+            objects[i] = imageStr;
+        }
+        return objects;
+    }
+
     @SuppressLint("StaticFieldLeak")
     private class DownloadFile extends AsyncTask<String, Void, Bitmap> {
 
@@ -302,8 +337,15 @@ public class CustomImagesActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(Activity.RESULT_OK);
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(Activity.RESULT_OK);
     }
 }

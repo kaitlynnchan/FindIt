@@ -8,7 +8,6 @@ package cmpt276.project.model;
  */
 public class CardDeck {
 
-    private int numCardsTotal;      // Total number of cards possible
     private int cardDeckSize;       // Number of cards in deck
     private int numImagesOnCard;    // Number of images on each card
     private int currentCardIndex;   // Stores the index of the card that is on the top of the draw pile
@@ -54,10 +53,6 @@ public class CardDeck {
         this.numImagesOnCard = numImagesOnCard;
     }
 
-    public void setNumCardsTotal(int numCardsTotal) {
-        this.numCardsTotal = numCardsTotal;
-    }
-
     public void setCardDeckSize(int cardDeckSize) {
         this.cardDeckSize = cardDeckSize;
     }
@@ -76,6 +71,7 @@ public class CardDeck {
     }
 
     public void populateCards(Object[] packArr){
+        int numCardsTotal = (numImagesOnCard * numImagesOnCard) - numImagesOnCard + 1;
         cards = new Object[numCardsTotal][numImagesOnCard];
         int row = 0;
 
@@ -151,8 +147,8 @@ public class CardDeck {
     }
 
     public void shuffleCardsAndImages(){
-        for(int i = 0; i < numCardsTotal; i++){
-            int rand = (int) ((Math.random() * (numCardsTotal - i)) + i);
+        for(int i = 0; i < cards.length; i++){
+            int rand = (int) ((Math.random() * (cards.length - i)) + i);
             Object[] tempCard = cards[i];
             cards[i] = cards[rand];
             cards[rand] = tempCard;
@@ -171,7 +167,6 @@ public class CardDeck {
     // cardIndex refers to the index of the card on the top of the draw pile
     public boolean searchDiscardPile(int imageIndex) {
         for(int i = 0; i < numImagesOnCard; i++){
-
             Object drawValue;
             String[] split = ((String) cards[currentCardIndex][imageIndex]).split(",");
             drawValue = split[0];
