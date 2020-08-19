@@ -46,18 +46,18 @@ public class GameConfigs {
 
     public int getCardDeckIndex(CardDeck cardDeck){
         for(int i = 0; i < cardDecks.size(); i++){
-            if(cardDecks.get(i).getNumImagesOnCard() == cardDeck.getNumImagesOnCard()
-                    && cardDecks.get(i).getCardDeckSize() == cardDeck.getCardDeckSize()){
+            if(cardDecks.get(i).getNumImagesPerCard() == cardDeck.getNumImagesPerCard()
+                    && cardDecks.get(i).getNumCards() == cardDeck.getNumCards()){
                 return i;
             }
         }
         return -1;
     }
 
-    public int getCardDeckIndex(int numImages, int cardDeckSize){
+    public int getCardDeckIndex(int numImagesPerCard, int numCards){
         for(int i = 0; i < cardDecks.size(); i++){
-            if(cardDecks.get(i).getNumImagesOnCard() == numImages
-                    && cardDecks.get(i).getCardDeckSize() == cardDeckSize){
+            if(cardDecks.get(i).getNumImagesPerCard() == numImagesPerCard
+                    && cardDecks.get(i).getNumCards() == numCards){
                 return i;
             }
         }

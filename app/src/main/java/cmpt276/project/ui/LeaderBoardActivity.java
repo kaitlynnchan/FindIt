@@ -37,8 +37,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
     private TextView[] scoresTxtView;
     private int numMaxScores;
     private int index;
-    private int numImagesOnCard;
-    private int cardDeckSize;
+    private int numImagesPerCard;
+    private int numCards;
 
     public static Intent makeLaunchIntent(Context context, int index){
         Intent intent = new Intent(context, LeaderBoardActivity.class);
@@ -62,12 +62,12 @@ public class LeaderBoardActivity extends AppCompatActivity {
         numMaxScores = scoresManager.getNumMaxScores();
         scoresTxtView = new TextView[numMaxScores];
 
-        numImagesOnCard = gameConfigs.getCardDecks().get(index).getNumImagesOnCard();
-        cardDeckSize = gameConfigs.getCardDecks().get(index).getCardDeckSize();
+        numImagesPerCard = gameConfigs.getCardDecks().get(index).getNumImagesPerCard();
+        numCards = gameConfigs.getCardDecks().get(index).getNumCards();
 
         setupHighScores();
         setupResetButton();
-        setNumImagesSpinner();
+        setNumImagesPerCardSpinner();
         setNumCardsSpinner();
         setupBackButton();
     }
@@ -154,17 +154,17 @@ public class LeaderBoardActivity extends AppCompatActivity {
         );
     }
 
-    private void setNumImagesSpinner() {
-        Spinner spinner = findViewById(R.id.spinnerNumImagesScores);
+    private void setNumImagesPerCardSpinner() {
+        Spinner spinner = findViewById(R.id.spinnerNumImagesPerCardScores);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.numImagesArray, android.R.layout.simple_spinner_item);
+                this, R.array.numImagesPerCardArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
-                numImagesOnCard = Integer.parseInt(text);
+                numImagesPerCard = Integer.parseInt(text);
                 updateScoresManager();
 
                 setTexts();
@@ -176,9 +176,9 @@ public class LeaderBoardActivity extends AppCompatActivity {
             }
         });
 
-        String[] numImagesArray = getResources().getStringArray(R.array.numImagesArray);
-        for(int i = 0; i < numImagesArray.length; i++){
-            if(numImagesArray[i].equals("" + numImagesOnCard)){
+        String[] numImagesPerArray = getResources().getStringArray(R.array.numImagesPerCardArray);
+        for(int i = 0; i < numImagesPerArray.length; i++){
+            if(numImagesPerArray[i].equals("" + numImagesPerCard)){
                 spinner.setSelection(i);
             }
         }
@@ -186,8 +186,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     private void setNumCardsSpinner() {
         Spinner spinner = findViewById(R.id.spinnerNumCardsScores);
-        final String[] cardDeckSizeArray = getResources().getStringArray(R.array.cardDeckSizeArray);
-        String[] textArray = setTextArray(cardDeckSizeArray);
+        final String[] numCardsArray = getResources().getStringArray(R.array.numCardsArray);
+        String[] textArray = setTextArray(numCardsArray);
 
         ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
                 this, android.R.layout.simple_spinner_item, textArray);
@@ -198,10 +198,10 @@ public class LeaderBoardActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
 
-                if(text.equals(cardDeckSizeArray[0])) {
-                    cardDeckSize = getNumCardsTotal();
+                if(text.equals(numCardsArray[0])) {
+                    numCards = getNumCardsTotal();
                 } else {
-                    cardDeckSize = Integer.parseInt(text);
+                    numCards = Integer.parseInt(text);
                 }
 
                 updateScoresManager();
@@ -216,34 +216,34 @@ public class LeaderBoardActivity extends AppCompatActivity {
         for(int i = 0; i < textArray.length; i++){
             if(i == 0){
                 int numCardsTotal = getNumCardsTotal();
-                if(cardDeckSize == numCardsTotal){
+                if(numCards == numCardsTotal){
                     spinner.setSelection(i);
                 }
-            } else if(textArray[i].equals("" + cardDeckSize)){
+            } else if(textArray[i].equals("" + numCards)){
                 spinner.setSelection(i);
             }
         }
     }
 
-    private String[] setTextArray(String[] cardDeckSizeArray) {
+    private String[] setTextArray(String[] numCardsArray) {
         String[] textArray;
         int numCardsTotal = getNumCardsTotal();
 
         if(numCardsTotal == 7){
-            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 2);
+            textArray = Arrays.copyOfRange(numCardsArray, 0, 2);
         } else if(numCardsTotal == 13){
-            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, 3);
+            textArray = Arrays.copyOfRange(numCardsArray, 0, 3);
         } else{
-            textArray = Arrays.copyOfRange(cardDeckSizeArray, 0, cardDeckSizeArray.length);
+            textArray = Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
         }
         return textArray;
     }
 
     private int getNumCardsTotal() {
         int numCardsTotal;
-        if (numImagesOnCard == 3) {
+        if (numImagesPerCard == 3) {
             numCardsTotal = 7;
-        } else if (numImagesOnCard == 6) {
+        } else if (numImagesPerCard == 6) {
             numCardsTotal = 31;
         } else {
             numCardsTotal = 13;
@@ -252,7 +252,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
     }
 
     private void updateScoresManager() {
-        index = gameConfigs.getCardDeckIndex(numImagesOnCard, cardDeckSize);
+        index = gameConfigs.getCardDeckIndex(numImagesPerCard, numCards);
         scoresManager = new ScoresManager();
         if (index == -1) {
             scoresManager.setNumMaxScores(5);

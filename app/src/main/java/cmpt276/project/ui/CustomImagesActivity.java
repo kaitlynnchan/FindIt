@@ -78,10 +78,10 @@ public class CustomImagesActivity extends AppCompatActivity {
     //  https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupImageTable() {
         final File[] directoryListing = getDirectory(this);
-        int numImages = directoryListing.length;
+        int numCustomImages = directoryListing.length;
         int counter = 0;
         int numCols = 4;
-        int numRows = (int) Math.ceil(numImages / (double) numCols);
+        int numRows = (int) Math.ceil(numCustomImages / (double) numCols);
 
         for (int row = 0; row < numRows; row++) {
             TableRow tableRow = new TableRow(this);
@@ -101,7 +101,7 @@ public class CustomImagesActivity extends AppCompatActivity {
                 ));
                 imageView.setImageResource(R.drawable.empty_image);
 
-                if(counter < numImages){
+                if(counter < numCustomImages){
                     Bitmap bitmap = getBitmap(directoryListing[counter], this);
                     imageView.setImageBitmap(bitmap);
 
@@ -148,8 +148,10 @@ public class CustomImagesActivity extends AppCompatActivity {
         File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
         File dir = new File(directory.toString());
         File[] directoryListing = dir.listFiles();
-        assert directoryListing != null;
-        return directoryListing.length;
+        if(directoryListing != null){
+            return directoryListing.length;
+        }
+        return 0;
     }
 
     private void deleteImageFile(File[] directoryListing, int index) {
@@ -345,7 +347,7 @@ public class CustomImagesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         setResult(Activity.RESULT_OK);
+        super.onBackPressed();
     }
 }

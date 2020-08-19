@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="numCardsArray">
+        <item>@string/all</item>
+        <item>@string/five</item>
+        <item>@string/ten</item>
+        <item>@string/fifteen</item>
+        <item>@string/twenty</item>
+    </string-array>
+    <string name="defaultNumCards">@string/all</string>
+
+    <string-array name="numImagesPerCardArray">
+        <item>@string/three</item>
+        <item>@string/four</item>
+        <item>@string/six</item>
+    </string-array>
+    <string name="defaultNumImagesPerCard">@string/three</string>
+    <string name="minNumImagesPerCard">@string/three</string>
+
+    <string-array name="difficultyModeArray">
+        <item>@string/easy</item>
+        <item>@string/normal</item>
+        <item>@string/hard</item>
+    </string-array>
+    <integer-array name="modeIntegerArray">
+        <item>@string/easy</item>
+        <item>@string/normal</item>
+        <item>@string/hard</item>
+    </integer-array>
+    <string name="defaultDifficultyMode">@string/easy</string>
+
+</resources>

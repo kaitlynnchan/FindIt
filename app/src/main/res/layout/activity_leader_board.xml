@@ -83,14 +83,14 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerNumImagesScores"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerNumImagesPerCardScores"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.77"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/spinnerNumImagesScores" />
+        app:layout_constraintTop_toTopOf="@+id/spinnerNumImagesPerCardScores" />
 
     <Spinner
-        android:id="@+id/spinnerNumImagesScores"
+        android:id="@+id/spinnerNumImagesPerCardScores"
         android:layout_width="60dp"
         android:layout_height="46dp"
 

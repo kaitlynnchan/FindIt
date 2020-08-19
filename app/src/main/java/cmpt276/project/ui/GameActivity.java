@@ -43,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
 
     private Chronometer timer;
     private CardDeck cardDeck;
-    private int numImagesOnCard;
+    private int numImagesPerCard;
     private Button[] drawPile;        // Contains the images of a card from the draw pile
     private Button[] discardPile;     // Contains the images of a card from the discard pile
 
@@ -60,10 +60,10 @@ public class GameActivity extends AppCompatActivity {
         );
 
         cardDeck = CardDeck.getInstance();
-        numImagesOnCard = cardDeck.getNumImagesOnCard();
+        numImagesPerCard = cardDeck.getNumImagesPerCard();
 
-        drawPile = new Button[numImagesOnCard];
-        discardPile = new Button[numImagesOnCard];
+        drawPile = new Button[numImagesPerCard];
+        discardPile = new Button[numImagesPerCard];
 
         setupDrawCard();
         setupDiscardCard();
@@ -76,7 +76,7 @@ public class GameActivity extends AppCompatActivity {
     // Help taken from Brian: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupDrawCard() {
         TableLayout tableDraw = findViewById(R.id.tableLayoutDraw);
-        for(int i = 0; i < numImagesOnCard; i++){
+        for(int i = 0; i < numImagesPerCard; i++){
             final int cardIndex = i;
             Button button = new Button(this);
             button.setLayoutParams(new TableLayout.LayoutParams(
@@ -106,7 +106,7 @@ public class GameActivity extends AppCompatActivity {
     // Help taken from Brian: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupDiscardCard() {
         TableLayout tableDiscard = findViewById(R.id.tableLayoutDiscard);
-        for(int i = 0; i < numImagesOnCard; i++){
+        for(int i = 0; i < numImagesPerCard; i++){
             Button button = new Button(this);
             button.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
@@ -129,7 +129,7 @@ public class GameActivity extends AppCompatActivity {
         MediaPlayer soundIncorrect = MediaPlayer.create(this, R.raw.incorrect_sound);
         if (cardDeck.searchDiscardPile(index)) {
             soundFound.start();
-            if (cardDeck.getCurrentCardIndex() == cardDeck.getCardDeckSize() - 1) {
+            if (cardDeck.getCurrentCardIndex() == cardDeck.getNumCards() - 1) {
                 takeScreenshot(cardDeck.getCurrentCardIndex());
                 stopTimer();
             } else {
@@ -145,7 +145,7 @@ public class GameActivity extends AppCompatActivity {
     // Change the button icons to the appropriate pictures
     // Used code from Brians youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void updateCard() {
-        for (int i = 0; i < numImagesOnCard; i++) {
+        for (int i = 0; i < numImagesPerCard; i++) {
             Object[] objectDraw = cardDeck.getCardObject(cardDeck.getCurrentCardIndex(), i);
             Object[] objectDiscard = cardDeck.getCardObject(cardDeck.getCurrentCardIndex() - 1, i);
 
@@ -160,7 +160,7 @@ public class GameActivity extends AppCompatActivity {
     // Locks the button sizes
     // Taken from Brians youtube videos: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void lockButtonSizes(Button[] pile) {
-        for (int i = 0; i < numImagesOnCard; i++) {
+        for (int i = 0; i < numImagesPerCard; i++) {
             Button button = pile[i];
 
             int height = button.getHeight();
