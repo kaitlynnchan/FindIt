@@ -124,13 +124,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createCardDeck() {
-        int cardDeckSize = OptionsActivity.getCardDeckSize(MainActivity.this);
-        int numImages = OptionsActivity.getNumImages(MainActivity.this);
+        int numCards = OptionsActivity.getNumCards(MainActivity.this);
+        int numImagesPerCard = OptionsActivity.getNumImagesPerCard(MainActivity.this);
         Object[] packArr = OptionsActivity.getPackArray(MainActivity.this);
         Mode difficultyMode = OptionsActivity.getDifficultyMode(MainActivity.this);
 
-        cardDeck.setCardDeckSize(cardDeckSize);
-        cardDeck.setNumImagesOnCard(numImages);
+        cardDeck.setNumCards(numCards);
+        cardDeck.setNumImagesPerCard(numImagesPerCard);
         cardDeck.setDifficultyMode(difficultyMode);
         cardDeck.setCardIndex();
         cardDeck.populateCards(packArr);
