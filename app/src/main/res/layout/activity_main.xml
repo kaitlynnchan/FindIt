@@ -8,7 +8,7 @@
     tools:context=".ui.MainActivity">
 
     <TextView
-        android:id="@+id/textTitle"
+        android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:shadowColor="#000000"
@@ -26,19 +26,19 @@
         app:layout_constraintVertical_bias="0.344" />
 
     <Button
-        android:id="@+id/buttonPlay"
+        android:id="@+id/button_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:text="@string/play"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textTitle"
+        app:layout_constraintEnd_toEndOf="@+id/text_title"
         app:layout_constraintHorizontal_bias="0.31"
-        app:layout_constraintStart_toStartOf="@+id/textTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+        app:layout_constraintStart_toStartOf="@+id/text_title"
+        app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
     <Button
-        android:id="@+id/buttonOptions"
+        android:id="@+id/button_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -49,25 +49,25 @@
         android:paddingBottom="3dp"
         android:text="@string/options"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textTitle"
+        app:layout_constraintEnd_toEndOf="@+id/text_title"
         app:layout_constraintHorizontal_bias="0.059"
-        app:layout_constraintStart_toStartOf="@+id/textTitle"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPlay" />
+        app:layout_constraintStart_toStartOf="@+id/text_title"
+        app:layout_constraintTop_toBottomOf="@+id/button_play" />
 
     <Button
-        android:id="@+id/buttonHelp"
+        android:id="@+id/button_help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@drawable/button_background"
         android:text="@string/help"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonOptions"
-        app:layout_constraintStart_toEndOf="@+id/buttonOptions"
-        app:layout_constraintTop_toTopOf="@+id/buttonOptions" />
+        app:layout_constraintBottom_toBottomOf="@+id/button_options"
+        app:layout_constraintStart_toEndOf="@+id/button_options"
+        app:layout_constraintTop_toTopOf="@+id/button_options" />
 
     <ImageButton
-        android:id="@+id/buttonLeaderBoard"
+        android:id="@+id/image_button_leader_board"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -76,9 +76,9 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:tint="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonPlay"
-        app:layout_constraintStart_toEndOf="@+id/buttonPlay"
-        app:layout_constraintTop_toTopOf="@+id/buttonPlay"
+        app:layout_constraintBottom_toBottomOf="@+id/button_play"
+        app:layout_constraintStart_toEndOf="@+id/button_play"
+        app:layout_constraintTop_toTopOf="@+id/button_play"
         app:srcCompat="@drawable/ic_trophy_black" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

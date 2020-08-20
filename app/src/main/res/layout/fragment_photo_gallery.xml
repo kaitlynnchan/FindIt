@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cmpt276.project.ui.flickr.PhotoGalleryActivity">
+    tools:context=".ui.flickr.PhotoGalleryActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/photo_recycler_view"
+        android:id="@+id/recycler_photo"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
