@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:background="@drawable/button_background"
-        android:contentDescription="@string/imageView"
+        android:contentDescription="@string/leader_board"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:tint="#000000"

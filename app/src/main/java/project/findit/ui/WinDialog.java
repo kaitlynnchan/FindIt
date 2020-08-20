@@ -26,7 +26,7 @@ import project.findit.R;
 /**
  * WIN FRAGMENT
  * Displays win screen, OK button, EXPORT IMAGES button, and allows user to
- *  input a nickname when appropriate
+ *  input a nickname for saving the score
  */
 public class WinDialog extends AppCompatDialogFragment {
 
@@ -40,7 +40,6 @@ public class WinDialog extends AppCompatDialogFragment {
         this.time = time;
     }
 
-    // Used help from Brian's youtube videos: https://www.youtube.com/watch?v=y6StJRn-Y-A&feature=youtu.be
     @SuppressLint("InflateParams")
     @NonNull
     @Override
@@ -58,9 +57,7 @@ public class WinDialog extends AppCompatDialogFragment {
 
         setupButton();
 
-        // Took help from Brians youtube videos: https://www.youtube.com/watch?v=y6StJRn-Y-A&feature=youtu.be
         return new AlertDialog.Builder(getActivity())
-                .setTitle("")
                 .setView(view)
                 .create();
     }

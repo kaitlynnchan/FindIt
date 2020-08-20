@@ -25,7 +25,7 @@ import project.findit.R;
 
 /**
  * OPTIONS SCREEN
- * Allows users to select an image package and mode
+ * Displays options user can choose
  */
 public class OptionsActivity extends AppCompatActivity {
 
@@ -56,8 +56,8 @@ public class OptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option);
         getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         numCustomImages = CustomImagesActivity.getNumCustomImages(this);
 
@@ -109,8 +109,13 @@ public class OptionsActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(modeBtn == buttonWordsImages && getImagePackId(OptionsActivity.this) == imageButtonCustom){
-                    Toast.makeText(OptionsActivity.this, R.string.toast_options_mode, Toast.LENGTH_SHORT).show();
+                if(modeBtn == buttonWordsImages
+                        && getImagePackId(OptionsActivity.this) == imageButtonCustom){
+                    Toast.makeText(
+                            OptionsActivity.this,
+                            R.string.toast_mode_not_supported,
+                            Toast.LENGTH_SHORT)
+                            .show();
                 } else{
                     saveModeId(modeBtn);
 
@@ -131,7 +136,8 @@ public class OptionsActivity extends AppCompatActivity {
 
     private void setNumImagesPerCardSpinner() {
         Spinner spinner = findViewById(R.id.spinner_num_images_per_card);
-        String[] numImagesPerCardArray = getResources().getStringArray(R.array.num_images_per_card_array);
+        String[] numImagesPerCardArray = getResources()
+                .getStringArray(R.array.num_images_per_card_array);
 
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
                 this, android.R.layout.simple_spinner_item, numImagesPerCardArray);
@@ -144,7 +150,11 @@ public class OptionsActivity extends AppCompatActivity {
                 int numImagesPerCard = Integer.parseInt(value);
                 if(numCustomImages < getTotalNumCardsOrImages(numImagesPerCard)
                         && getImagePackId(OptionsActivity.this) == imageButtonCustom){
-                    Toast.makeText(OptionsActivity.this, R.string.toast_options, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            OptionsActivity.this,
+                            R.string.toast_options_not_supported,
+                            Toast.LENGTH_SHORT)
+                            .show();
                     setNumImagesPerCardSpinner();
                 } else{
                     saveNumImagesPerCard(numImagesPerCard);
@@ -178,7 +188,8 @@ public class OptionsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String value = parent.getItemAtPosition(position).toString();
                 if(value.equals(getString(R.string.all))) {
-                    saveNumCards(getTotalNumCardsOrImages(getNumImagesPerCard(OptionsActivity.this)));
+                    saveNumCards(
+                            getTotalNumCardsOrImages(getNumImagesPerCard(OptionsActivity.this)));
                 } else {
                     saveNumCards(Integer.parseInt(value));
                 }
@@ -191,7 +202,8 @@ public class OptionsActivity extends AppCompatActivity {
 
         for(int i = 0; i < numCardsArray.length; i++){
             if(numCardsArray[i].equals(getString(R.string.all))){
-                if(getNumCards(this) == getTotalNumCardsOrImages(getNumImagesPerCard(this))){
+                if(getNumCards(this)
+                        == getTotalNumCardsOrImages(getNumImagesPerCard(this))){
                     spinner.setSelection(i);
                 }
             } else if(numCardsArray[i].equals("" + getNumCards(this))){
@@ -244,52 +256,60 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void saveImagePackId(int imagePack) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_IMAGE_PACK_ID, imagePack);
         editor.apply();
     }
 
     private static int getImagePackId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, DEFAULT_IMAGE_PACK);
     }
 
     private void saveModeId(int mode) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_MODE_ID, mode);
         editor.apply();
     }
 
     private static int getModeId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         return sharedPreferences.getInt(EDITOR_MODE_ID, DEFAULT_MODE_BUTTON);
     }
 
     private void saveNumImagesPerCard(int numImagesPerCard){
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_NUM_IMAGES_PER_CARD, numImagesPerCard);
         editor.apply();
     }
 
     public static int getNumImagesPerCard(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         String defaultValueStr = context.getString(R.string.default_num_images_per_card);
         int defaultValue = Integer.parseInt(defaultValueStr);
         return sharedPreferences.getInt(EDITOR_NUM_IMAGES_PER_CARD, defaultValue);
     }
 
     private void saveNumCards(int numCards){
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_NUM_CARDS, numCards);
         editor.apply();
     }
 
     public static int getNumCards(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         String defaultValueStr = context.getString(R.string.default_num_cards);
         int defaultValue;
         if(defaultValueStr.equals(context.getString(R.string.all))){
@@ -301,14 +321,16 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void saveDifficultyMode(String difficultyMode) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(EDITOR_DIFFICULTY_MODE, difficultyMode);
         editor.apply();
     }
 
     private static String getDifficultyModeStr(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         String defaultValue = context.getString(R.string.default_difficulty_mode);
         return sharedPreferences.getString(EDITOR_DIFFICULTY_MODE, defaultValue);
     }
@@ -330,26 +352,27 @@ public class OptionsActivity extends AppCompatActivity {
         if(imageButtonID == imageButtonCustom){
             packArr = CustomImagesActivity.getCustomArr(context);
         } else if(imageButtonID == imageButtonVegs){
-            packArr =  new Object[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
-                    R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
-                    R.drawable.artichoke, R.drawable.asparagus, R.drawable.cabbage,
-                    R.drawable.cauliflower, R.drawable.celery, R.drawable.corn, R.drawable.cucumber,
+            packArr =  new Object[]{R.drawable.artichoke, R.drawable.asparagus, R.drawable.broccoli,
+                    R.drawable.cabbage, R.drawable.carrot, R.drawable.cauliflower,
+                    R.drawable.celery, R.drawable.corn, R.drawable.cucumber, R.drawable.eggplant,
                     R.drawable.garlic, R.drawable.ginger, R.drawable.green_bell_pepper,
-                    R.drawable.kale, R.drawable.leek, R.drawable.okra, R.drawable.parsnip,
-                    R.drawable.peas, R.drawable.potato, R.drawable.red_bell_pepper,
+                    R.drawable.kale, R.drawable.leek, R.drawable.lettuce, R.drawable.mushroom,
+                    R.drawable.okra, R.drawable.onion, R.drawable.parsnip, R.drawable.peas,
+                    R.drawable.potato, R.drawable.radish, R.drawable.red_bell_pepper,
                     R.drawable.red_cabbage, R.drawable.red_onion, R.drawable.spinach,
                     R.drawable.turnip, R.drawable.yam, R.drawable.yellow_bell_pepper,
                     R.drawable.zucchini};
         } else{
-            packArr = new Object[]{R.drawable.red_apple, R.drawable.green_apple, R.drawable.lemon,
-                    R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
-                    R.drawable.watermelon, R.drawable.avocado, R.drawable.banana, R.drawable.blackberry,
+            packArr = new Object[]{R.drawable.avocado, R.drawable.banana, R.drawable.blackberry,
                     R.drawable.blueberry, R.drawable.cherry, R.drawable.coconut,
-                    R.drawable.cranberry, R.drawable.dragon_fruit, R.drawable.durian, R.drawable.fig,
-                    R.drawable.grapefruit, R.drawable.grapes, R.drawable.kiwi,
-                    R.drawable.melon, R.drawable.papaya, R.drawable.peach, R.drawable.pear,
-                    R.drawable.pineapple, R.drawable.plum, R.drawable.pomegranate,
-                    R.drawable.raspberry, R.drawable.squash, R.drawable.starfruit, R.drawable.strawberry};
+                    R.drawable.cranberry, R.drawable.dragon_fruit, R.drawable.durian,
+                    R.drawable.fig, R.drawable.grapefruit, R.drawable.grapes,
+                    R.drawable.green_apple, R.drawable.kiwi, R.drawable.lemon, R.drawable.mango,
+                    R.drawable.melon, R.drawable.orange, R.drawable.papaya, R.drawable.peach,
+                    R.drawable.pear, R.drawable.pineapple, R.drawable.plum, R.drawable.pomegranate,
+                    R.drawable.pumpkin, R.drawable.raspberry, R.drawable.red_apple,
+                    R.drawable.squash, R.drawable.starfruit, R.drawable.strawberry,
+                    R.drawable.watermelon};
         }
 
         if(getModeId(context) == buttonWordsImages){
@@ -376,7 +399,9 @@ public class OptionsActivity extends AppCompatActivity {
                 saveImagePackId(imageButtonCustom);
 
                 if(numCustomImages < getTotalNumCardsOrImages(getNumImagesPerCard(this))){
-                    Toast.makeText(this, R.string.toast_options, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            this, R.string.toast_options_not_supported, Toast.LENGTH_SHORT)
+                            .show();
 
                     int maxNumImagesPerCard = getMaxNumImagesPerCard();
                     saveNumImagesPerCard(maxNumImagesPerCard);
@@ -385,13 +410,17 @@ public class OptionsActivity extends AppCompatActivity {
                 }
 
                 if(getModeId(this) == buttonWordsImages){
-                    Toast.makeText(this, R.string.toast_options_mode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            this, R.string.toast_mode_not_supported, Toast.LENGTH_SHORT)
+                            .show();
                     saveModeId(DEFAULT_MODE_BUTTON);
                     setModeButton(buttonImages);
                     setModeButton(buttonWordsImages);
                 }
             } else{
-                Toast.makeText(this, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        this, R.string.toast_not_enough_images, Toast.LENGTH_SHORT)
+                        .show();
                 if(getImagePackId(this) == imageButtonCustom){
                     saveImagePackId(DEFAULT_IMAGE_PACK);
                 }
@@ -404,7 +433,8 @@ public class OptionsActivity extends AppCompatActivity {
 
     private int getMaxNumImagesPerCard() {
         int temp = Integer.parseInt(getString(R.string.default_num_images_per_card));
-        String[] numImagesPerCardArray = getResources().getStringArray(R.array.num_images_per_card_array);
+        String[] numImagesPerCardArray = getResources()
+                .getStringArray(R.array.num_images_per_card_array);
         for (String s : numImagesPerCardArray) {
             if (getTotalNumCardsOrImages(Integer.parseInt(s)) <= numCustomImages) {
                 temp = Integer.parseInt(s);

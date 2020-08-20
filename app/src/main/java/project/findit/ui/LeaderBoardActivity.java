@@ -51,8 +51,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leader_board);
         getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Intent intent = getIntent();
         index = intent.getIntExtra(EXTRA_INDEX, -1);
@@ -128,25 +128,31 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     public static void setDefaultScores(Context context, ScoresManager scoresManager){
         scoresManager.addScore(new Score(
-                250, context.getString(R.string.no_answer), context.getString(R.string.date_format)
-        ));
+                250,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format)));
         scoresManager.addScore(new Score(
-                400, context.getString(R.string.no_answer), context.getString(R.string.date_format)
-        ));
+                400,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format)));
         scoresManager.addScore( new Score(
-                20, context.getString(R.string.no_answer), context.getString(R.string.date_format)
-        ));
+                20,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format)));
         scoresManager.addScore(new Score(
-                25, context.getString(R.string.no_answer), context.getString(R.string.date_format)
-        ));
+                25,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format)));
         scoresManager.addScore(new Score(
-                18, context.getString(R.string.no_answer), context.getString(R.string.date_format)
-        ));
+                18,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format)));
     }
 
     private void setNumImagesPerCardSpinner() {
         Spinner spinner = findViewById(R.id.spinner_num_images_per_card);
-        String[] numImagesPerCardArray = getResources().getStringArray(R.array.num_images_per_card_array);
+        String[] numImagesPerCardArray = getResources()
+                .getStringArray(R.array.num_images_per_card_array);
 
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
                 this, android.R.layout.simple_spinner_item, numImagesPerCardArray);
