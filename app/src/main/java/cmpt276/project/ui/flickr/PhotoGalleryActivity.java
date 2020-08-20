@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 /**
+ * PHOTO GALLERY
  * This activity calls the Photogallery fragment
  */
 public class PhotoGalleryActivity extends SingleFragmentActivity {

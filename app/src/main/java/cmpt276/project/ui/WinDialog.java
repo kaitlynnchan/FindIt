@@ -28,7 +28,7 @@ import cmpt276.project.model.ScoresManager;
  * Displays win screen, OK button, EXPORT IMAGES button, and allows user to
  *  input a nickname when appropriate
  */
-public class WinFragment extends AppCompatDialogFragment {
+public class WinDialog extends AppCompatDialogFragment {
 
     private View view;
     private int time;
@@ -36,7 +36,7 @@ public class WinFragment extends AppCompatDialogFragment {
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
 
-    public WinFragment(int time){
+    public WinDialog(int time){
         this.time = time;
     }
 
@@ -45,14 +45,14 @@ public class WinFragment extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
-        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_win, null);
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_win, null);
         CardDeck cardDeck = CardDeck.getInstance();
         gameConfigs = GameConfigs.getInstance();
         index = gameConfigs.getCardDeckIndex(cardDeck);
         scoresManager = gameConfigs.getScoreManager(index);
 
         if(time < scoresManager.getScore(0).getTimeBySeconds()){
-            TextView txtHighScore = view.findViewById(R.id.textNewHighScore);
+            TextView txtHighScore = view.findViewById(R.id.text_new_high_score);
             txtHighScore.setVisibility(View.VISIBLE);
         }
 
@@ -66,11 +66,11 @@ public class WinFragment extends AppCompatDialogFragment {
     }
 
     private void setupButton() {
-        Button buttonOk = view.findViewById(R.id.buttonOK);
+        Button buttonOk = view.findViewById(R.id.button_ok);
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText userNameEntry = view.findViewById(R.id.editTextNickname);
+                EditText userNameEntry = view.findViewById(R.id.edit_text_nickname);
                 String userName = userNameEntry.getText().toString();
                 if(userName.isEmpty()){
                     userName = getString(R.string.no_answer);
@@ -90,7 +90,7 @@ public class WinFragment extends AppCompatDialogFragment {
             }
         });
 
-        Button buttonExport = view.findViewById(R.id.buttonExport);
+        Button buttonExport = view.findViewById(R.id.button_export);
         buttonExport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -7,7 +7,7 @@
     android:background="@color/colorLightGreen">
 
     <ImageView
-        android:id="@+id/imageRedApple"
+        android:id="@+id/image_red_apple"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/red_apple" />
 
     <ImageView
-        android:id="@+id/imageWatermelon"
+        android:id="@+id/image_watermelon"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -33,7 +33,7 @@
         app:srcCompat="@drawable/watermelon" />
 
     <ImageView
-        android:id="@+id/imagePumpkin"
+        android:id="@+id/image_pumpkin"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -46,7 +46,7 @@
         app:srcCompat="@drawable/pumpkin" />
 
     <ImageView
-        android:id="@+id/imageOrange"
+        android:id="@+id/image_orange"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -59,7 +59,7 @@
         app:srcCompat="@drawable/orange" />
 
     <ImageView
-        android:id="@+id/imageMango"
+        android:id="@+id/image_mango"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -72,7 +72,7 @@
         app:srcCompat="@drawable/mango" />
 
     <ImageView
-        android:id="@+id/imageLemon"
+        android:id="@+id/image_lemon"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -85,7 +85,7 @@
         app:srcCompat="@drawable/lemon" />
 
     <ImageView
-        android:id="@+id/imageGreenApple"
+        android:id="@+id/image_green_apple"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -98,7 +98,7 @@
         app:srcCompat="@drawable/green_apple" />
 
     <ImageView
-        android:id="@+id/imageEggplant"
+        android:id="@+id/image_eggplant"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -111,7 +111,7 @@
         app:srcCompat="@drawable/eggplant" />
 
     <ImageView
-        android:id="@+id/imageCarrot"
+        android:id="@+id/image_carrot"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -124,7 +124,7 @@
         app:srcCompat="@drawable/carrot" />
 
     <ImageView
-        android:id="@+id/imageBroccoli"
+        android:id="@+id/image_broccoli"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -137,7 +137,7 @@
         app:srcCompat="@drawable/broccoli" />
 
     <ImageView
-        android:id="@+id/imageRadish"
+        android:id="@+id/image_radish"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -150,7 +150,7 @@
         app:srcCompat="@drawable/radish" />
 
     <ImageView
-        android:id="@+id/imageOnion"
+        android:id="@+id/image_onion"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -163,7 +163,7 @@
         app:srcCompat="@drawable/onion" />
 
     <ImageView
-        android:id="@+id/imageMushroom"
+        android:id="@+id/image_mushroom"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -176,7 +176,7 @@
         app:srcCompat="@drawable/mushroom" />
 
     <ImageView
-        android:id="@+id/imageLettuce"
+        android:id="@+id/image_lettuce"
         android:layout_width="48dp"
         android:layout_height="47dp"
         android:contentDescription="@string/imageView"
@@ -189,7 +189,7 @@
         app:srcCompat="@drawable/lettuce" />
 
     <Button
-        android:id="@+id/buttonOK"
+        android:id="@+id/button_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -201,7 +201,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/buttonExport"
+        android:id="@+id/button_export"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -225,7 +225,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textWinTitle"
+            android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/you_win"
@@ -236,18 +236,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textNickname"
+            android:id="@+id/text_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/enter_your_name"
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/editTextNickname"
-            app:layout_constraintTop_toBottomOf="@+id/textWinTitle" />
+            app:layout_constraintStart_toStartOf="@+id/edit_text_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
         <EditText
-            android:id="@+id/editTextNickname"
+            android:id="@+id/edit_text_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -259,10 +259,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textNickname" />
+            app:layout_constraintTop_toBottomOf="@+id/text_nickname" />
 
         <TextView
-            android:id="@+id/textNewHighScore"
+            android:id="@+id/text_new_high_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -272,8 +272,8 @@
             android:textSize="18sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textWinTitle"
-            app:layout_constraintTop_toTopOf="@+id/textWinTitle" />
+            app:layout_constraintStart_toStartOf="@+id/text_title"
+            app:layout_constraintTop_toTopOf="@+id/text_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

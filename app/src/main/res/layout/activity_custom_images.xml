@@ -8,7 +8,7 @@
     android:background="@drawable/garden">
 
     <Button
-        android:id="@+id/buttonBack"
+        android:id="@+id/button_back"
         android:layout_width="40dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonLaunchFlickr"
+        android:id="@+id/button_launch_flickr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -35,7 +35,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonLaunchGallery"
+        android:id="@+id/button_launch_gallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -49,21 +49,21 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
-        android:id="@+id/scrollViewImages"
+        android:id="@+id/scroll_images"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="64dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLaunchGallery"
+        app:layout_constraintBottom_toTopOf="@+id/button_launch_gallery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/linearLayoutImages"
+            android:id="@+id/linear_images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
@@ -71,15 +71,15 @@
 
     <!-- https://stackoverflow.com/questions/5442183/using-the-animated-circle-in-an-imageview-while-loading-stuff -->
     <RelativeLayout
-        android:id="@+id/layoutLoadingPanel"
+        android:id="@+id/relative_loading_panel"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/scrollViewImages"
-        app:layout_constraintEnd_toEndOf="@+id/scrollViewImages"
-        app:layout_constraintStart_toStartOf="@+id/scrollViewImages"
-        app:layout_constraintTop_toTopOf="@+id/scrollViewImages" >
+        app:layout_constraintBottom_toBottomOf="@+id/scroll_images"
+        app:layout_constraintEnd_toEndOf="@+id/scroll_images"
+        app:layout_constraintStart_toStartOf="@+id/scroll_images"
+        app:layout_constraintTop_toTopOf="@+id/scroll_images" >
 
         <ProgressBar
             android:layout_width="201dp"

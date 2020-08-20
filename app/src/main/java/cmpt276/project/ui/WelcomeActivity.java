@@ -51,30 +51,30 @@ public class WelcomeActivity extends AppCompatActivity {
         final int HEIGHT = displayMetrics.heightPixels;
         final int NEGATIVE_HEIGHT = HEIGHT * -1;
 
-        View overlay = findViewById(R.id.viewOverlay);
-        TextView title = findViewById(R.id.textTitle);
-        TextView authors = findViewById(R.id.textAuthors);
-        ImageView magnifyGlass = findViewById(R.id.imageMagnifyGlass);
+        View overlay = findViewById(R.id.view_overlay);
+        TextView title = findViewById(R.id.text_title);
+        TextView authors = findViewById(R.id.text_authors);
+        ImageView magnifyGlass = findViewById(R.id.image_magnify_glass);
 
         overlay.setY(NEGATIVE_HEIGHT);
         title.setY(NEGATIVE_HEIGHT);
         authors.setY(NEGATIVE_HEIGHT);
         magnifyGlass.setY(NEGATIVE_HEIGHT);
 
-        ImageView appleRed = findViewById(R.id.imageRedApple);
-        ImageView lettuce = findViewById(R.id.imageLettuce);
-        ImageView carrot = findViewById(R.id.imageCarrot);
-        ImageView eggplant = findViewById(R.id.imageEggplant);
-        ImageView appleGreen = findViewById(R.id.imageAppleGreen);
-        ImageView broccoli = findViewById(R.id.imageBroccoli);
-        ImageView lemon = findViewById(R.id.imageLemon);
-        ImageView mango = findViewById(R.id.imageMango);
-        ImageView mushroom = findViewById(R.id.imageMushroom);
-        ImageView onion = findViewById(R.id.imageOnion);
-        ImageView orange = findViewById(R.id.imageOrange);
-        ImageView pumpkin = findViewById(R.id.imagePumpkin);
-        ImageView radish = findViewById(R.id.imageRadish);
-        ImageView watermelon = findViewById(R.id.imageWatermelon);
+        ImageView appleRed = findViewById(R.id.image_red_apple);
+        ImageView lettuce = findViewById(R.id.image_lettuce);
+        ImageView carrot = findViewById(R.id.image_carrot);
+        ImageView eggplant = findViewById(R.id.image_eggplant);
+        ImageView appleGreen = findViewById(R.id.image_green_apple);
+        ImageView broccoli = findViewById(R.id.image_broccoli);
+        ImageView lemon = findViewById(R.id.image_lemon);
+        ImageView mango = findViewById(R.id.image_mango);
+        ImageView mushroom = findViewById(R.id.image_mushroom);
+        ImageView onion = findViewById(R.id.image_onion);
+        ImageView orange = findViewById(R.id.image_orange);
+        ImageView pumpkin = findViewById(R.id.image_pumpkin);
+        ImageView radish = findViewById(R.id.image_radish);
+        ImageView watermelon = findViewById(R.id.image_watermelon);
 
         // Animation
         TranslateAnimation moveDown = new TranslateAnimation(0, 0, 0, HEIGHT);
@@ -102,7 +102,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void setupSkipButton() {
-        Button buttonSkip = findViewById(R.id.buttonSkip);
+        Button buttonSkip = findViewById(R.id.button_skip);
         buttonSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +118,5 @@ public class WelcomeActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         handler.removeCallbacksAndMessages(null);
-        finish();
     }
 }

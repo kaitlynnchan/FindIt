@@ -66,8 +66,8 @@ public class CustomImagesActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
 
-        linearLayoutImages = findViewById(R.id.linearLayoutImages);
-        layoutLoadingPanel = findViewById(R.id.layoutLoadingPanel);
+        linearLayoutImages = findViewById(R.id.linear_images);
+        layoutLoadingPanel = findViewById(R.id.relative_loading_panel);
 
         setupImageTable();
         setupLaunchButtons();
@@ -295,7 +295,7 @@ public class CustomImagesActivity extends AppCompatActivity {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                     fos.close();
                 } catch (Exception e) {
-                    Log.e(PhotoGalleryFragment.LOG_SAVE_IMAGE, e.getMessage(), e);
+                    Log.e(PhotoGalleryFragment.TAG_SAVE_IMAGE, e.getMessage(), e);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -312,7 +312,7 @@ public class CustomImagesActivity extends AppCompatActivity {
     }
 
     private void setupLaunchButtons() {
-        Button buttonLaunchFlickr = findViewById(R.id.buttonLaunchFlickr);
+        Button buttonLaunchFlickr = findViewById(R.id.button_launch_flickr);
         buttonLaunchFlickr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -323,7 +323,7 @@ public class CustomImagesActivity extends AppCompatActivity {
 
         // Got help from:
         //  https://stackoverflow.com/questions/19585815/select-multiple-images-from-android-gallery
-        Button buttonLaunchGallery = findViewById(R.id.buttonLaunchGallery);
+        Button buttonLaunchGallery = findViewById(R.id.button_launch_gallery);
         buttonLaunchGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -335,7 +335,7 @@ public class CustomImagesActivity extends AppCompatActivity {
             }
         });
 
-        Button buttonBack = findViewById(R.id.buttonBack);
+        Button buttonBack = findViewById(R.id.button_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -32,9 +32,9 @@ import cmpt276.project.model.ScoresManager;
  */
 public class MainActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFS_GAMES = "shared_preferences_games";
-    public static final String EDITOR_CARD_DECKS = "card_decks";
-    public static final String EDITOR_SCORES_MANAGERS = "scores_managers";
+    public static final String SHARED_PREFS_GAMES = "shared_prefs_games";
+    public static final String EDITOR_CARD_DECKS = "editor_card_decks";
+    public static final String EDITOR_SCORES_MANAGERS = "editor_scores_managers";
 
     private CardDeck cardDeck;
     private GameConfigs gameConfigs;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        Button buttonPlay = findViewById(R.id.buttonPlay);
+        Button buttonPlay = findViewById(R.id.button_play);
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton buttonLeaderBoard = findViewById(R.id.buttonLeaderBoard);
+        ImageButton buttonLeaderBoard = findViewById(R.id.image_button_leader_board);
         buttonLeaderBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button buttonOptions = findViewById(R.id.buttonOptions);
+        Button buttonOptions = findViewById(R.id.button_options);
         buttonOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button buttonHelp = findViewById(R.id.buttonHelp);
+        Button buttonHelp = findViewById(R.id.button_help);
         buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,14 +126,14 @@ public class MainActivity extends AppCompatActivity {
     private void createCardDeck() {
         int numCards = OptionsActivity.getNumCards(MainActivity.this);
         int numImagesPerCard = OptionsActivity.getNumImagesPerCard(MainActivity.this);
-        Object[] packArr = OptionsActivity.getPackArray(MainActivity.this);
         Mode difficultyMode = OptionsActivity.getDifficultyMode(MainActivity.this);
+        Object[] packArr = OptionsActivity.getPackArray(MainActivity.this);
 
         cardDeck.setNumCards(numCards);
         cardDeck.setNumImagesPerCard(numImagesPerCard);
         cardDeck.setDifficultyMode(difficultyMode);
-        cardDeck.setCardIndex();
         cardDeck.populateCards(packArr);
+        cardDeck.setCardIndex();
     }
 
     private void setupSavedScores() {
