@@ -27,8 +27,7 @@ import project.findit.R;
 
 /**
  * MAIN MENU
- * Includes play, options, help, and leader board
- *  buttons to navigate through the app
+ * Includes buttons to navigate through the app
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -48,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         cardDeck = CardDeck.getInstance();
         gameConfigs = GameConfigs.getInstance();
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         cardDeck.setNumImagesPerCard(numImagesPerCard);
         cardDeck.setDifficultyMode(difficultyMode);
         cardDeck.populateCards(packArr);
-        cardDeck.setCardIndex();
+        cardDeck.resetCurrentIndex();
     }
 
     private void setupSavedScores() {
@@ -150,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void saveGameConfigs(Context context, GameConfigs gameConfigs) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                SHARED_PREFS_GAMES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(gameConfigs.getCardDecks());

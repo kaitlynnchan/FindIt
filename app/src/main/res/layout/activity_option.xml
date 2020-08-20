@@ -14,6 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_background"
+        android:contentDescription="@string/back"
         android:foreground="@drawable/ic_arrow_back"
         android:foregroundGravity="center_vertical|right"
         android:foregroundTint="#000000"
@@ -52,7 +53,7 @@
                 android:layout_width="104dp"
                 android:layout_height="90dp"
                 android:background="@drawable/button_background"
-                android:contentDescription="@string/imageView"
+                android:contentDescription="@string/image_content_description"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/vegs" />
 
@@ -62,7 +63,7 @@
                 android:layout_height="90dp"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/button_background"
-                android:contentDescription="@string/imageView"
+                android:contentDescription="@string/image_content_description"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/fruits" />
 
@@ -72,7 +73,7 @@
                 android:layout_height="90dp"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/button_background"
-                android:contentDescription="@string/imageView"
+                android:contentDescription="@string/image_content_description"
                 android:paddingTop="18dp"
                 android:paddingBottom="18dp"
                 android:scaleType="fitCenter"
@@ -159,7 +160,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@drawable/button_background"
-        android:text="@string/mode_images"
+        android:text="@string/images"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/text_mode"
         app:layout_constraintStart_toEndOf="@+id/text_mode"
@@ -171,7 +172,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@drawable/button_background"
-        android:text="@string/mode_words_and_images"
+        android:text="@string/words_and_images"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/button_images"
         app:layout_constraintStart_toEndOf="@+id/button_images"
@@ -197,7 +198,6 @@
         android:layout_width="85dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
-
         android:background="@drawable/button_background"
         android:foreground="@drawable/ic_arrow_down"
         android:foregroundGravity="center_vertical|right"
