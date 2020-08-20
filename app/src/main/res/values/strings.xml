@@ -148,4 +148,5 @@
     <string name="easy">Easy</string>
     <string name="normal">Normal</string>
     <string name="hard">Hard</string>
+    <string name="title_flickr">Flickr</string>
 </resources>

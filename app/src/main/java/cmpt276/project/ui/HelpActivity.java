@@ -33,10 +33,10 @@ public class HelpActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
 
-        TextView textContent = findViewById(R.id.textContent);
+        TextView textContent = findViewById(R.id.text_content);
         textContent.setMovementMethod(LinkMovementMethod.getInstance());
 
-        Button buttonBack = findViewById(R.id.buttonBack);
+        Button buttonBack = findViewById(R.id.button_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -29,20 +29,20 @@ import cmpt276.project.model.Mode;
  */
 public class OptionsActivity extends AppCompatActivity {
 
-    private static final String SHARED_PREFS_OPTIONS = "shared_preferences_options";
-    private static final String EDITOR_IMAGE_PACK_ID = "id_image_pack";
-    private static final String EDITOR_NUM_IMAGES_PER_CARD = "num_images_per_card";
-    private static final String EDITOR_NUM_CARDS = "num_cards";
-    private static final String EDITOR_MODE_ID = "id_mode_button";
-    private static final String EDITOR_DIFFICULTY_MODE = "difficulty_mode_string";
+    private static final String SHARED_PREFS_OPTIONS = "shared_prefs_options";
+    private static final String EDITOR_IMAGE_PACK_ID = "editor_image_pack_id";
+    private static final String EDITOR_NUM_IMAGES_PER_CARD = "editor_num_images_per_card";
+    private static final String EDITOR_NUM_CARDS = "editor_num_cards";
+    private static final String EDITOR_MODE_ID = "editor_mode_id";
+    private static final String EDITOR_DIFFICULTY_MODE = "editor_difficulty_mode";
     private static final int REQUEST_CODE_CUSTOM = 42;
 
-    private static int imgButtonFruits = R.id.imgButtonFruits;
-    private static int imgButtonVegs = R.id.imgButtonVegs;
-    private static int imgButtonCustom = R.id.imgButtonCustom;
-    private static int buttonImages = R.id.buttonImages;
-    private static int buttonWordsImages = R.id.buttonWordsImages;
-    private static final int DEFAULT_IMAGE_PACK = imgButtonFruits;
+    private static int imageButtonFruits = R.id.image_button_fruits;
+    private static int imageButtonVegs = R.id.image_button_vegs;
+    private static int imageButtonCustom = R.id.image_button_custom;
+    private static int buttonImages = R.id.button_images;
+    private static int buttonWordsImages = R.id.button_words_images;
+    private static final int DEFAULT_IMAGE_PACK = imageButtonFruits;
     private static final int DEFAULT_MODE_BUTTON = buttonImages;
 
     private static int numCustomImages;
@@ -61,11 +61,11 @@ public class OptionsActivity extends AppCompatActivity {
 
         numCustomImages = CustomImagesActivity.getNumCustomImages(this);
 
-        setupImageButton(imgButtonFruits);
-        setupImageButton(imgButtonVegs);
-        setupImageButton(imgButtonCustom);
-        setupModeButton(buttonImages);
-        setupModeButton(buttonWordsImages);
+        setImageButton(imageButtonFruits);
+        setImageButton(imageButtonVegs);
+        setImageButton(imageButtonCustom);
+        setModeButton(buttonImages);
+        setModeButton(buttonWordsImages);
 
         setNumImagesPerCardSpinner();
         setNumCardsSpinner();
@@ -74,23 +74,23 @@ public class OptionsActivity extends AppCompatActivity {
         setupBackButton();
     }
 
-    private void setupImageButton(final int imageId) {
+    private void setImageButton(final int imageId) {
         ImageButton button = findViewById(imageId);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(imageId == imgButtonCustom){
+                if(imageId == imageButtonCustom){
                     Intent intent = CustomImagesActivity.makeLaunchIntent(OptionsActivity.this);
                     startActivityForResult(intent, REQUEST_CODE_CUSTOM);
-                    if(getImagePackId(OptionsActivity.this) == imgButtonCustom){
+                    if(getImagePackId(OptionsActivity.this) == imageButtonCustom){
                         saveImagePackId(DEFAULT_IMAGE_PACK);
                     }
                 } else{
                     saveImagePackId(imageId);
 
-                    setupImageButton(imgButtonFruits);
-                    setupImageButton(imgButtonVegs);
-                    setupImageButton(imgButtonCustom);
+                    setImageButton(imageButtonFruits);
+                    setImageButton(imageButtonVegs);
+                    setImageButton(imageButtonCustom);
                 }
             }
         });
@@ -104,30 +104,18 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
-    private void saveImagePackId(int imagePack) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_IMAGE_PACK_ID, imagePack);
-        editor.apply();
-    }
-
-    private static int getImagePackId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, DEFAULT_IMAGE_PACK);
-    }
-
-    private void setupModeButton(final int modeBtn) {
+    private void setModeButton(final int modeBtn) {
         Button button = findViewById(modeBtn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(modeBtn == buttonWordsImages && getImagePackId(OptionsActivity.this) == imgButtonCustom){
+                if(modeBtn == buttonWordsImages && getImagePackId(OptionsActivity.this) == imageButtonCustom){
                     Toast.makeText(OptionsActivity.this, R.string.toast_options_mode, Toast.LENGTH_SHORT).show();
                 } else{
                     saveModeId(modeBtn);
 
-                    setupModeButton(buttonImages);
-                    setupModeButton(buttonWordsImages);
+                    setModeButton(buttonImages);
+                    setModeButton(buttonWordsImages);
                 }
             }
         });
@@ -141,58 +129,9 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
-    private void saveModeId(int mode) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_MODE_ID, mode);
-        editor.apply();
-    }
-
-    private static int getModeId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_MODE_ID, DEFAULT_MODE_BUTTON);
-    }
-
-    public static Object[] getPackArray(Context context){
-        int imageButtonID = getImagePackId(context);
-        Object[] packArr;
-        if(imageButtonID == imgButtonCustom){
-            packArr = CustomImagesActivity.getCustomArr(context);
-        } else if(imageButtonID == imgButtonVegs){
-            packArr =  new Object[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
-                    R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
-                    R.drawable.artichoke, R.drawable.asparagus, R.drawable.cabbage,
-                    R.drawable.cauliflower, R.drawable.celery, R.drawable.corn, R.drawable.cucumber,
-                    R.drawable.garlic, R.drawable.ginger, R.drawable.green_bell_pepper,
-                    R.drawable.kale, R.drawable.leek, R.drawable.okra, R.drawable.parsnip,
-                    R.drawable.peas, R.drawable.potato, R.drawable.red_bell_pepper,
-                    R.drawable.red_cabbage, R.drawable.red_onion, R.drawable.spinach,
-                    R.drawable.turnip, R.drawable.yam, R.drawable.yellow_bell_pepper,
-                    R.drawable.zucchini};
-        } else{
-            packArr = new Object[]{R.drawable.red_apple, R.drawable.green_apple, R.drawable.lemon,
-                    R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
-                    R.drawable.watermelon, R.drawable.avocado, R.drawable.banana, R.drawable.blackberry,
-                    R.drawable.blueberry, R.drawable.cherry, R.drawable.coconut,
-                    R.drawable.cranberry, R.drawable.dragon_fruit, R.drawable.durian, R.drawable.fig,
-                    R.drawable.grapefruit, R.drawable.grapes, R.drawable.kiwi,
-                    R.drawable.melon, R.drawable.papaya, R.drawable.peach, R.drawable.pear,
-                    R.drawable.pineapple, R.drawable.plum, R.drawable.pomegranate,
-                    R.drawable.raspberry, R.drawable.squash, R.drawable.starfruit, R.drawable.strawberry};
-        }
-
-        if(getModeId(context) == buttonWordsImages){
-            for(int i = 0; i < packArr.length; i++){
-                String temp = context.getResources().getResourceEntryName((int) packArr[i]);
-                packArr[i] += "," + temp.replace("_", " ");
-            }
-        }
-        return packArr;
-    }
-
     private void setNumImagesPerCardSpinner() {
-        Spinner spinner = findViewById(R.id.spinnerNumImagesPerCard);
-        String[] numImagesPerCardArray = getResources().getStringArray(R.array.numImagesPerCardArray);
+        Spinner spinner = findViewById(R.id.spinner_num_images_per_card);
+        String[] numImagesPerCardArray = getResources().getStringArray(R.array.num_images_per_card_array);
 
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
                 this, android.R.layout.simple_spinner_item, numImagesPerCardArray);
@@ -204,7 +143,7 @@ public class OptionsActivity extends AppCompatActivity {
                 String value = parent.getItemAtPosition(position).toString();
                 int numImagesPerCard = Integer.parseInt(value);
                 if(numCustomImages < getTotalNumCardsOrImages(numImagesPerCard)
-                        && getImagePackId(OptionsActivity.this) == imgButtonCustom){
+                        && getImagePackId(OptionsActivity.this) == imageButtonCustom){
                     Toast.makeText(OptionsActivity.this, R.string.toast_options, Toast.LENGTH_SHORT).show();
                     setNumImagesPerCardSpinner();
                 } else{
@@ -225,23 +164,9 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
-    private void saveNumImagesPerCard(int numImagesPerCard){
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_NUM_IMAGES_PER_CARD, numImagesPerCard);
-        editor.apply();
-    }
-
-    public static int getNumImagesPerCard(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        String defaultValueStr = context.getResources().getString(R.string.defaultNumImagesPerCard);
-        int defaultValue = Integer.parseInt(defaultValueStr);
-        return sharedPreferences.getInt(EDITOR_NUM_IMAGES_PER_CARD, defaultValue);
-    }
-
     private void setNumCardsSpinner() {
-        Spinner spinner = findViewById(R.id.spinnerNumCards);
-        String[] numCardsArray = getResources().getStringArray(R.array.numCardsArray);
+        Spinner spinner = findViewById(R.id.spinner_num_cards);
+        String[] numCardsArray = getResources().getStringArray(R.array.num_cards_array);
         numCardsArray = setRangeArray(numCardsArray);
 
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
@@ -253,7 +178,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String value = parent.getItemAtPosition(position).toString();
                 if(value.equals(getString(R.string.all))) {
-                    saveNumCards(getTotalNumCardsOrImages(getNumImagesPerCard(getBaseContext())));
+                    saveNumCards(getTotalNumCardsOrImages(getNumImagesPerCard(OptionsActivity.this)));
                 } else {
                     saveNumCards(Integer.parseInt(value));
                 }
@@ -291,28 +216,9 @@ public class OptionsActivity extends AppCompatActivity {
         return (numImagesPerCard * numImagesPerCard) - numImagesPerCard + 1;
     }
 
-    private void saveNumCards(int numCards){
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(EDITOR_NUM_CARDS, numCards);
-        editor.apply();
-    }
-
-    public static int getNumCards(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        String defaultValueStr = context.getResources().getString(R.string.defaultNumCards);
-        int defaultValue;
-        if(defaultValueStr.equals(context.getString(R.string.all))){
-            defaultValue = getTotalNumCardsOrImages(getNumImagesPerCard(context));
-        } else{
-            defaultValue = Integer.parseInt(defaultValueStr);
-        }
-        return sharedPreferences.getInt(EDITOR_NUM_CARDS, defaultValue);
-    }
-
     private void setDifficultyModeSpinner() {
-        Spinner spinner = findViewById(R.id.difficultyModeSpinner);
-        String[] difficultyModeArray = getResources().getStringArray(R.array.difficultyModeArray);
+        Spinner spinner = findViewById(R.id.spinner_difficulty_mode);
+        String[] difficultyModeArray = getResources().getStringArray(R.array.difficulty_mode_array);
 
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
                 this, android.R.layout.simple_spinner_item, difficultyModeArray);
@@ -337,6 +243,63 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
+    private void saveImagePackId(int imagePack) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_IMAGE_PACK_ID, imagePack);
+        editor.apply();
+    }
+
+    private static int getImagePackId(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, DEFAULT_IMAGE_PACK);
+    }
+
+    private void saveModeId(int mode) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_MODE_ID, mode);
+        editor.apply();
+    }
+
+    private static int getModeId(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        return sharedPreferences.getInt(EDITOR_MODE_ID, DEFAULT_MODE_BUTTON);
+    }
+
+    private void saveNumImagesPerCard(int numImagesPerCard){
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_NUM_IMAGES_PER_CARD, numImagesPerCard);
+        editor.apply();
+    }
+
+    public static int getNumImagesPerCard(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        String defaultValueStr = context.getString(R.string.default_num_images_per_card);
+        int defaultValue = Integer.parseInt(defaultValueStr);
+        return sharedPreferences.getInt(EDITOR_NUM_IMAGES_PER_CARD, defaultValue);
+    }
+
+    private void saveNumCards(int numCards){
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EDITOR_NUM_CARDS, numCards);
+        editor.apply();
+    }
+
+    public static int getNumCards(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        String defaultValueStr = context.getString(R.string.default_num_cards);
+        int defaultValue;
+        if(defaultValueStr.equals(context.getString(R.string.all))){
+            defaultValue = getTotalNumCardsOrImages(getNumImagesPerCard(context));
+        } else{
+            defaultValue = Integer.parseInt(defaultValueStr);
+        }
+        return sharedPreferences.getInt(EDITOR_NUM_CARDS, defaultValue);
+    }
+
     private void saveDifficultyMode(String difficultyMode) {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -346,7 +309,7 @@ public class OptionsActivity extends AppCompatActivity {
 
     private static String getDifficultyModeStr(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        String defaultValue = context.getResources().getString(R.string.defaultDifficultyMode);
+        String defaultValue = context.getString(R.string.default_difficulty_mode);
         return sharedPreferences.getString(EDITOR_DIFFICULTY_MODE, defaultValue);
     }
 
@@ -361,6 +324,43 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
+    public static Object[] getPackArray(Context context){
+        int imageButtonID = getImagePackId(context);
+        Object[] packArr;
+        if(imageButtonID == imageButtonCustom){
+            packArr = CustomImagesActivity.getCustomArr(context);
+        } else if(imageButtonID == imageButtonVegs){
+            packArr =  new Object[]{R.drawable.broccoli, R.drawable.carrot, R.drawable.eggplant,
+                    R.drawable.lettuce, R.drawable.mushroom, R.drawable.onion, R.drawable.radish,
+                    R.drawable.artichoke, R.drawable.asparagus, R.drawable.cabbage,
+                    R.drawable.cauliflower, R.drawable.celery, R.drawable.corn, R.drawable.cucumber,
+                    R.drawable.garlic, R.drawable.ginger, R.drawable.green_bell_pepper,
+                    R.drawable.kale, R.drawable.leek, R.drawable.okra, R.drawable.parsnip,
+                    R.drawable.peas, R.drawable.potato, R.drawable.red_bell_pepper,
+                    R.drawable.red_cabbage, R.drawable.red_onion, R.drawable.spinach,
+                    R.drawable.turnip, R.drawable.yam, R.drawable.yellow_bell_pepper,
+                    R.drawable.zucchini};
+        } else{
+            packArr = new Object[]{R.drawable.red_apple, R.drawable.green_apple, R.drawable.lemon,
+                    R.drawable.mango, R.drawable.orange, R.drawable.pumpkin,
+                    R.drawable.watermelon, R.drawable.avocado, R.drawable.banana, R.drawable.blackberry,
+                    R.drawable.blueberry, R.drawable.cherry, R.drawable.coconut,
+                    R.drawable.cranberry, R.drawable.dragon_fruit, R.drawable.durian, R.drawable.fig,
+                    R.drawable.grapefruit, R.drawable.grapes, R.drawable.kiwi,
+                    R.drawable.melon, R.drawable.papaya, R.drawable.peach, R.drawable.pear,
+                    R.drawable.pineapple, R.drawable.plum, R.drawable.pomegranate,
+                    R.drawable.raspberry, R.drawable.squash, R.drawable.starfruit, R.drawable.strawberry};
+        }
+
+        if(getModeId(context) == buttonWordsImages){
+            for(int i = 0; i < packArr.length; i++){
+                String temp = context.getResources().getResourceEntryName((int) packArr[i]);
+                packArr[i] += "," + temp.replace("_", " ");
+            }
+        }
+        return packArr;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -372,34 +372,34 @@ public class OptionsActivity extends AppCompatActivity {
         switch (requestCode){
             case REQUEST_CODE_CUSTOM:
                 numCustomImages = CustomImagesActivity.getNumCustomImages(this);
-                int minNumImagesPerCard = Integer.parseInt(getString(R.string.minNumImagesPerCard));
+                int minNumImagesPerCard = Integer.parseInt(getString(R.string.min_num_images_per_card));
                 if(numCustomImages >= getTotalNumCardsOrImages(minNumImagesPerCard)){
-                    saveImagePackId(imgButtonCustom);
+                    saveImagePackId(imageButtonCustom);
 
                     if(numCustomImages < getTotalNumCardsOrImages(getNumImagesPerCard(this))){
-                        Toast.makeText(OptionsActivity.this, R.string.toast_options, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.toast_options, Toast.LENGTH_SHORT).show();
 
-                        int maxNumImagesPerCard = getMaxNumImagePerCard();
+                        int maxNumImagesPerCard = getMaxNumImagesPerCard();
                         saveNumImagesPerCard(maxNumImagesPerCard);
                         setNumImagesPerCardSpinner();
                         setNumCardsSpinner();
                     }
 
                     if(getModeId(this) == buttonWordsImages){
-                        Toast.makeText(OptionsActivity.this, R.string.toast_options_mode, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.toast_options_mode, Toast.LENGTH_SHORT).show();
                         saveModeId(DEFAULT_MODE_BUTTON);
-                        setupModeButton(buttonImages);
-                        setupModeButton(buttonWordsImages);
+                        setModeButton(buttonImages);
+                        setModeButton(buttonWordsImages);
                     }
                 } else{
-                    Toast.makeText(OptionsActivity.this, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
-                    if(getImagePackId(this) == imgButtonCustom){
+                    Toast.makeText(this, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
+                    if(getImagePackId(this) == imageButtonCustom){
                         saveImagePackId(DEFAULT_IMAGE_PACK);
                     }
                 }
-                setupImageButton(imgButtonFruits);
-                setupImageButton(imgButtonVegs);
-                setupImageButton(imgButtonCustom);
+                setImageButton(imageButtonFruits);
+                setImageButton(imageButtonVegs);
+                setImageButton(imageButtonCustom);
 
                 break;
             default:
@@ -407,9 +407,9 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
-    private int getMaxNumImagePerCard() {
-        int temp = Integer.parseInt(getString(R.string.defaultNumImagesPerCard));
-        String[] numImagesPerCardArray = getResources().getStringArray(R.array.numImagesPerCardArray);
+    private int getMaxNumImagesPerCard() {
+        int temp = Integer.parseInt(getString(R.string.default_num_images_per_card));
+        String[] numImagesPerCardArray = getResources().getStringArray(R.array.num_images_per_card_array);
         for (String s : numImagesPerCardArray) {
             if (getTotalNumCardsOrImages(Integer.parseInt(s)) <= numCustomImages) {
                 temp = Integer.parseInt(s);
@@ -419,8 +419,8 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void setupBackButton() {
-        Button btnBack = findViewById(R.id.buttonBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        Button buttonBack = findViewById(R.id.button_back);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

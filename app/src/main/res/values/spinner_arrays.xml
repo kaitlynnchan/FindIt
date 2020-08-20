@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="numCardsArray">
+    <string-array name="num_cards_array">
         <item>@string/all</item>
         <item>@string/five</item>
         <item>@string/ten</item>
         <item>@string/fifteen</item>
         <item>@string/twenty</item>
     </string-array>
-    <string name="defaultNumCards">@string/all</string>
+    <string name="default_num_cards">@string/all</string>
 
-    <string-array name="numImagesPerCardArray">
+    <string-array name="num_images_per_card_array">
         <item>@string/three</item>
         <item>@string/four</item>
         <item>@string/six</item>
     </string-array>
-    <string name="defaultNumImagesPerCard">@string/three</string>
-    <string name="minNumImagesPerCard">@string/three</string>
+    <string name="default_num_images_per_card">@string/three</string>
+    <string name="min_num_images_per_card">@string/three</string>
 
-    <string-array name="difficultyModeArray">
+    <string-array name="difficulty_mode_array">
         <item>@string/easy</item>
         <item>@string/normal</item>
         <item>@string/hard</item>
     </string-array>
-    <integer-array name="modeIntegerArray">
+    <integer-array name="mode_integer_array">
         <item>@string/easy</item>
         <item>@string/normal</item>
         <item>@string/hard</item>
     </integer-array>
-    <string name="defaultDifficultyMode">@string/easy</string>
+    <string name="default_difficulty_mode">@string/easy</string>
 
 </resources>

@@ -75,7 +75,7 @@ public class GameActivity extends AppCompatActivity {
     // The three buttons correspond to the three images on each card
     // Help taken from Brian: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupDrawCard() {
-        TableLayout tableDraw = findViewById(R.id.tableLayoutDraw);
+        TableLayout tableDraw = findViewById(R.id.table_draw);
         for(int i = 0; i < numImagesPerCard; i++){
             final int cardIndex = i;
             Button button = new Button(this);
@@ -105,7 +105,7 @@ public class GameActivity extends AppCompatActivity {
     // The buttons are purposely unresponsive
     // Help taken from Brian: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupDiscardCard() {
-        TableLayout tableDiscard = findViewById(R.id.tableLayoutDiscard);
+        TableLayout tableDiscard = findViewById(R.id.table_discard);
         for(int i = 0; i < numImagesPerCard; i++){
             Button button = new Button(this);
             button.setLayoutParams(new TableLayout.LayoutParams(
@@ -125,8 +125,8 @@ public class GameActivity extends AppCompatActivity {
     // Checks if the selected image matches an image on on the discard pile card.
     // Takes Screenshot of the cards in a given game.
     private void imageClicked(int index) {
-        MediaPlayer soundFound = MediaPlayer.create(this, R.raw.found);
-        MediaPlayer soundIncorrect = MediaPlayer.create(this, R.raw.incorrect_sound);
+        MediaPlayer soundFound = MediaPlayer.create(this, R.raw.sound_found);
+        MediaPlayer soundIncorrect = MediaPlayer.create(this, R.raw.sound_incorrect);
         if (cardDeck.searchDiscardPile(index)) {
             soundFound.start();
             if (cardDeck.getCurrentCardIndex() == cardDeck.getNumCards() - 1) {
@@ -160,7 +160,7 @@ public class GameActivity extends AppCompatActivity {
     // Locks the button sizes
     // Taken from Brians youtube videos: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void lockButtonSizes(Button[] pile) {
-        for (int i = 0; i < numImagesPerCard; i++) {
+        for (int i = 0; i < pile.length; i++) {
             Button button = pile[i];
 
             int height = button.getHeight();
@@ -225,7 +225,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startGame() {
-        final Button buttonStartGame = findViewById(R.id.buttonStartGame);
+        final Button buttonStartGame = findViewById(R.id.button_start_game);
         buttonStartGame.setSoundEffectsEnabled(false);
         buttonStartGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,10 +233,10 @@ public class GameActivity extends AppCompatActivity {
                 startTimer();
                 updateCard();
 
-                ImageView imgDiscard = findViewById(R.id.imageDiscardCard);
-                imgDiscard.setVisibility(View.VISIBLE);
-                ImageView imgCard = findViewById(R.id.imageCardBack);
-                imgCard.setVisibility(View.GONE);
+                ImageView imageDiscard = findViewById(R.id.image_discard_card);
+                imageDiscard.setVisibility(View.VISIBLE);
+                ImageView imageCard = findViewById(R.id.image_card_back);
+                imageCard.setVisibility(View.GONE);
 
                 buttonStartGame.setVisibility(View.INVISIBLE);
             }
@@ -244,29 +244,29 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        timer = findViewById(R.id.chronometer);
+        timer = findViewById(R.id.chronometer_timer);
         timer.start();
         timer.setBase(SystemClock.elapsedRealtime());
 
-        MediaPlayer soundStart = MediaPlayer.create(GameActivity.this, R.raw.start_sound);
+        MediaPlayer soundStart = MediaPlayer.create(GameActivity.this, R.raw.sound_start);
         soundStart.start();
     }
 
     private void stopTimer() {
         timer.stop();
 
-        MediaPlayer soundWin = MediaPlayer.create(this, R.raw.win_sound);
+        MediaPlayer soundWin = MediaPlayer.create(this, R.raw.sound_win);
         soundWin.start();
 
         // divide by 1000 to convert values from milliseconds to seconds
         int timeInSeconds = (int) ((SystemClock.elapsedRealtime() - timer.getBase()) / 1000.0);
         FragmentManager manager = getSupportFragmentManager();
-        WinFragment dialog = new WinFragment(timeInSeconds);
+        WinDialog dialog = new WinDialog(timeInSeconds);
         dialog.show(manager, "");
     }
 
     private void setupBackButton() {
-        Button buttonBack = findViewById(R.id.buttonBack);
+        Button buttonBack = findViewById(R.id.button_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -286,7 +286,7 @@ public class GameActivity extends AppCompatActivity {
             ContextWrapper cw = new ContextWrapper(getBaseContext());
             File directory = cw.getDir(FILE_EXPORT_CARDS, Context.MODE_PRIVATE);
 
-            File mypathDraw = new File(directory, "Draw"+imgNum+".jpeg");
+            File mypathDraw = new File(directory, "Draw"+imgNum+".jpg");
             File mypathDiscard = new File(directory, "Discard"+imgNum+".jpg");
 
             // create bitmap screen capture
@@ -295,9 +295,9 @@ public class GameActivity extends AppCompatActivity {
             Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
             view.setDrawingCacheEnabled(false);
 
-            ImageView imgDiscard = findViewById(R.id.imageDiscardCard);
-            ImageView imgDraw = findViewById(R.id.imageDrawCard);
-            TextView txt = findViewById(R.id.textDiscard);
+            ImageView imgDiscard = findViewById(R.id.image_discard_card);
+            ImageView imgDraw = findViewById(R.id.image_draw_card);
+            TextView txt = findViewById(R.id.text_discard);
             int height = imgDiscard.getHeight() + txt.getHeight() - 30;
             int width = (imgDiscard.getHeight() * 3) / 4;
             int xDiscard = (int) imgDiscard.getX() + ((imgDiscard.getWidth() - width) / 2);

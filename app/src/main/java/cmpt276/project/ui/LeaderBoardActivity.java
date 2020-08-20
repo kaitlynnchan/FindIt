@@ -34,7 +34,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
-    private TextView[] scoresTxtView;
+    private TextView[] textViewScores;
     private int numMaxScores;
     private int index;
     private int numImagesPerCard;
@@ -60,7 +60,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         gameConfigs = GameConfigs.getInstance();
         scoresManager = gameConfigs.getScoreManager(index);
         numMaxScores = scoresManager.getNumMaxScores();
-        scoresTxtView = new TextView[numMaxScores];
+        textViewScores = new TextView[numMaxScores];
 
         numImagesPerCard = gameConfigs.getCardDecks().get(index).getNumImagesPerCard();
         numCards = gameConfigs.getCardDecks().get(index).getNumCards();
@@ -73,7 +73,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
     }
 
     private void setupHighScores() {
-        LinearLayout layoutScores = findViewById(R.id.linearLayoutScores);
+        LinearLayout layoutScores = findViewById(R.id.linear_scores);
         for(int i = 0; i < numMaxScores; i++){
             TextView text = new TextView(this);
             text.setLayoutParams(new LinearLayout.LayoutParams(
@@ -86,13 +86,13 @@ public class LeaderBoardActivity extends AppCompatActivity {
             text.setGravity(Gravity.CENTER);
 
             layoutScores.addView(text);
-            scoresTxtView[i] = text;
+            textViewScores[i] = text;
         }
         setTexts();
     }
 
     private void setTexts() {
-        for(int i = 0; i < scoresTxtView.length; i++){
+        for(int i = 0; i < textViewScores.length; i++){
             int timeInSeconds = scoresManager.getScore(i).getTimeBySeconds();
             int minutes = timeInSeconds / 60;
             int seconds = timeInSeconds % 60;
@@ -106,12 +106,12 @@ public class LeaderBoardActivity extends AppCompatActivity {
                     + scoresManager.getScore(i).getName() + "\t\t\t"
                     + scoresManager.getScore(i).getDate();
 
-            scoresTxtView[i].setText(msg);
+            textViewScores[i].setText(msg);
         }
     }
 
     private void setupResetButton() {
-        Button buttonReset = findViewById(R.id.buttonReset);
+        Button buttonReset = findViewById(R.id.button_reset);
         buttonReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,36 +128,26 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     public static void setDefaultScores(Context context, ScoresManager scoresManager){
         scoresManager.addScore(new Score(
-                250,
-                context.getString(R.string.no_answer),
-                context.getString(R.string.date_format))
-        );
+                250, context.getString(R.string.no_answer), context.getString(R.string.date_format)
+        ));
         scoresManager.addScore(new Score(
-                400,
-                context.getString(R.string.no_answer),
-                context.getString(R.string.date_format))
-        );
+                400, context.getString(R.string.no_answer), context.getString(R.string.date_format)
+        ));
+        scoresManager.addScore( new Score(
+                20, context.getString(R.string.no_answer), context.getString(R.string.date_format)
+        ));
         scoresManager.addScore(new Score(
-                20,
-                context.getString(R.string.no_answer),
-                context.getString(R.string.date_format))
-        );
+                25, context.getString(R.string.no_answer), context.getString(R.string.date_format)
+        ));
         scoresManager.addScore(new Score(
-                25,
-                context.getString(R.string.no_answer),
-                context.getString(R.string.date_format))
-        );
-        scoresManager.addScore(new Score(
-                18,
-                context.getString(R.string.no_answer),
-                context.getString(R.string.date_format))
-        );
+                18, context.getString(R.string.no_answer), context.getString(R.string.date_format)
+        ));
     }
 
     private void setNumImagesPerCardSpinner() {
-        Spinner spinner = findViewById(R.id.spinnerNumImagesPerCardScores);
+        Spinner spinner = findViewById(R.id.spinner_num_images_per_card);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.numImagesPerCardArray, android.R.layout.simple_spinner_item);
+                this, R.array.num_images_per_card_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -176,7 +166,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
             }
         });
 
-        String[] numImagesPerArray = getResources().getStringArray(R.array.numImagesPerCardArray);
+        String[] numImagesPerArray = getResources().getStringArray(R.array.num_images_per_card_array);
         for(int i = 0; i < numImagesPerArray.length; i++){
             if(numImagesPerArray[i].equals("" + numImagesPerCard)){
                 spinner.setSelection(i);
@@ -185,8 +175,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
     }
 
     private void setNumCardsSpinner() {
-        Spinner spinner = findViewById(R.id.spinnerNumCardsScores);
-        final String[] numCardsArray = getResources().getStringArray(R.array.numCardsArray);
+        Spinner spinner = findViewById(R.id.spinner_num_cards);
+        final String[] numCardsArray = getResources().getStringArray(R.array.num_cards_array);
         String[] textArray = setTextArray(numCardsArray);
 
         ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
@@ -264,7 +254,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
     }
 
     private void setupBackButton() {
-        Button buttonBack = findViewById(R.id.buttonBack);
+        Button buttonBack = findViewById(R.id.button_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

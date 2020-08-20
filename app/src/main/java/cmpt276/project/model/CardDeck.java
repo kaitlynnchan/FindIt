@@ -11,8 +11,8 @@ public class CardDeck {
     private int numCards;           // Number of cards in deck
     private int numImagesPerCard;   // Number of images on each card
     private int currentCardIndex;   // Stores the index of the card that is on the top of the draw pile
-    private Object[][] cards;       // Card array: first index indicates the card, second index indicates which images are on the card
     private Mode difficultyMode;    // Specifies the difficulty of the game
+    private Object[][] cards;       // Card array: first index indicates the card, second index indicates which images are on the card
 
     private static CardDeck instance;
 

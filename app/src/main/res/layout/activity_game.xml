@@ -9,7 +9,7 @@
     android:background="@drawable/garden">
 
     <Button
-        android:id="@+id/buttonBack"
+        android:id="@+id/button_back"
         android:layout_width="40dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
@@ -23,14 +23,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineMiddle"
+        android:id="@+id/guideline_middle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
     <Chronometer
-        android:id="@+id/chronometer"
+        android:id="@+id/chronometer_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textScore"
+        android:id="@+id/text_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -50,59 +50,59 @@
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/chronometer"
-        app:layout_constraintEnd_toStartOf="@+id/chronometer"
-        app:layout_constraintTop_toTopOf="@+id/chronometer" />
+        app:layout_constraintBottom_toBottomOf="@+id/chronometer_timer"
+        app:layout_constraintEnd_toStartOf="@+id/chronometer_timer"
+        app:layout_constraintTop_toTopOf="@+id/chronometer_timer" />
 
     <ImageView
-        android:id="@+id/imageDrawCard"
+        android:id="@+id/image_draw_card"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:contentDescription="@string/imageView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineMiddle"
-        app:layout_constraintTop_toBottomOf="@+id/textDraw"
+        app:layout_constraintStart_toStartOf="@+id/guideline_middle"
+        app:layout_constraintTop_toBottomOf="@+id/text_draw"
         app:srcCompat="@drawable/card" />
 
     <ImageView
-        android:id="@+id/imageDiscardCard"
+        android:id="@+id/image_discard_card"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="24dp"
         android:contentDescription="@string/imageView"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineMiddle"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_middle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textDiscard"
+        app:layout_constraintTop_toBottomOf="@+id/text_discard"
         app:srcCompat="@drawable/card" />
 
     <TableLayout
-        android:id="@+id/tableLayoutDraw"
+        android:id="@+id/table_draw"
         android:layout_width="100dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageDrawCard"
-        app:layout_constraintEnd_toEndOf="@+id/imageDrawCard"
-        app:layout_constraintStart_toStartOf="@+id/imageDrawCard"
-        app:layout_constraintTop_toTopOf="@+id/imageDrawCard" />
+        app:layout_constraintBottom_toBottomOf="@+id/image_draw_card"
+        app:layout_constraintEnd_toEndOf="@+id/image_draw_card"
+        app:layout_constraintStart_toStartOf="@+id/image_draw_card"
+        app:layout_constraintTop_toTopOf="@+id/image_draw_card" />
 
     <TableLayout
-        android:id="@+id/tableLayoutDiscard"
+        android:id="@+id/table_discard"
         android:layout_width="100dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageDiscardCard"
-        app:layout_constraintEnd_toEndOf="@+id/imageDiscardCard"
-        app:layout_constraintStart_toStartOf="@+id/imageDiscardCard"
-        app:layout_constraintTop_toTopOf="@+id/imageDiscardCard" />
+        app:layout_constraintBottom_toBottomOf="@+id/image_discard_card"
+        app:layout_constraintEnd_toEndOf="@+id/image_discard_card"
+        app:layout_constraintStart_toStartOf="@+id/image_discard_card"
+        app:layout_constraintTop_toTopOf="@+id/image_discard_card" />
 
     <TextView
-        android:id="@+id/textDraw"
+        android:id="@+id/text_draw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -110,12 +110,12 @@
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageDrawCard"
-        app:layout_constraintStart_toStartOf="@+id/imageDrawCard"
-        app:layout_constraintTop_toBottomOf="@+id/textScore" />
+        app:layout_constraintEnd_toEndOf="@+id/image_draw_card"
+        app:layout_constraintStart_toStartOf="@+id/image_draw_card"
+        app:layout_constraintTop_toBottomOf="@+id/text_score" />
 
     <TextView
-        android:id="@+id/textDiscard"
+        android:id="@+id/text_discard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -123,12 +123,12 @@
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageDiscardCard"
-        app:layout_constraintStart_toStartOf="@+id/imageDiscardCard"
-        app:layout_constraintTop_toBottomOf="@+id/textScore" />
+        app:layout_constraintEnd_toEndOf="@+id/image_discard_card"
+        app:layout_constraintStart_toStartOf="@+id/image_discard_card"
+        app:layout_constraintTop_toBottomOf="@+id/text_score" />
 
     <Button
-        android:id="@+id/buttonStartGame"
+        android:id="@+id/button_start_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
@@ -141,14 +141,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageCardBack"
+        android:id="@+id/image_card_back"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/imageView"
-        app:layout_constraintBottom_toBottomOf="@+id/imageDrawCard"
-        app:layout_constraintEnd_toEndOf="@+id/imageDrawCard"
-        app:layout_constraintStart_toStartOf="@+id/imageDrawCard"
-        app:layout_constraintTop_toTopOf="@+id/imageDrawCard"
+        app:layout_constraintBottom_toBottomOf="@+id/image_draw_card"
+        app:layout_constraintEnd_toEndOf="@+id/image_draw_card"
+        app:layout_constraintStart_toStartOf="@+id/image_draw_card"
+        app:layout_constraintTop_toTopOf="@+id/image_draw_card"
         app:srcCompat="@drawable/card_back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

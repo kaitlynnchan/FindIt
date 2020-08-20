@@ -8,7 +8,7 @@
     tools:context=".ui.OptionsActivity">
 
     <Button
-        android:id="@+id/buttonBack"
+        android:id="@+id/button_back"
         android:layout_width="40dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textOptionsTitle"
+        android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -34,20 +34,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
+        android:id="@+id/scroll_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textOptionsTitle">
+        app:layout_constraintTop_toBottomOf="@+id/text_title">
 
         <LinearLayout
+            android:id="@+id/linear_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imgButtonVegs"
+                android:id="@+id/image_button_vegs"
                 android:layout_width="104dp"
                 android:layout_height="90dp"
                 android:background="@drawable/button_background"
@@ -56,7 +57,7 @@
                 app:srcCompat="@drawable/vegs" />
 
             <ImageButton
-                android:id="@+id/imgButtonFruits"
+                android:id="@+id/image_button_fruits"
                 android:layout_width="104dp"
                 android:layout_height="90dp"
                 android:layout_marginStart="20dp"
@@ -66,7 +67,7 @@
                 app:srcCompat="@drawable/fruits" />
 
             <ImageButton
-                android:id="@+id/imgButtonCustom"
+                android:id="@+id/image_button_custom"
                 android:layout_width="104dp"
                 android:layout_height="90dp"
                 android:layout_marginStart="20dp"
@@ -80,7 +81,7 @@
     </HorizontalScrollView>
 
     <TextView
-        android:id="@+id/textNumImages"
+        android:id="@+id/text_num_images"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/num_of_images"
@@ -95,21 +96,21 @@
         app:layout_constraintVertical_bias="0.55" />
 
     <TextView
-        android:id="@+id/textNumCards"
+        android:id="@+id/text_num_cards"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/num_of_cards"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textNumImages"
+        app:layout_constraintBottom_toBottomOf="@+id/text_num_images"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.609"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textNumImages" />
+        app:layout_constraintTop_toTopOf="@+id/text_num_images" />
 
     <Spinner
-        android:id="@+id/spinnerNumImagesPerCard"
+        android:id="@+id/spinner_num_images_per_card"
         android:layout_width="65dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
@@ -119,12 +120,12 @@
         android:foregroundGravity="center_vertical|right"
         android:foregroundTint="#000000"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="@+id/textNumImages"
-        app:layout_constraintStart_toEndOf="@+id/textNumImages"
-        app:layout_constraintTop_toTopOf="@+id/textNumImages" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_num_images"
+        app:layout_constraintStart_toEndOf="@+id/text_num_images"
+        app:layout_constraintTop_toTopOf="@+id/text_num_images" />
 
     <Spinner
-        android:id="@+id/spinnerNumCards"
+        android:id="@+id/spinner_num_cards"
         android:layout_width="65dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
@@ -133,12 +134,12 @@
         android:foregroundGravity="center_vertical|right"
         android:foregroundTint="#000000"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="@+id/textNumCards"
-        app:layout_constraintStart_toEndOf="@+id/textNumCards"
-        app:layout_constraintTop_toTopOf="@+id/textNumCards" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_num_cards"
+        app:layout_constraintStart_toEndOf="@+id/text_num_cards"
+        app:layout_constraintTop_toTopOf="@+id/text_num_cards" />
 
     <TextView
-        android:id="@+id/textMode"
+        android:id="@+id/text_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mode"
@@ -153,31 +154,31 @@
         app:layout_constraintVertical_bias="0.76" />
 
     <Button
-        android:id="@+id/buttonImages"
+        android:id="@+id/button_images"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@drawable/button_background"
         android:text="@string/mode_images"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textMode"
-        app:layout_constraintStart_toEndOf="@+id/textMode"
-        app:layout_constraintTop_toTopOf="@+id/textMode" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_mode"
+        app:layout_constraintStart_toEndOf="@+id/text_mode"
+        app:layout_constraintTop_toTopOf="@+id/text_mode" />
 
     <Button
-        android:id="@+id/buttonWordsImages"
+        android:id="@+id/button_words_images"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@drawable/button_background"
         android:text="@string/mode_words_and_images"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonImages"
-        app:layout_constraintStart_toEndOf="@+id/buttonImages"
-        app:layout_constraintTop_toTopOf="@+id/buttonImages" />
+        app:layout_constraintBottom_toBottomOf="@+id/button_images"
+        app:layout_constraintStart_toEndOf="@+id/button_images"
+        app:layout_constraintTop_toTopOf="@+id/button_images" />
 
     <TextView
-        android:id="@+id/textModeDifficulty"
+        android:id="@+id/text_mode_difficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/difficulty_mode"
@@ -192,7 +193,7 @@
         app:layout_constraintVertical_bias="0.907" />
 
     <Spinner
-        android:id="@+id/difficultyModeSpinner"
+        android:id="@+id/spinner_difficulty_mode"
         android:layout_width="85dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
@@ -202,8 +203,8 @@
         android:foregroundGravity="center_vertical|right"
         android:foregroundTint="#000000"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="@+id/textModeDifficulty"
-        app:layout_constraintStart_toEndOf="@+id/textModeDifficulty"
-        app:layout_constraintTop_toTopOf="@+id/textModeDifficulty" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_mode_difficulty"
+        app:layout_constraintStart_toEndOf="@+id/text_mode_difficulty"
+        app:layout_constraintTop_toTopOf="@+id/text_mode_difficulty" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

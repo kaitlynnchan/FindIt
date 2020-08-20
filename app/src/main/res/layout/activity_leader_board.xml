@@ -8,7 +8,7 @@
     tools:context="cmpt276.project.ui.LeaderBoardActivity">
 
     <Button
-        android:id="@+id/buttonBack"
+        android:id="@+id/button_back"
         android:layout_width="40dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonReset"
+        android:id="@+id/button_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/textLeaderBoardTitle"
+        android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayoutScores"
+        android:id="@+id/linear_scores"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="64dp"
@@ -59,38 +59,38 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLeaderBoardTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
     <TextView
-        android:id="@+id/textNumImages"
+        android:id="@+id/text_num_images"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/num_of_images"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textLeaderBoardTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/text_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textLeaderBoardTitle" />
+        app:layout_constraintTop_toTopOf="@+id/text_title" />
 
     <TextView
-        android:id="@+id/textNumCards"
+        android:id="@+id/text_num_cards"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/num_of_cards"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerNumImagesPerCardScores"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner_num_images_per_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.77"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/spinnerNumImagesPerCardScores" />
+        app:layout_constraintTop_toTopOf="@+id/spinner_num_images_per_card" />
 
     <Spinner
-        android:id="@+id/spinnerNumImagesPerCardScores"
+        android:id="@+id/spinner_num_images_per_card"
         android:layout_width="60dp"
         android:layout_height="46dp"
 
@@ -98,22 +98,24 @@
         android:background="@drawable/button_background"
         android:foreground="@drawable/ic_arrow_down"
         android:foregroundGravity="center_vertical|right"
+        android:foregroundTint="#000000"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="@+id/textNumImages"
-        app:layout_constraintStart_toEndOf="@+id/textNumImages"
-        app:layout_constraintTop_toTopOf="@+id/textNumImages" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_num_images"
+        app:layout_constraintStart_toEndOf="@+id/text_num_images"
+        app:layout_constraintTop_toTopOf="@+id/text_num_images" />
 
     <Spinner
-        android:id="@+id/spinnerNumCardsScores"
+        android:id="@+id/spinner_num_cards"
         android:layout_width="60dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/button_background"
         android:foreground="@drawable/ic_arrow_down"
         android:foregroundGravity="center_vertical|right"
+        android:foregroundTint="#000000"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="@+id/textNumCards"
-        app:layout_constraintStart_toEndOf="@+id/textNumCards"
-        app:layout_constraintTop_toTopOf="@+id/textNumCards" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_num_cards"
+        app:layout_constraintStart_toEndOf="@+id/text_num_cards"
+        app:layout_constraintTop_toTopOf="@+id/text_num_cards" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
