@@ -32,9 +32,9 @@ import cmpt276.project.model.ScoresManager;
  */
 public class MainActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFS_GAMES = "shared_prefs_games";
-    public static final String EDITOR_CARD_DECKS = "editor_card_decks";
-    public static final String EDITOR_SCORES_MANAGERS = "editor_scores_managers";
+    private static final String SHARED_PREFS_GAMES = "shared_prefs_games";
+    private static final String EDITOR_CARD_DECKS = "editor_card_decks";
+    private static final String EDITOR_SCORES_MANAGERS = "editor_scores_managers";
 
     private CardDeck cardDeck;
     private GameConfigs gameConfigs;
@@ -98,11 +98,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        super.onResume();
         loadGameConfigs();
         createCardDeck();
         setupSavedScores();
         saveGameConfigs(this, gameConfigs);
-        super.onResume();
     }
 
     private void loadGameConfigs() {
@@ -124,10 +124,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createCardDeck() {
-        int numCards = OptionsActivity.getNumCards(MainActivity.this);
-        int numImagesPerCard = OptionsActivity.getNumImagesPerCard(MainActivity.this);
-        Mode difficultyMode = OptionsActivity.getDifficultyMode(MainActivity.this);
-        Object[] packArr = OptionsActivity.getPackArray(MainActivity.this);
+        int numCards = OptionsActivity.getNumCards(this);
+        int numImagesPerCard = OptionsActivity.getNumImagesPerCard(this);
+        Mode difficultyMode = OptionsActivity.getDifficultyMode(this);
+        Object[] packArr = OptionsActivity.getPackArray(this);
 
         cardDeck.setNumCards(numCards);
         cardDeck.setNumImagesPerCard(numImagesPerCard);

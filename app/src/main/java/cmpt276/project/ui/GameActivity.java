@@ -39,7 +39,7 @@ import cmpt276.project.model.CardDeck;
  */
 public class GameActivity extends AppCompatActivity {
 
-    public static final String FILE_EXPORT_CARDS = "file_export_cards";
+    private static final String FILE_EXPORT_CARDS = "file_export_cards";
 
     private Chronometer timer;
     private CardDeck cardDeck;
@@ -248,7 +248,7 @@ public class GameActivity extends AppCompatActivity {
         timer.start();
         timer.setBase(SystemClock.elapsedRealtime());
 
-        MediaPlayer soundStart = MediaPlayer.create(GameActivity.this, R.raw.sound_start);
+        MediaPlayer soundStart = MediaPlayer.create(this, R.raw.sound_start);
         soundStart.start();
     }
 
