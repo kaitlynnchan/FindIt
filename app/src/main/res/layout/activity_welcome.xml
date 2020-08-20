@@ -8,7 +8,7 @@
     tools:context=".ui.WelcomeActivity">
 
     <ImageView
-        android:id="@+id/imageWatermelon"
+        android:id="@+id/image_watermelon"
         android:layout_width="86dp"
         android:layout_height="61dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,127 +17,127 @@
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageLettuce"
+        android:id="@+id/image_lettuce"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/imageWatermelon"
-        app:layout_constraintTop_toTopOf="@+id/imageWatermelon"
+        app:layout_constraintStart_toEndOf="@+id/image_watermelon"
+        app:layout_constraintTop_toTopOf="@+id/image_watermelon"
         app:srcCompat="@drawable/lettuce"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageEggplant"
+        android:id="@+id/image_eggplant"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/imageLettuce"
-        app:layout_constraintTop_toTopOf="@+id/imageLettuce"
+        app:layout_constraintStart_toEndOf="@+id/image_lettuce"
+        app:layout_constraintTop_toTopOf="@+id/image_lettuce"
         app:srcCompat="@drawable/eggplant"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageCarrot"
+        android:id="@+id/image_carrot"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/imageEggplant"
-        app:layout_constraintTop_toTopOf="@+id/imageEggplant"
+        app:layout_constraintStart_toEndOf="@+id/image_eggplant"
+        app:layout_constraintTop_toTopOf="@+id/image_eggplant"
         app:srcCompat="@drawable/carrot"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageMango"
+        android:id="@+id/image_mango"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/imageCarrot"
-        app:layout_constraintTop_toTopOf="@+id/imageCarrot"
+        app:layout_constraintStart_toEndOf="@+id/image_carrot"
+        app:layout_constraintTop_toTopOf="@+id/image_carrot"
         app:srcCompat="@drawable/mango"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageOnion"
+        android:id="@+id/image_onion"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/imageMango"
-        app:layout_constraintTop_toTopOf="@+id/imageMango"
+        app:layout_constraintStart_toEndOf="@+id/image_mango"
+        app:layout_constraintTop_toTopOf="@+id/image_mango"
         app:srcCompat="@drawable/onion"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imagePumpkin"
+        android:id="@+id/image_pumpkin"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/imageOnion"
-        app:layout_constraintTop_toTopOf="@+id/imageOnion"
+        app:layout_constraintStart_toEndOf="@+id/image_onion"
+        app:layout_constraintTop_toTopOf="@+id/image_onion"
         app:srcCompat="@drawable/pumpkin"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageBroccoli"
+        android:id="@+id/image_broccoli"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageAppleGreen"
-        app:layout_constraintTop_toTopOf="@+id/imageAppleGreen"
+        app:layout_constraintEnd_toStartOf="@+id/image_green_apple"
+        app:layout_constraintTop_toTopOf="@+id/image_green_apple"
         app:srcCompat="@drawable/broccoli"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageAppleGreen"
+        android:id="@+id/image_green_apple"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageLemon"
-        app:layout_constraintTop_toTopOf="@+id/imageLemon"
+        app:layout_constraintEnd_toStartOf="@+id/image_lemon"
+        app:layout_constraintTop_toTopOf="@+id/image_lemon"
         app:srcCompat="@drawable/green_apple"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageLemon"
+        android:id="@+id/image_lemon"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageRedApple"
-        app:layout_constraintTop_toTopOf="@+id/imageRedApple"
+        app:layout_constraintEnd_toStartOf="@+id/image_red_apple"
+        app:layout_constraintTop_toTopOf="@+id/image_red_apple"
         app:srcCompat="@drawable/lemon"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageRedApple"
+        android:id="@+id/image_red_apple"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageOrange"
-        app:layout_constraintTop_toTopOf="@+id/imageOrange"
+        app:layout_constraintEnd_toStartOf="@+id/image_orange"
+        app:layout_constraintTop_toTopOf="@+id/image_orange"
         app:srcCompat="@drawable/red_apple"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageOrange"
+        android:id="@+id/image_orange"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageMushroom"
-        app:layout_constraintTop_toTopOf="@+id/imageMushroom"
+        app:layout_constraintEnd_toStartOf="@+id/image_mushroom"
+        app:layout_constraintTop_toTopOf="@+id/image_mushroom"
         app:srcCompat="@drawable/orange"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageMushroom"
+        android:id="@+id/image_mushroom"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageRadish"
-        app:layout_constraintTop_toTopOf="@+id/imageRadish"
+        app:layout_constraintEnd_toStartOf="@+id/image_radish"
+        app:layout_constraintTop_toTopOf="@+id/image_radish"
         app:srcCompat="@drawable/mushroom"
         android:contentDescription="@string/imageView"/>
 
     <ImageView
-        android:id="@+id/imageRadish"
+        android:id="@+id/image_radish"
         android:layout_width="86dp"
         android:layout_height="61dp"
         android:layout_marginEnd="32dp"
@@ -147,7 +147,7 @@
         android:contentDescription="@string/imageView"/>
 
     <View
-        android:id="@+id/viewOverlay"
+        android:id="@+id/view_overlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorLightGreen"
@@ -156,7 +156,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textTitle"
+        android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:shadowColor="#000000"
@@ -174,7 +174,7 @@
         app:layout_constraintVertical_bias="0.425" />
 
     <TextView
-        android:id="@+id/textAuthors"
+        android:id="@+id/text_authors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -183,10 +183,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
     <Button
-        android:id="@+id/buttonSkip"
+        android:id="@+id/button_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -198,15 +198,15 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
-        android:id="@+id/imageMagnifyGlass"
+        android:id="@+id/image_magnify_glass"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textAuthors"
+        app:layout_constraintBottom_toBottomOf="@+id/text_authors"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textTitle"
-        app:layout_constraintTop_toTopOf="@+id/textTitle"
+        app:layout_constraintStart_toEndOf="@+id/text_title"
+        app:layout_constraintTop_toTopOf="@+id/text_title"
         app:srcCompat="@drawable/magnifying_glass"
         android:contentDescription="@string/imageView"/>
 

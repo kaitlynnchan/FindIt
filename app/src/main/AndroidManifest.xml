@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cmpt276.project">
+    package="project.findit">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -23,7 +23,7 @@
             android:name=".ui.HelpActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".ui.OptionActivity"
+            android:name=".ui.OptionsActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.GameActivity"
