@@ -1,4 +1,4 @@
-package cmpt276.project.ui;
+package project.findit.ui;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,9 +38,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import cmpt276.project.R;
-import cmpt276.project.ui.flickr.PhotoGalleryActivity;
-import cmpt276.project.ui.flickr.PhotoGalleryFragment;
+import project.findit.R;
+import project.findit.ui.flickr.PhotoGalleryActivity;
+import project.findit.ui.flickr.PhotoGalleryFragment;
 
 /**
  * CUSTOM IMAGES SCREEN

@@ -1,4 +1,4 @@
-package cmpt276.project.model.flickr;
+package project.findit.model.flickr;
 
 import android.content.Context;
 import android.preference.PreferenceManager;

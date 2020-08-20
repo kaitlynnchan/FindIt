@@ -1,4 +1,4 @@
-package cmpt276.project.ui;
+package project.findit.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -30,8 +30,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
 
-import cmpt276.project.R;
-import cmpt276.project.model.CardDeck;
+import project.findit.R;
+import project.findit.model.CardDeck;
 
 /**
  * GAME SCREEN

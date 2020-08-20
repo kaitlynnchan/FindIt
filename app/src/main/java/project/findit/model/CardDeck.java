@@ -1,4 +1,4 @@
-package cmpt276.project.model;
+package project.findit.model;
 
 /**
  * CARD DECK CLASS

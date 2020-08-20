@@ -1,4 +1,4 @@
-package cmpt276.project.ui;
+package project.findit.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,10 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Arrays;
 
-import cmpt276.project.R;
-import cmpt276.project.model.GameConfigs;
-import cmpt276.project.model.Score;
-import cmpt276.project.model.ScoresManager;
+import project.findit.model.GameConfigs;
+import project.findit.model.Score;
+import project.findit.model.ScoresManager;
+import project.findit.R;
 
 /**
  * LEADER BOARD SCREEN

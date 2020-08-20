@@ -1,4 +1,4 @@
-package cmpt276.project;
+package project.findit;
 
 import org.junit.Test;
 

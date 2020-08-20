@@ -1,4 +1,4 @@
-package cmpt276.project.model.flickr;
+package project.findit.model.flickr;
 
 import androidx.annotation.NonNull;
 

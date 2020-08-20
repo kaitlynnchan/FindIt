@@ -1,4 +1,4 @@
-package cmpt276.project.ui.flickr;
+package project.findit.ui.flickr;
 
 import android.content.Context;
 import android.content.Intent;

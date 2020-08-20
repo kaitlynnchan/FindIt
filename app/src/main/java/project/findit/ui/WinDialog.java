@@ -1,4 +1,4 @@
-package cmpt276.project.ui;
+package project.findit.ui;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -17,11 +17,11 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import java.util.Calendar;
 import java.util.Locale;
 
-import cmpt276.project.R;
-import cmpt276.project.model.CardDeck;
-import cmpt276.project.model.GameConfigs;
-import cmpt276.project.model.Score;
-import cmpt276.project.model.ScoresManager;
+import project.findit.model.CardDeck;
+import project.findit.model.GameConfigs;
+import project.findit.model.Score;
+import project.findit.model.ScoresManager;
+import project.findit.R;
 
 /**
  * WIN FRAGMENT

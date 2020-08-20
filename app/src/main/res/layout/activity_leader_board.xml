@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bananas_background"
-    tools:context="cmpt276.project.ui.LeaderBoardActivity">
+    tools:context=".ui.LeaderBoardActivity">
 
     <Button
         android:id="@+id/button_back"

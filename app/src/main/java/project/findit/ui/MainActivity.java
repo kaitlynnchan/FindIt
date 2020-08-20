@@ -1,4 +1,4 @@
-package cmpt276.project.ui;
+package project.findit.ui;
 
 import android.content.Intent;
 import android.content.Context;
@@ -19,11 +19,11 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import cmpt276.project.R;
-import cmpt276.project.model.CardDeck;
-import cmpt276.project.model.GameConfigs;
-import cmpt276.project.model.Mode;
-import cmpt276.project.model.ScoresManager;
+import project.findit.model.CardDeck;
+import project.findit.model.GameConfigs;
+import project.findit.model.Mode;
+import project.findit.model.ScoresManager;
+import project.findit.R;
 
 /**
  * MAIN MENU

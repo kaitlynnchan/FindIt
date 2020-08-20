@@ -1,4 +1,4 @@
-package cmpt276.project.ui.flickr;
+package project.findit.ui.flickr;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -38,11 +38,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import cmpt276.project.R;
-import cmpt276.project.model.flickr.FlickrFetchr;
-import cmpt276.project.model.flickr.GalleryItem;
-import cmpt276.project.model.flickr.QueryPreferences;
-import cmpt276.project.model.flickr.ThumbnailDownloader;
+import project.findit.R;
+import project.findit.model.flickr.FlickrFetchr;
+import project.findit.model.flickr.GalleryItem;
+import project.findit.model.flickr.QueryPreferences;
+import project.findit.model.flickr.ThumbnailDownloader;
 
 /**
  * PHOTO GALLERY FRAGMENT

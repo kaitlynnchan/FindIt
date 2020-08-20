@@ -1,4 +1,4 @@
-package cmpt276.project.ui;
+package project.findit.ui;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +20,8 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
-import cmpt276.project.R;
-import cmpt276.project.model.Mode;
+import project.findit.model.Mode;
+import project.findit.R;
 
 /**
  * OPTIONS SCREEN
