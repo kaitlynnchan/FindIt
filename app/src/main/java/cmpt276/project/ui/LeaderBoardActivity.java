@@ -30,7 +30,7 @@ import cmpt276.project.model.ScoresManager;
  */
 public class LeaderBoardActivity extends AppCompatActivity {
 
-    public static final String EXTRA_INDEX = "extra_index";
+    private static final String EXTRA_INDEX = "extra_index";
 
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
@@ -65,14 +65,14 @@ public class LeaderBoardActivity extends AppCompatActivity {
         numImagesPerCard = gameConfigs.getCardDecks().get(index).getNumImagesPerCard();
         numCards = gameConfigs.getCardDecks().get(index).getNumCards();
 
-        setupHighScores();
+        setupLeaderBoard();
         setupResetButton();
         setNumImagesPerCardSpinner();
         setNumCardsSpinner();
         setupBackButton();
     }
 
-    private void setupHighScores() {
+    private void setupLeaderBoard() {
         LinearLayout layoutScores = findViewById(R.id.linear_scores);
         for(int i = 0; i < numMaxScores; i++){
             TextView text = new TextView(this);
@@ -88,10 +88,10 @@ public class LeaderBoardActivity extends AppCompatActivity {
             layoutScores.addView(text);
             textViewScores[i] = text;
         }
-        setTexts();
+        setScoresText();
     }
 
-    private void setTexts() {
+    private void setScoresText() {
         for(int i = 0; i < textViewScores.length; i++){
             int timeInSeconds = scoresManager.getScore(i).getTimeBySeconds();
             int minutes = timeInSeconds / 60;
@@ -120,7 +120,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
                     setDefaultScores(LeaderBoardActivity.this, scoresManager);
                     gameConfigs.getScoreManager(index).setScoreArray(scoresManager.getScoreArray());
                     MainActivity.saveGameConfigs(LeaderBoardActivity.this, gameConfigs);
-                    setTexts();
+                    setScoresText();
                 }
             }
         });
@@ -146,18 +146,18 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     private void setNumImagesPerCardSpinner() {
         Spinner spinner = findViewById(R.id.spinner_num_images_per_card);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.num_images_per_card_array, android.R.layout.simple_spinner_item);
+        String[] numImagesPerCardArray = getResources().getStringArray(R.array.num_images_per_card_array);
+
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
+                this, android.R.layout.simple_spinner_item, numImagesPerCardArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String text = parent.getItemAtPosition(position).toString();
-                numImagesPerCard = Integer.parseInt(text);
+                String value = parent.getItemAtPosition(position).toString();
+                numImagesPerCard = Integer.parseInt(value);
                 updateScoresManager();
-
-                setTexts();
                 setNumCardsSpinner();
             }
 
@@ -166,9 +166,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
             }
         });
 
-        String[] numImagesPerArray = getResources().getStringArray(R.array.num_images_per_card_array);
-        for(int i = 0; i < numImagesPerArray.length; i++){
-            if(numImagesPerArray[i].equals("" + numImagesPerCard)){
+        for(int i = 0; i < numImagesPerCardArray.length; i++){
+            if(numImagesPerCardArray[i].equals("" + numImagesPerCard)){
                 spinner.setSelection(i);
             }
         }
@@ -176,26 +175,24 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     private void setNumCardsSpinner() {
         Spinner spinner = findViewById(R.id.spinner_num_cards);
-        final String[] numCardsArray = getResources().getStringArray(R.array.num_cards_array);
-        String[] textArray = setTextArray(numCardsArray);
+        String[] numCardsArray = getResources().getStringArray(R.array.num_cards_array);
+        numCardsArray = setRangeArray(numCardsArray);
 
-        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter(
-                this, android.R.layout.simple_spinner_item, textArray);
+        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter<CharSequence>(
+                this, android.R.layout.simple_spinner_item, numCardsArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String text = parent.getItemAtPosition(position).toString();
-
-                if(text.equals(numCardsArray[0])) {
-                    numCards = getNumCardsTotal();
+                String value = parent.getItemAtPosition(position).toString();
+                if(value.equals(getString(R.string.all))) {
+                    numCards = getTotalNumCards();
                 } else {
-                    numCards = Integer.parseInt(text);
+                    numCards = Integer.parseInt(value);
                 }
 
                 updateScoresManager();
-                setTexts();
             }
 
             @Override
@@ -203,42 +200,31 @@ public class LeaderBoardActivity extends AppCompatActivity {
             }
         });
 
-        for(int i = 0; i < textArray.length; i++){
-            if(i == 0){
-                int numCardsTotal = getNumCardsTotal();
-                if(numCards == numCardsTotal){
+        for(int i = 0; i < numCardsArray.length; i++){
+            if(numCardsArray[i].equals(getString(R.string.all))){
+                if(numCards == getTotalNumCards()){
                     spinner.setSelection(i);
                 }
-            } else if(textArray[i].equals("" + numCards)){
+            } else if(numCardsArray[i].equals("" + numCards)){
                 spinner.setSelection(i);
             }
         }
     }
 
-    private String[] setTextArray(String[] numCardsArray) {
-        String[] textArray;
-        int numCardsTotal = getNumCardsTotal();
-
-        if(numCardsTotal == 7){
-            textArray = Arrays.copyOfRange(numCardsArray, 0, 2);
-        } else if(numCardsTotal == 13){
-            textArray = Arrays.copyOfRange(numCardsArray, 0, 3);
-        } else{
-            textArray = Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
+    private String[] setRangeArray(String[] numCardsArray) {
+        int totalCards = getTotalNumCards();
+        for(int i = 0; i < numCardsArray.length; i++){
+            if(!numCardsArray[i].equals(getString(R.string.all))){
+                if(Integer.parseInt(numCardsArray[i]) > totalCards){
+                    return Arrays.copyOfRange(numCardsArray, 0, i);
+                }
+            }
         }
-        return textArray;
+        return Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
     }
 
-    private int getNumCardsTotal() {
-        int numCardsTotal;
-        if (numImagesPerCard == 3) {
-            numCardsTotal = 7;
-        } else if (numImagesPerCard == 6) {
-            numCardsTotal = 31;
-        } else {
-            numCardsTotal = 13;
-        }
-        return numCardsTotal;
+    private int getTotalNumCards() {
+        return (numImagesPerCard * numImagesPerCard) - numImagesPerCard + 1;
     }
 
     private void updateScoresManager() {
@@ -251,6 +237,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
             scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
             scoresManager.setScoreArray(gameConfigs.getScoreManager(index).getScoreArray());
         }
+        setScoresText();
     }
 
     private void setupBackButton() {

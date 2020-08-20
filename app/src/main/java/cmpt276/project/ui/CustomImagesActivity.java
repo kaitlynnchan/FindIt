@@ -286,7 +286,7 @@ public class CustomImagesActivity extends AppCompatActivity {
                     return null;
                 }
 
-                ContextWrapper cw = new ContextWrapper(CustomImagesActivity.this);
+                ContextWrapper cw = new ContextWrapper(getBaseContext());
                 File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
                 File myPath = new File(directory, name);
                 FileOutputStream fos;
@@ -347,7 +347,7 @@ public class CustomImagesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        setResult(Activity.RESULT_OK);
         super.onBackPressed();
+        setResult(Activity.RESULT_OK);
     }
 }

@@ -133,7 +133,7 @@ public class OptionsActivity extends AppCompatActivity {
         Spinner spinner = findViewById(R.id.spinner_num_images_per_card);
         String[] numImagesPerCardArray = getResources().getStringArray(R.array.num_images_per_card_array);
 
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
                 this, android.R.layout.simple_spinner_item, numImagesPerCardArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -169,7 +169,7 @@ public class OptionsActivity extends AppCompatActivity {
         String[] numCardsArray = getResources().getStringArray(R.array.num_cards_array);
         numCardsArray = setRangeArray(numCardsArray);
 
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
                 this, android.R.layout.simple_spinner_item, numCardsArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -190,7 +190,7 @@ public class OptionsActivity extends AppCompatActivity {
         });
 
         for(int i = 0; i < numCardsArray.length; i++){
-            if(i == 0){
+            if(numCardsArray[i].equals(getString(R.string.all))){
                 if(getNumCards(this) == getTotalNumCardsOrImages(getNumImagesPerCard(this))){
                     spinner.setSelection(i);
                 }
@@ -209,7 +209,7 @@ public class OptionsActivity extends AppCompatActivity {
                 }
             }
         }
-        return new String[]{getString(R.string.all)};
+        return Arrays.copyOfRange(numCardsArray, 0, numCardsArray.length);
     }
 
     private static int getTotalNumCardsOrImages(int numImagesPerCard) {
@@ -220,7 +220,7 @@ public class OptionsActivity extends AppCompatActivity {
         Spinner spinner = findViewById(R.id.spinner_difficulty_mode);
         String[] difficultyModeArray = getResources().getStringArray(R.array.difficulty_mode_array);
 
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
                 this, android.R.layout.simple_spinner_item, difficultyModeArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -369,41 +369,36 @@ public class OptionsActivity extends AppCompatActivity {
             return;
         }
 
-        switch (requestCode){
-            case REQUEST_CODE_CUSTOM:
-                numCustomImages = CustomImagesActivity.getNumCustomImages(this);
-                int minNumImagesPerCard = Integer.parseInt(getString(R.string.min_num_images_per_card));
-                if(numCustomImages >= getTotalNumCardsOrImages(minNumImagesPerCard)){
-                    saveImagePackId(imageButtonCustom);
+        if(requestCode == REQUEST_CODE_CUSTOM){
+            numCustomImages = CustomImagesActivity.getNumCustomImages(this);
+            int minNumImagesPerCard = Integer.parseInt(getString(R.string.min_num_images_per_card));
+            if(numCustomImages >= getTotalNumCardsOrImages(minNumImagesPerCard)){
+                saveImagePackId(imageButtonCustom);
 
-                    if(numCustomImages < getTotalNumCardsOrImages(getNumImagesPerCard(this))){
-                        Toast.makeText(this, R.string.toast_options, Toast.LENGTH_SHORT).show();
+                if(numCustomImages < getTotalNumCardsOrImages(getNumImagesPerCard(this))){
+                    Toast.makeText(this, R.string.toast_options, Toast.LENGTH_SHORT).show();
 
-                        int maxNumImagesPerCard = getMaxNumImagesPerCard();
-                        saveNumImagesPerCard(maxNumImagesPerCard);
-                        setNumImagesPerCardSpinner();
-                        setNumCardsSpinner();
-                    }
-
-                    if(getModeId(this) == buttonWordsImages){
-                        Toast.makeText(this, R.string.toast_options_mode, Toast.LENGTH_SHORT).show();
-                        saveModeId(DEFAULT_MODE_BUTTON);
-                        setModeButton(buttonImages);
-                        setModeButton(buttonWordsImages);
-                    }
-                } else{
-                    Toast.makeText(this, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
-                    if(getImagePackId(this) == imageButtonCustom){
-                        saveImagePackId(DEFAULT_IMAGE_PACK);
-                    }
+                    int maxNumImagesPerCard = getMaxNumImagesPerCard();
+                    saveNumImagesPerCard(maxNumImagesPerCard);
+                    setNumImagesPerCardSpinner();
+                    setNumCardsSpinner();
                 }
-                setImageButton(imageButtonFruits);
-                setImageButton(imageButtonVegs);
-                setImageButton(imageButtonCustom);
 
-                break;
-            default:
-                assert false;
+                if(getModeId(this) == buttonWordsImages){
+                    Toast.makeText(this, R.string.toast_options_mode, Toast.LENGTH_SHORT).show();
+                    saveModeId(DEFAULT_MODE_BUTTON);
+                    setModeButton(buttonImages);
+                    setModeButton(buttonWordsImages);
+                }
+            } else{
+                Toast.makeText(this, R.string.toast_no_images, Toast.LENGTH_SHORT).show();
+                if(getImagePackId(this) == imageButtonCustom){
+                    saveImagePackId(DEFAULT_IMAGE_PACK);
+                }
+            }
+            setImageButton(imageButtonFruits);
+            setImageButton(imageButtonVegs);
+            setImageButton(imageButtonCustom);
         }
     }
 
