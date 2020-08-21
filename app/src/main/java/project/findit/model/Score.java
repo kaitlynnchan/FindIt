@@ -2,9 +2,10 @@ package project.findit.model;
 
 /**
  * SCORE CLASS
- * Object that contains time (s), name, and date
+ * Creates and stores information on a score
  */
 public class Score {
+
     private int timeBySeconds;
     private String name;
     private String date;        // format: Month DD, YYY

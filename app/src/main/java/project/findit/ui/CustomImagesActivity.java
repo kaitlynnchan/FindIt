@@ -50,6 +50,7 @@ public class CustomImagesActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_FLICKR = 1;
     private static final int REQUEST_CODE_GALLERY = 2;
+    public static final String TITLE_SELECT_PICTURE = "Select Picture";
 
     private LinearLayout linearLayoutImages;
     private RelativeLayout layoutLoadingPanel;
@@ -63,8 +64,8 @@ public class CustomImagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_images);
         getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         linearLayoutImages = findViewById(R.id.linear_images);
         layoutLoadingPanel = findViewById(R.id.relative_loading_panel);
@@ -127,7 +128,8 @@ public class CustomImagesActivity extends AppCompatActivity {
             System.out.println(file.getName());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.magnifying_glass);
+            bitmap = BitmapFactory
+                    .decodeResource(context.getResources(), R.drawable.magnifying_glass);
         }
         return bitmap;
     }
@@ -156,7 +158,7 @@ public class CustomImagesActivity extends AppCompatActivity {
 
     private void deleteImageFile(File[] directoryListing, int index) {
         if (directoryListing[index].delete()) {
-            System.out.println("Deleted successfully");
+            Log.i(PhotoGalleryFragment.TAG_DOWNLOAD_IMAGE, "DELETED SUCCESSFULLY");
             System.gc();
         }
         updateImageTable();
@@ -185,14 +187,15 @@ public class CustomImagesActivity extends AppCompatActivity {
                 if(resultCode != Activity.RESULT_OK){
                     Toast.makeText(this, R.string.toast_fail, Toast.LENGTH_SHORT).show();
                 } else if (data == null){
-                    Toast.makeText(this, R.string.toast_null_data, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.toast_null_data, Toast.LENGTH_SHORT)
+                            .show();
                 } else if(data.getClipData() != null) {
                     // User selects multiple images by tapping and holding image
                     linearLayoutImages.setVisibility(View.INVISIBLE);
                     layoutLoadingPanel.setVisibility(View.VISIBLE);
 
                     // Evaluate the count before the for loop
-                    // otherwise, the count is evaluated every loop
+                    //  otherwise, the count is evaluated every loop
                     int count = data.getClipData().getItemCount();
                     for(int i = 0; i < count; i++) {
                         Uri uri = data.getClipData().getItemAt(i).getUri();
@@ -224,8 +227,10 @@ public class CustomImagesActivity extends AppCompatActivity {
                 try {
                     // Got help from:
                     //  https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+                    Bitmap bitmap = MediaStore.Images.Media
+                            .getBitmap(this.getContentResolver(), uri);
+                    SimpleDateFormat sdf = new SimpleDateFormat(
+                            "yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
                     sdf.setTimeZone(TimeZone.getTimeZone("PDT"));
                     String temp = sdf.format(new Date());
                     name += temp;
@@ -233,7 +238,7 @@ public class CustomImagesActivity extends AppCompatActivity {
 
                     new DownloadFile(bitmap, name).execute();
                 } catch (IOException e) {
-                    System.out.println("useBitmap function failed");
+                    Log.e(PhotoGalleryFragment.TAG_DOWNLOAD_IMAGE, "useBitmap function failed");
                     e.printStackTrace();
                 }
                 break;
@@ -241,8 +246,9 @@ public class CustomImagesActivity extends AppCompatActivity {
         }
     }
 
-    // https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
-    // Code for bitmap string conversion: https://stackoverflow.com/questions/22532136/android-how-to-create-a-bitmap-from-a-string
+    // Got help from:
+    //  https://stackoverflow.com/questions/22532136/android-how-to-create-a-bitmap-from-a-string
+    //  https://stackoverflow.com/questions/4917326/how-to-iterate-over-the-files-of-a-certain-directory-in-java
     public static Object[] getCustomArr(Context context) {
         final File[] directoryListing = getDirectory(context);
 
@@ -278,16 +284,14 @@ public class CustomImagesActivity extends AppCompatActivity {
 
         @Override
         protected Bitmap doInBackground(String... URL) {
-
-            System.out.println("IMAGE CAPTION: " + name);
-
             try {
                 if (bitmap == null){
                     return null;
                 }
 
                 ContextWrapper cw = new ContextWrapper(getBaseContext());
-                File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
+                File directory = cw.getDir(
+                        PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
                 File myPath = new File(directory, name);
                 FileOutputStream fos;
                 try {
@@ -295,7 +299,7 @@ public class CustomImagesActivity extends AppCompatActivity {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                     fos.close();
                 } catch (Exception e) {
-                    Log.e(PhotoGalleryFragment.TAG_SAVE_IMAGE, e.getMessage(), e);
+                    Log.e(PhotoGalleryFragment.TAG_DOWNLOAD_IMAGE, e.getMessage(), e);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -306,7 +310,7 @@ public class CustomImagesActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            System.out.println("SUCCESSFULLY SAVED");
+            Log.i(PhotoGalleryFragment.TAG_DOWNLOAD_IMAGE, "SUCCESSFULLY SAVED");
             updateImageTable();
         }
     }
@@ -331,7 +335,7 @@ public class CustomImagesActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"), REQUEST_CODE_GALLERY);
+                startActivityForResult(Intent.createChooser(intent, TITLE_SELECT_PICTURE), REQUEST_CODE_GALLERY);
             }
         });
 

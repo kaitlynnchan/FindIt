@@ -4,7 +4,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 
 /**
- * QUERY PREFERENCES
+ * QUERY PREFERENCES CLASS
  * Search queries in flickr
  */
 public class QueryPreferences {

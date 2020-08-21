@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.util.Log;
@@ -47,13 +48,14 @@ import project.findit.model.flickr.ThumbnailDownloader;
 /**
  * PHOTO GALLERY FRAGMENT
  * Displays the images available to the user,
- *  and downloads and saves them when a user clicks them
+ *  downloads and saves image when a user clicks it
  */
 public class PhotoGalleryFragment extends Fragment {
-    public static final String FILE_CUSTOM_DRAWABLE = "file_custom_drawable";
-    public static final String TAG_SAVE_IMAGE = "tag_save_image";
 
-    private static final String TAG_PHOTO_GALLERY_FRAGMENT = "tag_photo_gallery_fragment";
+    public static final String FILE_CUSTOM_DRAWABLE = "file_custom_drawable";
+    public static final String TAG_DOWNLOAD_IMAGE = "DownloadImage";
+
+    private static final String TAG = "PhotoGalleryFragment";
 
     private RecyclerView recyclerViewPhoto;
     private List<GalleryItem> items = new ArrayList<>();
@@ -83,7 +85,7 @@ public class PhotoGalleryFragment extends Fragment {
         );
         thumbnailDownloader.start();
         thumbnailDownloader.getLooper();
-        Log.i(TAG_PHOTO_GALLERY_FRAGMENT, "Background thread started");
+        Log.i(TAG, "Background thread started");
     }
 
     @Override
@@ -92,6 +94,10 @@ public class PhotoGalleryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_photo_gallery, container, false);
         recyclerViewPhoto = view.findViewById(R.id.recycler_photo);
         recyclerViewPhoto.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+
+        getActivity().getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -113,7 +119,7 @@ public class PhotoGalleryFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         thumbnailDownloader.quit();
-        Log.i(TAG_PHOTO_GALLERY_FRAGMENT, "Background thread destroyed");
+        Log.i(TAG, "Background thread destroyed");
     }
 
     @Override
@@ -126,7 +132,7 @@ public class PhotoGalleryFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d(TAG_PHOTO_GALLERY_FRAGMENT, "QueryTextSubmit: " + s);
+                Log.d(TAG, "QueryTextSubmit: " + s);
                 QueryPreferences.setStoredQuery(getActivity(), s);
                 updateItems();
                 return true;
@@ -134,7 +140,7 @@ public class PhotoGalleryFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                Log.d(TAG_PHOTO_GALLERY_FRAGMENT, "QueryTextChange: " + s);
+                Log.d(TAG, "QueryTextChange: " + s);
                 return false;
             }
         });
@@ -271,7 +277,6 @@ public class PhotoGalleryFragment extends Fragment {
 
     // Got help from:
     //  https://stackoverflow.com/questions/54996665/how-to-save-downloaded-file-in-internal-storage-in-android-studio
-    // Downloads and saves images to /data/data/cmpt276.project/app_flickrDrawable
     @SuppressLint("StaticFieldLeak")
     private class DownloadFile extends AsyncTask<String, Void, Bitmap> {
 
@@ -290,16 +295,11 @@ public class PhotoGalleryFragment extends Fragment {
 
         @Override
         protected Bitmap doInBackground(String... URL) {
-
-            System.out.println("IMAGE URL: " + url);
-            System.out.println("IMAGE CAPTION: " + name);
-
             Bitmap bitmap = null;
             try {
-                // Download Image from URL
+                // Download image using URL
                 InputStream input = new java.net.URL(url).openStream();
 
-                // Decode Bitmap
                 bitmap = BitmapFactory.decodeStream(input);
                 if (bitmap == null) {
                     return null;
@@ -314,7 +314,7 @@ public class PhotoGalleryFragment extends Fragment {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                     fos.close();
                 } catch (Exception e) {
-                    Log.e(TAG_SAVE_IMAGE, e.getMessage(), e);
+                    Log.e(TAG_DOWNLOAD_IMAGE, e.getMessage(), e);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -324,7 +324,7 @@ public class PhotoGalleryFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            System.out.println("SUCCESSFULLY SAVED");
+            Log.i(TAG_DOWNLOAD_IMAGE, "SUCCESSFULLY SAVED");
         }
     }
 

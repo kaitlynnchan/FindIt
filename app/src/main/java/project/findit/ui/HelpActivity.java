@@ -16,7 +16,6 @@ import project.findit.R;
 /**
  * HELP SCREEN
  * Displays how to play the game,
- *  a hyperlink to the 276 website,
  *  and the necessary citations as required.
  */
 public class HelpActivity extends AppCompatActivity {
@@ -30,8 +29,8 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
         getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         TextView textContent = findViewById(R.id.text_content);
         textContent.setMovementMethod(LinkMovementMethod.getInstance());

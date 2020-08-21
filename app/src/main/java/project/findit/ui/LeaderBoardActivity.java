@@ -30,8 +30,6 @@ import project.findit.R;
  */
 public class LeaderBoardActivity extends AppCompatActivity {
 
-    private static final String EXTRA_INDEX = "extra_index";
-
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
     private TextView[] textViewScores;
@@ -40,9 +38,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
     private int numImagesPerCard;
     private int numCards;
 
-    public static Intent makeLaunchIntent(Context context, int index){
+    public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, LeaderBoardActivity.class);
-        intent.putExtra(EXTRA_INDEX, index);
         return intent;
     }
 
@@ -51,19 +48,17 @@ public class LeaderBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leader_board);
         getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
-
-        Intent intent = getIntent();
-        index = intent.getIntExtra(EXTRA_INDEX, -1);
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         gameConfigs = GameConfigs.getInstance();
+        index = gameConfigs.getCurrentGameIndex();
+        numImagesPerCard = gameConfigs.getCardDeck(index).getNumImagesPerCard();
+        numCards = gameConfigs.getCardDeck(index).getNumCards();
+
         scoresManager = gameConfigs.getScoreManager(index);
         numMaxScores = scoresManager.getNumMaxScores();
         textViewScores = new TextView[numMaxScores];
-
-        numImagesPerCard = gameConfigs.getCardDecks().get(index).getNumImagesPerCard();
-        numCards = gameConfigs.getCardDecks().get(index).getNumCards();
 
         setupLeaderBoard();
         setupResetButton();
@@ -128,25 +123,31 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     public static void setDefaultScores(Context context, ScoresManager scoresManager){
         scoresManager.addScore(new Score(
-                250, context.getString(R.string.no_answer), context.getString(R.string.date_format)
-        ));
+                250,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format)));
         scoresManager.addScore(new Score(
-                400, context.getString(R.string.no_answer), context.getString(R.string.date_format)
-        ));
+                400,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format)));
         scoresManager.addScore( new Score(
-                20, context.getString(R.string.no_answer), context.getString(R.string.date_format)
-        ));
+                20,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format)));
         scoresManager.addScore(new Score(
-                25, context.getString(R.string.no_answer), context.getString(R.string.date_format)
-        ));
+                25,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format)));
         scoresManager.addScore(new Score(
-                18, context.getString(R.string.no_answer), context.getString(R.string.date_format)
-        ));
+                18,
+                context.getString(R.string.no_answer),
+                context.getString(R.string.date_format)));
     }
 
     private void setNumImagesPerCardSpinner() {
         Spinner spinner = findViewById(R.id.spinner_num_images_per_card);
-        String[] numImagesPerCardArray = getResources().getStringArray(R.array.num_images_per_card_array);
+        String[] numImagesPerCardArray = getResources()
+                .getStringArray(R.array.num_images_per_card_array);
 
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
                 this, android.R.layout.simple_spinner_item, numImagesPerCardArray);

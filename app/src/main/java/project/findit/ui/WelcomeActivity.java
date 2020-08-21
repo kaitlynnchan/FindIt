@@ -17,7 +17,7 @@ import project.findit.R;
 
 /**
  * SPLASH SCREEN
- * Plays a short animation and displays game title and authors
+ * Plays a short animation, includes game title and authors
  */
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -28,8 +28,8 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         handler = new Handler();
         handler.postDelayed(new Runnable() {

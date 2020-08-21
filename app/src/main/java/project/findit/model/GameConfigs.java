@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 /**
  * GAME CONFIGS CLASS
- * Stores a collection of cardDecks and scoresManagers
+ * Creates and stores a collection of cardDecks and scoresManagers
  */
 public class GameConfigs {
+
     private ArrayList<CardDeck> cardDecks = new ArrayList<>();
     private ArrayList<ScoresManager> scoresManagers = new ArrayList<>();
+    private int currentGameIndex;
 
     // Singleton implementation
     private static GameConfigs instance;
@@ -24,19 +26,36 @@ public class GameConfigs {
         return cardDecks;
     }
 
+    public void setCardDecks(ArrayList<CardDeck> cardDecks) {
+        this.cardDecks = cardDecks;
+    }
+
     public ArrayList<ScoresManager> getScoresManagers(){
         return scoresManagers;
+    }
+
+    public void setScoresManagers(ArrayList<ScoresManager> scoresManagers) {
+        this.scoresManagers = scoresManagers;
+    }
+
+    public int getCurrentGameIndex() {
+        return currentGameIndex;
+    }
+
+    public void setCurrentGameIndex(CardDeck cardDeck) {
+        this.currentGameIndex = getCardDeckIndex(cardDeck);
     }
 
     public ScoresManager getScoreManager(int index){
         return scoresManagers.get(index);
     }
-    public void setCardDecks(ArrayList<CardDeck> cardDecks) {
-        this.cardDecks = cardDecks;
+
+    public ScoresManager getCurrentScoreManager(){
+        return scoresManagers.get(currentGameIndex);
     }
 
-    public void setScoresManagers(ArrayList<ScoresManager> scoresManagers) {
-        this.scoresManagers = scoresManagers;
+    public CardDeck getCardDeck(int index){
+        return cardDecks.get(index);
     }
 
     public void add(CardDeck cardDeck, ScoresManager scoresManager){
