@@ -40,12 +40,13 @@ import project.findit.model.CardDeck;
 public class GameActivity extends AppCompatActivity {
 
     private static final String FILE_EXPORT_CARDS = "file_export_cards";
+    private static final String TAG_WIN_DIALOG = "tag_win_dialog";
 
     private Chronometer timer;
     private CardDeck cardDeck;
     private int numImagesPerCard;
-    private Button[] drawPile;        // Contains the images of a card from the draw pile
-    private Button[] discardPile;     // Contains the images of a card from the discard pile
+    private Button[] drawCard;
+    private Button[] discardCard;
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, GameActivity.class);
@@ -56,14 +57,14 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         cardDeck = CardDeck.getInstance();
         numImagesPerCard = cardDeck.getNumImagesPerCard();
 
-        drawPile = new Button[numImagesPerCard];
-        discardPile = new Button[numImagesPerCard];
+        drawCard = new Button[numImagesPerCard];
+        discardCard = new Button[numImagesPerCard];
 
         setupDrawCard();
         setupDiscardCard();
@@ -71,9 +72,6 @@ public class GameActivity extends AppCompatActivity {
         setupBackButton();
     }
 
-    // Sets up the images of the cards in the draw pile
-    // The three buttons correspond to the three images on each card
-    // Help taken from Brian: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void setupDrawCard() {
         TableLayout tableDraw = findViewById(R.id.table_draw);
         for(int i = 0; i < numImagesPerCard; i++){
@@ -82,8 +80,7 @@ public class GameActivity extends AppCompatActivity {
             button.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.WRAP_CONTENT,
                     TableLayout.LayoutParams.WRAP_CONTENT,
-                    1.0f
-            ));
+                    1.0f));
 
             // Avoid clipping text on smaller buttons
             button.setPadding(0, 0, 0, 0);
@@ -96,14 +93,12 @@ public class GameActivity extends AppCompatActivity {
             button.setSoundEffectsEnabled(false);
 
             tableDraw.addView(button);
-            drawPile[i] = button;
-            drawPile[i].setVisibility(View.INVISIBLE);
+            drawCard[i] = button;
+            drawCard[i].setVisibility(View.INVISIBLE);
         }
     }
 
-    // Sets up the images for the top card in the discard pile
-    // The buttons are purposely unresponsive
-    // Help taken from Brian: https://www.youtube.com/watch?v=4MFzuP1F-xQ
+    // The buttons are purposely unresponsive so the user can only click on the draw card
     private void setupDiscardCard() {
         TableLayout tableDiscard = findViewById(R.id.table_discard);
         for(int i = 0; i < numImagesPerCard; i++){
@@ -111,23 +106,20 @@ public class GameActivity extends AppCompatActivity {
             button.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
                     TableLayout.LayoutParams.MATCH_PARENT,
-                    1.0f
-            ));
+                    1.0f));
 
             button.setPadding(0, 0, 0, 0);
 
             tableDiscard.addView(button);
-            discardPile[i] = button;
-            discardPile[i].setVisibility(View.INVISIBLE);
+            discardCard[i] = button;
+            discardCard[i].setVisibility(View.INVISIBLE);
         }
     }
 
-    // Checks if the selected image matches an image on on the discard pile card.
-    // Takes Screenshot of the cards in a given game.
     private void imageClicked(int index) {
         MediaPlayer soundFound = MediaPlayer.create(this, R.raw.sound_found);
         MediaPlayer soundIncorrect = MediaPlayer.create(this, R.raw.sound_incorrect);
-        if (cardDeck.searchDiscardPile(index)) {
+        if (cardDeck.searchDiscardCard(index)) {
             soundFound.start();
             if (cardDeck.getCurrentCardIndex() == cardDeck.getNumCards() - 1) {
                 takeScreenshot(cardDeck.getCurrentCardIndex());
@@ -142,26 +134,22 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    // Change the button icons to the appropriate pictures
-    // Used code from Brians youtube video: https://www.youtube.com/watch?v=4MFzuP1F-xQ
     private void updateCard() {
         for (int i = 0; i < numImagesPerCard; i++) {
-            Object[] objectDraw = cardDeck.getCardObject(cardDeck.getCurrentCardIndex(), i);
-            Object[] objectDiscard = cardDeck.getCardObject(cardDeck.getCurrentCardIndex() - 1, i);
+            Object[] drawObject = cardDeck.getCardObject(cardDeck.getCurrentCardIndex(), i);
+            Object[] discardObject = cardDeck.getCardObject(cardDeck.getCurrentCardIndex() - 1, i);
 
-            lockButtonSizes(drawPile);
-            lockButtonSizes(discardPile);
+            lockButtonSizes(drawCard);
+            lockButtonSizes(discardCard);
 
-            setButton(objectDraw, drawPile[i]);
-            setButton(objectDiscard, discardPile[i]);
+            setButton(drawObject, drawCard[i]);
+            setButton(discardObject, discardCard[i]);
         }
     }
 
-    // Locks the button sizes
-    // Taken from Brians youtube videos: https://www.youtube.com/watch?v=4MFzuP1F-xQ
-    private void lockButtonSizes(Button[] pile) {
-        for (int i = 0; i < pile.length; i++) {
-            Button button = pile[i];
+    private void lockButtonSizes(Button[] card) {
+        for (int i = 0; i < card.length; i++) {
+            Button button = card[i];
 
             int height = button.getHeight();
             button.setMinHeight(height);
@@ -180,21 +168,24 @@ public class GameActivity extends AppCompatActivity {
         try {
             int image = Integer.parseInt((String) value);
             Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), image);
-
             setButtonImage(button, rotation, scale, originalBitmap);
         } catch (NumberFormatException e) {
             System.out.println("not image");
             try {
                 byte[] encodeByte = Base64.decode((String) value, Base64.DEFAULT);
-                Bitmap bitmapCustom = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+                Bitmap bitmapCustom = BitmapFactory
+                        .decodeByteArray(encodeByte, 0, encodeByte.length);
 
                 setButtonImage(button, rotation, scale, bitmapCustom);
             } catch (Exception ex) {
                 System.out.println("not bitmap image");
                 String word = "" + value;
                 SpannableString strSpannable = new SpannableString(word);
-                strSpannable.setSpan(new RelativeSizeSpan(
-                        2f / (float) scale), 0, word.length(), Spanned.SPAN_COMPOSING);
+                strSpannable.setSpan(
+                        new RelativeSizeSpan(2f / (float) scale),
+                        0,
+                        word.length(),
+                        Spanned.SPAN_COMPOSING);
 
                 button.setAllCaps(false);
                 button.setText(strSpannable);
@@ -247,6 +238,7 @@ public class GameActivity extends AppCompatActivity {
         timer = findViewById(R.id.chronometer_timer);
         timer.start();
         timer.setBase(SystemClock.elapsedRealtime());
+        cardDeck.incrementCardIndex();
 
         MediaPlayer soundStart = MediaPlayer.create(this, R.raw.sound_start);
         soundStart.start();
@@ -262,7 +254,7 @@ public class GameActivity extends AppCompatActivity {
         int timeInSeconds = (int) ((SystemClock.elapsedRealtime() - timer.getBase()) / 1000.0);
         FragmentManager manager = getSupportFragmentManager();
         WinDialog dialog = new WinDialog(timeInSeconds);
-        dialog.show(manager, "");
+        dialog.show(manager, TAG_WIN_DIALOG);
     }
 
     private void setupBackButton() {

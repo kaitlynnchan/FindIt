@@ -4,30 +4,31 @@ import java.util.ArrayList;
 
 /**
  * SCORES MANAGER CLASS
- * Stores an array list of scores
+ * Creates and stores an arraylist of scores
  */
 public class ScoresManager {
+
     private ArrayList<Score> scoreArray = new ArrayList<>();
     private int numMaxScores;
-
-    public int getNumMaxScores(){
-        return numMaxScores;
-    }
 
     public ArrayList<Score> getScoreArray(){
         return scoreArray;
     }
 
-    public Score getScore(int index){
-        return scoreArray.get(index);
+    public void setScoreArray(ArrayList<Score> sArray){
+        this.scoreArray = sArray;
+    }
+
+    public int getNumMaxScores(){
+        return numMaxScores;
     }
 
     public void setNumMaxScores(int numMaxScores) {
         this.numMaxScores = numMaxScores;
     }
 
-    public void setScoreArray(ArrayList<Score> sArray){
-        this.scoreArray = sArray;
+    public Score getScore(int index){
+        return scoreArray.get(index);
     }
 
     public void addScore(Score score) {

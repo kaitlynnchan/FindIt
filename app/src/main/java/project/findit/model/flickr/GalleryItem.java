@@ -4,40 +4,41 @@ import androidx.annotation.NonNull;
 
 /**
  * GALLERY ITEM CLASS
- * Contains functions related to information about each image
+ * Creates and stores information on an image
  */
 public class GalleryItem {
-    private String mCaption;
-    private String mId;
-    private String mUrl;
+
+    private String caption;
+    private String id;
+    private String url;
 
     public String getCaption() {
-        return mCaption;
+        return caption;
     }
 
     public void setCaption(String caption) {
-        mCaption = caption;
+        this.caption = caption;
     }
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public void setUrl(String url) {
-        mUrl = url;
+        this.url = url;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return mCaption;
+        return caption;
     }
 }

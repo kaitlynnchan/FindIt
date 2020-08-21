@@ -14,10 +14,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * THUMBNAIL DOWNLOADER
+ * THUMBNAIL DOWNLOADER CLASS
  * Retrieves the bitmap thumbnails
  */
 public class ThumbnailDownloader<T> extends HandlerThread {
+
     private static final String TAG = "ThumbnailDownloader";
     private static final int MESSAGE_DOWNLOAD = 0;
 

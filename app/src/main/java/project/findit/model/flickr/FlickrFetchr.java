@@ -20,8 +20,8 @@ import java.util.List;
  * Launches the flickr API, and deals with basic image functionality and storage
  */
 public class FlickrFetchr {
-    private static final String TAG = "FlickrFetchr";
 
+    private static final String TAG = "FlickrFetchr";
     private static final String API_KEY = "61c655e493723bfb462680fe8285db9e";
     private static final String FETCH_RECENTS_METHOD = "flickr.photos.getRecent";
     private static final String SEARCH_METHOD = "flickr.photos.search";

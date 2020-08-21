@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import java.util.Calendar;
 import java.util.Locale;
 
-import project.findit.model.CardDeck;
 import project.findit.model.GameConfigs;
 import project.findit.model.Score;
 import project.findit.model.ScoresManager;
@@ -26,13 +25,12 @@ import project.findit.R;
 /**
  * WIN FRAGMENT
  * Displays win screen, OK button, EXPORT IMAGES button, and allows user to
- *  input a nickname when appropriate
+ *  input a nickname for saving the score
  */
 public class WinDialog extends AppCompatDialogFragment {
 
     private View view;
     private int time;
-    private int index;
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
 
@@ -40,16 +38,13 @@ public class WinDialog extends AppCompatDialogFragment {
         this.time = time;
     }
 
-    // Used help from Brian's youtube videos: https://www.youtube.com/watch?v=y6StJRn-Y-A&feature=youtu.be
     @SuppressLint("InflateParams")
     @NonNull
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_win, null);
-        CardDeck cardDeck = CardDeck.getInstance();
         gameConfigs = GameConfigs.getInstance();
-        index = gameConfigs.getCardDeckIndex(cardDeck);
-        scoresManager = gameConfigs.getScoreManager(index);
+        scoresManager = gameConfigs.getCurrentScoreManager();
 
         if(time < scoresManager.getScore(0).getTimeBySeconds()){
             TextView txtHighScore = view.findViewById(R.id.text_new_high_score);
@@ -58,9 +53,7 @@ public class WinDialog extends AppCompatDialogFragment {
 
         setupButton();
 
-        // Took help from Brians youtube videos: https://www.youtube.com/watch?v=y6StJRn-Y-A&feature=youtu.be
         return new AlertDialog.Builder(getActivity())
-                .setTitle("")
                 .setView(view)
                 .create();
     }
@@ -83,7 +76,7 @@ public class WinDialog extends AppCompatDialogFragment {
                 String userDate = month + " " + day + ", " + year;
 
                 scoresManager.addScore(new Score(time, userName, userDate));
-                gameConfigs.getScoreManager(index).setScoreArray(scoresManager.getScoreArray());
+                gameConfigs.getCurrentScoreManager().setScoreArray(scoresManager.getScoreArray());
                 MainActivity.saveGameConfigs(getActivity(), gameConfigs);
 
                 getActivity().finish();
