@@ -30,8 +30,6 @@ import project.findit.R;
  */
 public class LeaderBoardActivity extends AppCompatActivity {
 
-    private static final String EXTRA_INDEX = "extra_index";
-
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
     private TextView[] textViewScores;
@@ -40,9 +38,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
     private int numImagesPerCard;
     private int numCards;
 
-    public static Intent makeLaunchIntent(Context context, int index){
+    public static Intent makeLaunchIntent(Context context){
         Intent intent = new Intent(context, LeaderBoardActivity.class);
-        intent.putExtra(EXTRA_INDEX, index);
         return intent;
     }
 
@@ -54,16 +51,14 @@ public class LeaderBoardActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Intent intent = getIntent();
-        index = intent.getIntExtra(EXTRA_INDEX, -1);
-
         gameConfigs = GameConfigs.getInstance();
+        index = gameConfigs.getCurrentGameIndex();
+        numImagesPerCard = gameConfigs.getCardDeck(index).getNumImagesPerCard();
+        numCards = gameConfigs.getCardDeck(index).getNumCards();
+
         scoresManager = gameConfigs.getScoreManager(index);
         numMaxScores = scoresManager.getNumMaxScores();
         textViewScores = new TextView[numMaxScores];
-
-        numImagesPerCard = gameConfigs.getCardDecks().get(index).getNumImagesPerCard();
-        numCards = gameConfigs.getCardDecks().get(index).getNumCards();
 
         setupLeaderBoard();
         setupResetButton();

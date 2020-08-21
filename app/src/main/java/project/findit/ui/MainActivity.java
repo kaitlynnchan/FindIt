@@ -70,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
         buttonLeaderBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = LeaderBoardActivity.makeLaunchIntent(
-                        MainActivity.this, gameConfigs.getCardDeckIndex(cardDeck));
+                Intent intent = LeaderBoardActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
@@ -146,11 +145,12 @@ public class MainActivity extends AppCompatActivity {
             scoresManager.setNumMaxScores(gameConfigs.getScoreManager(index).getNumMaxScores());
             scoresManager.setScoreArray(gameConfigs.getScoreManager(index).getScoreArray());
         }
+        gameConfigs.setCurrentGameIndex(cardDeck);
     }
 
     public static void saveGameConfigs(Context context, GameConfigs gameConfigs) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                SHARED_PREFS_GAMES, MODE_PRIVATE);
+        SharedPreferences sharedPreferences
+                = context.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(gameConfigs.getCardDecks());

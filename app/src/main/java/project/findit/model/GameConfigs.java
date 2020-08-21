@@ -42,12 +42,20 @@ public class GameConfigs {
         return currentGameIndex;
     }
 
-    public void setCurrentGameIndex(int currentGameIndex) {
-        this.currentGameIndex = currentGameIndex;
+    public void setCurrentGameIndex(CardDeck cardDeck) {
+        this.currentGameIndex = getCardDeckIndex(cardDeck);
     }
 
     public ScoresManager getScoreManager(int index){
         return scoresManagers.get(index);
+    }
+
+    public ScoresManager getCurrentScoreManager(){
+        return scoresManagers.get(currentGameIndex);
+    }
+
+    public CardDeck getCardDeck(int index){
+        return cardDecks.get(index);
     }
 
     public void add(CardDeck cardDeck, ScoresManager scoresManager){
