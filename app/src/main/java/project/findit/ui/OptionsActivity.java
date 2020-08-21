@@ -256,60 +256,60 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void saveImagePackId(int imagePack) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(
-                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences
+                = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_IMAGE_PACK_ID, imagePack);
         editor.apply();
     }
 
     private static int getImagePackId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences
+                = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, DEFAULT_IMAGE_PACK);
     }
 
     private void saveModeId(int mode) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(
-                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences
+                = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_MODE_ID, mode);
         editor.apply();
     }
 
     private static int getModeId(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences
+                = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         return sharedPreferences.getInt(EDITOR_MODE_ID, DEFAULT_MODE_BUTTON);
     }
 
     private void saveNumImagesPerCard(int numImagesPerCard){
-        SharedPreferences sharedPreferences = this.getSharedPreferences(
-                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences
+                = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_NUM_IMAGES_PER_CARD, numImagesPerCard);
         editor.apply();
     }
 
     public static int getNumImagesPerCard(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences
+                = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         String defaultValueStr = context.getString(R.string.default_num_images_per_card);
         int defaultValue = Integer.parseInt(defaultValueStr);
         return sharedPreferences.getInt(EDITOR_NUM_IMAGES_PER_CARD, defaultValue);
     }
 
     private void saveNumCards(int numCards){
-        SharedPreferences sharedPreferences = this.getSharedPreferences(
-                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences
+                = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_NUM_CARDS, numCards);
         editor.apply();
     }
 
     public static int getNumCards(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences
+                = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         String defaultValueStr = context.getString(R.string.default_num_cards);
         int defaultValue;
         if(defaultValueStr.equals(context.getString(R.string.all))){
@@ -321,16 +321,16 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void saveDifficultyMode(String difficultyMode) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(
-                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences
+                = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(EDITOR_DIFFICULTY_MODE, difficultyMode);
         editor.apply();
     }
 
     private static String getDifficultyModeStr(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences
+                = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         String defaultValue = context.getString(R.string.default_difficulty_mode);
         return sharedPreferences.getString(EDITOR_DIFFICULTY_MODE, defaultValue);
     }

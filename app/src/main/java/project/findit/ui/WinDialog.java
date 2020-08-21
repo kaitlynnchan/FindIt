@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import java.util.Calendar;
 import java.util.Locale;
 
-import project.findit.model.CardDeck;
 import project.findit.model.GameConfigs;
 import project.findit.model.Score;
 import project.findit.model.ScoresManager;
@@ -32,7 +31,6 @@ public class WinDialog extends AppCompatDialogFragment {
 
     private View view;
     private int time;
-    private int index;
     private GameConfigs gameConfigs;
     private ScoresManager scoresManager;
 
@@ -45,10 +43,8 @@ public class WinDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog (Bundle savedInstanceState) {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_win, null);
-        CardDeck cardDeck = CardDeck.getInstance();
         gameConfigs = GameConfigs.getInstance();
-        index = gameConfigs.getCardDeckIndex(cardDeck);
-        scoresManager = gameConfigs.getScoreManager(index);
+        scoresManager = gameConfigs.getCurrentScoreManager();
 
         if(time < scoresManager.getScore(0).getTimeBySeconds()){
             TextView txtHighScore = view.findViewById(R.id.text_new_high_score);
@@ -80,7 +76,7 @@ public class WinDialog extends AppCompatDialogFragment {
                 String userDate = month + " " + day + ", " + year;
 
                 scoresManager.addScore(new Score(time, userName, userDate));
-                gameConfigs.getScoreManager(index).setScoreArray(scoresManager.getScoreArray());
+                gameConfigs.getCurrentScoreManager().setScoreArray(scoresManager.getScoreArray());
                 MainActivity.saveGameConfigs(getActivity(), gameConfigs);
 
                 getActivity().finish();
