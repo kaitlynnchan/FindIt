@@ -18,7 +18,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.util.Log;
@@ -94,10 +93,6 @@ public class PhotoGalleryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_photo_gallery, container, false);
         recyclerViewPhoto = view.findViewById(R.id.recycler_photo);
         recyclerViewPhoto.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-
-        getActivity().getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);

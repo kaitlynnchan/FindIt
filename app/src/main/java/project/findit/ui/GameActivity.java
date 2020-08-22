@@ -11,8 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.AudioAttributes;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -21,7 +19,6 @@ import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.util.Base64;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
@@ -50,7 +47,7 @@ public class GameActivity extends AppCompatActivity {
     private int numImagesPerCard;
     private Button[] drawCard;
     private Button[] discardCard;
-//    private SoundPool soundPool;
+    private SoundPool soundPool;
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, GameActivity.class);
@@ -60,9 +57,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         cardDeck = CardDeck.getInstance();
         numImagesPerCard = cardDeck.getNumImagesPerCard();
@@ -70,29 +64,16 @@ public class GameActivity extends AppCompatActivity {
         drawCard = new Button[numImagesPerCard];
         discardCard = new Button[numImagesPerCard];
 
+        setupSounds();
         setupDrawCard();
         setupDiscardCard();
         startGame();
         setupBackButton();
-        setupSounds();
     }
 
     private void setupSounds() {
-        Sound.setupAttributes();
-        Sound.setSounds(this);
-//        AudioAttributes audioAttributes = new AudioAttributes.Builder()
-//                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-//                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-//                .build();
-//
-//        soundPool = new SoundPool.Builder()
-//                .setAudioAttributes(audioAttributes)
-//                .build();
-//
-//        Sound.FOUND = soundPool.load(this, R.raw.sound_found, 1);
-//        Sound.INCORRECT = soundPool.load(this, R.raw.sound_incorrect, 1);
-//        Sound.START = soundPool.load(this, R.raw.sound_start, 1);
-//        Sound.WIN = soundPool.load(this, R.raw.sound_win, 1);
+        soundPool = Sound.buildSoundPool();
+        Sound.loadSounds(this, soundPool);
     }
 
     private void setupDrawCard() {
@@ -141,8 +122,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void imageClicked(int index) {
         if (cardDeck.searchDiscardCard(index)) {
-            Sound.playSound(Sound.FOUND);
-//            soundPool.play(Sound.FOUND, 1, 1, 0, 0, 1);
+            Sound.playSound(soundPool, Sound.FOUND);
             if (cardDeck.getCurrentCardIndex() == cardDeck.getNumCards() - 1) {
                 takeScreenshot(cardDeck.getCurrentCardIndex());
                 stopTimer();
@@ -152,8 +132,7 @@ public class GameActivity extends AppCompatActivity {
                 updateCard();
             }
         } else{
-            Sound.playSound(Sound.INCORRECT);
-//            soundPool.play(Sound.INCORRECT, 1, 1, 0, 0, 1);
+            Sound.playSound(soundPool, Sound.INCORRECT);
         }
     }
 
@@ -263,15 +242,13 @@ public class GameActivity extends AppCompatActivity {
         timer.setBase(SystemClock.elapsedRealtime());
         cardDeck.incrementCardIndex();
 
-        Sound.playSound(Sound.START);
-//        soundPool.play(Sound.START, 1, 1, 0, 0, 1);
+        Sound.playSound(soundPool, Sound.START);
     }
 
     private void stopTimer() {
         timer.stop();
 
-        Sound.playSound(Sound.WIN);
-//        soundPool.play(Sound.WIN, 1, 1, 0, 0, 1);
+        Sound.playSound(soundPool, Sound.WIN);
 
         // divide by 1000 to convert values from milliseconds to seconds
         int timeInSeconds = (int) ((SystemClock.elapsedRealtime() - timer.getBase()) / 1000.0);
@@ -293,9 +270,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Sound.destroy();
-//        soundPool.release();
-//        soundPool = null;
+        soundPool.release();
+        soundPool = null;
     }
 
     // Take Screen Shot of the card.

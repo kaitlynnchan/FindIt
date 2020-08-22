@@ -1,11 +1,11 @@
 <resources>
-    <!-- Base application theme. -->
+    <!-- Basic theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorLightGreen</item>
         <item name="colorPrimaryDark">@color/colorGreen</item>
         <item name="colorAccent">@color/colorDarkGreen</item>
         <item name="fontFamily">@font/atma_medium</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
