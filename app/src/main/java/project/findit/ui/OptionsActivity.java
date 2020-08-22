@@ -7,19 +7,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.Arrays;
 
+import project.findit.model.Defaults;
 import project.findit.model.Mode;
 import project.findit.R;
 
@@ -42,8 +45,6 @@ public class OptionsActivity extends AppCompatActivity {
     private static int imageButtonCustom = R.id.image_button_custom;
     private static int buttonImages = R.id.button_images;
     private static int buttonWordsImages = R.id.button_words_images;
-    private static final int DEFAULT_IMAGE_PACK = imageButtonFruits;
-    private static final int DEFAULT_MODE_BUTTON = buttonImages;
 
     private static int numCustomImages;
 
@@ -55,9 +56,6 @@ public class OptionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option);
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         numCustomImages = CustomImagesActivity.getNumCustomImages(this);
 
@@ -71,6 +69,7 @@ public class OptionsActivity extends AppCompatActivity {
         setNumCardsSpinner();
         setDifficultyModeSpinner();
 
+        setupToggleButton();
         setupBackButton();
     }
 
@@ -83,7 +82,7 @@ public class OptionsActivity extends AppCompatActivity {
                     Intent intent = CustomImagesActivity.makeLaunchIntent(OptionsActivity.this);
                     startActivityForResult(intent, REQUEST_CODE_CUSTOM);
                     if(getImagePackId(OptionsActivity.this) == imageButtonCustom){
-                        saveImagePackId(DEFAULT_IMAGE_PACK);
+                        saveImagePackId(Defaults.DEFAULT_IMAGE_PACK);
                     }
                 } else{
                     saveImagePackId(imageId);
@@ -255,6 +254,42 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
+    private void setupToggleButton() {
+        ToggleButton toggleSound = findViewById(R.id.toggle_sound_effects);
+        toggleSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    System.out.println("on");
+                    AudioManager manager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                    manager.adjustStreamVolume(
+                            AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
+                    manager.adjustStreamVolume(
+                            AudioManager.STREAM_ALARM, AudioManager.ADJUST_UNMUTE, 0);
+                    manager.adjustStreamVolume(
+                            AudioManager.STREAM_NOTIFICATION, AudioManager.ADJUST_UNMUTE, 0);
+                    manager.adjustStreamVolume(
+                            AudioManager.STREAM_RING, AudioManager.ADJUST_UNMUTE, 0);
+                    manager.adjustStreamVolume(
+                            AudioManager.STREAM_DTMF, AudioManager.ADJUST_UNMUTE, 0);
+                } else {
+                    System.out.println("off");
+                    AudioManager manager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                    manager.adjustStreamVolume(
+                            AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
+                    manager.adjustStreamVolume(
+                            AudioManager.STREAM_ALARM, AudioManager.ADJUST_MUTE, 0);
+                    manager.adjustStreamVolume(
+                            AudioManager.STREAM_NOTIFICATION, AudioManager.ADJUST_MUTE, 0);
+                    manager.adjustStreamVolume(
+                            AudioManager.STREAM_RING, AudioManager.ADJUST_MUTE, 0);
+                    manager.adjustStreamVolume(
+                            AudioManager.STREAM_DTMF, AudioManager.ADJUST_MUTE, 0);
+                }
+            }
+        });
+    }
+
     private void saveImagePackId(int imagePack) {
         SharedPreferences sharedPreferences
                 = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
@@ -266,7 +301,7 @@ public class OptionsActivity extends AppCompatActivity {
     private static int getImagePackId(Context context){
         SharedPreferences sharedPreferences
                 = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, DEFAULT_IMAGE_PACK);
+        return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, Defaults.DEFAULT_IMAGE_PACK);
     }
 
     private void saveModeId(int mode) {
@@ -280,7 +315,7 @@ public class OptionsActivity extends AppCompatActivity {
     private static int getModeId(Context context){
         SharedPreferences sharedPreferences
                 = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
-        return sharedPreferences.getInt(EDITOR_MODE_ID, DEFAULT_MODE_BUTTON);
+        return sharedPreferences.getInt(EDITOR_MODE_ID, Defaults.DEFAULT_MODE_BUTTON);
     }
 
     private void saveNumImagesPerCard(int numImagesPerCard){
@@ -413,7 +448,7 @@ public class OptionsActivity extends AppCompatActivity {
                     Toast.makeText(
                             this, R.string.toast_mode_not_supported, Toast.LENGTH_SHORT)
                             .show();
-                    saveModeId(DEFAULT_MODE_BUTTON);
+                    saveModeId(Defaults.DEFAULT_MODE_BUTTON);
                     setModeButton(buttonImages);
                     setModeButton(buttonWordsImages);
                 }
@@ -422,7 +457,7 @@ public class OptionsActivity extends AppCompatActivity {
                         this, R.string.toast_not_enough_images, Toast.LENGTH_SHORT)
                         .show();
                 if(getImagePackId(this) == imageButtonCustom){
-                    saveImagePackId(DEFAULT_IMAGE_PACK);
+                    saveImagePackId(Defaults.DEFAULT_IMAGE_PACK);
                 }
             }
             setImageButton(imageButtonFruits);

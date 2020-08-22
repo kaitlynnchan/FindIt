@@ -119,8 +119,8 @@
     <string name="nickname">Nickname</string>
     <string name="no_answer">N/A</string>
     <string name="new_high_score">New High Score</string>
-    <string name="num_of_cards">Number \nof Cards</string>
-    <string name="num_of_images">Number \nof Images</string>
+    <string name="num_of_cards">Number of Cards:</string>
+    <string name="num_of_images">Number of Images Per Card:</string>
     <string name="words_and_images">words and images</string>
     <string name="images">IMAGES</string>
     <string name="mode">Mode:</string>

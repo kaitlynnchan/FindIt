@@ -9,36 +9,33 @@ import project.findit.R;
 public final class Sound {
 
     public static int FOUND;
+    public static int DING;
+    public static int CORRECT;
     public static int INCORRECT;
     public static int START;
     public static int WIN;
 
-    public static SoundPool soundPool;
-
-    public static void setupAttributes(){
+    public static SoundPool buildSoundPool(){
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .build();
 
-        soundPool = new SoundPool.Builder()
+        return new SoundPool.Builder()
                 .setAudioAttributes(audioAttributes)
                 .build();
     }
 
-    public static void setSounds(Context context){
+    public static void loadSounds(Context context, SoundPool soundPool){
         FOUND = soundPool.load(context, R.raw.sound_found, 1);
+        DING = soundPool.load(context, R.raw.sound_ding, 1);
+        CORRECT = soundPool.load(context, R.raw.sound_correct, 1);
         INCORRECT = soundPool.load(context, R.raw.sound_incorrect, 1);
         START = soundPool.load(context, R.raw.sound_start, 1);
         WIN = soundPool.load(context, R.raw.sound_win, 1);
     }
 
-    public static void playSound(int sound){
+    public static void playSound(SoundPool soundPool, int sound){
         soundPool.play(sound, 1, 1, 0, 0, 1);
-    }
-
-    public static void destroy(){
-        soundPool.release();
-        soundPool = null;
     }
 }

@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -39,17 +38,13 @@ public class LeaderBoardActivity extends AppCompatActivity {
     private int numCards;
 
     public static Intent makeLaunchIntent(Context context){
-        Intent intent = new Intent(context, LeaderBoardActivity.class);
-        return intent;
+        return new Intent(context, LeaderBoardActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leader_board);
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         gameConfigs = GameConfigs.getInstance();
         index = gameConfigs.getCurrentGameIndex();
