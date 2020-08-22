@@ -43,7 +43,6 @@
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,33 +58,33 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_title" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_num_images_per_card" />
 
     <TextView
         android:id="@+id/text_num_images"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/num_of_images"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textColor="#000000"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/text_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintHorizontal_bias="0.162"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_title" />
+        app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
     <TextView
         android:id="@+id/text_num_cards"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/num_of_cards"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textColor="#000000"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/spinner_num_images_per_card"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.77"
+        app:layout_constraintHorizontal_bias="0.69"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/spinner_num_images_per_card" />
 

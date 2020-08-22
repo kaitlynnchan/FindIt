@@ -11,7 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.SpannableString;
@@ -19,7 +19,6 @@ import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.util.Base64;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
@@ -32,6 +31,7 @@ import java.util.Date;
 
 import project.findit.R;
 import project.findit.model.CardDeck;
+import project.findit.model.SoundEffect;
 
 /**
  * GAME SCREEN
@@ -47,6 +47,7 @@ public class GameActivity extends AppCompatActivity {
     private int numImagesPerCard;
     private Button[] drawCard;
     private Button[] discardCard;
+    private SoundPool soundPool;
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, GameActivity.class);
@@ -56,9 +57,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         cardDeck = CardDeck.getInstance();
         numImagesPerCard = cardDeck.getNumImagesPerCard();
@@ -66,10 +64,16 @@ public class GameActivity extends AppCompatActivity {
         drawCard = new Button[numImagesPerCard];
         discardCard = new Button[numImagesPerCard];
 
+        setupSounds();
         setupDrawCard();
         setupDiscardCard();
         startGame();
         setupBackButton();
+    }
+
+    private void setupSounds() {
+        soundPool = SoundEffect.buildSoundPool();
+        SoundEffect.loadSounds(this, soundPool);
     }
 
     private void setupDrawCard() {
@@ -117,10 +121,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void imageClicked(int index) {
-        MediaPlayer soundFound = MediaPlayer.create(this, R.raw.sound_found);
-        MediaPlayer soundIncorrect = MediaPlayer.create(this, R.raw.sound_incorrect);
         if (cardDeck.searchDiscardCard(index)) {
-            soundFound.start();
+            SoundEffect.playSound(soundPool, SoundEffect.CORRECT);
             if (cardDeck.getCurrentCardIndex() == cardDeck.getNumCards() - 1) {
                 takeScreenshot(cardDeck.getCurrentCardIndex());
                 stopTimer();
@@ -130,7 +132,7 @@ public class GameActivity extends AppCompatActivity {
                 updateCard();
             }
         } else{
-            soundIncorrect.start();
+            SoundEffect.playSound(soundPool, SoundEffect.INCORRECT);
         }
     }
 
@@ -240,15 +242,13 @@ public class GameActivity extends AppCompatActivity {
         timer.setBase(SystemClock.elapsedRealtime());
         cardDeck.incrementCardIndex();
 
-        MediaPlayer soundStart = MediaPlayer.create(this, R.raw.sound_start);
-        soundStart.start();
+        SoundEffect.playSound(soundPool, SoundEffect.START);
     }
 
     private void stopTimer() {
         timer.stop();
 
-        MediaPlayer soundWin = MediaPlayer.create(this, R.raw.sound_win);
-        soundWin.start();
+        SoundEffect.playSound(soundPool, SoundEffect.WIN);
 
         // divide by 1000 to convert values from milliseconds to seconds
         int timeInSeconds = (int) ((SystemClock.elapsedRealtime() - timer.getBase()) / 1000.0);
@@ -265,6 +265,13 @@ public class GameActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        soundPool.release();
+        soundPool = null;
     }
 
     // Take Screen Shot of the card.
