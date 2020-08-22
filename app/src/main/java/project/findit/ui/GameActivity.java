@@ -31,7 +31,7 @@ import java.util.Date;
 
 import project.findit.R;
 import project.findit.model.CardDeck;
-import project.findit.model.Sound;
+import project.findit.model.SoundEffect;
 
 /**
  * GAME SCREEN
@@ -72,8 +72,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupSounds() {
-        soundPool = Sound.buildSoundPool();
-        Sound.loadSounds(this, soundPool);
+        soundPool = SoundEffect.buildSoundPool();
+        SoundEffect.loadSounds(this, soundPool);
     }
 
     private void setupDrawCard() {
@@ -122,7 +122,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void imageClicked(int index) {
         if (cardDeck.searchDiscardCard(index)) {
-            Sound.playSound(soundPool, Sound.FOUND);
+            SoundEffect.playSound(soundPool, SoundEffect.CORRECT);
             if (cardDeck.getCurrentCardIndex() == cardDeck.getNumCards() - 1) {
                 takeScreenshot(cardDeck.getCurrentCardIndex());
                 stopTimer();
@@ -132,7 +132,7 @@ public class GameActivity extends AppCompatActivity {
                 updateCard();
             }
         } else{
-            Sound.playSound(soundPool, Sound.INCORRECT);
+            SoundEffect.playSound(soundPool, SoundEffect.INCORRECT);
         }
     }
 
@@ -242,13 +242,13 @@ public class GameActivity extends AppCompatActivity {
         timer.setBase(SystemClock.elapsedRealtime());
         cardDeck.incrementCardIndex();
 
-        Sound.playSound(soundPool, Sound.START);
+        SoundEffect.playSound(soundPool, SoundEffect.START);
     }
 
     private void stopTimer() {
         timer.stop();
 
-        Sound.playSound(soundPool, Sound.WIN);
+        SoundEffect.playSound(soundPool, SoundEffect.WIN);
 
         // divide by 1000 to convert values from milliseconds to seconds
         int timeInSeconds = (int) ((SystemClock.elapsedRealtime() - timer.getBase()) / 1000.0);
