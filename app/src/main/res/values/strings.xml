@@ -150,4 +150,8 @@
     <string name="normal">Normal</string>
     <string name="hard">Hard</string>
     <string name="title_flickr">Flickr</string>
+    <string name="image_pack">Image Pack:</string>
+    <string name="sound_effects">Sound Effects:</string>
+    <string name="off">OFF</string>
+    <string name="on">ON</string>
 </resources>

@@ -6,10 +6,9 @@ import android.media.SoundPool;
 
 import project.findit.R;
 
-public final class Sound {
+public final class SoundEffect {
 
     public static int FOUND;
-    public static int DING;
     public static int CORRECT;
     public static int INCORRECT;
     public static int START;
@@ -28,7 +27,6 @@ public final class Sound {
 
     public static void loadSounds(Context context, SoundPool soundPool){
         FOUND = soundPool.load(context, R.raw.sound_found, 1);
-        DING = soundPool.load(context, R.raw.sound_ding, 1);
         CORRECT = soundPool.load(context, R.raw.sound_correct, 1);
         INCORRECT = soundPool.load(context, R.raw.sound_incorrect, 1);
         START = soundPool.load(context, R.raw.sound_start, 1);
