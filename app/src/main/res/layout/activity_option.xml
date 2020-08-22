@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/garden_rose"
+    android:background="@drawable/strawberries_background"
     tools:context=".ui.OptionsActivity">
 
     <Button
@@ -34,12 +34,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/text_image_pack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/image_pack"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/scroll_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scroll_horizontal" />
+
     <HorizontalScrollView
         android:id="@+id/scroll_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/text_image_pack"
         app:layout_constraintTop_toBottomOf="@+id/text_title">
 
         <LinearLayout
@@ -49,28 +63,28 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/image_button_vegs"
-                android:layout_width="104dp"
-                android:layout_height="90dp"
-                android:background="@drawable/button_background"
-                android:contentDescription="@string/image_content_description"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/vegs" />
-
-            <ImageButton
                 android:id="@+id/image_button_fruits"
-                android:layout_width="104dp"
-                android:layout_height="90dp"
-                android:layout_marginStart="20dp"
+                android:layout_width="90dp"
+                android:layout_height="80dp"
                 android:background="@drawable/button_background"
                 android:contentDescription="@string/image_content_description"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/fruits" />
 
             <ImageButton
+                android:id="@+id/image_button_vegs"
+                android:layout_width="90dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button_background"
+                android:contentDescription="@string/image_content_description"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/vegs" />
+
+            <ImageButton
                 android:id="@+id/image_button_custom"
-                android:layout_width="104dp"
-                android:layout_height="90dp"
+                android:layout_width="90dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/button_background"
                 android:contentDescription="@string/image_content_description"
@@ -87,28 +101,13 @@
         android:layout_height="wrap_content"
         android:text="@string/num_of_images"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintHorizontal_bias="0.153"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.55" />
-
-    <TextView
-        android:id="@+id/text_num_cards"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/num_of_cards"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/text_num_images"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_num_images" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinner_num_images_per_card"
@@ -124,6 +123,21 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_num_images"
         app:layout_constraintStart_toEndOf="@+id/text_num_images"
         app:layout_constraintTop_toTopOf="@+id/text_num_images" />
+
+    <TextView
+        android:id="@+id/text_num_cards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/num_of_cards"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/text_num_images"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.728"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_num_images"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
         android:id="@+id/spinner_num_cards"
@@ -145,14 +159,14 @@
         android:layout_height="wrap_content"
         android:text="@string/mode"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintHorizontal_bias="0.116"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.674" />
 
     <Button
         android:id="@+id/button_images"
@@ -161,6 +175,7 @@
         android:layout_marginStart="16dp"
         android:background="@drawable/button_background"
         android:text="@string/images"
+        android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/text_mode"
         app:layout_constraintStart_toEndOf="@+id/text_mode"
@@ -173,6 +188,7 @@
         android:layout_marginStart="16dp"
         android:background="@drawable/button_background"
         android:text="@string/words_and_images"
+        android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/button_images"
         app:layout_constraintStart_toEndOf="@+id/button_images"
@@ -184,14 +200,14 @@
         android:layout_height="wrap_content"
         android:text="@string/difficulty_mode"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.325"
+        app:layout_constraintHorizontal_bias="0.718"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.907" />
+        app:layout_constraintVertical_bias="0.674" />
 
     <Spinner
         android:id="@+id/spinner_difficulty_mode"
@@ -206,5 +222,34 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_mode_difficulty"
         app:layout_constraintStart_toEndOf="@+id/text_mode_difficulty"
         app:layout_constraintTop_toTopOf="@+id/text_mode_difficulty" />
+
+    <TextView
+        android:id="@+id/text_sound_effects"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sound_effects"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.859" />
+
+    <ToggleButton
+        android:id="@+id/toggle_sound_effects"
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/button_background"
+        android:text="@string/sound_effects"
+        android:textOff="@string/off"
+        android:textOn="@string/on"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_sound_effects"
+        app:layout_constraintStart_toEndOf="@+id/text_sound_effects"
+        app:layout_constraintTop_toTopOf="@+id/text_sound_effects" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
