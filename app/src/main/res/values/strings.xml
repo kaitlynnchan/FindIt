@@ -121,8 +121,8 @@
     <string name="new_high_score">New High Score</string>
     <string name="num_of_cards">Number of Cards:</string>
     <string name="num_of_images">Number of Images Per Card:</string>
-    <string name="words_and_images">words and images</string>
-    <string name="images">IMAGES</string>
+    <string name="words_and_images">Words &amp; Images</string>
+    <string name="images">Images</string>
     <string name="mode">Mode:</string>
     <string name="date_format">Month DD, YYYY</string>
     <string name="search">Search</string>
@@ -138,7 +138,7 @@
     <string name="toast_fail">EditOwnImages failed to return from gallery</string>
     <string name="toast_null_data">Data is null</string>
 
-    <string name="all">all</string>
+    <string name="all">All</string>
     <string name="five">5</string>
     <string name="ten">10</string>
     <string name="fifteen">15</string>
