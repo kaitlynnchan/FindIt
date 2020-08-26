@@ -85,8 +85,7 @@ public class CustomImagesActivity extends AppCompatActivity {
             tableRow.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
                     TableLayout.LayoutParams.MATCH_PARENT,
-                    1.0f
-            ));
+                    1.0f));
             linearLayoutImages.addView(tableRow);
 
             for (int col = 0; col < numCols; col++) {
@@ -94,8 +93,7 @@ public class CustomImagesActivity extends AppCompatActivity {
                 imageView.setLayoutParams(new TableRow.LayoutParams(
                         TableRow.LayoutParams.MATCH_PARENT,
                         300,
-                        1.0f
-                ));
+                        1.0f));
                 imageView.setImageResource(R.drawable.empty_image);
 
                 if(counter < numCustomImages){
@@ -124,8 +122,8 @@ public class CustomImagesActivity extends AppCompatActivity {
             System.out.println(file.getName());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            bitmap = BitmapFactory
-                    .decodeResource(context.getResources(), R.drawable.magnifying_glass);
+            bitmap = BitmapFactory.decodeResource(context.getResources(),
+                    R.drawable.magnifying_glass);
         }
         return bitmap;
     }
@@ -225,8 +223,8 @@ public class CustomImagesActivity extends AppCompatActivity {
                     //  https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
                     Bitmap bitmap = MediaStore.Images.Media
                             .getBitmap(this.getContentResolver(), uri);
-                    SimpleDateFormat sdf = new SimpleDateFormat(
-                            "yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
+                            Locale.getDefault());
                     sdf.setTimeZone(TimeZone.getTimeZone("PDT"));
                     String temp = sdf.format(new Date());
                     name += temp;
@@ -286,8 +284,8 @@ public class CustomImagesActivity extends AppCompatActivity {
                 }
 
                 ContextWrapper cw = new ContextWrapper(getBaseContext());
-                File directory = cw.getDir(
-                        PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE, Context.MODE_PRIVATE);
+                File directory = cw.getDir(PhotoGalleryFragment.FILE_CUSTOM_DRAWABLE,
+                        Context.MODE_PRIVATE);
                 File myPath = new File(directory, name);
                 FileOutputStream fos;
                 try {
@@ -331,7 +329,8 @@ public class CustomImagesActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, TITLE_SELECT_PICTURE), REQUEST_CODE_GALLERY);
+                startActivityForResult(Intent.createChooser(intent, TITLE_SELECT_PICTURE),
+                        REQUEST_CODE_GALLERY);
             }
         });
 

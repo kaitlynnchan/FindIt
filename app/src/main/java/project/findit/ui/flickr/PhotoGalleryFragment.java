@@ -192,8 +192,8 @@ public class PhotoGalleryFragment extends Fragment {
 
                     // Got help from:
                     //  https://stackoverflow.com/questions/39897338/how-to-get-current-time-stamp-in-android/39897615
-                    SimpleDateFormat sdf = new SimpleDateFormat(
-                            "yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
+                            Locale.getDefault());
                     sdf.setTimeZone(TimeZone.getTimeZone("PDT"));
 
                     String bitmapUrl = items.get(position).getUrl();
