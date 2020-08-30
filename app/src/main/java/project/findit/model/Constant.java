@@ -16,4 +16,7 @@ public final class Constant {
 
     public static final int DEFAULT_DIFFICULTY_MODE = R.string.default_difficulty_mode;
 
+    private Constant(){
+        throw new IllegalAccessError("Cannot access constructor");
+    }
 }

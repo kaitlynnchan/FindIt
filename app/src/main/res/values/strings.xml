@@ -6,7 +6,7 @@
     <string name="play">PLAY</string>
     <string name="options">OPTIONS</string>
     <string name="help">HELP</string>
-    <string name="image_content_description">TODO</string>
+    <string name="image_content_description">image</string>
     <string name="option_heading">Choose \nWisely!!!!</string>
     <string name="back">back button</string>
     <string name="leader_board">leader board button</string>
@@ -154,4 +154,6 @@
     <string name="sound_effects">Sound Effects:</string>
     <string name="off">OFF</string>
     <string name="on">ON</string>
+    <string name="card">card</string>
+    <string name="magnifying_glass">magnifying glass</string>
 </resources>

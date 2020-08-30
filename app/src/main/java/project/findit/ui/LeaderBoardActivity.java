@@ -2,7 +2,6 @@ package project.findit.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -70,8 +69,6 @@ public class LeaderBoardActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     1.0f));
-            text.setTextColor(Color.parseColor("#000000"));
-            text.setTextSize(18);
             text.setGravity(Gravity.CENTER);
 
             layoutScores.addView(text);
