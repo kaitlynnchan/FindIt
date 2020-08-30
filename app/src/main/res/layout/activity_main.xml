@@ -31,7 +31,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:text="@string/play"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/text_title"
         app:layout_constraintHorizontal_bias="0.31"
         app:layout_constraintStart_toStartOf="@+id/text_title"
@@ -48,7 +47,6 @@
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
         android:text="@string/options"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/text_title"
         app:layout_constraintHorizontal_bias="0.059"
         app:layout_constraintStart_toStartOf="@+id/text_title"
@@ -61,7 +59,6 @@
         android:layout_marginStart="16dp"
         android:background="@drawable/button_background"
         android:text="@string/help"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/button_options"
         app:layout_constraintStart_toEndOf="@+id/button_options"
         app:layout_constraintTop_toTopOf="@+id/button_options" />

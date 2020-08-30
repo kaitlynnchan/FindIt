@@ -5,6 +5,10 @@
         <item name="colorPrimaryDark">@color/colorGreen</item>
         <item name="colorAccent">@color/colorDarkGreen</item>
         <item name="fontFamily">@font/atma_medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColorLink">@color/colorLightBlue</item>
+        <item name="android:foregroundTint">@android:color/black</item>
         <item name="android:windowFullscreen">true</item>
     </style>
 

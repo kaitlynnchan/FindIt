@@ -18,7 +18,6 @@
         android:contentDescription="@string/back"
         android:foreground="@drawable/ic_arrow_back"
         android:foregroundGravity="center_vertical|right"
-        android:foregroundTint="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/help_title"
-        android:textColor="#000000"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,10 +55,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/help_content"
-                android:textColor="#000000"
-                android:textColorHighlight="#0027FF"
-                android:textColorLink="#2196F3"
-                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
