@@ -14,6 +14,10 @@ public final class SoundEffect {
     public static int START;
     public static int WIN;
 
+    private SoundEffect(){
+        throw new IllegalAccessError("Cannot access constructor");
+    }
+
     public static SoundPool buildSoundPool(){
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)

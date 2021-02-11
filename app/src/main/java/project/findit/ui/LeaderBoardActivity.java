@@ -2,7 +2,6 @@ package project.findit.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -69,10 +68,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
             text.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    1.0f
-            ));
-            text.setTextColor(Color.parseColor("#000000"));
-            text.setTextSize(18);
+                    1.0f));
             text.setGravity(Gravity.CENTER);
 
             layoutScores.addView(text);
@@ -141,11 +137,11 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     private void setNumImagesPerCardSpinner() {
         Spinner spinner = findViewById(R.id.spinner_num_images_per_card);
-        String[] numImagesPerCardArray = getResources()
-                .getStringArray(R.array.num_images_per_card_array);
+        String[] numImagesPerCardArray =
+                getResources().getStringArray(R.array.num_images_per_card_array);
 
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
-                this, android.R.layout.simple_spinner_item, numImagesPerCardArray);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this,
+                android.R.layout.simple_spinner_item, numImagesPerCardArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -174,8 +170,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
         String[] numCardsArray = getResources().getStringArray(R.array.num_cards_array);
         numCardsArray = setRangeArray(numCardsArray);
 
-        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter<CharSequence>(
-                this, android.R.layout.simple_spinner_item, numCardsArray);
+        ArrayAdapter<CharSequence> adapter =  new ArrayAdapter<CharSequence>(this,
+                android.R.layout.simple_spinner_item, numCardsArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

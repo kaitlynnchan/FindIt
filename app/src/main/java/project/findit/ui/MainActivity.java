@@ -100,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadGameConfigs() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(EDITOR_CARD_DECKS, null);
         Type type = new TypeToken<ArrayList<CardDeck>>() {}.getType();
@@ -145,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void saveGameConfigs(Context context, GameConfigs gameConfigs) {
-        SharedPreferences sharedPreferences
-                = context.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_GAMES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(gameConfigs.getCardDecks());

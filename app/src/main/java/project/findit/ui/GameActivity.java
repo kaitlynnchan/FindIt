@@ -29,9 +29,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
 
-import project.findit.R;
 import project.findit.model.CardDeck;
 import project.findit.model.SoundEffect;
+import project.findit.R;
 
 /**
  * GAME SCREEN
@@ -138,8 +138,9 @@ public class GameActivity extends AppCompatActivity {
 
     private void updateCard() {
         for (int i = 0; i < numImagesPerCard; i++) {
-            Object[] drawObject = cardDeck.getCardObject(cardDeck.getCurrentCardIndex(), i);
-            Object[] discardObject = cardDeck.getCardObject(cardDeck.getCurrentCardIndex() - 1, i);
+            int currentCardIndex = cardDeck.getCurrentCardIndex();
+            Object[] drawObject = cardDeck.getCardObject(currentCardIndex, i);
+            Object[] discardObject = cardDeck.getCardObject(currentCardIndex - 1, i);
 
             lockButtonSizes(drawCard);
             lockButtonSizes(discardCard);
@@ -175,19 +176,16 @@ public class GameActivity extends AppCompatActivity {
             System.out.println("not image");
             try {
                 byte[] encodeByte = Base64.decode((String) value, Base64.DEFAULT);
-                Bitmap bitmapCustom = BitmapFactory
-                        .decodeByteArray(encodeByte, 0, encodeByte.length);
+                Bitmap bitmapCustom = BitmapFactory.decodeByteArray(encodeByte, 0,
+                        encodeByte.length);
 
                 setButtonImage(button, rotation, scale, bitmapCustom);
             } catch (Exception ex) {
                 System.out.println("not bitmap image");
                 String word = "" + value;
                 SpannableString strSpannable = new SpannableString(word);
-                strSpannable.setSpan(
-                        new RelativeSizeSpan(2f / (float) scale),
-                        0,
-                        word.length(),
-                        Spanned.SPAN_COMPOSING);
+                strSpannable.setSpan(new RelativeSizeSpan(2f / (float) scale), 0,
+                        word.length(), Spanned.SPAN_COMPOSING);
 
                 button.setAllCaps(false);
                 button.setText(strSpannable);
@@ -201,14 +199,14 @@ public class GameActivity extends AppCompatActivity {
     private void setButtonImage(Button button, int rotate, int scale, Bitmap bitmap) {
         Matrix matrix = new Matrix();
         matrix.setRotate(rotate, bitmap.getWidth() / 2f, bitmap.getHeight() / 2f);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(
-                bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
+                bitmap.getWidth(), bitmap.getHeight(), matrix, false);
 
         int width = button.getWidth();
         int height = button.getHeight();
 
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(
-                rotatedBitmap, width / scale, height / scale, true);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(rotatedBitmap,
+                width / scale, height / scale, true);
 
         Resources resource = getResources();
         button.setBackground(new BitmapDrawable(resource, scaledBitmap));
@@ -294,18 +292,9 @@ public class GameActivity extends AppCompatActivity {
             Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
             view.setDrawingCacheEnabled(false);
 
-            ImageView imgDiscard = findViewById(R.id.image_discard_card);
-            ImageView imgDraw = findViewById(R.id.image_draw_card);
-            TextView txt = findViewById(R.id.text_discard);
-            int height = imgDiscard.getHeight() + txt.getHeight() - 30;
-            int width = (imgDiscard.getHeight() * 3) / 4;
-            int xDiscard = (int) imgDiscard.getX() + ((imgDiscard.getWidth() - width) / 2);
-            int xDraw = (int) imgDraw.getX() + ((imgDiscard.getWidth() - width) / 2);
-            int y = (int) txt.getY() + 10;
-
             // create the cropped version of the bitmap.
-            Bitmap resizedBitmapDraw = Bitmap.createBitmap(bitmap, xDraw, y, width, height);
-            Bitmap resizedBitmapDiscard = Bitmap.createBitmap(bitmap, xDiscard, y, width, height);
+            Bitmap resizedBitmapDraw = resizeBitmap(bitmap, false);
+            Bitmap resizedBitmapDiscard = resizeBitmap(bitmap, true);
 
             FileOutputStream outputStreamDraw = new FileOutputStream(mypathDraw);
             FileOutputStream outputStreamDiscard = new FileOutputStream(mypathDiscard);
@@ -324,5 +313,19 @@ public class GameActivity extends AppCompatActivity {
             // Several error may come out with file handling or DOM
             e.printStackTrace();
         }
+    }
+
+    private Bitmap resizeBitmap(Bitmap bitmap, boolean isDiscard){
+        ImageView imgDiscard = findViewById(R.id.image_discard_card);
+        ImageView imgDraw = findViewById(R.id.image_draw_card);
+        TextView txt = findViewById(R.id.text_discard);
+        int height = imgDiscard.getHeight() + txt.getHeight() - 30;
+        int width = (imgDiscard.getHeight() * 3) / 4;
+        int y = (int) txt.getY() + 10;
+        int x = (int) imgDraw.getX() + ((imgDiscard.getWidth() - width) / 2);
+        if(isDiscard){
+            x = (int) imgDiscard.getX() + ((imgDiscard.getWidth() - width) / 2);
+        }
+        return Bitmap.createBitmap(bitmap, x, y, width, height);
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/colorLightGreen">
@@ -196,7 +195,6 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/button_background"
         android:text="@android:string/ok"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -208,7 +206,6 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/button_background"
         android:text="@string/export_images"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -229,7 +226,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/you_win"
-            android:textColor="#000000"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -241,8 +237,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/enter_your_name"
-            android:textColor="#000000"
-            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/edit_text_nickname"
             app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
@@ -269,7 +263,6 @@
             android:layout_marginTop="28dp"
             android:rotation="-15"
             android:text="@string/new_high_score"
-            android:textSize="18sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/text_title"

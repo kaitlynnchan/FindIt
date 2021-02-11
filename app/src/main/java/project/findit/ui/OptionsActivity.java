@@ -79,7 +79,8 @@ public class OptionsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(imageId == imageButtonCustom){
-                    Intent intent = CustomImagesActivity.makeLaunchIntent(OptionsActivity.this);
+                    Intent intent =
+                            CustomImagesActivity.makeLaunchIntent(OptionsActivity.this);
                     startActivityForResult(intent, REQUEST_CODE_CUSTOM);
                     if(getImagePackId(OptionsActivity.this) == imageButtonCustom){
                         saveImagePackId(Constant.DEFAULT_IMAGE_PACK);
@@ -110,9 +111,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(modeBtn == buttonWordsImages
                         && getImagePackId(OptionsActivity.this) == imageButtonCustom){
-                    Toast.makeText(
-                            OptionsActivity.this,
-                            R.string.toast_mode_not_supported,
+                    Toast.makeText(OptionsActivity.this, R.string.toast_mode_not_supported,
                             Toast.LENGTH_SHORT)
                             .show();
                 } else{
@@ -135,11 +134,11 @@ public class OptionsActivity extends AppCompatActivity {
 
     private void setNumImagesPerCardSpinner() {
         Spinner spinner = findViewById(R.id.spinner_num_images_per_card);
-        String[] numImagesPerCardArray = getResources()
-                .getStringArray(R.array.num_images_per_card_array);
+        String[] numImagesPerCardArray =
+                getResources().getStringArray(R.array.num_images_per_card_array);
 
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
-                this, android.R.layout.simple_spinner_item, numImagesPerCardArray);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this,
+                android.R.layout.simple_spinner_item, numImagesPerCardArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -149,8 +148,7 @@ public class OptionsActivity extends AppCompatActivity {
                 int numImagesPerCard = Integer.parseInt(value);
                 if(numCustomImages < getTotalNumCardsOrImages(numImagesPerCard)
                         && getImagePackId(OptionsActivity.this) == imageButtonCustom){
-                    Toast.makeText(
-                            OptionsActivity.this,
+                    Toast.makeText(OptionsActivity.this,
                             R.string.toast_options_not_supported,
                             Toast.LENGTH_SHORT)
                             .show();
@@ -178,8 +176,8 @@ public class OptionsActivity extends AppCompatActivity {
         String[] numCardsArray = getResources().getStringArray(R.array.num_cards_array);
         numCardsArray = setRangeArray(numCardsArray);
 
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
-                this, android.R.layout.simple_spinner_item, numCardsArray);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this,
+                android.R.layout.simple_spinner_item, numCardsArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -187,8 +185,8 @@ public class OptionsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String value = parent.getItemAtPosition(position).toString();
                 if(value.equals(getString(R.string.all))) {
-                    saveNumCards(
-                            getTotalNumCardsOrImages(getNumImagesPerCard(OptionsActivity.this)));
+                    saveNumCards(getTotalNumCardsOrImages(
+                            getNumImagesPerCard(OptionsActivity.this)));
                 } else {
                     saveNumCards(Integer.parseInt(value));
                 }
@@ -229,10 +227,11 @@ public class OptionsActivity extends AppCompatActivity {
 
     private void setDifficultyModeSpinner() {
         Spinner spinner = findViewById(R.id.spinner_difficulty_mode);
-        String[] difficultyModeArray = getResources().getStringArray(R.array.difficulty_mode_array);
+        String[] difficultyModeArray =
+                getResources().getStringArray(R.array.difficulty_mode_array);
 
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
-                this, android.R.layout.simple_spinner_item, difficultyModeArray);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this,
+                android.R.layout.simple_spinner_item, difficultyModeArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -261,27 +260,27 @@ public class OptionsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    manager.adjustStreamVolume(
-                            AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
-                    manager.adjustStreamVolume(
-                            AudioManager.STREAM_ALARM, AudioManager.ADJUST_UNMUTE, 0);
-                    manager.adjustStreamVolume(
-                            AudioManager.STREAM_NOTIFICATION, AudioManager.ADJUST_UNMUTE, 0);
-                    manager.adjustStreamVolume(
-                            AudioManager.STREAM_RING, AudioManager.ADJUST_UNMUTE, 0);
-                    manager.adjustStreamVolume(
-                            AudioManager.STREAM_DTMF, AudioManager.ADJUST_UNMUTE, 0);
+                    manager.adjustStreamVolume(AudioManager.STREAM_MUSIC,
+                            AudioManager.ADJUST_UNMUTE, 0);
+                    manager.adjustStreamVolume(AudioManager.STREAM_ALARM,
+                            AudioManager.ADJUST_UNMUTE, 0);
+                    manager.adjustStreamVolume(AudioManager.STREAM_NOTIFICATION,
+                            AudioManager.ADJUST_UNMUTE, 0);
+                    manager.adjustStreamVolume(AudioManager.STREAM_RING,
+                            AudioManager.ADJUST_UNMUTE, 0);
+                    manager.adjustStreamVolume(AudioManager.STREAM_DTMF,
+                            AudioManager.ADJUST_UNMUTE, 0);
                 } else {
-                    manager.adjustStreamVolume(
-                            AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
-                    manager.adjustStreamVolume(
-                            AudioManager.STREAM_ALARM, AudioManager.ADJUST_MUTE, 0);
-                    manager.adjustStreamVolume(
-                            AudioManager.STREAM_NOTIFICATION, AudioManager.ADJUST_MUTE, 0);
-                    manager.adjustStreamVolume(
-                            AudioManager.STREAM_RING, AudioManager.ADJUST_MUTE, 0);
-                    manager.adjustStreamVolume(
-                            AudioManager.STREAM_DTMF, AudioManager.ADJUST_MUTE, 0);
+                    manager.adjustStreamVolume(AudioManager.STREAM_MUSIC,
+                            AudioManager.ADJUST_MUTE, 0);
+                    manager.adjustStreamVolume(AudioManager.STREAM_ALARM,
+                            AudioManager.ADJUST_MUTE, 0);
+                    manager.adjustStreamVolume(AudioManager.STREAM_NOTIFICATION,
+                            AudioManager.ADJUST_MUTE, 0);
+                    manager.adjustStreamVolume(AudioManager.STREAM_RING,
+                            AudioManager.ADJUST_MUTE, 0);
+                    manager.adjustStreamVolume(AudioManager.STREAM_DTMF,
+                            AudioManager.ADJUST_MUTE, 0);
                 }
             }
         });
@@ -290,60 +289,60 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void saveImagePackId(int imagePack) {
-        SharedPreferences sharedPreferences
-                = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_IMAGE_PACK_ID, imagePack);
         editor.apply();
     }
 
     private static int getImagePackId(Context context){
-        SharedPreferences sharedPreferences
-                = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         return sharedPreferences.getInt(EDITOR_IMAGE_PACK_ID, Constant.DEFAULT_IMAGE_PACK);
     }
 
     private void saveModeId(int mode) {
-        SharedPreferences sharedPreferences
-                = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_MODE_ID, mode);
         editor.apply();
     }
 
     private static int getModeId(Context context){
-        SharedPreferences sharedPreferences
-                = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         return sharedPreferences.getInt(EDITOR_MODE_ID, Constant.DEFAULT_MODE_BUTTON);
     }
 
     private void saveNumImagesPerCard(int numImagesPerCard){
-        SharedPreferences sharedPreferences
-                = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_NUM_IMAGES_PER_CARD, numImagesPerCard);
         editor.apply();
     }
 
     public static int getNumImagesPerCard(Context context) {
-        SharedPreferences sharedPreferences
-                = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         String defaultValueStr = context.getString(Constant.DEFAULT_NUM_IMAGES_PER_CARD);
         int defaultValue = Integer.parseInt(defaultValueStr);
         return sharedPreferences.getInt(EDITOR_NUM_IMAGES_PER_CARD, defaultValue);
     }
 
     private void saveNumCards(int numCards){
-        SharedPreferences sharedPreferences
-                = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EDITOR_NUM_CARDS, numCards);
         editor.apply();
     }
 
     public static int getNumCards(Context context) {
-        SharedPreferences sharedPreferences
-                = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         String defaultValueStr = context.getString(Constant.DEFAULT_NUM_CARDS);
         int defaultValue;
         if(defaultValueStr.equals(context.getString(R.string.all))){
@@ -355,16 +354,16 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     private void saveDifficultyMode(String difficultyMode) {
-        SharedPreferences sharedPreferences
-                = this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                this.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(EDITOR_DIFFICULTY_MODE, difficultyMode);
         editor.apply();
     }
 
     private static String getDifficultyModeStr(Context context){
-        SharedPreferences sharedPreferences
-                = context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(SHARED_PREFS_OPTIONS, MODE_PRIVATE);
         String defaultValue = context.getString(Constant.DEFAULT_DIFFICULTY_MODE);
         return sharedPreferences.getString(EDITOR_DIFFICULTY_MODE, defaultValue);
     }
@@ -433,8 +432,8 @@ public class OptionsActivity extends AppCompatActivity {
                 saveImagePackId(imageButtonCustom);
 
                 if(numCustomImages < getTotalNumCardsOrImages(getNumImagesPerCard(this))){
-                    Toast.makeText(
-                            this, R.string.toast_options_not_supported, Toast.LENGTH_SHORT)
+                    Toast.makeText(this, R.string.toast_options_not_supported,
+                            Toast.LENGTH_SHORT)
                             .show();
 
                     int maxNumImagesPerCard = getMaxNumImagesPerCard();
@@ -444,16 +443,15 @@ public class OptionsActivity extends AppCompatActivity {
                 }
 
                 if(getModeId(this) == buttonWordsImages){
-                    Toast.makeText(
-                            this, R.string.toast_mode_not_supported, Toast.LENGTH_SHORT)
+                    Toast.makeText(this, R.string.toast_mode_not_supported,
+                            Toast.LENGTH_SHORT)
                             .show();
                     saveModeId(Constant.DEFAULT_MODE_BUTTON);
                     setModeButton(buttonImages);
                     setModeButton(buttonWordsImages);
                 }
             } else{
-                Toast.makeText(
-                        this, R.string.toast_not_enough_images, Toast.LENGTH_SHORT)
+                Toast.makeText(this, R.string.toast_not_enough_images, Toast.LENGTH_SHORT)
                         .show();
                 if(getImagePackId(this) == imageButtonCustom){
                     saveImagePackId(Constant.DEFAULT_IMAGE_PACK);
@@ -467,8 +465,8 @@ public class OptionsActivity extends AppCompatActivity {
 
     private int getMaxNumImagesPerCard() {
         int temp = Integer.parseInt(getString(Constant.DEFAULT_NUM_IMAGES_PER_CARD));
-        String[] numImagesPerCardArray = getResources()
-                .getStringArray(R.array.num_images_per_card_array);
+        String[] numImagesPerCardArray =
+                getResources().getStringArray(R.array.num_images_per_card_array);
         for (String s : numImagesPerCardArray) {
             if (getTotalNumCardsOrImages(Integer.parseInt(s)) <= numCustomImages) {
                 temp = Integer.parseInt(s);

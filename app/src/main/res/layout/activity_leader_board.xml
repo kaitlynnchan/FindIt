@@ -16,7 +16,6 @@
         android:background="@drawable/button_background"
         android:foreground="@drawable/ic_arrow_back"
         android:foregroundGravity="center_vertical|right"
-        android:foregroundTint="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,8 +27,6 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_background"
         android:text="@string/reset"
-        android:textColor="#000000"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -39,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/leader_board_title"
-        android:textColor="#000000"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,11 +62,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/num_of_images"
-        android:textColor="#000000"
-        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
@@ -79,8 +73,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/num_of_cards"
-        android:textColor="#000000"
-        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/spinner_num_images_per_card"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +89,6 @@
         android:background="@drawable/button_background"
         android:foreground="@drawable/ic_arrow_down"
         android:foregroundGravity="center_vertical|right"
-        android:foregroundTint="#000000"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/text_num_images"
         app:layout_constraintStart_toEndOf="@+id/text_num_images"
@@ -111,7 +102,6 @@
         android:background="@drawable/button_background"
         android:foreground="@drawable/ic_arrow_down"
         android:foregroundGravity="center_vertical|right"
-        android:foregroundTint="#000000"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/text_num_cards"
         app:layout_constraintStart_toEndOf="@+id/text_num_cards"
