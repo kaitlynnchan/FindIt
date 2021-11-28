@@ -9,13 +9,13 @@ Compatible Devices (reccommended): Pixel API 24, Pixel 2 API R
 ## Run
 1. Download this repository and open the project folder in Android Studio
 2. Create Config.java in "/project/findit/model", copy and paste in the following code, and fill in the Flickr `API_KEY`.
-  ```Java
-  package project.findit.model;
+    ```Java
+      package project.findit.model;
 
-  public class Config {
-      public static final String API_KEY = "";
-  }
-  ```
+      public class Config {
+          public static final String API_KEY = "";
+      }
+    ```
     1. If you don't want to use the Flickr API, leave `API_KEY` empty.
     2. To create a Flickr API key follow the steps listed [here](https://www.flickr.com/services/api/misc.api_keys.html)
 2. Select a device
